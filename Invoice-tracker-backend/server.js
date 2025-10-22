@@ -72,6 +72,17 @@ function createTables() {
     )
   `);
 
+  db.exec(`
+    CREATE TABLE IF NOT EXISTS contracts (
+      id TEXT PRIMARY KEY,
+      contractName TEXT NOT NULL UNIQUE,
+      contractValue REAL NOT NULL,
+      currency TEXT DEFAULT 'USD',
+      createdDate TEXT,
+      updatedDate TEXT
+    )
+  `);
+
   console.log('Database tables ready');
 }
 
@@ -1063,6 +1074,94 @@ app.post('/api/query', (req, res) => {
         count: results.length
       });
     }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Contract Management Endpoints
+
+// Get all contracts
+app.get('/api/contracts', (req, res) => {
+  try {
+    const rows = db.prepare('SELECT * FROM contracts').all();
+    res.json(rows);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Create or update contract value
+app.post('/api/contracts', (req, res) => {
+  try {
+    const { contractName, contractValue, currency } = req.body;
+
+    if (!contractName || !contractValue) {
+      return res.status(400).json({ error: 'Contract name and value are required' });
+    }
+
+    const existing = db.prepare('SELECT id FROM contracts WHERE contractName = ?').get(contractName);
+    const now = new Date().toISOString().split('T')[0];
+
+    if (existing) {
+      // Update existing contract
+      db.prepare(`
+        UPDATE contracts
+        SET contractValue = ?, currency = ?, updatedDate = ?
+        WHERE contractName = ?
+      `).run(contractValue, currency || 'USD', now, contractName);
+
+      res.json({ success: true, action: 'updated' });
+    } else {
+      // Create new contract
+      const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
+      db.prepare(`
+        INSERT INTO contracts (id, contractName, contractValue, currency, createdDate, updatedDate)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `).run(id, contractName, contractValue, currency || 'USD', now, now);
+
+      res.json({ success: true, action: 'created' });
+    }
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Update contract value
+app.put('/api/contracts/:contractName', (req, res) => {
+  try {
+    const { contractName } = req.params;
+    const { contractValue, currency } = req.body;
+
+    const now = new Date().toISOString().split('T')[0];
+
+    const result = db.prepare(`
+      UPDATE contracts
+      SET contractValue = ?, currency = ?, updatedDate = ?
+      WHERE contractName = ?
+    `).run(contractValue, currency || 'USD', now, contractName);
+
+    if (result.changes === 0) {
+      // Contract doesn't exist, create it
+      const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
+      db.prepare(`
+        INSERT INTO contracts (id, contractName, contractValue, currency, createdDate, updatedDate)
+        VALUES (?, ?, ?, ?, ?, ?)
+      `).run(id, contractName, contractValue, currency || 'USD', now, now);
+    }
+
+    res.json({ success: true });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete contract
+app.delete('/api/contracts/:contractName', (req, res) => {
+  try {
+    const { contractName } = req.params;
+    db.prepare('DELETE FROM contracts WHERE contractName = ?').run(contractName);
+    res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }

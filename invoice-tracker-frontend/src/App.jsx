@@ -60,22 +60,40 @@ function InvoiceTracker() {
   const [queryText, setQueryText] = useState('');
   const [queryResult, setQueryResult] = useState(null);
 
-  // Load contract values from localStorage
-  useEffect(() => {
-    const saved = localStorage.getItem('contractValues');
-    if (saved) {
-      setContractValues(JSON.parse(saved));
+  // Load contract values from database
+  const loadContracts = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/contracts`);
+      const contractsObj = {};
+      response.data.forEach(contract => {
+        contractsObj[contract.contractName] = {
+          value: contract.contractValue,
+          currency: contract.currency
+        };
+      });
+      setContractValues(contractsObj);
+    } catch (error) {
+      console.error('Error loading contracts:', error);
     }
-  }, []);
+  };
 
-  // Save contract values to localStorage
-  const saveContractValue = (contract, value, currency) => {
+  // Save contract value to database
+  const saveContractValue = async (contract, value, currency) => {
     const newValues = {
       ...contractValues,
       [contract]: { value: parseFloat(value), currency: currency || 'USD' }
     };
     setContractValues(newValues);
-    localStorage.setItem('contractValues', JSON.stringify(newValues));
+
+    try {
+      await axios.put(`${API_URL}/contracts/${encodeURIComponent(contract)}`, {
+        contractValue: parseFloat(value),
+        currency: currency || 'USD'
+      });
+    } catch (error) {
+      console.error('Error saving contract:', error);
+      showMessage('error', 'Failed to save contract value');
+    }
   };
 
   // Load data
@@ -83,6 +101,7 @@ function InvoiceTracker() {
     loadInvoices();
     loadExpectedInvoices();
     loadExchangeRates();
+    loadContracts();
   }, []);
 
   const loadInvoices = async () => {
