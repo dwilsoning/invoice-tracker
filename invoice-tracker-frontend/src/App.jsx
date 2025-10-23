@@ -1065,7 +1065,7 @@ function InvoiceTracker() {
             <h2 className="text-xl font-bold text-white">Filters</h2>
             <button
               onClick={clearFilters}
-              className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+              className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
             >
               Clear All Filters
             </button>
