@@ -38,9 +38,9 @@ function InvoiceTracker() {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
-  
+
   // Dashboard date filter
-  const [dashboardDateFilter, setDashboardDateFilter] = useState('year');
+  const [dashboardDateFilter, setDashboardDateFilter] = useState('allTime');
   const [dashboardCustomFrom, setDashboardCustomFrom] = useState('');
   const [dashboardCustomTo, setDashboardCustomTo] = useState('');
   
@@ -303,6 +303,11 @@ function InvoiceTracker() {
         from: `${year}-01-01`,
         to: `${year}-12-31`
       };
+    } else if (dashboardDateFilter === 'allTime') {
+      return {
+        from: null,
+        to: null
+      };
     } else {
       return {
         from: dashboardCustomFrom,
@@ -420,12 +425,25 @@ function InvoiceTracker() {
   // Mark as paid/unpaid
   const updateInvoiceStatus = async (id, status) => {
     try {
-      await axios.put(`${API_URL}/invoices/${id}`, { 
+      // Find the invoice being updated
+      const invoice = invoices.find(inv => inv.id === id);
+
+      await axios.put(`${API_URL}/invoices/${id}`, {
         status,
         paymentDate: status === 'Paid' ? new Date().toISOString().split('T')[0] : null
       });
       await loadInvoices();
-      showMessage('success', `Invoice marked as ${status}`);
+
+      // Check if invoice is in current dashboard period
+      const dateRange = getDashboardDateRange();
+      const isInPeriod = (!dateRange.from || invoice.invoiceDate >= dateRange.from) &&
+                         (!dateRange.to || invoice.invoiceDate <= dateRange.to);
+
+      if (!isInPeriod && status === 'Paid') {
+        showMessage('success', `Invoice marked as ${status}. Note: This invoice is outside the current dashboard period (invoice date: ${formatDate(invoice.invoiceDate)})`);
+      } else {
+        showMessage('success', `Invoice marked as ${status}`);
+      }
     } catch (error) {
       showMessage('error', 'Failed to update invoice');
     }
@@ -603,25 +621,26 @@ function InvoiceTracker() {
         <div className="mb-6 bg-white p-4 rounded-lg shadow">
           <div className="flex gap-4 items-center flex-wrap">
             <label className="font-semibold">Dashboard Period:</label>
-            <select 
+            <select
               value={dashboardDateFilter}
               onChange={(e) => setDashboardDateFilter(e.target.value)}
               className="border rounded px-3 py-2"
             >
+              <option value="allTime">All Time</option>
               <option value="year">This Calendar Year</option>
               <option value="custom">Custom Period</option>
             </select>
-            
+
             {dashboardDateFilter === 'custom' && (
               <>
-                <input 
+                <input
                   type="date"
                   value={dashboardCustomFrom}
                   onChange={(e) => setDashboardCustomFrom(e.target.value)}
                   className="border rounded px-3 py-2"
                   placeholder="From"
                 />
-                <input 
+                <input
                   type="date"
                   value={dashboardCustomTo}
                   onChange={(e) => setDashboardCustomTo(e.target.value)}
