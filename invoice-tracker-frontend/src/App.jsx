@@ -12,7 +12,7 @@ const TYPE_COLORS = {
   'MS': '#EF4444',
   'HW': '#6366F1',
   '3PP': '#EC4899',
-  'Credit Memo': '#14B8A6'
+  'Credit Memo': '#DC2626'  // Red color for credit memos
 };
 
 // Status colors

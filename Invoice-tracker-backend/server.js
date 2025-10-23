@@ -134,7 +134,7 @@ function getDateFormatByInvoiceNumber(invoiceNumber) {
   const usFormatPrefixes = ['46', '47', '48', '49'];
 
   // International format invoice series (DD-MM-YYYY)
-  const intlFormatPrefixes = ['40', '41', '42', '43', '44', '45', '60', '61', '11', '12'];
+  const intlFormatPrefixes = ['40', '41', '42', '43', '44', '45', '60', '61', '11', '12', '86'];
 
   // Check if invoice starts with any US format prefix
   for (const prefix of usFormatPrefixes) {
@@ -263,7 +263,12 @@ function formatDateForDisplay(dateStr) {
 }
 
 // Classify invoice type
-function classifyInvoiceType(services) {
+function classifyInvoiceType(services, invoiceNumber) {
+  // Check invoice number first - credit memos start with 86
+  if (invoiceNumber && invoiceNumber.toString().startsWith('86')) {
+    return 'Credit Memo';
+  }
+
   if (!services) return 'PS';
 
   const lower = services.toLowerCase();
@@ -578,7 +583,7 @@ async function extractInvoiceData(pdfPath, originalName) {
   }
 
   // Classify and detect frequency
-  invoice.invoiceType = classifyInvoiceType(invoice.services);
+  invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber);
   invoice.frequency = detectFrequency(invoice.services, invoice.amountDue);
 
   return invoice;
