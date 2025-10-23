@@ -244,32 +244,35 @@ function InvoiceTracker() {
   // Filter invoices
   const getFilteredInvoices = () => {
     let filtered = [...invoices];
-    
+
     // Status filter
     if (statusFilter !== 'All') {
+      const today = new Date().toISOString().split('T')[0];
+
       if (statusFilter === 'Overdue') {
-        const today = new Date().toISOString().split('T')[0];
         filtered = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate < today);
+      } else if (statusFilter === 'Current Unpaid') {
+        filtered = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate >= today);
       } else {
         filtered = filtered.filter(inv => inv.status === statusFilter);
       }
     }
-    
+
     // Type filter
     if (typeFilter !== 'All') {
       filtered = filtered.filter(inv => inv.invoiceType === typeFilter);
     }
-    
+
     // Client filter
     if (clientFilter !== 'All') {
       filtered = filtered.filter(inv => inv.client === clientFilter);
     }
-    
+
     // Contract filter
     if (contractFilter !== 'All') {
       filtered = filtered.filter(inv => inv.customerContract === contractFilter);
     }
-    
+
     // Date range filter
     if (dateFrom) {
       filtered = filtered.filter(inv => inv.invoiceDate >= dateFrom);
@@ -277,18 +280,18 @@ function InvoiceTracker() {
     if (dateTo) {
       filtered = filtered.filter(inv => inv.invoiceDate <= dateTo);
     }
-    
+
     // Search filter
     if (searchTerm) {
       const term = searchTerm.toLowerCase();
-      filtered = filtered.filter(inv => 
+      filtered = filtered.filter(inv =>
         inv.invoiceNumber?.toLowerCase().includes(term) ||
         inv.client?.toLowerCase().includes(term) ||
         inv.customerContract?.toLowerCase().includes(term) ||
         inv.services?.toLowerCase().includes(term)
       );
     }
-    
+
     return filtered;
   };
 
@@ -312,31 +315,41 @@ function InvoiceTracker() {
   const calculateStats = () => {
     const dateRange = getDashboardDateRange();
     let filtered = invoices;
-    
+
     if (dateRange.from) {
       filtered = filtered.filter(inv => inv.invoiceDate >= dateRange.from);
     }
     if (dateRange.to) {
       filtered = filtered.filter(inv => inv.invoiceDate <= dateRange.to);
     }
-    
+
     const today = new Date().toISOString().split('T')[0];
     const thisMonth = today.substring(0, 7);
-    
+
     const totalInvoiced = filtered.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
     const totalPaid = filtered.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
-    const totalUnpaid = filtered.filter(inv => inv.status === 'Pending').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+
+    const unpaidInvoices = filtered.filter(inv => inv.status === 'Pending');
+    const totalUnpaid = unpaidInvoices.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+
     const overdue = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate < today);
     const overdueAmount = overdue.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+
+    const currentUnpaidInvoices = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate >= today);
+    const currentUnpaid = currentUnpaidInvoices.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+
     const dueThisMonth = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate && inv.dueDate.startsWith(thisMonth)).reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
-    
+
     return {
       totalInvoiced,
       totalPaid,
       totalUnpaid,
+      unpaidCount: unpaidInvoices.length,
       outstanding: totalUnpaid,
       overdueAmount,
       overdueCount: overdue.length,
+      currentUnpaid,
+      currentUnpaidCount: currentUnpaidInvoices.length,
       dueThisMonth
     };
   };
@@ -382,7 +395,7 @@ function InvoiceTracker() {
     clearFilters();
     const today = new Date().toISOString().split('T')[0];
     const thisMonth = today.substring(0, 7);
-    
+
     switch (statType) {
       case 'paid':
         setStatusFilter('Paid');
@@ -392,6 +405,9 @@ function InvoiceTracker() {
         break;
       case 'overdue':
         setStatusFilter('Overdue');
+        break;
+      case 'currentUnpaid':
+        setStatusFilter('Current Unpaid');
         break;
       case 'dueThisMonth':
         setStatusFilter('Pending');
@@ -619,52 +635,67 @@ function InvoiceTracker() {
 
         {/* Statistics */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-          <div 
+          <div
             className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
             onClick={() => {}}
           >
             <div className="text-gray-600 text-sm">Total Invoiced</div>
             <div className="text-3xl font-bold text-gray-900">${stats.totalInvoiced.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">All invoices in selected period</div>
           </div>
-          
-          <div 
+
+          <div
             className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
             onClick={() => handleStatClick('paid')}
           >
             <div className="text-gray-600 text-sm">Total Paid</div>
             <div className="text-3xl font-bold text-green-600">${stats.totalPaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Invoices marked as paid</div>
           </div>
-          
-          <div 
+
+          <div
             className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
             onClick={() => handleStatClick('unpaid')}
           >
-            <div className="text-gray-600 text-sm">Total Unpaid</div>
+            <div className="text-gray-600 text-sm flex items-center gap-1">
+              Total Unpaid
+              <span className="text-xs text-gray-400" title="All invoices not yet paid, including those not yet due">ⓘ</span>
+            </div>
             <div className="text-3xl font-bold text-yellow-600">${stats.totalUnpaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">All pending invoices ({stats.unpaidCount})</div>
           </div>
-          
-          <div 
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
-            onClick={() => handleStatClick('unpaid')}
-          >
-            <div className="text-gray-600 text-sm">Outstanding</div>
-            <div className="text-3xl font-bold text-orange-600">${stats.outstanding.toLocaleString()}</div>
-          </div>
-          
-          <div 
+
+          <div
             className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
             onClick={() => handleStatClick('overdue')}
           >
-            <div className="text-gray-600 text-sm">Overdue ({stats.overdueCount})</div>
+            <div className="text-gray-600 text-sm flex items-center gap-1">
+              Overdue
+              <span className="text-xs text-gray-400" title="Unpaid invoices past their due date">ⓘ</span>
+            </div>
             <div className="text-3xl font-bold text-red-600">${stats.overdueAmount.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Past due date ({stats.overdueCount} invoices)</div>
           </div>
-          
-          <div 
+
+          <div
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            onClick={() => handleStatClick('currentUnpaid')}
+          >
+            <div className="text-gray-600 text-sm flex items-center gap-1">
+              Current Unpaid
+              <span className="text-xs text-gray-400" title="Unpaid invoices not yet overdue">ⓘ</span>
+            </div>
+            <div className="text-3xl font-bold text-orange-600">${stats.currentUnpaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Not yet due ({stats.currentUnpaidCount} invoices)</div>
+          </div>
+
+          <div
             className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
             onClick={() => handleStatClick('dueThisMonth')}
           >
             <div className="text-gray-600 text-sm">Due This Month</div>
             <div className="text-3xl font-bold text-blue-600">${stats.dueThisMonth.toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Unpaid, due in current month</div>
           </div>
         </div>
 
@@ -865,15 +896,16 @@ function InvoiceTracker() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium mb-1">Status</label>
-              <select 
+              <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
                 className="w-full border rounded px-3 py-2"
               >
-                <option value="All">All</option>
-                <option value="Paid">Paid</option>
-                <option value="Pending">Pending</option>
-                <option value="Overdue">Overdue</option>
+                <option value="All">All Statuses</option>
+                <option value="Paid">✓ Paid</option>
+                <option value="Pending">⏳ Unpaid (All)</option>
+                <option value="Current Unpaid">📅 Current Unpaid (Not Yet Due)</option>
+                <option value="Overdue">⚠️ Overdue (Past Due Date)</option>
               </select>
             </div>
             
