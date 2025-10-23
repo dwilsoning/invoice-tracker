@@ -503,15 +503,28 @@ async function extractInvoiceData(pdfPath, originalName) {
   }
 
   // Extract amount - handle negative amounts (credit memos)
-  // Look for patterns like: -$1,234.56, ($1,234.56), $-1,234.56, or just $1,234.56
-  const amountMatch = text.match(/(?:Total|Amount\s*Due|Balance\s*Due)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
-                      text.match(/[-\(]?\$\s*([\d,]+\.?\d*)[\)]?/);
+  // Try multiple patterns to find the amount
+  let amountMatch =
+    // Pattern 1: Total/Amount Due/Balance Due with various formats
+    text.match(/(?:Total|Amount\s*Due|Balance\s*Due|Credit\s*Amount|Total\s*Amount)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
+    // Pattern 2: Invoice Total
+    text.match(/Invoice\s*Total[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
+    // Pattern 3: Just a dollar amount with possible negative indicators
+    text.match(/[-\(]\$?\s*([\d,]+\.?\d*)\)?/i) ||
+    // Pattern 4: Dollar sign followed by amount
+    text.match(/\$\s*([\d,]+\.?\d*)/);
+
   console.log('Amount match:', amountMatch ? amountMatch[0] : 'NOT FOUND');
+
   if (amountMatch) {
-    let amount = parseFloat(amountMatch[0].replace(/[,\$]/g, '').replace(/[()]/g, ''));
+    // Extract numeric value
+    let amountStr = amountMatch[0].replace(/[^\d,.\-()]/g, '');
+    console.log('Amount string after cleaning:', amountStr);
+
+    let amount = parseFloat(amountStr.replace(/[,\$()]/g, '').replace(/^\-/, ''));
     console.log('Parsed amount before sign check:', amount);
 
-    // Check if the amount should be negative (parentheses or minus sign)
+    // Check if the amount should be negative (parentheses or minus sign in original match)
     if (amountMatch[0].includes('(') || amountMatch[0].includes('-')) {
       amount = -Math.abs(amount);
       console.log('Amount is negative, final value:', amount);
@@ -519,6 +532,13 @@ async function extractInvoiceData(pdfPath, originalName) {
 
     invoice.amountDue = amount;
   }
+
+  // If still no amount found, set to 0 to avoid database error (but log warning)
+  if (!invoice.amountDue && invoice.amountDue !== 0) {
+    console.log('WARNING: No amount found, setting to 0');
+    invoice.amountDue = 0;
+  }
+
   console.log('Final invoice.amountDue:', invoice.amountDue);
 
   // Extract contract numbers - improved patterns
