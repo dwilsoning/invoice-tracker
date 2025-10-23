@@ -124,8 +124,38 @@ function convertToUSD(amount, currency) {
   return Math.round(amount * rate);
 }
 
-// Parse date - handles multiple formats
-function parseDate(dateStr, currency) {
+// Determine date format based on invoice number pattern
+function getDateFormatByInvoiceNumber(invoiceNumber) {
+  if (!invoiceNumber) return 'international'; // Default to international
+
+  const invoiceStr = invoiceNumber.toString();
+
+  // US format invoice series (MM-DD-YYYY)
+  const usFormatPrefixes = ['46', '47', '48', '49'];
+
+  // International format invoice series (DD-MM-YYYY)
+  const intlFormatPrefixes = ['40', '41', '42', '43', '44', '45', '60', '61', '11', '12'];
+
+  // Check if invoice starts with any US format prefix
+  for (const prefix of usFormatPrefixes) {
+    if (invoiceStr.startsWith(prefix)) {
+      return 'us';
+    }
+  }
+
+  // Check if invoice starts with any international format prefix
+  for (const prefix of intlFormatPrefixes) {
+    if (invoiceStr.startsWith(prefix)) {
+      return 'international';
+    }
+  }
+
+  // Default to international for unknown patterns
+  return 'international';
+}
+
+// Parse date - handles multiple formats based on invoice number
+function parseDate(dateStr, currency, invoiceNumber) {
   if (!dateStr) return null;
 
   const cleaned = dateStr.trim();
@@ -192,29 +222,16 @@ function parseDate(dateStr, currency) {
     month = first;
     day = second;
   }
-  // Otherwise, use currency hint (but prefer DD-MM-YYYY for most cases)
+  // Otherwise, use invoice number pattern to determine format
   else {
-    if (currency === 'USD') {
-      // For USD, could be either - but most international invoices use DD-MM-YYYY
-      // Check if this makes a valid date both ways
-      const ddmmDate = new Date(year, second - 1, first);
-      const mmddDate = new Date(year, first - 1, second);
+    const dateFormat = getDateFormatByInvoiceNumber(invoiceNumber);
 
-      // If both are valid, prefer DD-MM-YYYY (international standard)
-      if (!isNaN(ddmmDate.getTime()) && !isNaN(mmddDate.getTime())) {
-        day = first;
-        month = second;
-      } else if (!isNaN(ddmmDate.getTime())) {
-        day = first;
-        month = second;
-      } else if (!isNaN(mmddDate.getTime())) {
-        month = first;
-        day = second;
-      } else {
-        return null;
-      }
+    if (dateFormat === 'us') {
+      // US format: MM-DD-YYYY
+      month = first;
+      day = second;
     } else {
-      // Non-USD: DD-MM-YYYY
+      // International format: DD-MM-YYYY
       day = first;
       month = second;
     }
@@ -232,7 +249,7 @@ function parseDate(dateStr, currency) {
   return date.toISOString().split('T')[0];
 }
 
-// Format date for display (DD-MMM-YYYY)
+// Format date for display (DD-MMM-YY)
 function formatDateForDisplay(dateStr) {
   if (!dateStr) return '';
   const date = new Date(dateStr);
@@ -241,7 +258,7 @@ function formatDateForDisplay(dateStr) {
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
   const day = String(date.getDate()).padStart(2, '0');
   const month = months[date.getMonth()];
-  const year = date.getFullYear();
+  const year = String(date.getFullYear()).slice(-2); // 2-digit year
   return `${day}-${month}-${year}`;
 }
 
@@ -464,8 +481,8 @@ async function extractInvoiceData(pdfPath, originalName) {
   const allDates = [...namedDates, ...numericDates];
 
   if (allDates.length > 0) {
-    invoice.invoiceDate = parseDate(allDates[0], invoice.currency);
-    invoice.dueDate = parseDate(allDates[allDates.length > 1 ? 1 : 0], invoice.currency);
+    invoice.invoiceDate = parseDate(allDates[0], invoice.currency, invoice.invoiceNumber);
+    invoice.dueDate = parseDate(allDates[allDates.length > 1 ? 1 : 0], invoice.currency, invoice.invoiceNumber);
   }
 
   // Fallback to today if dates are invalid
