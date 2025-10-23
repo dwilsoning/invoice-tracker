@@ -272,7 +272,6 @@ function InvoiceTracker() {
   // Filter invoices
   const getFilteredInvoices = () => {
     let filtered = [...invoices];
-    console.log('All invoices:', invoices.length, invoices);
 
     // Status filter
     if (statusFilter !== 'All') {
@@ -329,8 +328,6 @@ function InvoiceTracker() {
       );
     }
 
-    console.log('Filtered invoices:', filtered.length, filtered);
-    console.log('Filters applied:', { statusFilter, typeFilter, clientFilter, contractFilter, dateFrom, dateTo, searchTerm, agingFilter });
     return filtered;
   };
 
@@ -370,19 +367,28 @@ function InvoiceTracker() {
     const today = new Date().toISOString().split('T')[0];
     const thisMonth = today.substring(0, 7);
 
-    const totalInvoiced = filtered.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
-    const totalPaid = filtered.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+    // Separate credit memos from regular invoices
+    const creditMemos = filtered.filter(inv => inv.invoiceType === 'Credit Memo');
+    const regularInvoices = filtered.filter(inv => inv.invoiceType !== 'Credit Memo');
 
-    const unpaidInvoices = filtered.filter(inv => inv.status === 'Pending');
+    // Credit memo totals (negative amounts)
+    const totalCreditMemos = creditMemos.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+    const creditMemosCount = creditMemos.length;
+
+    // Regular invoice stats (excluding credit memos)
+    const totalInvoiced = regularInvoices.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+    const totalPaid = regularInvoices.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+
+    const unpaidInvoices = regularInvoices.filter(inv => inv.status === 'Pending');
     const totalUnpaid = unpaidInvoices.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
-    const overdue = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate < today);
+    const overdue = regularInvoices.filter(inv => inv.status === 'Pending' && inv.dueDate < today);
     const overdueAmount = overdue.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
-    const currentUnpaidInvoices = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate >= today);
+    const currentUnpaidInvoices = regularInvoices.filter(inv => inv.status === 'Pending' && inv.dueDate >= today);
     const currentUnpaid = currentUnpaidInvoices.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
-    const dueThisMonth = filtered.filter(inv => inv.status === 'Pending' && inv.dueDate && inv.dueDate.startsWith(thisMonth)).reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+    const dueThisMonth = regularInvoices.filter(inv => inv.status === 'Pending' && inv.dueDate && inv.dueDate.startsWith(thisMonth)).reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
     return {
       totalInvoiced,
@@ -394,7 +400,9 @@ function InvoiceTracker() {
       overdueCount: overdue.length,
       currentUnpaid,
       currentUnpaidCount: currentUnpaidInvoices.length,
-      dueThisMonth
+      dueThisMonth,
+      totalCreditMemos,
+      creditMemosCount
     };
   };
 
@@ -425,7 +433,8 @@ function InvoiceTracker() {
 
   // Calculate aging statistics
   const calculateAgingStats = () => {
-    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending');
+    // Exclude credit memos from aging report (only regular unpaid invoices)
+    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo');
 
     const buckets = {
       'Current': { count: 0, total: 0, invoices: [] },
@@ -790,6 +799,26 @@ function InvoiceTracker() {
             <div className="text-gray-600 text-sm">Due This Month</div>
             <div className="text-3xl font-bold text-blue-600">${stats.dueThisMonth.toLocaleString()}</div>
             <div className="text-xs text-gray-500 mt-1">Unpaid, due in current month</div>
+          </div>
+
+          <div
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            onClick={() => {
+              setStatusFilter('All');
+              setTypeFilter('Credit Memo');
+              setClientFilter('All');
+              setContractFilter('All');
+              setAgingFilter('All');
+              setSearchTerm('');
+              setShowInvoiceTable(true);
+            }}
+          >
+            <div className="text-gray-600 text-sm flex items-center gap-1">
+              Total Credit Memos
+              <span className="text-xs text-gray-400" title="Credit memos issued (negative amounts)">ⓘ</span>
+            </div>
+            <div className="text-3xl font-bold text-red-600">${Math.abs(stats.totalCreditMemos).toLocaleString()}</div>
+            <div className="text-xs text-gray-500 mt-1">Credits issued ({stats.creditMemosCount} memos)</div>
           </div>
         </div>
 
