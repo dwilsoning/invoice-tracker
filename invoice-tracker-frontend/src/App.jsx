@@ -272,6 +272,7 @@ function InvoiceTracker() {
   // Filter invoices
   const getFilteredInvoices = () => {
     let filtered = [...invoices];
+    console.log('All invoices:', invoices.length, invoices);
 
     // Status filter
     if (statusFilter !== 'All') {
@@ -328,6 +329,8 @@ function InvoiceTracker() {
       );
     }
 
+    console.log('Filtered invoices:', filtered.length, filtered);
+    console.log('Filters applied:', { statusFilter, typeFilter, clientFilter, contractFilter, dateFrom, dateTo, searchTerm, agingFilter });
     return filtered;
   };
 
