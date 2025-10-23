@@ -263,9 +263,9 @@ function formatDateForDisplay(dateStr) {
 }
 
 // Classify invoice type
-function classifyInvoiceType(services, invoiceNumber) {
-  // Check invoice number first - credit memos start with 86
-  if (invoiceNumber && invoiceNumber.toString().startsWith('86')) {
+function classifyInvoiceType(services, invoiceNumber, amount) {
+  // Check if amount is negative - credit memos have negative amounts
+  if (amount && amount < 0) {
     return 'Credit Memo';
   }
 
@@ -500,11 +500,19 @@ async function extractInvoiceData(pdfPath, originalName) {
     invoice.dueDate = futureDate.toISOString().split('T')[0];
   }
 
-  // Extract amount
-  const amountMatch = text.match(/(?:Total|Amount\s*Due|Balance\s*Due)[:\s]*\$?\s*([\d,]+\.?\d*)/i) ||
-                      text.match(/\$\s*([\d,]+\.?\d*)/);
+  // Extract amount - handle negative amounts (credit memos)
+  // Look for patterns like: -$1,234.56, ($1,234.56), $-1,234.56, or just $1,234.56
+  const amountMatch = text.match(/(?:Total|Amount\s*Due|Balance\s*Due)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
+                      text.match(/[-\(]?\$\s*([\d,]+\.?\d*)[\)]?/);
   if (amountMatch) {
-    invoice.amountDue = parseFloat(amountMatch[1].replace(/,/g, ''));
+    let amount = parseFloat(amountMatch[0].replace(/[,\$]/g, '').replace(/[()]/g, ''));
+
+    // Check if the amount should be negative (parentheses or minus sign)
+    if (amountMatch[0].includes('(') || amountMatch[0].includes('-')) {
+      amount = -Math.abs(amount);
+    }
+
+    invoice.amountDue = amount;
   }
 
   // Extract contract numbers - improved patterns
@@ -583,7 +591,7 @@ async function extractInvoiceData(pdfPath, originalName) {
   }
 
   // Classify and detect frequency
-  invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber);
+  invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber, invoice.amountDue);
   invoice.frequency = detectFrequency(invoice.services, invoice.amountDue);
 
   return invoice;
