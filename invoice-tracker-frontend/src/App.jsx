@@ -889,9 +889,9 @@ function InvoiceTracker() {
               placeholder="E.g., 'What's the total for PS invoices from Acme Corp?'"
               className="flex-1 border rounded px-4 py-2"
             />
-            <button 
+            <button
               onClick={handleQuery}
-              className="px-6 py-2 bg-purple-600 text-white rounded hover:bg-purple-700 transition"
+              className="px-6 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
             >
               Ask
             </button>
@@ -1230,15 +1230,15 @@ function InvoiceTracker() {
         </div>
 
         {/* Invoice Table */}
-        <div className="bg-[#707CF1] rounded-lg shadow">
+        <div className="bg-white rounded-lg shadow">
           <button
             onClick={() => setShowInvoiceTable(!showInvoiceTable)}
-            className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
+            className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
           >
-            <span className="font-bold text-lg text-white">
+            <span className="font-bold text-lg">
               Invoices ({filteredInvoices.length})
             </span>
-            <span className="text-white">{showInvoiceTable ? '−' : '+'}</span>
+            <span>{showInvoiceTable ? '−' : '+'}</span>
           </button>
           
           {showInvoiceTable && (
