@@ -737,72 +737,72 @@ function InvoiceTracker() {
         </div>
 
         {/* Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-blue-500"
             onClick={() => {}}
           >
-            <div className="text-gray-600 text-sm">Total Invoiced</div>
-            <div className="text-3xl font-bold text-gray-900">${stats.totalInvoiced.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">All invoices in selected period</div>
+            <div className="text-gray-600 text-sm font-medium">Total Invoiced</div>
+            <div className="text-3xl font-bold text-blue-500 my-2">${stats.totalInvoiced.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">All invoices in selected period</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-green-500"
             onClick={() => handleStatClick('paid')}
           >
-            <div className="text-gray-600 text-sm">Total Paid</div>
-            <div className="text-3xl font-bold text-green-600">${stats.totalPaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">Invoices marked as paid</div>
+            <div className="text-gray-600 text-sm font-medium">Total Paid</div>
+            <div className="text-3xl font-bold text-green-500 my-2">${stats.totalPaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">Invoices marked as paid</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-yellow-500"
             onClick={() => handleStatClick('unpaid')}
           >
-            <div className="text-gray-600 text-sm flex items-center gap-1">
+            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
               Total Unpaid
               <span className="text-xs text-gray-400" title="All invoices not yet paid, including those not yet due">ⓘ</span>
             </div>
-            <div className="text-3xl font-bold text-yellow-600">${stats.totalUnpaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">All pending invoices ({stats.unpaidCount})</div>
+            <div className="text-3xl font-bold text-yellow-500 my-2">${stats.totalUnpaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">All pending invoices ({stats.unpaidCount})</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-red-500"
             onClick={() => handleStatClick('overdue')}
           >
-            <div className="text-gray-600 text-sm flex items-center gap-1">
+            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
               Overdue
               <span className="text-xs text-gray-400" title="Unpaid invoices past their due date">ⓘ</span>
             </div>
-            <div className="text-3xl font-bold text-red-600">${stats.overdueAmount.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">Past due date ({stats.overdueCount} invoices)</div>
+            <div className="text-3xl font-bold text-red-500 my-2">${stats.overdueAmount.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">Past due date ({stats.overdueCount} invoices)</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-orange-500"
             onClick={() => handleStatClick('currentUnpaid')}
           >
-            <div className="text-gray-600 text-sm flex items-center gap-1">
+            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
               Current Unpaid
               <span className="text-xs text-gray-400" title="Unpaid invoices not yet overdue">ⓘ</span>
             </div>
-            <div className="text-3xl font-bold text-orange-600">${stats.currentUnpaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">Not yet due ({stats.currentUnpaidCount} invoices)</div>
+            <div className="text-3xl font-bold text-orange-500 my-2">${stats.currentUnpaid.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">Not yet due ({stats.currentUnpaidCount} invoices)</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-purple-500"
             onClick={() => handleStatClick('dueThisMonth')}
           >
-            <div className="text-gray-600 text-sm">Due This Month</div>
-            <div className="text-3xl font-bold text-blue-600">${stats.dueThisMonth.toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">Unpaid, due in current month</div>
+            <div className="text-gray-600 text-sm font-medium">Due This Month</div>
+            <div className="text-3xl font-bold text-purple-500 my-2">${stats.dueThisMonth.toLocaleString()}</div>
+            <div className="text-xs text-gray-500">Unpaid, due in current month</div>
           </div>
 
           <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition"
+            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-pink-500"
             onClick={() => {
               setStatusFilter('All');
               setTypeFilter('Credit Memo');
@@ -813,12 +813,12 @@ function InvoiceTracker() {
               setShowInvoiceTable(true);
             }}
           >
-            <div className="text-gray-600 text-sm flex items-center gap-1">
+            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
               Total Credit Memos
               <span className="text-xs text-gray-400" title="Credit memos issued (negative amounts)">ⓘ</span>
             </div>
-            <div className="text-3xl font-bold text-red-600">${Math.abs(stats.totalCreditMemos).toLocaleString()}</div>
-            <div className="text-xs text-gray-500 mt-1">Credits issued ({stats.creditMemosCount} memos)</div>
+            <div className="text-3xl font-bold text-pink-500 my-2">${Math.abs(stats.totalCreditMemos).toLocaleString()}</div>
+            <div className="text-xs text-gray-500">Credits issued ({stats.creditMemosCount} memos)</div>
           </div>
         </div>
 
