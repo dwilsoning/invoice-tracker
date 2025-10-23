@@ -705,9 +705,9 @@ function InvoiceTracker() {
         </div>
 
         {/* Dashboard date filter */}
-        <div className="mb-6 bg-white p-4 rounded-lg shadow">
+        <div className="mb-6 bg-[#707CF1] p-4 rounded-lg shadow">
           <div className="flex gap-4 items-center flex-wrap">
-            <label className="font-semibold">Dashboard Period:</label>
+            <label className="font-semibold text-white">Dashboard Period:</label>
             <select
               value={dashboardDateFilter}
               onChange={(e) => setDashboardDateFilter(e.target.value)}
@@ -740,94 +740,100 @@ function InvoiceTracker() {
         </div>
 
         {/* Statistics */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-blue-500"
-            onClick={() => {}}
-          >
-            <div className="text-gray-600 text-sm font-medium">Total Invoiced</div>
-            <div className="text-3xl font-bold text-blue-500 my-2">${stats.totalInvoiced.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">All invoices in selected period</div>
-          </div>
-
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-green-500"
-            onClick={() => handleStatClick('paid')}
-          >
-            <div className="text-gray-600 text-sm font-medium">Total Paid</div>
-            <div className="text-3xl font-bold text-green-500 my-2">${stats.totalPaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">Invoices marked as paid</div>
-          </div>
-
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-yellow-500"
-            onClick={() => handleStatClick('unpaid')}
-          >
-            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
-              Total Unpaid
-              <span className="text-xs text-gray-400" title="All invoices not yet paid, including those not yet due">ⓘ</span>
+        <div className="mb-8">
+          {/* First row - 4 columns */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-4">
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-blue-500"
+              onClick={() => {}}
+            >
+              <div className="text-gray-600 text-sm font-medium">Total Invoiced</div>
+              <div className="text-3xl font-bold text-blue-500 my-2">${stats.totalInvoiced.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">All invoices in selected period</div>
             </div>
-            <div className="text-3xl font-bold text-yellow-500 my-2">${stats.totalUnpaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">All pending invoices ({stats.unpaidCount})</div>
-          </div>
 
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-red-500"
-            onClick={() => handleStatClick('overdue')}
-          >
-            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
-              Overdue
-              <span className="text-xs text-gray-400" title="Unpaid invoices past their due date">ⓘ</span>
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-green-500"
+              onClick={() => handleStatClick('paid')}
+            >
+              <div className="text-gray-600 text-sm font-medium">Total Paid</div>
+              <div className="text-3xl font-bold text-green-500 my-2">${stats.totalPaid.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Invoices marked as paid</div>
             </div>
-            <div className="text-3xl font-bold text-red-500 my-2">${stats.overdueAmount.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">Past due date ({stats.overdueCount} invoices)</div>
-          </div>
 
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-orange-500"
-            onClick={() => handleStatClick('currentUnpaid')}
-          >
-            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
-              Current Unpaid
-              <span className="text-xs text-gray-400" title="Unpaid invoices not yet overdue">ⓘ</span>
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-yellow-500"
+              onClick={() => handleStatClick('unpaid')}
+            >
+              <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
+                Total Unpaid
+                <span className="text-xs text-gray-400" title="All invoices not yet paid, including those not yet due">ⓘ</span>
+              </div>
+              <div className="text-3xl font-bold text-yellow-500 my-2">${stats.totalUnpaid.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">All pending invoices ({stats.unpaidCount})</div>
             </div>
-            <div className="text-3xl font-bold text-orange-500 my-2">${stats.currentUnpaid.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">Not yet due ({stats.currentUnpaidCount} invoices)</div>
-          </div>
 
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-purple-500"
-            onClick={() => handleStatClick('dueThisMonth')}
-          >
-            <div className="text-gray-600 text-sm font-medium">Due This Month</div>
-            <div className="text-3xl font-bold text-purple-500 my-2">${stats.dueThisMonth.toLocaleString()}</div>
-            <div className="text-xs text-gray-500">Unpaid, due in current month</div>
-          </div>
-
-          <div
-            className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-4 border-pink-500"
-            onClick={() => {
-              setStatusFilter('All');
-              setTypeFilter('Credit Memo');
-              setClientFilter('All');
-              setContractFilter('All');
-              setAgingFilter('All');
-              setSearchTerm('');
-              setShowInvoiceTable(true);
-            }}
-          >
-            <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
-              Total Credit Memos
-              <span className="text-xs text-gray-400" title="Credit memos issued (negative amounts)">ⓘ</span>
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-red-500"
+              onClick={() => handleStatClick('overdue')}
+            >
+              <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
+                Overdue
+                <span className="text-xs text-gray-400" title="Unpaid invoices past their due date">ⓘ</span>
+              </div>
+              <div className="text-3xl font-bold text-red-500 my-2">${stats.overdueAmount.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Past due date ({stats.overdueCount} invoices)</div>
             </div>
-            <div className="text-3xl font-bold text-pink-500 my-2">${Math.abs(stats.totalCreditMemos).toLocaleString()}</div>
-            <div className="text-xs text-gray-500">Credits issued ({stats.creditMemosCount} memos)</div>
+          </div>
+
+          {/* Second row - 3 columns centered */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-w-5xl mx-auto">
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-orange-500"
+              onClick={() => handleStatClick('currentUnpaid')}
+            >
+              <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
+                Current Unpaid
+                <span className="text-xs text-gray-400" title="Unpaid invoices not yet overdue">ⓘ</span>
+              </div>
+              <div className="text-3xl font-bold text-orange-500 my-2">${stats.currentUnpaid.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Not yet due ({stats.currentUnpaidCount} invoices)</div>
+            </div>
+
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-purple-500"
+              onClick={() => handleStatClick('dueThisMonth')}
+            >
+              <div className="text-gray-600 text-sm font-medium">Due This Month</div>
+              <div className="text-3xl font-bold text-purple-500 my-2">${stats.dueThisMonth.toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Unpaid, due in current month</div>
+            </div>
+
+            <div
+              className="bg-white p-6 rounded-lg shadow cursor-pointer hover:shadow-lg transition border-l-8 border-pink-500"
+              onClick={() => {
+                setStatusFilter('All');
+                setTypeFilter('Credit Memo');
+                setClientFilter('All');
+                setContractFilter('All');
+                setAgingFilter('All');
+                setSearchTerm('');
+                setShowInvoiceTable(true);
+              }}
+            >
+              <div className="text-gray-600 text-sm font-medium flex items-center gap-1">
+                Total Credit Memos
+                <span className="text-xs text-gray-400" title="Credit memos issued (negative amounts)">ⓘ</span>
+              </div>
+              <div className="text-3xl font-bold text-pink-500 my-2">${Math.abs(stats.totalCreditMemos).toLocaleString()}</div>
+              <div className="text-xs text-gray-500">Credits issued ({stats.creditMemosCount} memos)</div>
+            </div>
           </div>
         </div>
 
         {/* Aged Invoice Report */}
-        <div className="mb-6 bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-4">Aged Invoice Report (Unpaid Only)</h2>
+        <div className="mb-6 bg-[#707CF1] p-6 rounded-lg shadow">
+          <h2 className="text-xl font-bold mb-4 text-white">Aged Invoice Report (Unpaid Only)</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
             {Object.keys(agingStats).map(bucket => {
               const data = agingStats[bucket];
@@ -835,14 +841,14 @@ function InvoiceTracker() {
 
               // Color scheme based on aging severity
               const getColor = () => {
-                if (bucket === 'Current') return 'bg-green-100 hover:bg-green-200 border-green-300 text-green-800';
-                if (bucket === '31-60') return 'bg-yellow-100 hover:bg-yellow-200 border-yellow-300 text-yellow-800';
-                if (bucket === '61-90') return 'bg-orange-100 hover:bg-orange-200 border-orange-300 text-orange-800';
-                if (bucket === '91-120') return 'bg-red-100 hover:bg-red-200 border-red-300 text-red-800';
-                if (bucket === '121-180') return 'bg-red-200 hover:bg-red-300 border-red-400 text-red-900';
-                if (bucket === '181-270') return 'bg-purple-100 hover:bg-purple-200 border-purple-300 text-purple-800';
-                if (bucket === '271-365') return 'bg-purple-200 hover:bg-purple-300 border-purple-400 text-purple-900';
-                return 'bg-gray-200 hover:bg-gray-300 border-gray-400 text-gray-900';
+                if (bucket === 'Current') return 'bg-green-100 hover:bg-green-200 border-green-300 border-l-green-500 text-green-800';
+                if (bucket === '31-60') return 'bg-yellow-100 hover:bg-yellow-200 border-yellow-300 border-l-yellow-500 text-yellow-800';
+                if (bucket === '61-90') return 'bg-orange-100 hover:bg-orange-200 border-orange-300 border-l-orange-500 text-orange-800';
+                if (bucket === '91-120') return 'bg-red-100 hover:bg-red-200 border-red-300 border-l-red-500 text-red-800';
+                if (bucket === '121-180') return 'bg-red-200 hover:bg-red-300 border-red-400 border-l-red-600 text-red-900';
+                if (bucket === '181-270') return 'bg-purple-100 hover:bg-purple-200 border-purple-300 border-l-purple-500 text-purple-800';
+                if (bucket === '271-365') return 'bg-purple-200 hover:bg-purple-300 border-purple-400 border-l-purple-600 text-purple-900';
+                return 'bg-gray-200 hover:bg-gray-300 border-gray-400 border-l-gray-600 text-gray-900';
               };
 
               const activeClass = isActive ? 'ring-4 ring-blue-500' : '';
@@ -851,7 +857,7 @@ function InvoiceTracker() {
                 <div
                   key={bucket}
                   onClick={() => handleAgingClick(bucket)}
-                  className={`${getColor()} ${activeClass} p-4 rounded-lg border-2 cursor-pointer transition-all transform hover:scale-105`}
+                  className={`${getColor()} ${activeClass} p-4 rounded-lg border-2 border-l-8 cursor-pointer transition-all transform hover:scale-105`}
                 >
                   <div className="text-xs font-semibold mb-1">
                     {bucket === 'Current' ? 'Current' : `${bucket} days`}
@@ -866,14 +872,14 @@ function InvoiceTracker() {
               );
             })}
           </div>
-          <div className="mt-4 text-xs text-gray-600">
+          <div className="mt-4 text-xs text-white">
             Click on any aging bucket to filter invoices. Current = not yet due or up to 30 days overdue.
           </div>
         </div>
 
         {/* Natural Language Query */}
-        <div className="mb-6 bg-white p-4 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-3">Ask About Your Invoices</h2>
+        <div className="mb-6 bg-[#707CF1] p-4 rounded-lg shadow">
+          <h2 className="text-xl font-bold mb-3 text-white">Ask About Your Invoices</h2>
           <div className="flex gap-2">
             <input 
               type="text"
@@ -919,15 +925,15 @@ function InvoiceTracker() {
         {/* Expected Invoices */}
         <div className="mb-6">
           {/* Unacknowledged */}
-          <div className="bg-white rounded-lg shadow mb-2">
+          <div className="bg-[#707CF1] rounded-lg shadow mb-2">
             <button
               onClick={() => setShowExpectedUnack(!showExpectedUnack)}
-              className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
+              className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
             >
-              <span className="font-bold text-lg">
+              <span className="font-bold text-lg text-white">
                 Expected Invoices - Unacknowledged ({unacknowledgedExpected.length})
               </span>
-              <span>{showExpectedUnack ? '−' : '+'}</span>
+              <span className="text-white">{showExpectedUnack ? '−' : '+'}</span>
             </button>
             
             {showExpectedUnack && unacknowledgedExpected.length > 0 && (
@@ -987,15 +993,15 @@ function InvoiceTracker() {
           </div>
 
           {/* Acknowledged */}
-          <div className="bg-white rounded-lg shadow">
+          <div className="bg-[#707CF1] rounded-lg shadow">
             <button
               onClick={() => setShowExpectedAck(!showExpectedAck)}
-              className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
+              className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
             >
-              <span className="font-bold text-lg">
+              <span className="font-bold text-lg text-white">
                 Expected Invoices - Acknowledged ({acknowledgedExpected.length})
               </span>
-              <span>{showExpectedAck ? '−' : '+'}</span>
+              <span className="text-white">{showExpectedAck ? '−' : '+'}</span>
             </button>
             
             {showExpectedAck && acknowledgedExpected.length > 0 && (
@@ -1054,9 +1060,9 @@ function InvoiceTracker() {
         </div>
 
         {/* Filters */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
+        <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold">Filters</h2>
+            <h2 className="text-xl font-bold text-white">Filters</h2>
             <button
               onClick={clearFilters}
               className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
@@ -1067,7 +1073,7 @@ function InvoiceTracker() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium mb-1">Status</label>
+              <label className="block text-sm font-medium mb-1 text-white">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
@@ -1082,7 +1088,7 @@ function InvoiceTracker() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">Type</label>
+              <label className="block text-sm font-medium mb-1 text-white">Type</label>
               <select 
                 value={typeFilter}
                 onChange={(e) => setTypeFilter(e.target.value)}
@@ -1101,8 +1107,8 @@ function InvoiceTracker() {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1">Client</label>
-              <select 
+              <label className="block text-sm font-medium mb-1 text-white">Client</label>
+              <select
                 value={clientFilter}
                 onChange={(e) => setClientFilter(e.target.value)}
                 className="w-full border rounded px-3 py-2"
@@ -1113,10 +1119,10 @@ function InvoiceTracker() {
                 ))}
               </select>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-1">Contract</label>
-              <select 
+              <label className="block text-sm font-medium mb-1 text-white">Contract</label>
+              <select
                 value={contractFilter}
                 onChange={(e) => setContractFilter(e.target.value)}
                 className="w-full border rounded px-3 py-2"
@@ -1127,29 +1133,29 @@ function InvoiceTracker() {
                 ))}
               </select>
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-1">From Date</label>
-              <input 
+              <label className="block text-sm font-medium mb-1 text-white">From Date</label>
+              <input
                 type="date"
                 value={dateFrom}
                 onChange={(e) => setDateFrom(e.target.value)}
                 className="w-full border rounded px-3 py-2"
               />
             </div>
-            
+
             <div>
-              <label className="block text-sm font-medium mb-1">To Date</label>
-              <input 
+              <label className="block text-sm font-medium mb-1 text-white">To Date</label>
+              <input
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
                 className="w-full border rounded px-3 py-2"
               />
             </div>
-            
+
             <div className="md:col-span-3">
-              <label className="block text-sm font-medium mb-1">Search</label>
+              <label className="block text-sm font-medium mb-1 text-white">Search</label>
               <input 
                 type="text"
                 value={searchTerm}
@@ -1162,11 +1168,11 @@ function InvoiceTracker() {
         </div>
 
         {/* Grouping */}
-        <div className="bg-white p-6 rounded-lg shadow mb-6">
-          <h2 className="text-xl font-bold mb-4">Grouping</h2>
+        <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
+          <h2 className="text-xl font-bold mb-4 text-white">Grouping</h2>
           <div className="flex gap-4 items-center flex-wrap">
             <div>
-              <label className="block text-sm font-medium mb-1">Group By</label>
+              <label className="block text-sm font-medium mb-1 text-white">Group By</label>
               <select 
                 value={groupBy}
                 onChange={(e) => setGroupBy(e.target.value)}
@@ -1182,7 +1188,7 @@ function InvoiceTracker() {
             
             {groupBy !== 'None' && (
               <div>
-                <label className="block text-sm font-medium mb-1">Then By</label>
+                <label className="block text-sm font-medium mb-1 text-white">Then By</label>
                 <select 
                   value={secondaryGroupBy}
                   onChange={(e) => setSecondaryGroupBy(e.target.value)}
@@ -1224,15 +1230,15 @@ function InvoiceTracker() {
         </div>
 
         {/* Invoice Table */}
-        <div className="bg-white rounded-lg shadow">
+        <div className="bg-[#707CF1] rounded-lg shadow">
           <button
             onClick={() => setShowInvoiceTable(!showInvoiceTable)}
-            className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
+            className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
           >
-            <span className="font-bold text-lg">
+            <span className="font-bold text-lg text-white">
               Invoices ({filteredInvoices.length})
             </span>
-            <span>{showInvoiceTable ? '−' : '+'}</span>
+            <span className="text-white">{showInvoiceTable ? '−' : '+'}</span>
           </button>
           
           {showInvoiceTable && (
