@@ -38,6 +38,7 @@ function InvoiceTracker() {
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
+  const [agingFilter, setAgingFilter] = useState('All');
 
   // Dashboard date filter
   const [dashboardDateFilter, setDashboardDateFilter] = useState('allTime');
@@ -135,6 +136,33 @@ function InvoiceTracker() {
   const convertToUSD = (amount, currency) => {
     const rate = exchangeRates[currency] || 1;
     return Math.round(amount * rate);
+  };
+
+  // Calculate days overdue
+  const getDaysOverdue = (dueDate) => {
+    if (!dueDate) return 0;
+    const today = new Date();
+    const due = new Date(dueDate);
+    const diffTime = today - due;
+    const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+    return diffDays;
+  };
+
+  // Get aging bucket for an invoice
+  const getAgingBucket = (invoice) => {
+    if (invoice.status === 'Paid') return null;
+
+    const daysOverdue = getDaysOverdue(invoice.dueDate);
+
+    if (daysOverdue <= 0) return 'Current';
+    if (daysOverdue <= 30) return 'Current';
+    if (daysOverdue <= 60) return '31-60';
+    if (daysOverdue <= 90) return '61-90';
+    if (daysOverdue <= 120) return '91-120';
+    if (daysOverdue <= 180) return '121-180';
+    if (daysOverdue <= 270) return '181-270';
+    if (daysOverdue <= 365) return '271-365';
+    return '>365';
   };
 
   // Format date (DD-MMM-YY)
@@ -256,6 +284,14 @@ function InvoiceTracker() {
       } else {
         filtered = filtered.filter(inv => inv.status === statusFilter);
       }
+    }
+
+    // Aging filter
+    if (agingFilter !== 'All') {
+      filtered = filtered.filter(inv => {
+        const bucket = getAgingBucket(inv);
+        return bucket === agingFilter;
+      });
     }
 
     // Type filter
@@ -384,6 +420,33 @@ function InvoiceTracker() {
     return grouped;
   };
 
+  // Calculate aging statistics
+  const calculateAgingStats = () => {
+    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending');
+
+    const buckets = {
+      'Current': { count: 0, total: 0, invoices: [] },
+      '31-60': { count: 0, total: 0, invoices: [] },
+      '61-90': { count: 0, total: 0, invoices: [] },
+      '91-120': { count: 0, total: 0, invoices: [] },
+      '121-180': { count: 0, total: 0, invoices: [] },
+      '181-270': { count: 0, total: 0, invoices: [] },
+      '271-365': { count: 0, total: 0, invoices: [] },
+      '>365': { count: 0, total: 0, invoices: [] }
+    };
+
+    unpaidInvoices.forEach(inv => {
+      const bucket = getAgingBucket(inv);
+      if (bucket && buckets[bucket]) {
+        buckets[bucket].count++;
+        buckets[bucket].total += convertToUSD(inv.amountDue, inv.currency);
+        buckets[bucket].invoices.push(inv);
+      }
+    });
+
+    return buckets;
+  };
+
   // Clear filters
   const clearFilters = () => {
     setStatusFilter('All');
@@ -393,6 +456,7 @@ function InvoiceTracker() {
     setSearchTerm('');
     setDateFrom('');
     setDateTo('');
+    setAgingFilter('All');
   };
 
   // Handle stat click
@@ -420,6 +484,13 @@ function InvoiceTracker() {
         setDateTo(thisMonth + '-31');
         break;
     }
+  };
+
+  // Handle aging bucket click
+  const handleAgingClick = (bucket) => {
+    clearFilters();
+    setAgingFilter(bucket);
+    setShowInvoiceTable(true);
   };
 
   // Mark as paid/unpaid
@@ -545,11 +616,12 @@ function InvoiceTracker() {
   // Get unique values for filters
   const clients = [...new Set(invoices.map(inv => inv.client))].sort();
   const contracts = [...new Set(invoices.map(inv => inv.customerContract).filter(Boolean))].sort();
-  
+
   const stats = calculateStats();
+  const agingStats = calculateAgingStats();
   const filteredInvoices = getFilteredInvoices();
   const groupedInvoices = groupInvoices(filteredInvoices);
-  
+
   const unacknowledgedExpected = expectedInvoices.filter(e => !e.acknowledged);
   const acknowledgedExpected = expectedInvoices.filter(e => e.acknowledged);
 
@@ -715,6 +787,52 @@ function InvoiceTracker() {
             <div className="text-gray-600 text-sm">Due This Month</div>
             <div className="text-3xl font-bold text-blue-600">${stats.dueThisMonth.toLocaleString()}</div>
             <div className="text-xs text-gray-500 mt-1">Unpaid, due in current month</div>
+          </div>
+        </div>
+
+        {/* Aged Invoice Report */}
+        <div className="mb-6 bg-white p-6 rounded-lg shadow">
+          <h2 className="text-xl font-bold mb-4">Aged Invoice Report (Unpaid Only)</h2>
+          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
+            {Object.keys(agingStats).map(bucket => {
+              const data = agingStats[bucket];
+              const isActive = agingFilter === bucket;
+
+              // Color scheme based on aging severity
+              const getColor = () => {
+                if (bucket === 'Current') return 'bg-green-100 hover:bg-green-200 border-green-300 text-green-800';
+                if (bucket === '31-60') return 'bg-yellow-100 hover:bg-yellow-200 border-yellow-300 text-yellow-800';
+                if (bucket === '61-90') return 'bg-orange-100 hover:bg-orange-200 border-orange-300 text-orange-800';
+                if (bucket === '91-120') return 'bg-red-100 hover:bg-red-200 border-red-300 text-red-800';
+                if (bucket === '121-180') return 'bg-red-200 hover:bg-red-300 border-red-400 text-red-900';
+                if (bucket === '181-270') return 'bg-purple-100 hover:bg-purple-200 border-purple-300 text-purple-800';
+                if (bucket === '271-365') return 'bg-purple-200 hover:bg-purple-300 border-purple-400 text-purple-900';
+                return 'bg-gray-200 hover:bg-gray-300 border-gray-400 text-gray-900';
+              };
+
+              const activeClass = isActive ? 'ring-4 ring-blue-500' : '';
+
+              return (
+                <div
+                  key={bucket}
+                  onClick={() => handleAgingClick(bucket)}
+                  className={`${getColor()} ${activeClass} p-4 rounded-lg border-2 cursor-pointer transition-all transform hover:scale-105`}
+                >
+                  <div className="text-xs font-semibold mb-1">
+                    {bucket === 'Current' ? 'Current' : `${bucket} days`}
+                  </div>
+                  <div className="text-2xl font-bold mb-1">
+                    ${data.total.toLocaleString()}
+                  </div>
+                  <div className="text-xs opacity-75">
+                    {data.count} invoice{data.count !== 1 ? 's' : ''}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <div className="mt-4 text-xs text-gray-600">
+            Click on any aging bucket to filter invoices. Current = not yet due or up to 30 days overdue.
           </div>
         </div>
 
