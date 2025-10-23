@@ -124,33 +124,103 @@ function convertToUSD(amount, currency) {
   return Math.round(amount * rate);
 }
 
-// Parse date based on currency
+// Parse date - handles multiple formats
 function parseDate(dateStr, currency) {
   if (!dateStr) return null;
 
   const cleaned = dateStr.trim();
+
+  // Month name mapping
+  const monthMap = {
+    'jan': 1, 'january': 1,
+    'feb': 2, 'february': 2,
+    'mar': 3, 'march': 3,
+    'apr': 4, 'april': 4,
+    'may': 5,
+    'jun': 6, 'june': 6,
+    'jul': 7, 'july': 7,
+    'aug': 8, 'august': 8,
+    'sep': 9, 'sept': 9, 'september': 9,
+    'oct': 10, 'october': 10,
+    'nov': 11, 'november': 11,
+    'dec': 12, 'december': 12
+  };
+
+  // Try to match DD-MMM-YYYY or DD-MMMM-YYYY format (e.g., 12-MAR-2025, 11-APR-2025)
+  const namedMonthMatch = cleaned.match(/(\d{1,2})[-\/\s]([a-z]+)[-\/\s](\d{2,4})/i);
+  if (namedMonthMatch) {
+    const day = parseInt(namedMonthMatch[1]);
+    const monthStr = namedMonthMatch[2].toLowerCase();
+    let year = parseInt(namedMonthMatch[3]);
+
+    const month = monthMap[monthStr];
+
+    if (month) {
+      if (year < 100) year += 2000;
+
+      const date = new Date(year, month - 1, day);
+      if (!isNaN(date.getTime())) {
+        return date.toISOString().split('T')[0];
+      }
+    }
+  }
+
+  // Handle numeric formats (MM-DD-YYYY or DD-MM-YYYY)
   const parts = cleaned.split(/[-\/]/);
 
   if (parts.length !== 3) return null;
 
   let day, month, year;
 
-  if (currency === 'USD') {
-    // MM-DD-YYYY for USD
-    month = parseInt(parts[0]);
-    day = parseInt(parts[1]);
-    year = parseInt(parts[2]);
-  } else {
-    // DD-MM-YYYY for non-USD
-    day = parseInt(parts[0]);
-    month = parseInt(parts[1]);
-    year = parseInt(parts[2]);
-  }
+  // Try to determine format intelligently
+  const first = parseInt(parts[0]);
+  const second = parseInt(parts[1]);
+  const third = parseInt(parts[2]);
 
+  if (isNaN(first) || isNaN(second) || isNaN(third)) return null;
+
+  year = third;
   if (year < 100) year += 2000;
 
+  // If first number > 12, it must be DD-MM-YYYY
+  if (first > 12) {
+    day = first;
+    month = second;
+  }
+  // If second number > 12, it must be MM-DD-YYYY
+  else if (second > 12) {
+    month = first;
+    day = second;
+  }
+  // Otherwise, use currency hint (but prefer DD-MM-YYYY for most cases)
+  else {
+    if (currency === 'USD') {
+      // For USD, could be either - but most international invoices use DD-MM-YYYY
+      // Check if this makes a valid date both ways
+      const ddmmDate = new Date(year, second - 1, first);
+      const mmddDate = new Date(year, first - 1, second);
+
+      // If both are valid, prefer DD-MM-YYYY (international standard)
+      if (!isNaN(ddmmDate.getTime()) && !isNaN(mmddDate.getTime())) {
+        day = first;
+        month = second;
+      } else if (!isNaN(ddmmDate.getTime())) {
+        day = first;
+        month = second;
+      } else if (!isNaN(mmddDate.getTime())) {
+        month = first;
+        day = second;
+      } else {
+        return null;
+      }
+    } else {
+      // Non-USD: DD-MM-YYYY
+      day = first;
+      month = second;
+    }
+  }
+
   // Validate date components
-  if (isNaN(day) || isNaN(month) || isNaN(year)) return null;
   if (month < 1 || month > 12) return null;
   if (day < 1 || day > 31) return null;
 
@@ -381,12 +451,21 @@ async function extractInvoiceData(pdfPath, originalName) {
     invoice.currency = 'GBP';
   }
 
-  // Extract dates
-  const dateRegex = /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})\b/g;
-  const dates = [...text.matchAll(dateRegex)].map(m => m[0]);
-  if (dates.length > 0) {
-    invoice.invoiceDate = parseDate(dates[0], invoice.currency);
-    invoice.dueDate = parseDate(dates[dates.length > 1 ? 1 : 0], invoice.currency);
+  // Extract dates - look for both named month and numeric formats
+  // First try to find dates with month names (e.g., 12-MAR-2025, 11-APR-2025)
+  const namedDateRegex = /\b(\d{1,2})[-\/\s](jan|feb|mar|apr|may|jun|jul|aug|sep|sept|oct|nov|dec)[a-z]*[-\/\s](\d{2,4})\b/gi;
+  const namedDates = [...text.matchAll(namedDateRegex)].map(m => m[0]);
+
+  // Also look for numeric dates
+  const numericDateRegex = /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})\b/g;
+  const numericDates = [...text.matchAll(numericDateRegex)].map(m => m[0]);
+
+  // Combine all dates, preferring named dates
+  const allDates = [...namedDates, ...numericDates];
+
+  if (allDates.length > 0) {
+    invoice.invoiceDate = parseDate(allDates[0], invoice.currency);
+    invoice.dueDate = parseDate(allDates[allDates.length > 1 ? 1 : 0], invoice.currency);
   }
 
   // Fallback to today if dates are invalid
