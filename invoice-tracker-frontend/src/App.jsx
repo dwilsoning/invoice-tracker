@@ -638,7 +638,7 @@ function InvoiceTracker() {
   const acknowledgedExpected = expectedInvoices.filter(e => e.acknowledged);
 
   return (
-    <div className="min-h-screen bg-slate-800 p-4 md:p-8" onDragOver={handleDragOver}>
+    <div className="min-h-screen bg-[#393392] p-4 md:p-8" onDragOver={handleDragOver}>
       {/* Drag overlay */}
       {dragOver && (
         <div 
@@ -657,7 +657,10 @@ function InvoiceTracker() {
 
       {/* Header */}
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-white mb-8">Invoice Tracker</h1>
+        <div className="flex items-center gap-4 mb-8">
+          <img src="/logo.png" alt="Altera Logo" className="h-12 w-auto" />
+          <h1 className="text-4xl font-bold text-white">APAC Invoice Tracker</h1>
+        </div>
 
         {/* Message */}
         {message.text && (
