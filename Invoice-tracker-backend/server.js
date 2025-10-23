@@ -513,29 +513,39 @@ async function extractInvoiceData(pdfPath, originalName) {
   }
 
   // Extract amount - handle negative amounts (credit memos)
-  // Try multiple patterns to find the amount
+  // Try multiple patterns to find the amount, prioritizing Invoice Total
   let amountMatch =
-    // Pattern 1: Total/Amount Due/Balance Due with various formats
-    text.match(/(?:Total|Amount\s*Due|Balance\s*Due|Credit\s*Amount|Total\s*Amount)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
-    // Pattern 2: Invoice Total
-    text.match(/Invoice\s*Total[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
-    // Pattern 3: Just a dollar amount with possible negative indicators
-    text.match(/[-\(]\$?\s*([\d,]+\.?\d*)\)?/i) ||
-    // Pattern 4: Dollar sign followed by amount
-    text.match(/\$\s*([\d,]+\.?\d*)/);
+    // Pattern 1: Invoice Total (highest priority) - handles both "Invoice Total$" and "Invoice Total $"
+    text.match(/Invoice\s*Total[\s:]*\$?\s*-?\s*([\d,]+\.?\d*)/i) ||
+    // Pattern 2: Open Credit
+    text.match(/Open\s*Credit[\s:]*\$?\s*-?\s*([\d,]+\.?\d*)/i) ||
+    // Pattern 3: Item Subtotal (for credit memos)
+    text.match(/Item\s*Subtotal[\s\n]*\$[\s\n]*(-?[\d,]+\.?\d*)/i) ||
+    // Pattern 4: Amount Due/Balance Due with various formats
+    text.match(/(?:Amount\s*Due|Balance\s*Due)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
+    // Pattern 5: Credit Amount
+    text.match(/Credit\s*Amount[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
+    // Pattern 6: Just a dollar amount with possible negative indicators
+    text.match(/[-\(]\$?\s*([\d,]+\.?\d*)\)?/i);
 
   console.log('Amount match:', amountMatch ? amountMatch[0] : 'NOT FOUND');
+  console.log('Amount match full array:', amountMatch);
 
   if (amountMatch) {
-    // Extract numeric value
-    let amountStr = amountMatch[0].replace(/[^\d,.\-()]/g, '');
-    console.log('Amount string after cleaning:', amountStr);
+    // Check if this is an Invoice Total or similar where we need to look for minus sign in the full match
+    const fullMatch = amountMatch[0];
 
-    let amount = parseFloat(amountStr.replace(/[,\$()]/g, '').replace(/^\-/, ''));
+    // Extract numeric value from capture group
+    let amountStr = amountMatch[1] || amountMatch[0];
+    console.log('Amount string from capture:', amountStr);
+
+    // Clean and parse
+    let amount = parseFloat(amountStr.replace(/[,\$]/g, ''));
     console.log('Parsed amount before sign check:', amount);
 
-    // Check if the amount should be negative (parentheses or minus sign in original match)
-    if (amountMatch[0].includes('(') || amountMatch[0].includes('-')) {
+    // Check if the amount should be negative
+    // Look for minus sign or parentheses in either the full match or the original text around this amount
+    if (fullMatch.includes('-') || fullMatch.includes('(') || amountStr.startsWith('-')) {
       amount = -Math.abs(amount);
       console.log('Amount is negative, final value:', amount);
     }
