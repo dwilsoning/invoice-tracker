@@ -318,9 +318,11 @@ function detectFrequency(services, amount) {
 
 // Extract invoice data from PDF
 async function extractInvoiceData(pdfPath, originalName) {
+  console.log('=== Starting PDF extraction for:', originalName);
   const dataBuffer = fs.readFileSync(pdfPath);
   const pdfData = await pdfParse(dataBuffer);
   const text = pdfData.text;
+  console.log('PDF text extracted, length:', text.length);
 
   const invoice = {
     invoiceNumber: '',
@@ -504,16 +506,20 @@ async function extractInvoiceData(pdfPath, originalName) {
   // Look for patterns like: -$1,234.56, ($1,234.56), $-1,234.56, or just $1,234.56
   const amountMatch = text.match(/(?:Total|Amount\s*Due|Balance\s*Due)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
                       text.match(/[-\(]?\$\s*([\d,]+\.?\d*)[\)]?/);
+  console.log('Amount match:', amountMatch ? amountMatch[0] : 'NOT FOUND');
   if (amountMatch) {
     let amount = parseFloat(amountMatch[0].replace(/[,\$]/g, '').replace(/[()]/g, ''));
+    console.log('Parsed amount before sign check:', amount);
 
     // Check if the amount should be negative (parentheses or minus sign)
     if (amountMatch[0].includes('(') || amountMatch[0].includes('-')) {
       amount = -Math.abs(amount);
+      console.log('Amount is negative, final value:', amount);
     }
 
     invoice.amountDue = amount;
   }
+  console.log('Final invoice.amountDue:', invoice.amountDue);
 
   // Extract contract numbers - improved patterns
   const contractMatch = text.match(/(?:Customer\s*Contract|Contract)\s*#?[:\s]*([A-Z0-9-]+)/i);
@@ -594,6 +600,7 @@ async function extractInvoiceData(pdfPath, originalName) {
   invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber, invoice.amountDue);
   invoice.frequency = detectFrequency(invoice.services, invoice.amountDue);
 
+  console.log('=== Extraction complete, final invoice object:', JSON.stringify(invoice, null, 2));
   return invoice;
 }
 
@@ -698,7 +705,8 @@ app.post('/api/upload-pdfs', async (req, res) => {
           checkAndRemoveExpectedInvoice(invoice);
 
         } catch (error) {
-          console.error(`Error processing ${file.originalFilename}:`, error);
+          console.error(`!!! Error processing ${file.originalFilename}:`, error.message);
+          console.error('!!! Full error stack:', error.stack);
           if (fs.existsSync(file.filepath)) fs.unlinkSync(file.filepath);
         }
       }
