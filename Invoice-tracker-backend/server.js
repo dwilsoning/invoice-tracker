@@ -1324,6 +1324,57 @@ app.delete('/api/contracts/:contractName', (req, res) => {
   }
 });
 
+// Get duplicates by invoice number
+app.get('/api/invoices/duplicates/:invoiceNumber', (req, res) => {
+  try {
+    const { invoiceNumber } = req.params;
+    const duplicates = db.prepare(
+      'SELECT id, invoiceNumber, invoiceType, amountDue, currency, uploadDate FROM invoices WHERE LOWER(TRIM(invoiceNumber)) = LOWER(TRIM(?)) ORDER BY uploadDate DESC'
+    ).all(invoiceNumber);
+    res.json(duplicates);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete invoices by invoice number (keep only the latest)
+app.delete('/api/invoices/duplicates/:invoiceNumber', (req, res) => {
+  try {
+    const { invoiceNumber } = req.params;
+
+    // Get all records with this invoice number, ordered by upload date
+    const records = db.prepare(
+      'SELECT id, uploadDate, pdfPath FROM invoices WHERE LOWER(TRIM(invoiceNumber)) = LOWER(TRIM(?)) ORDER BY uploadDate DESC'
+    ).all(invoiceNumber);
+
+    if (records.length <= 1) {
+      return res.json({ success: true, message: 'No duplicates found', deleted: 0 });
+    }
+
+    // Keep the first one (most recent), delete the rest
+    const toDelete = records.slice(1);
+    let deletedCount = 0;
+
+    for (const record of toDelete) {
+      // Delete PDF file
+      if (record.pdfPath) {
+        const pdfFullPath = path.join(__dirname, record.pdfPath);
+        if (fs.existsSync(pdfFullPath)) {
+          fs.unlinkSync(pdfFullPath);
+        }
+      }
+
+      // Delete database record
+      db.prepare('DELETE FROM invoices WHERE id = ?').run(record.id);
+      deletedCount++;
+    }
+
+    res.json({ success: true, message: `Deleted ${deletedCount} duplicate(s), kept the most recent`, deleted: deletedCount });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`Invoice Tracker API running on http://localhost:${PORT}`);
