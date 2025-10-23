@@ -323,6 +323,7 @@ async function extractInvoiceData(pdfPath, originalName) {
   const pdfData = await pdfParse(dataBuffer);
   const text = pdfData.text;
   console.log('PDF text extracted, length:', text.length);
+  console.log('First 1000 chars of PDF text:', text.substring(0, 1000));
 
   const invoice = {
     invoiceNumber: '',
@@ -339,11 +340,20 @@ async function extractInvoiceData(pdfPath, originalName) {
     frequency: 'adhoc'
   };
 
-  // Extract invoice number
-  const invNumMatch = text.match(/Invoice\s*(?:#|No\.?|Number)?\s*[:\s]*([A-Z0-9-]+)/i) ||
-                      text.match(/Tax\s*Invoice\s*[:\s]*([A-Z0-9-]+)/i) ||
-                      text.match(/Invoice\s+([A-Z0-9-]+)/i);
-  if (invNumMatch) invoice.invoiceNumber = invNumMatch[1].trim();
+  // Extract invoice number - prioritize numeric patterns and avoid "Total"
+  const invNumMatch =
+                      text.match(/Invoice\s*(?:#|No\.?|Number)?\s*[:\s]*([0-9][A-Z0-9-]+)/i) ||
+                      text.match(/Tax\s*Invoice\s*[:\s]*([0-9][A-Z0-9-]+)/i) ||
+                      text.match(/Credit\s*Memo\s*[:\s#]*([0-9][A-Z0-9-]+)/i) ||
+                      text.match(/Invoice\s+([0-9][A-Z0-9-]+)/i);
+  if (invNumMatch) {
+    const invoiceNum = invNumMatch[1].trim();
+    // Exclude common words like "Total"
+    if (invoiceNum !== 'Total' && invoiceNum.match(/\d/)) {
+      invoice.invoiceNumber = invoiceNum;
+    }
+  }
+  console.log('Extracted invoice number:', invoice.invoiceNumber);
 
   // Extract client - multiple strategies with fallbacks
   let clientFound = false;
