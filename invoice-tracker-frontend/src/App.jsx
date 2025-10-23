@@ -15,6 +15,11 @@ const TYPE_COLORS = {
   'Credit Memo': '#DC2626'  // Red color for credit memos
 };
 
+// Helper function to display invoice type
+const displayInvoiceType = (type) => {
+  return type === 'Credit Memo' ? 'CM' : type;
+};
+
 // Status colors
 const STATUS_COLORS = {
   'Paid': '#10B981',
@@ -1372,11 +1377,11 @@ function InvoiceTracker() {
                                 <td className="px-4 py-2">{inv.customerContract || '-'}</td>
                                 <td className="px-4 py-2">{inv.poNumber || '-'}</td>
                                 <td className="px-4 py-2">
-                                  <span 
+                                  <span
                                     className="px-2 py-1 rounded text-white text-xs"
                                     style={{ backgroundColor: TYPE_COLORS[inv.invoiceType] || '#6B7280' }}
                                   >
-                                    {inv.invoiceType}
+                                    {displayInvoiceType(inv.invoiceType)}
                                   </span>
                                 </td>
                                 <td className="px-4 py-2">{formatDate(inv.invoiceDate)}</td>
@@ -1483,11 +1488,11 @@ function InvoiceTracker() {
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">Type</div>
-                    <span 
+                    <span
                       className="inline-block px-2 py-1 rounded text-white text-xs"
                       style={{ backgroundColor: TYPE_COLORS[selectedInvoice.invoiceType] }}
                     >
-                      {selectedInvoice.invoiceType}
+                      {displayInvoiceType(selectedInvoice.invoiceType)}
                     </span>
                   </div>
                   <div>
