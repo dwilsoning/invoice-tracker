@@ -638,7 +638,7 @@ function InvoiceTracker() {
   const acknowledgedExpected = expectedInvoices.filter(e => e.acknowledged);
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8" onDragOver={handleDragOver}>
+    <div className="min-h-screen bg-slate-800 p-4 md:p-8" onDragOver={handleDragOver}>
       {/* Drag overlay */}
       {dragOver && (
         <div 
@@ -657,7 +657,7 @@ function InvoiceTracker() {
 
       {/* Header */}
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-4xl font-bold text-gray-900 mb-8">Invoice Tracker</h1>
+        <h1 className="text-4xl font-bold text-white mb-8">Invoice Tracker</h1>
 
         {/* Message */}
         {message.text && (
