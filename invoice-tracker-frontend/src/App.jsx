@@ -1268,19 +1268,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         <div className="mb-6">
           {/* Unacknowledged */}
           <div className="bg-[#707CF1] rounded-lg shadow mb-2">
-            <button
-              onClick={() => setShowExpectedUnack(!showExpectedUnack)}
-              className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
-            >
+            <div className="w-full px-6 py-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <span className="font-bold text-lg text-white">
                   Expected Invoices - Unacknowledged ({unacknowledgedExpected.length})
                 </span>
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowExpectedUnack(!showExpectedUnack);
-                  }}
+                  onClick={() => setShowExpectedUnack(!showExpectedUnack)}
                   className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
                   title={showExpectedUnack ? "Collapse Section" : "Expand Section"}
                 >
@@ -1297,7 +1291,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   )}
                 </button>
               </div>
-            </button>
+            </div>
             
             {showExpectedUnack && unacknowledgedExpected.length > 0 && (
               <div className="px-6 pb-4">
@@ -1374,19 +1368,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
           {/* Acknowledged */}
           <div className="bg-[#707CF1] rounded-lg shadow">
-            <button
-              onClick={() => setShowExpectedAck(!showExpectedAck)}
-              className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
-            >
+            <div className="w-full px-6 py-4 flex justify-between items-center">
               <div className="flex items-center gap-3">
                 <span className="font-bold text-lg text-white">
                   Expected Invoices - Acknowledged ({acknowledgedExpected.length})
                 </span>
                 <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setShowExpectedAck(!showExpectedAck);
-                  }}
+                  onClick={() => setShowExpectedAck(!showExpectedAck)}
                   className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
                   title={showExpectedAck ? "Collapse Section" : "Expand Section"}
                 >
@@ -1403,7 +1391,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   )}
                 </button>
               </div>
-            </button>
+            </div>
             
             {showExpectedAck && acknowledgedExpected.length > 0 && (
               <div className="px-6 pb-4">

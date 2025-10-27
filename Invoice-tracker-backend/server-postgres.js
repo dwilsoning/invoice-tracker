@@ -1639,7 +1639,7 @@ app.get('/api/duplicates', async (req, res) => {
         // Get the actual invoice number (with original casing)
         const original = allInvoices.find(inv => inv.invoiceNumber.toLowerCase().trim() === num);
         return {
-          invoiceNumber: original.invoice_number,
+          invoiceNumber: original.invoiceNumber,
           count: invoiceCount[num]
         };
       });
