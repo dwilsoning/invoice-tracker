@@ -49,6 +49,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [dateTo, setDateTo] = useState('');
   const [agingFilter, setAgingFilter] = useState('All');
   const [activeStatBox, setActiveStatBox] = useState(null);
+  const [selectedExpectedInvoiceId, setSelectedExpectedInvoiceId] = useState(null);
 
   // Dashboard date filter
   const [dashboardDateFilter, setDashboardDateFilter] = useState('allTime');
@@ -755,9 +756,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   };
 
   // Filter by contract from expected invoices
-  const filterByContract = (contract) => {
+  const filterByContract = (contract, expectedInvoiceId) => {
     if (contract && contract !== '-') {
       setContractFilter(contract);
+      setSelectedExpectedInvoiceId(expectedInvoiceId);
       setShowInvoiceTable(true);
       // Scroll to invoice table after a short delay to allow state to update
       setTimeout(() => {
@@ -1275,12 +1277,15 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     </thead>
                     <tbody>
                       {unacknowledgedExpected.map(exp => (
-                        <tr key={exp.id} className="border-t hover:bg-gray-50">
+                        <tr
+                          key={exp.id}
+                          className={`border-t hover:bg-gray-50 ${selectedExpectedInvoiceId === exp.id ? 'bg-yellow-100 ring-2 ring-yellow-400' : ''}`}
+                        >
                           <td className="px-4 py-2 text-gray-900">{exp.client}</td>
                           <td className="px-4 py-2">
                             {exp.customerContract ? (
                               <button
-                                onClick={() => filterByContract(exp.customerContract)}
+                                onClick={() => filterByContract(exp.customerContract, exp.id)}
                                 className="text-[#0076A2] hover:text-[#005a7a] underline cursor-pointer font-medium"
                               >
                                 {exp.customerContract}
@@ -1377,12 +1382,15 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     </thead>
                     <tbody>
                       {acknowledgedExpected.map(exp => (
-                        <tr key={exp.id} className="border-t hover:bg-gray-50">
+                        <tr
+                          key={exp.id}
+                          className={`border-t hover:bg-gray-50 ${selectedExpectedInvoiceId === exp.id ? 'bg-yellow-100 ring-2 ring-yellow-400' : ''}`}
+                        >
                           <td className="px-4 py-2 text-gray-900">{exp.client}</td>
                           <td className="px-4 py-2">
                             {exp.customerContract ? (
                               <button
-                                onClick={() => filterByContract(exp.customerContract)}
+                                onClick={() => filterByContract(exp.customerContract, exp.id)}
                                 className="text-[#0076A2] hover:text-[#005a7a] underline cursor-pointer font-medium"
                               >
                                 {exp.customerContract}
