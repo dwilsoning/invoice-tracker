@@ -1238,6 +1238,17 @@ async function generateExpectedInvoices() {
   }
 }
 
+// Schedule expected invoice generation to run daily at midnight
+// This ensures expected invoices are generated even when no invoices are uploaded
+setInterval(() => {
+  console.log('Running scheduled expected invoice generation...');
+  generateExpectedInvoices();
+}, 24 * 60 * 60 * 1000); // Run every 24 hours
+
+// Also run on server startup to catch any that were missed
+console.log('Running initial expected invoice generation on server startup...');
+generateExpectedInvoices();
+
 // Check and remove expected invoice when actual invoice received
 async function checkAndRemoveExpectedInvoice(invoice) {
   // Skip adhoc invoices - they shouldn't have expected entries
