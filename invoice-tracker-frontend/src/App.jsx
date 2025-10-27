@@ -1479,19 +1479,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Duplicate Invoices Management */}
         <div className="bg-white rounded-lg shadow mb-6">
-          <button
-            onClick={() => setShowDuplicates(!showDuplicates)}
-            className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
-          >
+          <div className="w-full px-6 py-4 flex justify-between items-center">
             <div className="flex items-center gap-3">
               <span className="font-bold text-lg text-red-600">
                 Duplicate Invoices ({duplicates.length})
               </span>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowDuplicates(!showDuplicates);
-                }}
+                onClick={() => setShowDuplicates(!showDuplicates)}
                 className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm flex items-center gap-1"
                 title={showDuplicates ? "Collapse Section" : "Expand Section"}
               >
@@ -1508,7 +1502,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
-          </button>
+          </div>
 
           {showDuplicates && (
             <div className="px-6 pb-6">
