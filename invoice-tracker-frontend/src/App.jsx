@@ -81,6 +81,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [selectedDuplicate, setSelectedDuplicate] = useState(null);
   const [duplicateDetails, setDuplicateDetails] = useState([]);
 
+  // Server Status
+  const [serverStatus, setServerStatus] = useState('checking'); // 'online', 'offline', 'checking'
+
   // Load contract values from database
   const loadContracts = async () => {
     try {
@@ -319,6 +322,22 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   useEffect(() => {
     window.addEventListener('dragenter', handleDragEnter);
     return () => window.removeEventListener('dragenter', handleDragEnter);
+  }, []);
+
+  // Server health check
+  const checkServerStatus = async () => {
+    try {
+      await axios.get(`${API_URL}/health`, { timeout: 3000 });
+      setServerStatus('online');
+    } catch (error) {
+      setServerStatus('offline');
+    }
+  };
+
+  useEffect(() => {
+    checkServerStatus();
+    const interval = setInterval(checkServerStatus, 10000); // Check every 10 seconds
+    return () => clearInterval(interval);
   }, []);
 
   // Helper function to check if invoice matches a status filter option
@@ -915,12 +934,27 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             <img src="/logo.png" alt="Altera Logo" className="h-12 w-auto" />
             <h1 className="text-4xl font-bold text-white">APAC Invoice Tracker</h1>
           </div>
-          <button
-            onClick={onNavigateToAnalytics}
-            className="px-6 py-3 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition shadow font-semibold"
-          >
-            View Analytics →
-          </button>
+          <div className="flex items-center gap-4">
+            {/* Server Status Indicator */}
+            <div className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-lg">
+              <div className={`w-3 h-3 rounded-full ${
+                serverStatus === 'online' ? 'bg-green-500' :
+                serverStatus === 'offline' ? 'bg-red-500' :
+                'bg-yellow-500'
+              }`} />
+              <span className="text-sm text-white font-medium">
+                {serverStatus === 'online' ? 'Server Online' :
+                 serverStatus === 'offline' ? 'Server Offline' :
+                 'Checking...'}
+              </span>
+            </div>
+            <button
+              onClick={onNavigateToAnalytics}
+              className="px-6 py-3 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition shadow font-semibold"
+            >
+              View Analytics →
+            </button>
+          </div>
         </div>
 
         {/* Message */}
