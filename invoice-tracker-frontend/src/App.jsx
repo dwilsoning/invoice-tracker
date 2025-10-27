@@ -794,7 +794,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const loadDuplicates = async () => {
     try {
       const response = await axios.get(`${API_URL}/duplicates`);
-      console.log('Duplicates response from API:', response.data);
+      console.log('RAW RESPONSE:', response);
+      console.log('RESPONSE DATA:', response.data);
+      console.log('STRINGIFIED:', JSON.stringify(response.data));
       setDuplicates(response.data);
     } catch (error) {
       console.error('Error loading duplicates:', error);
