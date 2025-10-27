@@ -707,10 +707,29 @@ async function extractInvoiceData(pdf_path, originalName) {
 
 // API Endpoints
 
+// Health check endpoint - indicates database type
+app.get('/api/health', async (req, res) => {
+  try {
+    await pool.query('SELECT 1');
+    res.json({
+      status: 'ok',
+      database: 'postgresql',
+      version: '1.0',
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 'error',
+      database: 'postgresql',
+      error: error.message
+    });
+  }
+});
+
 // Get all invoices
 app.get('/api/invoices', async (req, res) => {
   try {
-    const rows = await db.all('SELECT * FROM invoices ORDER BY invoice_date DESC', );
+    const rows = await db.all('SELECT * FROM invoices ORDER BY invoice_date DESC');
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -752,9 +771,10 @@ app.post('/api/upload-pdfs', async (req, res) => {
           const invoiceData = await extractInvoiceData(file.filepath, file.originalFilename);
 
           // Check for duplicates (for tracking purposes, but allow upload)
-          const existing = db.prepare(
-            'SELECT id, invoice_number FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?))'
-          ).get(invoiceData.invoice_number);
+          const existing = await db.get(
+            'SELECT id, invoice_number FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1))',
+            invoiceData.invoice_number
+          );
 
           if (existing) {
             duplicates.push({
@@ -780,13 +800,13 @@ app.post('/api/upload-pdfs', async (req, res) => {
             pdfOriginalName: file.originalFilename
           };
 
-          db.prepare(`
+          await db.run(`
             INSERT INTO invoices (
               id, invoice_number, invoice_date, client, customer_contract,
               oracle_contract, po_number, invoice_type, amount_due, currency,
               due_date, status, upload_date, services, pdf_path, pdf_original_name, frequency
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          `).run(
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+          `,
             invoice.id, invoice.invoiceNumber, invoice.invoiceDate, invoice.client,
             invoice.customerContract, invoice.oracleContract, invoice.poNumber,
             invoice.invoiceType, invoice.amountDue, invoice.currency, invoice.dueDate,
@@ -846,7 +866,7 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       }
 
       // Get existing invoice to delete old PDF
-      const existing = await db.get('SELECT pdf_path FROM invoices WHERE id = ?', id);
+      const existing = await db.get('SELECT pdf_path FROM invoices WHERE id = $1', id);
 
       // Extract new invoice data
       const invoiceData = await extractInvoiceData(file.filepath, file.originalFilename);
@@ -865,14 +885,14 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       }
 
       // Update invoice in database
-      db.prepare(`
+      await db.run(`
         UPDATE invoices
-        SET invoice_date = ?, client = ?, customer_contract = ?, oracle_contract = ?,
-            po_number = ?, invoice_type = ?, amount_due = ?, currency = ?, due_date = ?,
-            services = ?, pdf_path = ?, pdf_original_name = ?, frequency = ?,
-            upload_date = ?
-        WHERE id = ?
-      `).run(
+        SET invoice_date = $1, client = $2, customer_contract = $3, oracle_contract = $4,
+            po_number = $5, invoice_type = $6, amount_due = $7, currency = $8, due_date = $9,
+            services = $10, pdf_path = $11, pdf_original_name = $12, frequency = $13,
+            upload_date = $14
+        WHERE id = $15
+      `,
         invoiceData.invoice_date, invoiceData.client, invoiceData.customer_contract,
         invoiceData.oracle_contract, invoiceData.po_number, invoiceData.invoice_type,
         invoiceData.amount_due, invoiceData.currency, invoiceData.due_date,
@@ -938,15 +958,13 @@ app.post('/api/upload-payments', async (req, res) => {
 
       let updatedCount = 0;
 
-      const updateStmt = db.prepare(`
-        UPDATE invoices
-        SET status = 'Paid', payment_date = ?
-        WHERE LOWER(TRIM(invoice_number)) = LOWER(?)
-      `);
-
       for (const update of updates) {
-        const result = updateStmt.run(update.payment_date, update.invoice_number);
-        updatedCount += result.changes;
+        const result = await db.run(`
+          UPDATE invoices
+          SET status = 'Paid', payment_date = $1
+          WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
+        `, update.paymentDate, update.invoiceNumber);
+        updatedCount += result.rowCount || 0;
       }
 
       fs.unlinkSync(file.filepath);
@@ -1005,7 +1023,7 @@ app.put('/api/invoices/:id', async (req, res) => {
 app.delete('/api/invoices/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const row = await db.get('SELECT pdf_path FROM invoices WHERE id = ?', id);
+    const row = await db.get('SELECT pdf_path FROM invoices WHERE id = $1', id);
 
     if (row && row.pdf_path) {
       // Convert web path (/pdfs/file.pdf) to file system path (invoice_pdfs/file.pdf)
@@ -1030,7 +1048,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
       }
     }
 
-    await db.run('DELETE FROM invoices WHERE id = ?', id);
+    await db.run('DELETE FROM invoices WHERE id = $1', id);
     res.json({ success: true });
   } catch (error) {
     console.error('Error deleting invoice:', error);
@@ -1042,7 +1060,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
 app.delete('/api/invoices', async (req, res) => {
   try {
     // Get all invoice PDFs
-    const invoices = await db.all('SELECT pdf_path FROM invoices', );
+    const invoices = await db.all('SELECT pdf_path FROM invoices');
 
     // Move all PDF files to deleted folder
     let movedFiles = 0;
@@ -1067,10 +1085,10 @@ app.delete('/api/invoices', async (req, res) => {
     }
 
     // Delete all invoices from database
-    const result = await db.run('DELETE FROM invoices', );
+    const result = await db.run('DELETE FROM invoices');
 
     // Delete all expected invoices
-    await db.run('DELETE FROM expected_invoices', );
+    await db.run('DELETE FROM expected_invoices');
 
     res.json({
       success: true,
@@ -1086,7 +1104,7 @@ app.delete('/api/invoices', async (req, res) => {
 // Get expected invoices
 app.get('/api/expected-invoices', async (req, res) => {
   try {
-    const rows = await db.all('SELECT * FROM expected_invoices ORDER BY expected_date ASC', );
+    const rows = await db.all('SELECT * FROM expected_invoices ORDER BY expected_date ASC');
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1101,9 +1119,10 @@ app.put('/api/expected-invoices/:id', async (req, res) => {
 
     const acknowledged_date = acknowledged ? new Date().toISOString().split('T')[0] : null;
 
-    db.prepare(
-      'UPDATE expected_invoices SET acknowledged = ?, acknowledged_date = ? WHERE id = ?'
-    ).run(acknowledged ? 1 : 0, acknowledged_date, id);
+    await db.run(
+      'UPDATE expected_invoices SET acknowledged = $1, acknowledged_date = $2 WHERE id = $3',
+      acknowledged ? 1 : 0, acknowledged_date, id
+    );
 
     res.json({ success: true });
   } catch (error) {
@@ -1115,7 +1134,7 @@ app.put('/api/expected-invoices/:id', async (req, res) => {
 app.delete('/api/expected-invoices/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    await db.run('DELETE FROM expected_invoices WHERE id = ?', id);
+    await db.run('DELETE FROM expected_invoices WHERE id = $1', id);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1125,14 +1144,14 @@ app.delete('/api/expected-invoices/:id', async (req, res) => {
 // Generate expected invoices
 async function generateExpectedInvoices() {
   try {
-    const rows = db.prepare(`
+    const rows = await db.all(`
       SELECT
         client, customer_contract, invoice_type, amount_due, currency,
         invoice_date, invoice_number, frequency
       FROM invoices
       WHERE frequency != 'adhoc'
       ORDER BY client, customer_contract, invoice_date DESC
-    `).all();
+    `);
 
     const grouped = {};
 
@@ -1183,21 +1202,22 @@ async function generateExpectedInvoices() {
       const today = new Date().toISOString().split('T')[0];
 
       if (expected_date <= today) {
-        const existing = db.prepare(
-          'SELECT id FROM expected_invoices WHERE client = ? AND customer_contract = ? AND expected_date = ?'
-        ).get(invoice.client, invoice.customerContract || '', expected_date);
+        const existing = await db.get(
+          'SELECT id FROM expected_invoices WHERE client = $1 AND customer_contract = $2 AND expected_date = $3',
+          invoice.client, invoice.customerContract || '', expected_date
+        );
 
         if (!existing) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
           const created_date = new Date().toISOString().split('T')[0];
 
-          db.prepare(`
+          await db.run(`
             INSERT INTO expected_invoices (
               id, client, customer_contract, invoice_type, expected_amount,
               currency, expected_date, frequency, last_invoice_number, last_invoice_date,
               created_date
-            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-          `).run(
+            ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+          `,
             id,
             invoice.client,
             invoice.customerContract || '',
@@ -1232,13 +1252,13 @@ async function checkAndRemoveExpectedInvoice(invoice) {
     const invoice_date = new Date(invoice.invoiceDate);
 
     // Find matching expected invoices
-    const expectedInvoices = db.prepare(`
+    const expectedInvoices = await db.all(`
       SELECT id, expected_date FROM expected_invoices
-      WHERE client = ?
-        AND (customer_contract = ? OR (customer_contract IS NULL AND ? = ''))
-        AND invoice_type = ?
-        AND frequency = ?
-    `).all(clientMatch, contractMatch, contractMatch, typeMatch, invoice.frequency);
+      WHERE client = $1
+        AND (customer_contract = $2 OR (customer_contract IS NULL AND $3 = ''))
+        AND invoice_type = $4
+        AND frequency = $5
+    `, clientMatch, contractMatch, contractMatch, typeMatch, invoice.frequency);
 
     // Remove expected invoices that match and are within reasonable date range
     for (const expected of expectedInvoices) {
@@ -1247,7 +1267,7 @@ async function checkAndRemoveExpectedInvoice(invoice) {
 
       // Match if invoice is within 45 days of expected date
       if (daysDiff <= 45) {
-        await db.run('DELETE FROM expected_invoices WHERE id = ?', expected.id);
+        await db.run('DELETE FROM expected_invoices WHERE id = $1', expected.id);
         console.log(`Removed expected invoice for ${clientMatch} - ${contractMatch} (${typeMatch})`);
       }
     }
@@ -1263,9 +1283,10 @@ async function cleanupAcknowledgedInvoices() {
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     const cutoffDate = oneWeekAgo.toISOString().split('T')[0];
 
-    db.prepare(
-      'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledged_date < ?'
-    ).run(cutoffDate);
+    await db.run(
+      'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledged_date < $1',
+      cutoffDate
+    );
 
     console.log('Cleaned up old acknowledged invoices');
   } catch (error) {
@@ -1286,7 +1307,7 @@ app.post('/api/query', async (req, res) => {
   try {
     const { query } = req.body;
 
-    const invoices = await db.all('SELECT * FROM invoices', );
+    const invoices = await db.all('SELECT * FROM invoices');
 
     const queryLower = query.toLowerCase();
     let results = [...invoices];
@@ -1486,7 +1507,7 @@ app.post('/api/query', async (req, res) => {
 // Get all contracts
 app.get('/api/contracts', async (req, res) => {
   try {
-    const rows = await db.all('SELECT * FROM contracts', );
+    const rows = await db.all('SELECT * FROM contracts');
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1502,25 +1523,25 @@ app.post('/api/contracts', async (req, res) => {
       return res.status(400).json({ error: 'Contract name and value are required' });
     }
 
-    const existing = await db.get('SELECT id FROM contracts WHERE contract_name = ?', contract_name);
+    const existing = await db.get('SELECT id FROM contracts WHERE contract_name = $1', contract_name);
     const now = new Date().toISOString().split('T')[0];
 
     if (existing) {
       // Update existing contract
-      db.prepare(`
+      await db.run(`
         UPDATE contracts
-        SET contract_value = ?, currency = ?, updated_date = ?
-        WHERE contract_name = ?
-      `).run(contract_value, currency || 'USD', now, contract_name);
+        SET contract_value = $1, currency = $2, updated_date = $3
+        WHERE contract_name = $4
+      `, contract_value, currency || 'USD', now, contract_name);
 
       res.json({ success: true, action: 'updated' });
     } else {
       // Create new contract
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
-      db.prepare(`
+      await db.run(`
         INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `).run(id, contract_name, contract_value, currency || 'USD', now, now);
+        VALUES ($1, $2, $3, $4, $5, $6)
+      `, id, contract_name, contract_value, currency || 'USD', now, now);
 
       res.json({ success: true, action: 'created' });
     }
@@ -1537,19 +1558,19 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 
     const now = new Date().toISOString().split('T')[0];
 
-    const result = db.prepare(`
+    const result = await db.run(`
       UPDATE contracts
-      SET contract_value = ?, currency = ?, updated_date = ?
-      WHERE contract_name = ?
-    `).run(contract_value, currency || 'USD', now, contract_name);
+      SET contract_value = $1, currency = $2, updated_date = $3
+      WHERE contract_name = $4
+    `, contract_value, currency || 'USD', now, contract_name);
 
-    if (result.changes === 0) {
+    if (result.rowCount === 0) {
       // Contract doesn't exist, create it
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
-      db.prepare(`
+      await db.run(`
         INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
-        VALUES (?, ?, ?, ?, ?, ?)
-      `).run(id, contract_name, contract_value, currency || 'USD', now, now);
+        VALUES ($1, $2, $3, $4, $5, $6)
+      `, id, contract_name, contract_value, currency || 'USD', now, now);
     }
 
     res.json({ success: true });
@@ -1562,7 +1583,7 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 app.delete('/api/contracts/:contractName', async (req, res) => {
   try {
     const { contract_name } = req.params;
-    await db.run('DELETE FROM contracts WHERE contract_name = ?', contract_name);
+    await db.run('DELETE FROM contracts WHERE contract_name = $1', contract_name);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1572,7 +1593,7 @@ app.delete('/api/contracts/:contractName', async (req, res) => {
 // Get all invoice numbers that have duplicates
 app.get('/api/duplicates', async (req, res) => {
   try {
-    const allInvoices = await db.all('SELECT invoice_number FROM invoices', );
+    const allInvoices = await db.all('SELECT invoice_number FROM invoices');
     const invoiceCount = {};
 
     // Count occurrences of each invoice number
@@ -1603,9 +1624,10 @@ app.get('/api/duplicates', async (req, res) => {
 app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
     const { invoice_number } = req.params;
-    const duplicates = db.prepare(
-      'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?)) ORDER BY upload_date DESC'
-    ).all(invoice_number);
+    const duplicates = await db.all(
+      'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
+      invoice_number
+    );
     res.json(duplicates);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1618,9 +1640,10 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
     const { invoice_number } = req.params;
 
     // Get all records with this invoice number, ordered by upload date
-    const records = db.prepare(
-      'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?)) ORDER BY upload_date DESC'
-    ).all(invoice_number);
+    const records = await db.all(
+      'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
+      invoice_number
+    );
 
     if (records.length <= 1) {
       return res.json({ success: true, message: 'No duplicates found', deleted: 0 });

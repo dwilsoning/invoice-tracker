@@ -36,7 +36,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [loading, setLoading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
   const [message, setMessage] = useState({ type: '', text: '' });
-  
+  const [databaseWarning, setDatabaseWarning] = useState(null);
+
   // Filters
   const [statusFilter, setStatusFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
@@ -71,6 +72,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [queryText, setQueryText] = useState('');
   const [queryResult, setQueryResult] = useState(null);
   const [queryFilteredIds, setQueryFilteredIds] = useState(null);
+  const [filtersCollapsed, setFiltersCollapsed] = useState(false);
+  const [groupingCollapsed, setGroupingCollapsed] = useState(false);
 
   // Duplicates State
   const [duplicates, setDuplicates] = useState([]);
@@ -110,6 +113,25 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     } catch (error) {
       console.error('Error saving contract:', error);
       showMessage('error', 'Failed to save contract value');
+    }
+  };
+
+  // Check database type on mount
+  useEffect(() => {
+    checkDatabaseType();
+  }, []);
+
+  const checkDatabaseType = async () => {
+    try {
+      const response = await axios.get(`${API_URL}/health`);
+      if (response.data.database === 'sqlite') {
+        setDatabaseWarning({
+          type: 'sqlite',
+          message: response.data.warning || 'You are using SQLite backend. Please switch to PostgreSQL for production.'
+        });
+      }
+    } catch (error) {
+      console.warn('Could not check database type:', error.message);
     }
   };
 
@@ -863,6 +885,40 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         </div>
       )}
 
+      {/* Database Warning Banner */}
+      {databaseWarning && (
+        <div className="max-w-7xl mx-auto mb-4">
+          <div className="bg-red-600 border-2 border-red-800 rounded-lg p-4 shadow-lg">
+            <div className="flex items-start gap-3">
+              <div className="text-3xl">⚠️</div>
+              <div className="flex-1">
+                <h3 className="text-white font-bold text-lg mb-1">
+                  SQLite Backend Detected - Not Recommended for Production
+                </h3>
+                <p className="text-red-100 text-sm mb-2">
+                  {databaseWarning.message}
+                </p>
+                <div className="bg-red-800 rounded p-3 text-white text-xs font-mono">
+                  <p className="mb-1">To fix this issue:</p>
+                  <ol className="list-decimal list-inside space-y-1">
+                    <li>Stop the current server (Ctrl+C)</li>
+                    <li>Start PostgreSQL server: <code className="bg-red-900 px-1 rounded">node server-postgres.js</code></li>
+                    <li>Or use the batch file in C:\Users\dwils\Desktop\Invoice Tracker</li>
+                  </ol>
+                </div>
+              </div>
+              <button
+                onClick={() => setDatabaseWarning(null)}
+                className="text-white hover:text-red-200 text-2xl leading-none"
+                title="Dismiss warning"
+              >
+                ×
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Header */}
       <div className="max-w-7xl mx-auto">
         <div className="flex items-center justify-between mb-8">
@@ -1478,7 +1534,26 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         {/* Filters */}
         <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-bold text-white">Filters</h2>
+            <div className="flex items-center gap-3">
+              <h2 className="text-xl font-bold text-white">Filters</h2>
+              <button
+                onClick={() => setFiltersCollapsed(!filtersCollapsed)}
+                className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
+                title={filtersCollapsed ? "Expand Filters" : "Collapse Filters"}
+              >
+                {filtersCollapsed ? (
+                  <>
+                    <span>▼</span>
+                    <span>Show</span>
+                  </>
+                ) : (
+                  <>
+                    <span>▲</span>
+                    <span>Hide</span>
+                  </>
+                )}
+              </button>
+            </div>
             <button
               onClick={clearFilters}
               className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
@@ -1486,8 +1561,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               Clear All Filters
             </button>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+
+          {!filtersCollapsed && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-sm font-medium mb-2 text-white">
                 Status {statusFilter.length > 0 && `(${statusFilter.length} selected)`}
@@ -1609,7 +1685,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
             <div className="md:col-span-3">
               <label className="block text-sm font-medium mb-1 text-white">Search</label>
-              <input 
+              <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
@@ -1618,12 +1694,34 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               />
             </div>
           </div>
+          )}
         </div>
 
         {/* Grouping */}
         <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
-          <h2 className="text-xl font-bold mb-4 text-white">Grouping</h2>
-          <div className="flex gap-4 items-center flex-wrap">
+          <div className="flex items-center gap-3 mb-4">
+            <h2 className="text-xl font-bold text-white">Grouping</h2>
+            <button
+              onClick={() => setGroupingCollapsed(!groupingCollapsed)}
+              className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
+              title={groupingCollapsed ? "Expand Grouping" : "Collapse Grouping"}
+            >
+              {groupingCollapsed ? (
+                <>
+                  <span>▼</span>
+                  <span>Show</span>
+                </>
+              ) : (
+                <>
+                  <span>▲</span>
+                  <span>Hide</span>
+                </>
+              )}
+            </button>
+          </div>
+
+          {!groupingCollapsed && (
+            <div className="flex gap-4 items-center flex-wrap">
             <div>
               <label className="block text-sm font-medium mb-1 text-white">Group By</label>
               <select 
@@ -1680,6 +1778,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               </>
             )}
           </div>
+          )}
         </div>
 
         {/* Invoice Table */}

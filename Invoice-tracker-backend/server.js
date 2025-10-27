@@ -839,6 +839,17 @@ async function extractInvoiceData(pdfPath, originalName) {
 
 // API Endpoints
 
+// Health check endpoint - indicates database type
+app.get('/api/health', async (req, res) => {
+  res.json({
+    status: 'ok',
+    database: 'sqlite',
+    version: '1.0',
+    warning: 'Using SQLite - not recommended for production. Please use server-postgres.js instead.',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Get all invoices
 app.get('/api/invoices', async (req, res) => {
   try {
