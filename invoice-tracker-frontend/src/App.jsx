@@ -1474,6 +1474,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 Duplicate Invoices ({duplicates.length})
               </span>
               <button
+                onClick={loadDuplicates}
+                className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
+                title="Reload duplicates from server"
+              >
+                🔄 Reload
+              </button>
+              <button
                 onClick={() => setShowDuplicates(!showDuplicates)}
                 className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm flex items-center gap-1"
                 title={showDuplicates ? "Collapse Section" : "Expand Section"}
