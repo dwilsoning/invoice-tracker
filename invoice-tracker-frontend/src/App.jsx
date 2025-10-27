@@ -794,6 +794,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const loadDuplicates = async () => {
     try {
       const response = await axios.get(`${API_URL}/duplicates`);
+      console.log('Duplicates response from API:', response.data);
       setDuplicates(response.data);
     } catch (error) {
       console.error('Error loading duplicates:', error);
@@ -1863,19 +1864,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Invoice Table */}
         <div className="bg-white rounded-lg shadow">
-          <button
-            onClick={() => setShowInvoiceTable(!showInvoiceTable)}
-            className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
-          >
+          <div className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50">
             <div className="flex items-center gap-3">
               <span className="font-bold text-lg">
                 Invoices ({filteredInvoices.length})
               </span>
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setShowInvoiceTable(!showInvoiceTable);
-                }}
+                onClick={() => setShowInvoiceTable(!showInvoiceTable)}
                 className="px-3 py-1 bg-[#707CF1] text-white rounded hover:bg-[#5a6ad9] transition text-sm flex items-center gap-1"
                 title={showInvoiceTable ? "Collapse Invoices" : "Expand Invoices"}
               >
@@ -1892,7 +1887,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
-          </button>
+          </div>
           
           {showInvoiceTable && (
             <div className="px-6 pb-6">
