@@ -1653,10 +1653,10 @@ app.get('/api/duplicates', async (req, res) => {
 // Get duplicates by invoice number
 app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
-    const { invoice_number } = req.params;
+    const { invoiceNumber } = req.params;
     const duplicates = await db.all(
       'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
-      invoice_number
+      invoiceNumber
     );
     res.json(duplicates);
   } catch (error) {
@@ -1667,12 +1667,12 @@ app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
 // Delete invoices by invoice number (keep only the latest)
 app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
-    const { invoice_number } = req.params;
+    const { invoiceNumber } = req.params;
 
     // Get all records with this invoice number, ordered by upload date
     const records = await db.all(
       'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
-      invoice_number
+      invoiceNumber
     );
 
     if (records.length <= 1) {
