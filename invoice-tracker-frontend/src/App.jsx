@@ -803,9 +803,14 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   const loadDuplicateDetails = async (invoiceNumber) => {
     try {
+      console.log('Loading duplicate details for:', invoiceNumber);
       const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}`);
+      console.log('Duplicate details response:', response.data);
+      console.log('Number of duplicates found:', response.data.length);
       setDuplicateDetails(response.data);
       setSelectedDuplicate(invoiceNumber);
+      console.log('State updated - selectedDuplicate:', invoiceNumber);
+      console.log('State updated - duplicateDetails length:', response.data.length);
     } catch (error) {
       console.error('Error loading duplicate details:', error);
       showMessage('error', 'Failed to load duplicate details');
@@ -1549,6 +1554,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   </div>
 
                   {/* Duplicate Details */}
+                  {console.log('Render check - selectedDuplicate:', selectedDuplicate, 'duplicateDetails.length:', duplicateDetails.length)}
                   {selectedDuplicate && duplicateDetails.length > 0 && (
                     <div className="mt-6 p-4 bg-gray-50 rounded">
                       <div className="flex justify-between items-center mb-4">
