@@ -1,0 +1,3231 @@
+═══════════════════════════════════════════════════════
+    COMPREHENSIVE INVOICE VALIDATION
+═══════════════════════════════════════════════════════
+
+Found 815 PDF files
+
+Starting validation...
+
+⚠️  25-1620 - NOT FOUND in database
+❌ 4000004480 - 2 discrepancies found
+❌ 4000004481 - 1 discrepancies found
+❌ 4000004482 - 2 discrepancies found
+ℹ️  Skipping 1761207984496-EFT_REMITTANCE_267711414.pdf - remittance file
+❌ 3000070746 - 1 discrepancies found
+❌ 11000000091 - 1 discrepancies found
+❌ 11000000094 - 1 discrepancies found
+❌ 11000000095 - 1 discrepancies found
+❌ 11000000096 - 1 discrepancies found
+❌ 11000000097 - 1 discrepancies found
+❌ 11000000098 - 1 discrepancies found
+❌ 11000000099 - 1 discrepancies found
+❌ 11000000100 - 1 discrepancies found
+❌ 11000000101 - 1 discrepancies found
+❌ 11000000102 - 1 discrepancies found
+❌ 11000000103 - 1 discrepancies found
+❌ 11000000104 - 1 discrepancies found
+❌ 11000000105 - 1 discrepancies found
+❌ 11000000106 - 1 discrepancies found
+❌ 11000000107 - 1 discrepancies found
+❌ 11000000108 - 1 discrepancies found
+❌ 11000000109 - 1 discrepancies found
+❌ 11000000110 - 1 discrepancies found
+❌ 11000000111 - 1 discrepancies found
+❌ 11000000112 - 1 discrepancies found
+❌ 11000000113 - 1 discrepancies found
+❌ 11000000114 - 1 discrepancies found
+❌ 11000000115 - 1 discrepancies found
+❌ 11000000116 - 1 discrepancies found
+❌ 11000000117 - 1 discrepancies found
+❌ 11000000118 - 1 discrepancies found
+❌ 11000000125 - 1 discrepancies found
+❌ 11000000126 - 1 discrepancies found
+❌ 160005702 - 1 discrepancies found
+❌ 160005767 - 1 discrepancies found
+❌ 160005940 - 1 discrepancies found
+❌ 160006534 - 1 discrepancies found
+❌ 160006635 - 1 discrepancies found
+❌ 160006872 - 1 discrepancies found
+❌ 160007012 - 1 discrepancies found
+❌ 160007190 - 1 discrepancies found
+❌ 160007431 - 1 discrepancies found
+❌ 160007675 - 1 discrepancies found
+❌ 160008038 - 1 discrepancies found
+❌ 160008181 - 1 discrepancies found
+❌ 160008245 - 1 discrepancies found
+❌ 160008457 - 1 discrepancies found
+❌ 160008467 - 1 discrepancies found
+❌ 160008628 - 1 discrepancies found
+❌ 160008655 - 1 discrepancies found
+❌ 160008660 - 1 discrepancies found
+❌ 160008661 - 1 discrepancies found
+❌ 160008662 - 1 discrepancies found
+❌ 160008663 - 1 discrepancies found
+❌ 160008722 - 1 discrepancies found
+❌ 160008723 - 1 discrepancies found
+❌ 160008724 - 1 discrepancies found
+❌ 160008725 - 1 discrepancies found
+❌ 160008750 - 1 discrepancies found
+❌ 160008765 - 1 discrepancies found
+❌ 160008766 - 1 discrepancies found
+❌ 160008767 - 1 discrepancies found
+❌ 160008976 - 1 discrepancies found
+❌ 160009034 - 1 discrepancies found
+❌ 160009070 - 1 discrepancies found
+❌ 160009078 - 1 discrepancies found
+❌ 160009255 - 1 discrepancies found
+❌ 160009266 - 1 discrepancies found
+❌ 160009302 - 1 discrepancies found
+❌ 160009328 - 1 discrepancies found
+❌ 160009485 - 1 discrepancies found
+❌ 160009486 - 1 discrepancies found
+❌ 160009504 - 2 discrepancies found
+❌ 160009542 - 1 discrepancies found
+❌ 160009564 - 1 discrepancies found
+❌ 160009588 - 1 discrepancies found
+❌ 6000000692 - 1 discrepancies found
+❌ 6000000704 - 1 discrepancies found
+❌ 6000000705 - 1 discrepancies found
+❌ 6000000706 - 1 discrepancies found
+❌ 6000000707 - 1 discrepancies found
+❌ 6000000708 - 1 discrepancies found
+❌ 6000000709 - 1 discrepancies found
+❌ 6000000711 - 1 discrepancies found
+❌ 6000000712 - 1 discrepancies found
+❌ 6000000713 - 1 discrepancies found
+❌ 6000000714 - 1 discrepancies found
+❌ 6000000715 - 1 discrepancies found
+❌ 6000000716 - 1 discrepancies found
+❌ 6000000717 - 1 discrepancies found
+❌ 6000000718 - 1 discrepancies found
+❌ 6000000719 - 1 discrepancies found
+❌ 6000000720 - 1 discrepancies found
+❌ 6000000721 - 1 discrepancies found
+❌ 6000000722 - 1 discrepancies found
+❌ 6000000723 - 1 discrepancies found
+❌ 6000000724 - 1 discrepancies found
+❌ 6000000725 - 1 discrepancies found
+❌ 6000000726 - 1 discrepancies found
+❌ 6000000727 - 1 discrepancies found
+❌ 6000000728 - 1 discrepancies found
+❌ 6000000729 - 1 discrepancies found
+❌ 6000000730 - 1 discrepancies found
+❌ 6000000731 - 1 discrepancies found
+❌ 6000000732 - 1 discrepancies found
+❌ 6000000733 - 1 discrepancies found
+❌ 6000000734 - 1 discrepancies found
+❌ 6000000735 - 1 discrepancies found
+❌ 6000000736 - 1 discrepancies found
+❌ 6000000737 - 1 discrepancies found
+❌ 6000000738 - 1 discrepancies found
+❌ 6000000739 - 1 discrepancies found
+❌ 6000000740 - 1 discrepancies found
+❌ 6000000741 - 1 discrepancies found
+❌ 6000000743 - 1 discrepancies found
+❌ 6000000744 - 1 discrepancies found
+❌ 6000000745 - 1 discrepancies found
+❌ 6000000746 - 2 discrepancies found
+❌ 6000000747 - 1 discrepancies found
+❌ 6000000748 - 1 discrepancies found
+❌ 6000000749 - 1 discrepancies found
+❌ 6000000750 - 1 discrepancies found
+❌ 6000000751 - 1 discrepancies found
+❌ 6000000753 - 1 discrepancies found
+❌ 6000000754 - 1 discrepancies found
+❌ 6000000755 - 1 discrepancies found
+❌ 6000000756 - 1 discrepancies found
+❌ 6000000757 - 1 discrepancies found
+❌ 6000000758 - 1 discrepancies found
+❌ 6000000759 - 1 discrepancies found
+❌ 6000000760 - 1 discrepancies found
+❌ 6000000761 - 1 discrepancies found
+❌ 6000000762 - 1 discrepancies found
+❌ 6000000764 - 1 discrepancies found
+❌ 6000000765 - 1 discrepancies found
+❌ 6000000766 - 1 discrepancies found
+❌ 6000000767 - 1 discrepancies found
+❌ 6000000768 - 1 discrepancies found
+❌ 6000000769 - 1 discrepancies found
+❌ 6000000770 - 1 discrepancies found
+❌ 6000000771 - 1 discrepancies found
+❌ 6000000772 - 1 discrepancies found
+❌ 6000000773 - 1 discrepancies found
+❌ 6000000774 - 1 discrepancies found
+❌ 6000000775 - 1 discrepancies found
+❌ 6000000776 - 1 discrepancies found
+❌ 6000000777 - 1 discrepancies found
+❌ 6000000778 - 1 discrepancies found
+❌ 6000000779 - 1 discrepancies found
+❌ 6000000782 - 1 discrepancies found
+❌ 6000000783 - 1 discrepancies found
+❌ 6000000784 - 1 discrepancies found
+❌ 6000000785 - 1 discrepancies found
+❌ 6000000786 - 1 discrepancies found
+❌ 6000000787 - 1 discrepancies found
+❌ 6000000788 - 1 discrepancies found
+❌ 6000000789 - 1 discrepancies found
+❌ 6000000790 - 1 discrepancies found
+❌ 6000000791 - 1 discrepancies found
+❌ 6000000792 - 1 discrepancies found
+❌ 6000000793 - 1 discrepancies found
+❌ 6000000794 - 1 discrepancies found
+❌ 6000000795 - 1 discrepancies found
+❌ 6000000796 - 1 discrepancies found
+❌ 6000000797 - 1 discrepancies found
+❌ 6000000798 - 1 discrepancies found
+❌ 6000000799 - 1 discrepancies found
+❌ 6000000800 - 1 discrepancies found
+❌ 6000000801 - 2 discrepancies found
+❌ 6000000802 - 1 discrepancies found
+❌ 6000000803 - 1 discrepancies found
+❌ 6000000804 - 1 discrepancies found
+❌ 6000000805 - 1 discrepancies found
+❌ 6000000806 - 1 discrepancies found
+❌ 6000000807 - 2 discrepancies found
+❌ 6000000808 - 2 discrepancies found
+❌ 6000000809 - 1 discrepancies found
+❌ 6000000810 - 1 discrepancies found
+❌ 6000000811 - 1 discrepancies found
+❌ 6000000812 - 1 discrepancies found
+❌ 6000000813 - 1 discrepancies found
+❌ 6000000814 - 1 discrepancies found
+❌ 6000000815 - 1 discrepancies found
+❌ 6000000816 - 1 discrepancies found
+❌ 6000000817 - 1 discrepancies found
+❌ 6000000818 - 1 discrepancies found
+❌ 6000000819 - 1 discrepancies found
+❌ 6000000820 - 1 discrepancies found
+❌ 6000000821 - 1 discrepancies found
+❌ 6000000822 - 1 discrepancies found
+❌ 6000000823 - 1 discrepancies found
+❌ 6000000824 - 1 discrepancies found
+❌ 6000000825 - 1 discrepancies found
+❌ 6000000826 - 1 discrepancies found
+❌ 6000000827 - 1 discrepancies found
+❌ 6000000828 - 1 discrepancies found
+❌ 6000000829 - 1 discrepancies found
+❌ 6000000830 - 1 discrepancies found
+❌ 6000000831 - 1 discrepancies found
+❌ 6000000832 - 1 discrepancies found
+❌ 6000000833 - 1 discrepancies found
+❌ 6000000834 - 1 discrepancies found
+❌ 6000000835 - 1 discrepancies found
+❌ 6000000836 - 1 discrepancies found
+❌ 6000000837 - 1 discrepancies found
+❌ 6000000838 - 1 discrepancies found
+❌ 6000000839 - 1 discrepancies found
+❌ 6000000840 - 1 discrepancies found
+❌ 6000000841 - 1 discrepancies found
+❌ 6000000842 - 1 discrepancies found
+❌ 6000000843 - 1 discrepancies found
+❌ 6000000844 - 1 discrepancies found
+❌ 6000000845 - 1 discrepancies found
+❌ 6000000846 - 1 discrepancies found
+❌ 6000000847 - 1 discrepancies found
+❌ 6000000848 - 1 discrepancies found
+❌ 6000000850 - 1 discrepancies found
+❌ 6000000851 - 1 discrepancies found
+❌ 6000000852 - 1 discrepancies found
+❌ 6000000853 - 1 discrepancies found
+❌ 6000000854 - 1 discrepancies found
+❌ 6000000855 - 1 discrepancies found
+❌ 6000000856 - 1 discrepancies found
+❌ 6000000857 - 1 discrepancies found
+❌ 6000000858 - 1 discrepancies found
+❌ 6000000859 - 1 discrepancies found
+❌ 6000000860 - 1 discrepancies found
+❌ 6000000861 - 1 discrepancies found
+❌ 6000000862 - 1 discrepancies found
+❌ 6000000863 - 1 discrepancies found
+❌ 6000000864 - 1 discrepancies found
+❌ 6000000865 - 1 discrepancies found
+❌ 6000000866 - 1 discrepancies found
+❌ 6000000867 - 1 discrepancies found
+❌ 6000000868 - 1 discrepancies found
+❌ 6000000869 - 1 discrepancies found
+❌ 6000000870 - 1 discrepancies found
+❌ 6000000871 - 1 discrepancies found
+❌ 6000000872 - 1 discrepancies found
+❌ 6000000873 - 1 discrepancies found
+❌ 6000000874 - 1 discrepancies found
+❌ 6000000875 - 1 discrepancies found
+❌ 6000000876 - 1 discrepancies found
+❌ 6000000877 - 1 discrepancies found
+❌ 6000000878 - 1 discrepancies found
+❌ 6000000879 - 1 discrepancies found
+❌ 6000000880 - 1 discrepancies found
+❌ 6000000881 - 1 discrepancies found
+❌ 6000000882 - 1 discrepancies found
+❌ 6000000883 - 1 discrepancies found
+❌ 6000000884 - 1 discrepancies found
+❌ 6000000885 - 1 discrepancies found
+❌ 6000000886 - 1 discrepancies found
+❌ 6000000887 - 1 discrepancies found
+❌ 6000000888 - 1 discrepancies found
+❌ 6000000889 - 1 discrepancies found
+❌ 9000000485 - 1 discrepancies found
+❌ 9000000486 - 1 discrepancies found
+❌ 9000000487 - 1 discrepancies found
+❌ 9000000488 - 1 discrepancies found
+❌ 9000000489 - 1 discrepancies found
+❌ 9000000490 - 1 discrepancies found
+❌ 9000000491 - 1 discrepancies found
+❌ 9000000493 - 1 discrepancies found
+❌ 9000000494 - 1 discrepancies found
+❌ 9000000495 - 1 discrepancies found
+❌ 9000000496 - 1 discrepancies found
+❌ 9000000497 - 1 discrepancies found
+❌ 9000000499 - 1 discrepancies found
+❌ 9000000500 - 1 discrepancies found
+❌ 9000000501 - 1 discrepancies found
+❌ 9000000503 - 1 discrepancies found
+❌ 9000000504 - 1 discrepancies found
+❌ 9000000505 - 1 discrepancies found
+❌ 9000000506 - 1 discrepancies found
+❌ 9000000507 - 1 discrepancies found
+❌ 9000000508 - 1 discrepancies found
+❌ 9000000509 - 1 discrepancies found
+❌ 9000000510 - 1 discrepancies found
+❌ 9000000511 - 1 discrepancies found
+❌ 9000000512 - 1 discrepancies found
+❌ 9000000513 - 1 discrepancies found
+❌ 3000000240 - 1 discrepancies found
+❌ 3000000320 - 1 discrepancies found
+❌ 3000000321 - 1 discrepancies found
+❌ 3000000980 - 1 discrepancies found
+❌ 3000001000 - 1 discrepancies found
+❌ 3000001020 - 1 discrepancies found
+❌ 3000001040 - 1 discrepancies found
+❌ 3000001060 - 1 discrepancies found
+❌ 3000001080 - 1 discrepancies found
+❌ 3000001100 - 1 discrepancies found
+❌ 3000001120 - 1 discrepancies found
+❌ 3000001141 - 1 discrepancies found
+❌ 3000001160 - 2 discrepancies found
+❌ 3000089463 - 1 discrepancies found
+❌ 3600005161 - 1 discrepancies found
+⚠️  3600005381 - NOT FOUND in database
+❌ 3600005501 - 1 discrepancies found
+❌ 3600006341 - 1 discrepancies found
+❌ 3600006361 - 1 discrepancies found
+❌ 3600006441 - 1 discrepancies found
+⚠️  4000000780 - NOT FOUND in database
+✅ 4000000820 - All fields match
+❌ 4000000840 - 2 discrepancies found
+✅ 4000000860 - All fields match
+❌ 4000000880 - 1 discrepancies found
+❌ 4000000881 - 1 discrepancies found
+✅ 4000000900 - All fields match
+✅ 4000000920 - All fields match
+✅ 4000000940 - All fields match
+❌ 4000000960 - 1 discrepancies found
+✅ 4000002980 - All fields match
+✅ 4000003921 - All fields match
+✅ 4000003924 - All fields match
+✅ 4000003941 - All fields match
+✅ 4000003960 - All fields match
+✅ 4000003961 - All fields match
+✅ 4000003962 - All fields match
+✅ 4000003963 - All fields match
+✅ 4000003964 - All fields match
+✅ 4000003965 - All fields match
+✅ 4000003966 - All fields match
+✅ 4000003980 - All fields match
+✅ 4000003981 - All fields match
+✅ 4000003982 - All fields match
+✅ 4000003983 - All fields match
+✅ 4000003985 - All fields match
+✅ 4000003986 - All fields match
+✅ 4000003987 - All fields match
+✅ 4000004000 - All fields match
+✅ 4000004001 - All fields match
+✅ 4000004002 - All fields match
+✅ 4000004020 - All fields match
+✅ 4000004100 - All fields match
+✅ 4000004101 - All fields match
+✅ 4000004120 - All fields match
+✅ 4000004121 - All fields match
+✅ 4000004122 - All fields match
+✅ 4000004123 - All fields match
+✅ 4000004124 - All fields match
+✅ 4000004125 - All fields match
+✅ 4000004126 - All fields match
+✅ 4000004127 - All fields match
+✅ 4000004128 - All fields match
+✅ 4000004140 - All fields match
+✅ 4000004141 - All fields match
+✅ 4000004142 - All fields match
+✅ 4000004143 - All fields match
+✅ 4000004160 - All fields match
+✅ 4000004161 - All fields match
+✅ 4000004162 - All fields match
+✅ 4000004163 - All fields match
+✅ 4000004180 - All fields match
+✅ 4000004181 - All fields match
+✅ 4000004182 - All fields match
+✅ 4000004200 - All fields match
+✅ 4000004240 - All fields match
+✅ 4000004260 - All fields match
+✅ 4000004261 - All fields match
+✅ 4000004262 - All fields match
+✅ 4000004263 - All fields match
+✅ 4000004280 - All fields match
+✅ 4000004300 - All fields match
+✅ 4000004301 - All fields match
+✅ 4000004320 - All fields match
+✅ 4000004321 - All fields match
+✅ 4000004340 - All fields match
+❌ 4000004360 - 2 discrepancies found
+✅ 4000004361 - All fields match
+✅ 4000004380 - All fields match
+✅ 4000004400 - All fields match
+✅ 4000004401 - All fields match
+✅ 4000004420 - All fields match
+✅ 4000004440 - All fields match
+✅ 4000004441 - All fields match
+❌ 4000004500 - 2 discrepancies found
+✅ 4000004520 - All fields match
+✅ 4000004521 - All fields match
+✅ 4000004540 - All fields match
+✅ 4000004560 - All fields match
+✅ 4000004580 - All fields match
+✅ 4000004600 - All fields match
+✅ 4000004620 - All fields match
+✅ 4000004621 - All fields match
+✅ 4000004640 - All fields match
+❌ 4000004660 - 1 discrepancies found
+❌ 4000004661 - 1 discrepancies found
+❌ 4000004662 - 1 discrepancies found
+✅ 4000004680 - All fields match
+✅ 4000004681 - All fields match
+✅ 4000004700 - All fields match
+✅ 4000004701 - All fields match
+✅ 4000004761 - All fields match
+✅ 4000004801 - All fields match
+✅ 4000004820 - All fields match
+✅ 4000004821 - All fields match
+✅ 4000004822 - All fields match
+✅ 4000004840 - All fields match
+✅ 4000004860 - All fields match
+✅ 4000004900 - All fields match
+✅ 4000004920 - All fields match
+✅ 4000004940 - All fields match
+✅ 4000004980 - All fields match
+✅ 4000004981 - All fields match
+✅ 4000004982 - All fields match
+✅ 4000004983 - All fields match
+✅ 4000004984 - All fields match
+✅ 4000005000 - All fields match
+✅ 4000005001 - All fields match
+✅ 4000005002 - All fields match
+✅ 4000005003 - All fields match
+✅ 4000005020 - All fields match
+✅ 4000005021 - All fields match
+✅ 4000005060 - All fields match
+✅ 4000005061 - All fields match
+✅ 4000005062 - All fields match
+✅ 4000005063 - All fields match
+✅ 4000005064 - All fields match
+✅ 4000005065 - All fields match
+✅ 4000005066 - All fields match
+✅ 4000005067 - All fields match
+✅ 4000005068 - All fields match
+✅ 4000005069 - All fields match
+✅ 4000005070 - All fields match
+✅ 4000005071 - All fields match
+✅ 4000005072 - All fields match
+✅ 4000005073 - All fields match
+✅ 4000005074 - All fields match
+✅ 4000005075 - All fields match
+✅ 4000005080 - All fields match
+✅ 4000005081 - All fields match
+✅ 4000005082 - All fields match
+✅ 4000005083 - All fields match
+✅ 4000005084 - All fields match
+✅ 4000005085 - All fields match
+✅ 4000005100 - All fields match
+✅ 4000005160 - All fields match
+✅ 4000005161 - All fields match
+✅ 4000005180 - All fields match
+✅ 4000005181 - All fields match
+✅ 4000005182 - All fields match
+✅ 4000005183 - All fields match
+✅ 4000005200 - All fields match
+✅ 4000005220 - All fields match
+❌ 4000005221 - 1 discrepancies found
+❌ 4000005222 - 1 discrepancies found
+✅ 4000005240 - All fields match
+✅ 4000005260 - All fields match
+✅ 4000005280 - All fields match
+✅ 4000005281 - All fields match
+✅ 4000005300 - All fields match
+✅ 4000005320 - All fields match
+✅ 4000005321 - All fields match
+✅ 4000005340 - All fields match
+✅ 4000005341 - All fields match
+✅ 4000005342 - All fields match
+✅ 4000005361 - All fields match
+✅ 4000005400 - All fields match
+✅ 4000005402 - All fields match
+✅ 4000005403 - All fields match
+✅ 4000005420 - All fields match
+✅ 4000005440 - All fields match
+✅ 4000005441 - All fields match
+✅ 4000005442 - All fields match
+✅ 4000005460 - All fields match
+✅ 4000005461 - All fields match
+✅ 4000005480 - All fields match
+✅ 4000005481 - All fields match
+✅ 4000005500 - All fields match
+❌ 4000005520 - 2 discrepancies found
+✅ 4000005540 - All fields match
+✅ 4000005541 - All fields match
+✅ 4000005542 - All fields match
+✅ 4000005561 - All fields match
+✅ 4000005580 - All fields match
+✅ 4000005581 - All fields match
+✅ 4000005582 - All fields match
+✅ 4000005583 - All fields match
+✅ 4000005584 - All fields match
+✅ 4000005600 - All fields match
+✅ 4000005601 - All fields match
+✅ 4000005602 - All fields match
+✅ 4000005603 - All fields match
+✅ 4000005604 - All fields match
+✅ 4000005605 - All fields match
+✅ 4000005606 - All fields match
+✅ 4000005607 - All fields match
+✅ 4000005608 - All fields match
+✅ 4000005620 - All fields match
+✅ 4000005621 - All fields match
+❌ 4000005660 - 2 discrepancies found
+✅ 4000005661 - All fields match
+✅ 4000005662 - All fields match
+✅ 4000005663 - All fields match
+❌ 4000005664 - 2 discrepancies found
+✅ 4000005665 - All fields match
+✅ 4000005666 - All fields match
+✅ 4000005667 - All fields match
+✅ 4000005680 - All fields match
+✅ 4000005700 - All fields match
+✅ 4000005701 - All fields match
+✅ 4000005720 - All fields match
+✅ 4000005721 - All fields match
+✅ 4000005722 - All fields match
+✅ 4000005723 - All fields match
+✅ 4000005740 - All fields match
+✅ 4000005741 - All fields match
+✅ 4000005742 - All fields match
+✅ 4000005744 - All fields match
+✅ 4000005760 - All fields match
+✅ 4000005761 - All fields match
+✅ 4000005762 - All fields match
+❌ 4000005780 - 2 discrepancies found
+❌ 4000005781 - 2 discrepancies found
+✅ 4000005782 - All fields match
+✅ 4000005783 - All fields match
+✅ 4000005800 - All fields match
+✅ 4000005801 - All fields match
+✅ 4000005802 - All fields match
+✅ 4000005820 - All fields match
+✅ 4000005840 - All fields match
+✅ 4000005841 - All fields match
+✅ 4000005860 - All fields match
+✅ 4000005880 - All fields match
+✅ 4000005881 - All fields match
+✅ 4000005900 - All fields match
+✅ 4000005901 - All fields match
+❌ 4000005920 - 1 discrepancies found
+✅ 4000005941 - All fields match
+✅ 4000005960 - All fields match
+✅ 4000005961 - All fields match
+✅ 4000005962 - All fields match
+✅ 4000005963 - All fields match
+✅ 4000005980 - All fields match
+❌ 4000006001 - 2 discrepancies found
+✅ 4000006002 - All fields match
+❌ 4004404147 - 1 discrepancies found
+✅ 4004588774 - All fields match
+❌ 4004641783 - 1 discrepancies found
+❌ 4004641801 - 1 discrepancies found
+❌ 4004644512 - 1 discrepancies found
+❌ 4004657001 - 1 discrepancies found
+❌ 4004666081 - 1 discrepancies found
+❌ 4004666155 - 1 discrepancies found
+❌ 4004666175 - 1 discrepancies found
+❌ 4004666202 - 1 discrepancies found
+❌ 4004668171 - 1 discrepancies found
+❌ 4004677373 - 1 discrepancies found
+❌ 4004677374 - 1 discrepancies found
+❌ 4004677472 - 1 discrepancies found
+❌ 4004677473 - 1 discrepancies found
+❌ 4004677615 - 1 discrepancies found
+❌ 4004677832 - 1 discrepancies found
+❌ 4004686705 - 1 discrepancies found
+❌ 4004686809 - 1 discrepancies found
+❌ 4004686842 - 1 discrepancies found
+❌ 4004687791 - 2 discrepancies found
+⚠️  4004687792 - NOT FOUND in database
+❌ 4004690182 - 1 discrepancies found
+❌ 4004690229 - 1 discrepancies found
+❌ 4004690231 - 1 discrepancies found
+❌ 4004892435 - 1 discrepancies found
+❌ 4004892436 - 1 discrepancies found
+✅ 4600006140 - All fields match
+✅ 4600012179 - All fields match
+✅ 4600012637 - All fields match
+✅ 4600012939 - All fields match
+✅ 4600012956 - All fields match
+✅ 4600013185 - All fields match
+✅ 4600013635 - All fields match
+✅ 4600013636 - All fields match
+✅ 4600013776 - All fields match
+❌ 4600014680 - 1 discrepancies found
+✅ 4600014695 - All fields match
+✅ 4600014696 - All fields match
+✅ 4600014697 - All fields match
+✅ 4600014762 - All fields match
+❌ 4600015300 - 1 discrepancies found
+❌ 4600015337 - 1 discrepancies found
+❌ 4600015399 - 1 discrepancies found
+❌ 4600015445 - 1 discrepancies found
+❌ 4600015483 - 1 discrepancies found
+✅ 4600015513 - All fields match
+✅ 4600016443 - All fields match
+✅ 4600016545 - All fields match
+❌ 4600016655 - 1 discrepancies found
+✅ 4600017003 - All fields match
+❌ 4600017007 - 1 discrepancies found
+✅ 4600017181 - All fields match
+❌ 4600017195 - 2 discrepancies found
+✅ 4600017196 - All fields match
+✅ 4600017197 - All fields match
+❌ 4600017223 - 1 discrepancies found
+✅ 4600017238 - All fields match
+✅ 4600017239 - All fields match
+✅ 4600017315 - All fields match
+❌ 4600017918 - 1 discrepancies found
+❌ 4600017921 - 1 discrepancies found
+✅ 4600017958 - All fields match
+✅ 4600017960 - All fields match
+✅ 4600017962 - All fields match
+❌ 4600017964 - 1 discrepancies found
+❌ 4600018030 - 1 discrepancies found
+✅ 4600018074 - All fields match
+❌ 4600018159 - 2 discrepancies found
+✅ 4600018558 - All fields match
+❌ 4600018575 - 1 discrepancies found
+❌ 4600019608 - 1 discrepancies found
+❌ 4600019751 - 2 discrepancies found
+❌ 4600019883 - 1 discrepancies found
+✅ 4600020035 - All fields match
+❌ 4600020132 - 1 discrepancies found
+❌ 4600020263 - 1 discrepancies found
+❌ 4600020264 - 1 discrepancies found
+❌ 4600020276 - 1 discrepancies found
+✅ 4600020297 - All fields match
+❌ 4600020300 - 1 discrepancies found
+✅ 4600020401 - All fields match
+✅ 4600020555 - All fields match
+✅ 4600020556 - All fields match
+✅ 4600020930 - All fields match
+✅ 4600021214 - All fields match
+❌ 4600021248 - 1 discrepancies found
+❌ 4600021568 - 1 discrepancies found
+✅ 4600021804 - All fields match
+❌ 4600021824 - 1 discrepancies found
+❌ 4600021878 - 1 discrepancies found
+❌ 4600021974 - 1 discrepancies found
+✅ 4600022014 - All fields match
+❌ 4600022189 - 2 discrepancies found
+✅ 4600022192 - All fields match
+❌ 4600022290 - 1 discrepancies found
+✅ 4600022467 - All fields match
+✅ 4600022581 - All fields match
+✅ 4600022850 - All fields match
+✅ 4600022851 - All fields match
+❌ 4600022931 - 1 discrepancies found
+❌ 4600023003 - 2 discrepancies found
+✅ 4600023071 - All fields match
+✅ 4600023075 - All fields match
+❌ 4600023342 - 1 discrepancies found
+❌ 4600023517 - 1 discrepancies found
+❌ 4600023563 - 1 discrepancies found
+❌ 4600023698 - 1 discrepancies found
+❌ 4600023701 - 1 discrepancies found
+✅ 4600023739 - All fields match
+❌ 4600023862 - 1 discrepancies found
+✅ 4600023975 - All fields match
+✅ 4600023976 - All fields match
+✅ 4600023977 - All fields match
+✅ 4600023997 - All fields match
+✅ 4600024135 - All fields match
+✅ 4600024136 - All fields match
+✅ 4600024137 - All fields match
+✅ 4600024138 - All fields match
+✅ 4600024595 - All fields match
+❌ 4600024858 - 2 discrepancies found
+❌ 4600025015 - 1 discrepancies found
+❌ 4600025016 - 1 discrepancies found
+✅ 4600025019 - All fields match
+✅ 4600025020 - All fields match
+✅ 4600025046 - All fields match
+❌ 4600025070 - 1 discrepancies found
+❌ 4600025159 - 1 discrepancies found
+❌ 4600025317 - 1 discrepancies found
+❌ 4600025321 - 1 discrepancies found
+❌ 4600025325 - 1 discrepancies found
+✅ 4600025335 - All fields match
+✅ 4600025495 - All fields match
+✅ 4600025526 - All fields match
+✅ 4600025527 - All fields match
+✅ 4600025529 - All fields match
+✅ 4600025531 - All fields match
+✅ 4600025533 - All fields match
+✅ 4600025534 - All fields match
+✅ 4600025535 - All fields match
+✅ 4600025538 - All fields match
+✅ 4600025539 - All fields match
+✅ 4600025540 - All fields match
+✅ 4600025542 - All fields match
+✅ 4600025543 - All fields match
+✅ 4600025544 - All fields match
+✅ 4600025545 - All fields match
+✅ 4600025546 - All fields match
+✅ 4600025547 - All fields match
+✅ 4600025548 - All fields match
+❌ 4600025935 - 1 discrepancies found
+❌ 4600025973 - 1 discrepancies found
+❌ 4600026080 - 1 discrepancies found
+✅ 4600026466 - All fields match
+❌ 4600026613 - 1 discrepancies found
+❌ 4600026725 - 1 discrepancies found
+❌ 4600026875 - 1 discrepancies found
+❌ 4600026878 - 1 discrepancies found
+✅ 4600026915 - All fields match
+✅ 4600026916 - All fields match
+✅ 4600026917 - All fields match
+✅ 4600026918 - All fields match
+✅ 4600027160 - All fields match
+✅ 4600027315 - All fields match
+✅ 4600027683 - All fields match
+✅ 4600027684 - All fields match
+❌ 4600027689 - 1 discrepancies found
+✅ 4600027696 - All fields match
+❌ 4600027706 - 1 discrepancies found
+❌ 4600027856 - 2 discrepancies found
+✅ 4600027865 - All fields match
+✅ 4600027866 - All fields match
+✅ 4600027903 - All fields match
+✅ 4600027974 - All fields match
+✅ 4600027987 - All fields match
+✅ 4600028146 - All fields match
+❌ 4600028153 - 1 discrepancies found
+❌ 4600028272 - 1 discrepancies found
+❌ 4600028354 - 1 discrepancies found
+❌ 4600028422 - 1 discrepancies found
+✅ 4600028556 - All fields match
+✅ 4600028557 - All fields match
+✅ 4600028558 - All fields match
+✅ 4600028804 - All fields match
+✅ 4600029059 - All fields match
+✅ 4600029060 - All fields match
+❌ 4600029368 - 2 discrepancies found
+❌ 4600029527 - 1 discrepancies found
+❌ 4600029528 - 1 discrepancies found
+❌ 4600029529 - 1 discrepancies found
+✅ 4600029535 - All fields match
+✅ 4600029536 - All fields match
+✅ 4600029537 - All fields match
+✅ 4600029646 - All fields match
+❌ 4600029692 - 1 discrepancies found
+❌ 4600029722 - 1 discrepancies found
+❌ 4600029839 - 1 discrepancies found
+❌ 4600029841 - 1 discrepancies found
+❌ 4600030036 - 1 discrepancies found
+❌ 4600030039 - 1 discrepancies found
+❌ 4600030083 - 1 discrepancies found
+❌ 4600030677 - 2 discrepancies found
+❌ 4600030690 - 1 discrepancies found
+❌ 4600030712 - 1 discrepancies found
+❌ 4600030852 - 1 discrepancies found
+❌ 4600030902 - 1 discrepancies found
+✅ 4600030983 - All fields match
+❌ 4600031098 - 1 discrepancies found
+❌ 4600031258 - 1 discrepancies found
+✅ 4600031421 - All fields match
+✅ 4600031422 - All fields match
+✅ 4600031427 - All fields match
+✅ 4600031584 - All fields match
+✅ 4600031586 - All fields match
+✅ 4600032086 - All fields match
+✅ 4600032087 - All fields match
+✅ 4600032088 - All fields match
+✅ 4600032089 - All fields match
+❌ 4600032469 - 2 discrepancies found
+✅ 4600032514 - All fields match
+✅ 4600032515 - All fields match
+✅ 4600032535 - All fields match
+❌ 4600032536 - 2 discrepancies found
+❌ 4600032537 - 2 discrepancies found
+❌ 4600032538 - 1 discrepancies found
+❌ 4600032668 - 1 discrepancies found
+✅ 4600032695 - All fields match
+❌ 4600032703 - 1 discrepancies found
+❌ 4600032776 - 1 discrepancies found
+❌ 4600032778 - 1 discrepancies found
+❌ 4600032781 - 1 discrepancies found
+❌ 4600032787 - 1 discrepancies found
+❌ 4600033191 - 2 discrepancies found
+❌ 4600034289 - 1 discrepancies found
+❌ 4600034399 - 1 discrepancies found
+❌ 4600034403 - 1 discrepancies found
+❌ 4600034421 - 1 discrepancies found
+✅ 8000001040 - All fields match
+✅ 8000001041 - All fields match
+❌ 8600004201 - 1 discrepancies found
+❌ 8600004221 - 1 discrepancies found
+✅ 8600004581 - All fields match
+❌ 8600006301 - 1 discrepancies found
+❌ 8600006302 - 1 discrepancies found
+⚠️  9000000081 - NOT FOUND in database
+⚠️  9000000082 - NOT FOUND in database
+⚠️  9000000083 - NOT FOUND in database
+⚠️  9000000084 - NOT FOUND in database
+⚠️  9000000085 - NOT FOUND in database
+⚠️  9000000086 - NOT FOUND in database
+⚠️  9000000087 - NOT FOUND in database
+⚠️  9000000088 - NOT FOUND in database
+⚠️  9000000089 - NOT FOUND in database
+⚠️  9000000090 - NOT FOUND in database
+⚠️  9000000092 - NOT FOUND in database
+⚠️  9000000093 - NOT FOUND in database
+✅ 4000004483 - All fields match
+✅ 4000004484 - All fields match
+❌ 6000000780 - 1 discrepancies found
+❌ 6000000781 - 1 discrepancies found
+❌ 4600026853 - 1 discrepancies found
+❌ 4600026853 - 1 discrepancies found
+❌ 4600026853 - 1 discrepancies found
+❌ 6000000893 - 1 discrepancies found
+❌ 6000000897 - 1 discrepancies found
+❌ 9000000476 - 1 discrepancies found
+✅ 4000000680 - All fields match
+❌ 4004578918 - 1 discrepancies found
+❌ 4004589316 - 1 discrepancies found
+✅ 8600004581 - All fields match
+✅ 4600009116 - All fields match
+✅ 4600010384 - All fields match
+⚠️  9000000087 - NOT FOUND in database
+❌ 9000000498 - 1 discrepancies found
+❌ 3000001140 - 2 discrepancies found
+❌ 6000000849 - 1 discrepancies found
+❌ 4000005401 - 1 discrepancies found
+
+═══════════════════════════════════════════════════════
+                VALIDATION SUMMARY
+═══════════════════════════════════════════════════════
+
+Total PDFs checked: 814
+✅ Perfect matches: 342
+❌ Discrepancies found: 472
+📊 Accuracy rate: 42.0%
+
+
+📋 MISSING IN DATABASE (17):
+───────────────────────────────────────────────────────
+  • 25-1620 (1761207984338-Altera - Inv 25-1620 16 Jan25 PO4000333 - Ceduna.pdf)
+  • 3600005381 (1761208031026-MDRX_AR_Standard_Invoice_3600005381.pdf)
+  • 4000000780 (1761208031190-MDRX_AR_Standard_Invoice_4000000780.pdf)
+  • 4004687792 (1761208070289-MDRX_AR_Standard_Invoice_4004687792.pdf)
+  • 9000000081 (1761208104166-MDRX_AR_Standard_Invoice_9000000081.pdf)
+  • 9000000082 (1761208104193-MDRX_AR_Standard_Invoice_9000000082.pdf)
+  • 9000000083 (1761208104220-MDRX_AR_Standard_Invoice_9000000083.pdf)
+  • 9000000084 (1761208104249-MDRX_AR_Standard_Invoice_9000000084.pdf)
+  • 9000000085 (1761208104280-MDRX_AR_Standard_Invoice_9000000085.pdf)
+  • 9000000086 (1761208104309-MDRX_AR_Standard_Invoice_9000000086.pdf)
+  • 9000000087 (1761208104338-MDRX_AR_Standard_Invoice_9000000087.pdf)
+  • 9000000088 (1761208105550-MDRX_AR_Standard_Invoice_9000000088.pdf)
+  • 9000000089 (1761208105574-MDRX_AR_Standard_Invoice_9000000089.pdf)
+  • 9000000090 (1761208105603-MDRX_AR_Standard_Invoice_9000000090.pdf)
+  • 9000000092 (1761208105647-MDRX_AR_Standard_Invoice_9000000092.pdf)
+  • 9000000093 (1761208105673-MDRX_AR_Standard_Invoice_9000000093.pdf)
+  • 9000000087 (1761268886746-MDRX_AR_Standard_Invoice_9000000087.pdf)
+
+⚠️  DATA MISMATCHES (455):
+───────────────────────────────────────────────────────
+
+  Invoice: 4000004480 (DB ID: 1761207984435gqrtrqhom)
+    invoiceDate:
+      PDF: 2024-11-21
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000004481 (DB ID: 1761207984459w2wxtmptq)
+    invoiceDate:
+      PDF: 2024-11-21
+      DB:  2025-10-23
+
+  Invoice: 4000004482 (DB ID: 1761207984484gb23w8xdr)
+    invoiceDate:
+      PDF: 2024-11-21
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 3000070746 (DB ID: 1761207987014xy99e1j3e)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 11000000091 (DB ID: 1761207987036crmkvh3cp)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000094 (DB ID: 1761207987064krqbf8vcg)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000095 (DB ID: 17612079870887nk973dac)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000096 (DB ID: 1761207987112z3kjvawxd)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000097 (DB ID: 1761207987143k5n6cembu)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000098 (DB ID: 17612079883562xuqst1sc)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000099 (DB ID: 1761207988378zp1u8iwm4)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000100 (DB ID: 17612079883990q4u6oush)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000101 (DB ID: 1761207988422pvgolwbi9)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000102 (DB ID: 1761207988446n395op3ck)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000103 (DB ID: 17612079884715kvp2ndq1)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000104 (DB ID: 17612079885056c98sad7c)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000105 (DB ID: 1761207988530zzojiya8q)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000106 (DB ID: 1761207988572eyrfo1smr)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000107 (DB ID: 17612079885988frk5l3dk)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000108 (DB ID: 176120798982542nq1q9p6)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000109 (DB ID: 1761207989847p0058us6f)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000110 (DB ID: 1761207989873i1po50tk7)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000111 (DB ID: 17612079899018e40m2jth)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000112 (DB ID: 1761207989934sjcaze0n7)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000113 (DB ID: 1761207989961qnvfc0b74)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000114 (DB ID: 1761207989985miae6uqks)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000115 (DB ID: 1761207990022m9oojs9zz)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000116 (DB ID: 1761207990052uq2djo2ug)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000117 (DB ID: 17612079900750ujwcz2xa)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000118 (DB ID: 1761207991259c778rii1r)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000125 (DB ID: 1761207991284ev9rdkbrs)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 11000000126 (DB ID: 1761207991308oa9vo0py0)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160005702 (DB ID: 1761207991334jwhbyhiu3)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160005767 (DB ID: 17612079913575oax8rkj6)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160005940 (DB ID: 1761207991383kgz63muw0)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160006534 (DB ID: 17612079914076m3v5z9co)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160006635 (DB ID: 1761207991433dkplc3lbk)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160006872 (DB ID: 1761207991458k01n28vt7)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160007012 (DB ID: 1761207991483b9le7u3t2)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160007190 (DB ID: 1761207992668c4dzcybsn)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160007431 (DB ID: 17612079926899twenazw8)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160007675 (DB ID: 1761207992710smoq5ij16)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008038 (DB ID: 17612079927315j1racjxn)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008181 (DB ID: 1761207992757mi2xs1xu5)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008245 (DB ID: 1761207992781sigvvnwzp)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008457 (DB ID: 1761207992800xmtnst832)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008467 (DB ID: 1761207992825g1fhpqlwl)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008628 (DB ID: 1761207992850z94v0f34d)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008655 (DB ID: 17612079928769jz4yi2cr)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008660 (DB ID: 1761207994095xdy9ezqd7)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008661 (DB ID: 17612079941219aiu4gcj6)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008662 (DB ID: 1761207994143vtdn3cw07)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008663 (DB ID: 1761207994169pinsndtm6)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008722 (DB ID: 1761207994192hbqtzbg2f)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008723 (DB ID: 1761207994218exe9nm2ob)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008724 (DB ID: 17612079942400wi2xeg69)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008725 (DB ID: 17612079942630mh8xtze3)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008750 (DB ID: 17612079942835n853eefl)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008765 (DB ID: 1761207994307djeh3x57e)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008766 (DB ID: 17612079955456sezsf2g3)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008767 (DB ID: 17612079955759ifck6nqd)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160008976 (DB ID: 1761207995600j281v35yz)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009034 (DB ID: 1761207995620hvbki9lgf)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009070 (DB ID: 17612079956552pdgbg4li)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009078 (DB ID: 17612079956799qbziusgv)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009255 (DB ID: 17612079957149p8cp3ixz)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009266 (DB ID: 1761207995756tqkbn0dof)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009302 (DB ID: 176120799578533pumekmd)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009328 (DB ID: 176120799582436fyncxf9)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009485 (DB ID: 17612079970228eklp1ovi)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009486 (DB ID: 1761207997046kpoyqlljw)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009504 (DB ID: 1761207997072aje4qujvh)
+    currency:
+      PDF: Ser
+      DB:  USD
+    customerContract:
+      PDF: Oracle
+      DB:  125339
+
+  Invoice: 160009542 (DB ID: 17612079970954rtvk96k6)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009564 (DB ID: 1761207997136pa6b7576s)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 160009588 (DB ID: 1761207997185o6ans54l8)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000692 (DB ID: 1761207997215ptp4awctz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000704 (DB ID: 1761207997264hkyfhiasp)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000705 (DB ID: 17612079972921f9gokwn7)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000706 (DB ID: 17612079973311wapbsq78)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000707 (DB ID: 1761207998609bz6anyw1p)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000708 (DB ID: 1761207998636jpelsvoh1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000709 (DB ID: 1761207998664b6ujkm5rs)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000711 (DB ID: 1761207998691ei5nzb7i0)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000712 (DB ID: 1761207998729l1k5al80c)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000713 (DB ID: 1761207998754xgxux1sp5)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000714 (DB ID: 1761207998776c2h5itowg)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000715 (DB ID: 1761207998799pedwsobtv)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000716 (DB ID: 1761207998824oy8yux2iq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000717 (DB ID: 1761207998851qpjcg7n5x)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000718 (DB ID: 17612080000934scm8l1vw)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000719 (DB ID: 1761208000118jwsynt3dp)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000720 (DB ID: 17612080001425302eoztn)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000721 (DB ID: 17612080001694ceykw2vl)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000722 (DB ID: 1761208000197bzdjfx2ib)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000723 (DB ID: 1761208000222mssecpo6q)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000724 (DB ID: 176120800025391wrj9wqq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000725 (DB ID: 1761208000278s7411uj4m)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000726 (DB ID: 17612080003063e4tftp71)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000727 (DB ID: 1761208000331c1bv4410m)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000728 (DB ID: 17612080015480bhqx5s98)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000729 (DB ID: 1761208001570elbk1jtdk)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000730 (DB ID: 1761208001595nvr736ul7)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000731 (DB ID: 1761208001616m8b7i0fjq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000732 (DB ID: 1761208001638ot67a4k56)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000733 (DB ID: 176120800166733dd1h0e8)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000734 (DB ID: 1761208001697itlywnzld)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000735 (DB ID: 1761208001739yxbnjpg7v)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000736 (DB ID: 1761208001763sx5pmmy61)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000737 (DB ID: 17612080017833on2x7r7b)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000738 (DB ID: 1761208002948jcpvrqmbz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000739 (DB ID: 1761208002970h8xnalntz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000740 (DB ID: 1761208002994v5srlo8lq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000741 (DB ID: 1761208003037w46g2lsbk)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000743 (DB ID: 1761208003081c1xs6ncb4)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000744 (DB ID: 1761208003116vel7i0qc7)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000745 (DB ID: 17612080031508bpl18rkf)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000746 (DB ID: 1761208003194tw1vc0rjm)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000747 (DB ID: 1761208003235g0xog2xeg)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000748 (DB ID: 1761208003254f7lu7jgg6)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000749 (DB ID: 1761208004474or30gjj8r)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000750 (DB ID: 1761208004498l13hs8q5c)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000751 (DB ID: 1761208004535oi81haaeb)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000753 (DB ID: 17612080045620aj01821y)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000754 (DB ID: 1761208004590h9jviackr)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000755 (DB ID: 1761208004614eywgcbgpr)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000756 (DB ID: 1761208004640ndtuo2jmy)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000757 (DB ID: 1761208004667z5ql0am0d)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000758 (DB ID: 1761208004694xfbk9n32q)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000759 (DB ID: 1761208004727tog5qhiwf)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000760 (DB ID: 17612080059170yzjl3m7n)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000761 (DB ID: 1761208005942bpisxw86f)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000762 (DB ID: 1761208005970idy8reh0z)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000764 (DB ID: 1761208005994zdbmvvnek)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000765 (DB ID: 1761208006019jh3c73k2r)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000766 (DB ID: 1761208006043viw3tfjm1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000767 (DB ID: 1761208006077tf84uhtoc)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000768 (DB ID: 17612080061098rnumhrra)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000769 (DB ID: 17612080061353lfarz41x)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000770 (DB ID: 1761208006161827x8vxmf)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000771 (DB ID: 1761208007393i5ttdyeq2)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000772 (DB ID: 1761208007415akcn712ts)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000773 (DB ID: 1761208007436djo4koh2e)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000774 (DB ID: 17612080074680g98slmg7)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000775 (DB ID: 1761208007494ic4oi8jv9)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000776 (DB ID: 1761208007517ja7f5b1yx)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000777 (DB ID: 1761208007545lbyegqtc3)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000778 (DB ID: 1761208007571yiein22vz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000779 (DB ID: 1761208007591p3zu5pjuh)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000782 (DB ID: 1761208007617uthiag37f)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000783 (DB ID: 17612080088186q9lkhs8z)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000784 (DB ID: 1761208008839imbo2kao4)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000785 (DB ID: 17612080088636ikgow6k3)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000786 (DB ID: 1761208008888kj6jewbwe)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000787 (DB ID: 17612080089098y1hn1g87)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000788 (DB ID: 1761208008925i2mc9khjn)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000789 (DB ID: 1761208008943xk2f4oi7b)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000790 (DB ID: 17612080089741r8ipmaxk)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000791 (DB ID: 1761208008999h2rf4wkmf)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000792 (DB ID: 1761208009022lolq0m0x0)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000793 (DB ID: 1761208010196xix463ylw)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000794 (DB ID: 1761208010222vndygq99p)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000795 (DB ID: 1761208010254gak3vx5cf)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000796 (DB ID: 17612080102856yqpn6zsf)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000797 (DB ID: 17612080103272bxdxz5mx)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000798 (DB ID: 17612080103479ee7x3p9z)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000799 (DB ID: 1761208010376l4sjfbhgb)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000800 (DB ID: 1761208010400n8tcooo3d)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000801 (DB ID: 1761208010425o1fz5wnpk)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000802 (DB ID: 176120801045526chx813l)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000803 (DB ID: 1761208012095tuqlu8lm2)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000804 (DB ID: 17612080121197wksbsufj)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000805 (DB ID: 1761208012146btl8fvc0j)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000806 (DB ID: 1761208012178edwvuumh2)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000807 (DB ID: 1761208012202wgyq9wj0j)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000808 (DB ID: 1761208012232a2k6pydns)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000809 (DB ID: 1761208012258ao3a7xlvc)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000810 (DB ID: 1761208012281amapgyi4x)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000811 (DB ID: 176120801232038nlqjbaw)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000812 (DB ID: 1761208012345ew9lx23nf)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000813 (DB ID: 17612080135612xejejk9y)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000814 (DB ID: 17612080135997jvxbu7q1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000815 (DB ID: 1761208013625xih6wk2st)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000816 (DB ID: 1761208013654nepqinv44)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000817 (DB ID: 1761208013681agvnp3ho3)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000818 (DB ID: 17612080137080pduvys48)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000819 (DB ID: 176120801373775kqejrvv)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000820 (DB ID: 17612080137658s797hxba)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000821 (DB ID: 1761208013814o5xyr2aa1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000822 (DB ID: 1761208013835ed2hekfpa)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000823 (DB ID: 17612080150588iwdw716y)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000824 (DB ID: 17612080150797fhwtktk2)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000825 (DB ID: 1761208015107xnkcrd3dq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000826 (DB ID: 17612080151299m17qczr8)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000827 (DB ID: 1761208015149qrtrvbo02)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000828 (DB ID: 1761208015171es1sfdjgd)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000829 (DB ID: 1761208015206wxuw1t5b4)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000830 (DB ID: 176120801523831wrz62a0)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000831 (DB ID: 1761208015262s19ipqic0)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000832 (DB ID: 1761208015284bj5yrd95n)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000833 (DB ID: 1761208016492nj48uqebh)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000834 (DB ID: 1761208016525dm0w9z4h4)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000835 (DB ID: 1761208016546mz4k42xue)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000836 (DB ID: 17612080165679r4mk5p59)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000837 (DB ID: 1761208016585jzbdq574h)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000838 (DB ID: 1761208016608zakth92n3)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000839 (DB ID: 1761208016636t46dhw33g)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000840 (DB ID: 1761208016657d2z7iv2wv)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000841 (DB ID: 17612080166851aioiozgm)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000842 (DB ID: 17612080167110weemhhhz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000843 (DB ID: 1761208017894d3b8j1l5m)
+    currency:
+      PDF: Ser
+      DB:  USD
+
+  Invoice: 6000000844 (DB ID: 1761208017916gbwzqcw6n)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000845 (DB ID: 1761208017949v0xm1n0sh)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000846 (DB ID: 1761208017974anqgw70mo)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000847 (DB ID: 1761208017998vywp07qvw)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000848 (DB ID: 17612080180200oiid8i0m)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000850 (DB ID: 1761208018039awg3l0xxz)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000851 (DB ID: 1761208018064vq30jqd9t)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000852 (DB ID: 1761208018100rlwqwo1vh)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000853 (DB ID: 1761208018128fsc6mfr12)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000854 (DB ID: 17612080193364kvzhlwyb)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000855 (DB ID: 17612080193602gvt9tygn)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000856 (DB ID: 1761208019384neygaja89)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000857 (DB ID: 176120801941386d36u2s1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000858 (DB ID: 1761208019441guehdnp1b)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000859 (DB ID: 1761208019468thre4m53t)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000860 (DB ID: 17612080194925c25fwr6t)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000861 (DB ID: 1761208019528m67en4ylr)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000862 (DB ID: 1761208019552vq91xjiz1)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000863 (DB ID: 17612080195821f6rbc0vy)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000864 (DB ID: 1761208020787rtvyq4geg)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000865 (DB ID: 1761208020807xdgx97jrq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000866 (DB ID: 17612080208299c5h1o6mv)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000867 (DB ID: 1761208020854g36fz3z3n)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000868 (DB ID: 17612080208746eip6h42j)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000869 (DB ID: 17612080208933383u77ge)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000870 (DB ID: 17612080209155vhh5bz9r)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000871 (DB ID: 17612080209380m92648d8)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000872 (DB ID: 1761208020960pn4dh3bdm)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000873 (DB ID: 1761208020982mqa5x6qxq)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000874 (DB ID: 1761208022182oaiz75l80)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000875 (DB ID: 17612080222236jv3ytn2k)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000876 (DB ID: 1761208022244k2f0zkcak)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000877 (DB ID: 1761208022270t8pggj8uw)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000878 (DB ID: 17612080223034909oxisu)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000879 (DB ID: 1761208022328n0w1jflxg)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000880 (DB ID: 1761208022356kwkea2z92)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000881 (DB ID: 1761208022380kga5z3gly)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000882 (DB ID: 1761208022400ytngore6d)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000883 (DB ID: 1761208022419fyknotftx)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000884 (DB ID: 1761208023646klyq4itsi)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000885 (DB ID: 1761208023677bwjrb1yoa)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000886 (DB ID: 1761208023707b5e28bv6w)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000887 (DB ID: 1761208023728g778yp8cn)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000888 (DB ID: 17612080237552gi0zz11a)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000889 (DB ID: 1761208023789ogz7id7kn)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 9000000485 (DB ID: 1761208023821sawt2awdn)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000486 (DB ID: 1761208023846urtavd2tv)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000487 (DB ID: 1761208023871r491z9l6r)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000488 (DB ID: 1761208023898zwj7ifsxz)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000489 (DB ID: 1761208025186l59n25fk3)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000490 (DB ID: 1761208025211q4zk8b0u)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000491 (DB ID: 1761208025234hsskxhb2v)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000493 (DB ID: 1761208025261e7qvk7hpp)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000494 (DB ID: 1761208025287bqgpzh0br)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000495 (DB ID: 1761208025310x760s3no3)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000496 (DB ID: 17612080253354if4je7m4)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000497 (DB ID: 1761208025359bbvzcea4p)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000499 (DB ID: 1761208025434dbeux33nl)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000500 (DB ID: 17612080266153rcjm5eg3)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000501 (DB ID: 1761208026638n7l8eweao)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000503 (DB ID: 1761208026660psokosg4o)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000504 (DB ID: 1761208026682i0d21lqiv)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000505 (DB ID: 1761208026705qxymizz81)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000506 (DB ID: 17612080267262hudka2uy)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000507 (DB ID: 1761208026752qb4yh3500)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000508 (DB ID: 17612080267842txhqreak)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000509 (DB ID: 1761208026836qjbofubal)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000510 (DB ID: 1761208026873p4gboot5g)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000511 (DB ID: 1761208028092l05qpixw8)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000512 (DB ID: 1761208028118ham4xeopb)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 9000000513 (DB ID: 17612080281412krnstie8)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 3000000240 (DB ID: 1761208028165j4pnopmtu)
+    currency:
+      PDF: Sys
+      DB:  SGD
+
+  Invoice: 3000000320 (DB ID: 17612080282353q7ieog3w)
+    currency:
+      PDF: Sys
+      DB:  SGD
+
+  Invoice: 3000000321 (DB ID: 1761208028258ar4b8pe11)
+    currency:
+      PDF: Sys
+      DB:  SGD
+
+  Invoice: 3000000980 (DB ID: 1761208029566tupgy8r92)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001000 (DB ID: 1761208029588adu71oues)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001020 (DB ID: 1761208029609547jt5l2i)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001040 (DB ID: 1761208029629q2u1vyh3a)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001060 (DB ID: 1761208029654jzgxa93we)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001080 (DB ID: 17612080296735dd323qna)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001100 (DB ID: 176120802969615yhgfh4e)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001120 (DB ID: 1761208029717o9b41iyp9)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000001141 (DB ID: 1761208029744utwz3fz2k)
+    currency:
+      PDF: Sys
+      DB:  USD
+
+  Invoice: 3000001160 (DB ID: 17612080297695u6iatw5e)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3000089463 (DB ID: 1761208030967cyw98hyq2)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 3600005161 (DB ID: 1761208031007kxdeve5mm)
+    currency:
+      PDF: Sys
+      DB:  SGD
+
+  Invoice: 3600005501 (DB ID: 17612080310688emcjtqq0)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3600006341 (DB ID: 1761208031116hqyudq6ty)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 3600006361 (DB ID: 1761208031143ps44n2y9f)
+    currency:
+      PDF: Sys
+      DB:  AUD
+
+  Invoice: 3600006441 (DB ID: 17612080311684jjvnfs38)
+    currency:
+      PDF: Sys
+      DB:  USD
+
+  Invoice: 4000000840 (DB ID: 1761208032402gf3pujqld)
+    invoiceDate:
+      PDF: 2025-02-27
+      DB:  2025-10-23
+    customerContract:
+      PDF: 489133
+      DB:  487101
+
+  Invoice: 4000000880 (DB ID: 1761208032454oz6ju8fmo)
+    invoiceDate:
+      PDF: 2025-06-10
+      DB:  2025-10-23
+
+  Invoice: 4000000881 (DB ID: 1761208032486qp2srs6t4)
+    invoiceDate:
+      PDF: 2025-06-10
+      DB:  2025-10-23
+
+  Invoice: 4000000960 (DB ID: 1761208032595l62bvrx7t)
+    invoiceDate:
+      PDF: 2025-09-29
+      DB:  2025-10-23
+
+  Invoice: 4000004360 (DB ID: 1761208041420zyzst1xps)
+    invoiceDate:
+      PDF: 2024-09-20
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000004500 (DB ID: 1761208042891gwbj13yjd)
+    invoiceDate:
+      PDF: 2024-11-27
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000004660 (DB ID: 1761208044804su4tcl0ke)
+    invoiceDate:
+      PDF: 2024-12-18
+      DB:  2025-10-23
+
+  Invoice: 4000004661 (DB ID: 1761208044832ynw4cn5y4)
+    invoiceDate:
+      PDF: 2024-12-18
+      DB:  2025-10-23
+
+  Invoice: 4000004662 (DB ID: 1761208044865wheawx09h)
+    invoiceDate:
+      PDF: 2024-12-18
+      DB:  2025-10-23
+
+  Invoice: 4000005221 (DB ID: 1761208053830l99mvbmta)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+
+  Invoice: 4000005222 (DB ID: 1761208053856kkifo6ij8)
+    client:
+      PDF: Application Services
+      DB:  South Australia Health
+
+  Invoice: 4000005520 (DB ID: 17612080568635urig2k8o)
+    invoiceDate:
+      PDF: 2025-06-24
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000005660 (DB ID: 1761208061097wz4srfzjc)
+    invoiceDate:
+      PDF: 2025-07-28
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000005664 (DB ID: 17612080612288to4cumzu)
+    invoiceDate:
+      PDF: 2025-07-28
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000005780 (DB ID: 1761208064292f1fl63085)
+    invoiceDate:
+      PDF: 2025-08-14
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000005781 (DB ID: 176120806432641dl3asn8)
+    invoiceDate:
+      PDF: 2025-08-14
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  AUD
+
+  Invoice: 4000005920 (DB ID: 1761208065941p49qnwgum)
+    invoiceDate:
+      PDF: 2025-09-08
+      DB:  2025-10-23
+
+  Invoice: 4000006001 (DB ID: 17612080673411axti3iyo)
+    invoiceDate:
+      PDF: 2025-10-13
+      DB:  2025-10-23
+    customerContract:
+      PDF: 507053
+      DB:  465128
+
+  Invoice: 4004404147 (DB ID: 17612080674137m81sq43g)
+    currency:
+      PDF: Mai
+      DB:  SGD
+
+  Invoice: 4004641783 (DB ID: 1761208067478623f65qwj)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004641801 (DB ID: 1761208068681r1wqy8pno)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004644512 (DB ID: 17612080687030uey56u5t)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004657001 (DB ID: 17612080687379t9whtm05)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004666081 (DB ID: 1761208068757k91qu3vna)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004666155 (DB ID: 1761208068782m5wpdr21e)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004666175 (DB ID: 1761208068801bajxjlfwh)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004666202 (DB ID: 1761208068824n19l8xqul)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004668171 (DB ID: 1761208068850ab2ky9t0z)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004677373 (DB ID: 1761208068870mmacxbll7)
+    currency:
+      PDF: Mai
+      DB:  AUD
+
+  Invoice: 4004677374 (DB ID: 1761208068890ei5aqyisn)
+    currency:
+      PDF: Mai
+      DB:  AUD
+
+  Invoice: 4004677472 (DB ID: 1761208070095b7tgph766)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004677473 (DB ID: 1761208070120kn3o3cf3d)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004677615 (DB ID: 1761208070149jqgp62pxj)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004677832 (DB ID: 1761208070172kgy7xlldc)
+    currency:
+      PDF: Mai
+      DB:  SGD
+
+  Invoice: 4004686705 (DB ID: 17612080702080wfm13yg9)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004686809 (DB ID: 1761208070230a4ngsousx)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004686842 (DB ID: 1761208070252ho3zv14cv)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004687791 (DB ID: 1761208070272dh27wtdum)
+    invoiceDate:
+      PDF: 2024-09-17
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  SGD
+
+  Invoice: 4004690182 (DB ID: 1761208070315cxjt6atn1)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004690229 (DB ID: 1761208071502h4a0u0r9s)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004690231 (DB ID: 1761208071523f8jcpkoay)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004892435 (DB ID: 1761208071546iu5je0jch)
+    currency:
+      PDF: Mai
+      DB:  AUD
+
+  Invoice: 4004892436 (DB ID: 17612080715715wllba50j)
+    currency:
+      PDF: Mai
+      DB:  AUD
+
+  Invoice: 4600014680 (DB ID: 1761208072985ony2fkstc)
+    dueDate:
+      PDF: 2024-01-12
+      DB:  2024-12-01
+
+  Invoice: 4600015300 (DB ID: 1761208073116k9vqzki29)
+    dueDate:
+      PDF: 2024-01-12
+      DB:  2024-12-01
+
+  Invoice: 4600015337 (DB ID: 17612080731490njw65vax)
+    dueDate:
+      PDF: 2024-01-12
+      DB:  2024-12-01
+
+  Invoice: 4600015399 (DB ID: 1761208074376nunofu3v0)
+    dueDate:
+      PDF: 2024-03-12
+      DB:  2024-12-03
+
+  Invoice: 4600015445 (DB ID: 1761208074399s27gl46og)
+    dueDate:
+      PDF: 2024-02-12
+      DB:  2024-12-02
+
+  Invoice: 4600015483 (DB ID: 1761208074424nobt0yup4)
+    dueDate:
+      PDF: 2024-02-12
+      DB:  2024-12-02
+
+  Invoice: 4600016655 (DB ID: 176120807452204jvnf3vj)
+    dueDate:
+      PDF: 2024-11-12
+      DB:  2024-12-11
+
+  Invoice: 4600017007 (DB ID: 176120807456808nph1rvv)
+    dueDate:
+      PDF: 2025-02-01
+      DB:  2025-01-02
+
+  Invoice: 4600017195 (DB ID: 1761208075826e18pdsrqp)
+    invoiceDate:
+      PDF: 2024-11-19
+      DB:  2025-10-23
+    customerContract:
+      PDF: 506519
+      DB:  82363
+
+  Invoice: 4600017223 (DB ID: 17612080758871h8mw88fl)
+    dueDate:
+      PDF: 2025-02-01
+      DB:  2025-01-02
+
+  Invoice: 4600017918 (DB ID: 1761208075986wn15dyigd)
+    dueDate:
+      PDF: 2025-01-02
+      DB:  2025-02-01
+
+  Invoice: 4600017921 (DB ID: 1761208076011qlit1akl3)
+    dueDate:
+      PDF: 2025-01-02
+      DB:  2025-02-01
+
+  Invoice: 4600017964 (DB ID: 1761208077771fn1z8r7l4)
+    dueDate:
+      PDF: 2025-01-02
+      DB:  2025-02-01
+
+  Invoice: 4600018030 (DB ID: 17612080777967lv6088os)
+    dueDate:
+      PDF: 2025-01-02
+      DB:  2025-02-01
+
+  Invoice: 4600018159 (DB ID: 17612080778570oevdeit4)
+    invoiceDate:
+      PDF: 2024-09-12
+      DB:  2024-12-09
+    dueDate:
+      PDF: 2025-08-01
+      DB:  2025-01-08
+
+  Invoice: 4600018575 (DB ID: 1761208077903c4j9x77tl)
+    dueDate:
+      PDF: 2025-01-02
+      DB:  2025-02-01
+
+  Invoice: 4600019608 (DB ID: 17612080779263h2xa66s1)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600019751 (DB ID: 1761208079128i636s1nj4)
+    invoiceDate:
+      PDF: 2025-09-01
+      DB:  2025-01-09
+    dueDate:
+      PDF: 2025-08-02
+      DB:  2025-02-08
+
+  Invoice: 4600019883 (DB ID: 176120807915286ql8osqj)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600020132 (DB ID: 176120807922363z6fny1t)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600020263 (DB ID: 1761208079266r7us6vaf6)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600020264 (DB ID: 176120807929726mvitp6o)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600020276 (DB ID: 17612080793286keiqe0oe)
+    dueDate:
+      PDF: 2025-05-03
+      DB:  2025-03-05
+
+  Invoice: 4600020300 (DB ID: 1761208079387g15hyo9y6)
+    dueDate:
+      PDF: 2025-01-03
+      DB:  2025-03-01
+
+  Invoice: 4600021248 (DB ID: 1761208080806zs51wfwnn)
+    dueDate:
+      PDF: 2025-01-04
+      DB:  2025-04-01
+
+  Invoice: 4600021568 (DB ID: 1761208080832uqrmfy4m0)
+    dueDate:
+      PDF: 2025-01-04
+      DB:  2025-04-01
+
+  Invoice: 4600021824 (DB ID: 1761208080896f54i0gc7j)
+    dueDate:
+      PDF: 2025-01-04
+      DB:  2025-04-01
+
+  Invoice: 4600021878 (DB ID: 17612080809202hlyfjtob)
+    dueDate:
+      PDF: 2025-01-04
+      DB:  2025-04-01
+
+  Invoice: 4600021974 (DB ID: 1761208080947xtee7s0ys)
+    dueDate:
+      PDF: 2025-02-04
+      DB:  2025-04-02
+
+  Invoice: 4600022189 (DB ID: 1761208082169495brhu54)
+    invoiceDate:
+      PDF: 2025-02-19
+      DB:  2025-10-23
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 4600022290 (DB ID: 1761208082222uioebzoek)
+    dueDate:
+      PDF: 2025-06-04
+      DB:  2025-04-06
+
+  Invoice: 4600022931 (DB ID: 1761208082353htxxgay9n)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 4600023003 (DB ID: 1761208082375ij2vr3xnq)
+    invoiceDate:
+      PDF: 2025-10-03
+      DB:  2025-03-10
+    dueDate:
+      PDF: 2025-09-04
+      DB:  2025-04-09
+
+  Invoice: 4600023342 (DB ID: 176120808367715ol0g8yv)
+    dueDate:
+      PDF: 2025-01-05
+      DB:  2025-05-01
+
+  Invoice: 4600023517 (DB ID: 176120808371450tq1isfe)
+    dueDate:
+      PDF: 2025-01-05
+      DB:  2025-05-01
+
+  Invoice: 4600023563 (DB ID: 17612080837392eyajoqgh)
+    dueDate:
+      PDF: 2025-03-05
+      DB:  2025-05-03
+
+  Invoice: 4600023698 (DB ID: 17612080837636xtrzd5qd)
+    dueDate:
+      PDF: 2025-01-05
+      DB:  2025-05-01
+
+  Invoice: 4600023701 (DB ID: 1761208083788gw5nfge7u)
+    dueDate:
+      PDF: 2025-01-05
+      DB:  2025-05-01
+
+  Invoice: 4600023862 (DB ID: 1761208083846v4anibet4)
+    dueDate:
+      PDF: 2025-04-05
+      DB:  2025-05-04
+
+  Invoice: 4600024858 (DB ID: 1761208085339p046xj7uo)
+    invoiceDate:
+      PDF: 2025-11-04
+      DB:  2025-04-11
+    dueDate:
+      PDF: 2025-11-05
+      DB:  2025-05-11
+
+  Invoice: 4600025015 (DB ID: 1761208085361gv0et65ee)
+    invoiceDate:
+      PDF: 2025-04-16
+      DB:  2025-10-23
+
+  Invoice: 4600025016 (DB ID: 1761208086598bdqz7thsy)
+    invoiceDate:
+      PDF: 2025-04-16
+      DB:  2025-10-23
+
+  Invoice: 4600025070 (DB ID: 1761208086696hn2w889cs)
+    dueDate:
+      PDF: 2025-02-06
+      DB:  2025-06-02
+
+  Invoice: 4600025159 (DB ID: 17612080867204t7p0s5wf)
+    dueDate:
+      PDF: 2025-01-06
+      DB:  2025-06-01
+
+  Invoice: 4600025317 (DB ID: 1761208086760t7vd9gzub)
+    dueDate:
+      PDF: 2025-05-06
+      DB:  2025-06-05
+
+  Invoice: 4600025321 (DB ID: 1761208086785xf0rhnpr)
+    dueDate:
+      PDF: 2025-05-06
+      DB:  2025-06-05
+
+  Invoice: 4600025325 (DB ID: 1761208086809592ms1vfh)
+    dueDate:
+      PDF: 2025-05-06
+      DB:  2025-06-05
+
+  Invoice: 4600025935 (DB ID: 1761208089665k70s9ztg5)
+    invoiceDate:
+      PDF: 2025-07-05
+      DB:  2025-05-07
+
+  Invoice: 4600025973 (DB ID: 1761208089688505wj6nvx)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600026080 (DB ID: 1761208090890yazvxtumh)
+    invoiceDate:
+      PDF: 2025-07-05
+      DB:  2025-05-07
+
+  Invoice: 4600026613 (DB ID: 1761208090937ru6g92iz5)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600026725 (DB ID: 17612080909797dym21r87)
+    dueDate:
+      PDF: 2025-03-07
+      DB:  2025-07-03
+
+  Invoice: 4600026875 (DB ID: 17612080910295kecl71a5)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600026878 (DB ID: 1761208091060pzhldq5ib)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600027689 (DB ID: 1761208092454dlyu6v4vh)
+    dueDate:
+      PDF: 2025-01-08
+      DB:  2025-08-01
+
+  Invoice: 4600027706 (DB ID: 17612080925075z1i2vn9b)
+    dueDate:
+      PDF: 2025-01-08
+      DB:  2025-08-01
+
+  Invoice: 4600027856 (DB ID: 17612080925400s1acmrds)
+    invoiceDate:
+      PDF: 2025-09-06
+      DB:  2025-06-09
+    dueDate:
+      PDF: 2025-09-07
+      DB:  2025-07-09
+
+  Invoice: 4600028153 (DB ID: 1761208093905lk1u7r2q3)
+    dueDate:
+      PDF: 2025-01-08
+      DB:  2025-08-01
+
+  Invoice: 4600028272 (DB ID: 1761208093933y7z7i6lsr)
+    dueDate:
+      PDF: 2025-02-08
+      DB:  2025-08-02
+
+  Invoice: 4600028354 (DB ID: 1761208093960cglbrcn33)
+    dueDate:
+      PDF: 2025-01-08
+      DB:  2025-08-01
+
+  Invoice: 4600028422 (DB ID: 1761208093986ogxow5yqu)
+    dueDate:
+      PDF: 2025-01-08
+      DB:  2025-08-01
+
+  Invoice: 4600029368 (DB ID: 1761208095360v1amz4tqm)
+    invoiceDate:
+      PDF: 2025-04-07
+      DB:  2025-07-04
+    dueDate:
+      PDF: 2025-03-08
+      DB:  2025-08-03
+
+  Invoice: 4600029527 (DB ID: 17612080953876z5iii383)
+    invoiceDate:
+      PDF: 2025-07-09
+      DB:  2025-10-23
+
+  Invoice: 4600029528 (DB ID: 1761208095414l28yg4y8t)
+    invoiceDate:
+      PDF: 2025-07-09
+      DB:  2025-10-23
+
+  Invoice: 4600029529 (DB ID: 1761208095442l6epo9mtk)
+    invoiceDate:
+      PDF: 2025-07-09
+      DB:  2025-10-23
+
+  Invoice: 4600029692 (DB ID: 1761208096830hyqi0y4yn)
+    dueDate:
+      PDF: 2025-01-09
+      DB:  2025-09-01
+
+  Invoice: 4600029722 (DB ID: 1761208096854igswsyjjg)
+    dueDate:
+      PDF: 2025-02-09
+      DB:  2025-09-02
+
+  Invoice: 4600029839 (DB ID: 1761208096880s14sbp7fs)
+    dueDate:
+      PDF: 2025-01-09
+      DB:  2025-09-01
+
+  Invoice: 4600029841 (DB ID: 1761208096904i9zkjyoqf)
+    dueDate:
+      PDF: 2025-01-09
+      DB:  2025-09-01
+
+  Invoice: 4600030036 (DB ID: 1761208096925rkj0wq7w3)
+    dueDate:
+      PDF: 2025-05-09
+      DB:  2025-09-05
+
+  Invoice: 4600030039 (DB ID: 1761208096954n6g5ih60n)
+    dueDate:
+      PDF: 2025-05-09
+      DB:  2025-09-05
+
+  Invoice: 4600030083 (DB ID: 1761208096992cfa7ng7p4)
+    dueDate:
+      PDF: 2025-07-09
+      DB:  2025-09-07
+
+  Invoice: 4600030677 (DB ID: 17612080982150frxy44o8)
+    invoiceDate:
+      PDF: 2025-07-08
+      DB:  2025-08-07
+    dueDate:
+      PDF: 2025-06-09
+      DB:  2025-09-06
+
+  Invoice: 4600030690 (DB ID: 176120809823703ztlgf0d)
+    dueDate:
+      PDF: 2025-01-10
+      DB:  2025-10-01
+
+  Invoice: 4600030712 (DB ID: 17612080982589z71p81o6)
+    dueDate:
+      PDF: 2025-01-10
+      DB:  2025-10-01
+
+  Invoice: 4600030852 (DB ID: 1761208098301gmmuofyhw)
+    dueDate:
+      PDF: 2025-01-10
+      DB:  2025-10-01
+
+  Invoice: 4600030902 (DB ID: 17612080983226cy4he1fx)
+    dueDate:
+      PDF: 2025-01-10
+      DB:  2025-10-01
+
+  Invoice: 4600031098 (DB ID: 1761208098361sm5cdi44n)
+    dueDate:
+      PDF: 2025-03-10
+      DB:  2025-10-03
+
+  Invoice: 4600031258 (DB ID: 1761208098382uip4m6zac)
+    dueDate:
+      PDF: 2025-01-10
+      DB:  2025-10-01
+
+  Invoice: 4600032469 (DB ID: 1761208099826cf8m276z9)
+    invoiceDate:
+      PDF: 2025-08-09
+      DB:  2025-09-08
+    dueDate:
+      PDF: 2025-08-10
+      DB:  2025-10-08
+
+  Invoice: 4600032536 (DB ID: 1761208101152ngm6v9f1b)
+    invoiceDate:
+      PDF: 2025-12-09
+      DB:  2025-09-12
+    dueDate:
+      PDF: 2025-12-10
+      DB:  2025-10-12
+
+  Invoice: 4600032537 (DB ID: 1761208101206mvqcyqs6d)
+    invoiceDate:
+      PDF: 2025-12-09
+      DB:  2025-09-12
+    dueDate:
+      PDF: 2025-12-10
+      DB:  2025-10-12
+
+  Invoice: 4600032538 (DB ID: 1761208101233oovznbwje)
+    invoiceDate:
+      PDF: 2025-09-12
+      DB:  2025-10-23
+
+  Invoice: 4600032668 (DB ID: 1761208101266hvhp3kjhn)
+    dueDate:
+      PDF: 2025-02-11
+      DB:  2025-11-02
+
+  Invoice: 4600032703 (DB ID: 1761208101327yiapt6kwo)
+    dueDate:
+      PDF: 2025-01-11
+      DB:  2025-11-01
+
+  Invoice: 4600032776 (DB ID: 1761208101361dr694jqs1)
+    dueDate:
+      PDF: 2025-01-11
+      DB:  2025-11-01
+
+  Invoice: 4600032778 (DB ID: 1761208101387mf8crh98t)
+    dueDate:
+      PDF: 2025-01-11
+      DB:  2025-11-01
+
+  Invoice: 4600032781 (DB ID: 1761208101417gvk2zmtn5)
+    dueDate:
+      PDF: 2025-01-11
+      DB:  2025-11-01
+
+  Invoice: 4600032787 (DB ID: 1761208102663dnbkuke8p)
+    dueDate:
+      PDF: 2025-01-11
+      DB:  2025-11-01
+
+  Invoice: 4600033191 (DB ID: 1761208102692ya3e5g1af)
+    invoiceDate:
+      PDF: 2025-07-10
+      DB:  2025-10-07
+    dueDate:
+      PDF: 2025-06-11
+      DB:  2025-11-06
+
+  Invoice: 4600034289 (DB ID: 1761208102736j705vquea)
+    dueDate:
+      PDF: 2025-01-12
+      DB:  2025-12-01
+
+  Invoice: 4600034399 (DB ID: 1761208102759cz7id2ug0)
+    dueDate:
+      PDF: 2025-01-12
+      DB:  2025-12-01
+
+  Invoice: 4600034403 (DB ID: 17612081027825b57e23oy)
+    dueDate:
+      PDF: 2025-01-12
+      DB:  2025-12-01
+
+  Invoice: 4600034421 (DB ID: 1761208102814nlyz790nz)
+    dueDate:
+      PDF: 2025-01-12
+      DB:  2025-12-01
+
+  Invoice: 8600004201 (DB ID: 1761208102889dngtv3fey)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 8600004221 (DB ID: 1761208102910qvozmohn7)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 8600006301 (DB ID: 1761208104123786ruzx4a)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 8600006302 (DB ID: 17612081041485n2vynsnl)
+    currency:
+      PDF: Cre
+      DB:  USD
+
+  Invoice: 6000000780 (DB ID: 1761208108272p3psjctcr)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000781 (DB ID: 1761208108306k738pun68)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 4600026853 (DB ID: 17612103584314wc88a3gc)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600026853 (DB ID: 17612103584314wc88a3gc)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 4600026853 (DB ID: 17612103584314wc88a3gc)
+    dueDate:
+      PDF: 2025-01-07
+      DB:  2025-07-01
+
+  Invoice: 6000000893 (DB ID: 17612619477918y13bl0lm)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 6000000897 (DB ID: 17612619696157jo51btur)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 9000000476 (DB ID: 17612677665166sfwmszog)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 4004578918 (DB ID: 176126800765957ad8mxiy)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 4004589316 (DB ID: 1761268047351zaf95zvkc)
+    currency:
+      PDF: Mai
+      DB:  USD
+
+  Invoice: 9000000498 (DB ID: 176126997325789wfa7cvv)
+    currency:
+      PDF: Ser
+      DB:  SGD
+
+  Invoice: 3000001140 (DB ID: 1761270139816wecldy4vt)
+    client:
+      PDF: Women's and Children's Hospital 
+      DB:  South Australia Health
+    currency:
+      PDF: Sys
+      DB:  USD
+
+  Invoice: 6000000849 (DB ID: 1761270601396k0w3gr6y4)
+    currency:
+      PDF: Ser
+      DB:  AUD
+
+  Invoice: 4000005401 (DB ID: 1761271094451eiw9sy79j)
+    client:
+      PDF: Women's and Children's Hospital 
+      DB:  South Australia Health
+
+✅ Detailed report saved to: comprehensive-validation-report.json
+✅ Corrections CSV saved to: corrections-needed.csv
+

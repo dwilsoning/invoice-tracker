@@ -1,0 +1,177 @@
+═══════════════════════════════════════════════════════
+         QA VALIDATION REPORT - KEY FINDINGS
+═══════════════════════════════════════════════════════
+
+VALIDATION SUMMARY:
+───────────────────────────────────────────────────────
+  Total Invoices Checked: 814
+  ✅ Perfect Matches: 342 (42.0%)
+  ⚠️  Real Discrepancies: 126
+  📋 Missing in Database: 17
+
+
+📅 INVOICE DATE DISCREPANCIES (41):
+───────────────────────────────────────────────────────
+  Invoice: 4000004480
+    PDF Date:  2024-11-21
+    DB Date:   2025-10-23
+
+  Invoice: 4000004481
+    PDF Date:  2024-11-21
+    DB Date:   2025-10-23
+
+  Invoice: 4000004482
+    PDF Date:  2024-11-21
+    DB Date:   2025-10-23
+
+  Invoice: 4000000840
+    PDF Date:  2025-02-27
+    DB Date:   2025-10-23
+
+  Invoice: 4000000880
+    PDF Date:  2025-06-10
+    DB Date:   2025-10-23
+
+  Invoice: 4000000881
+    PDF Date:  2025-06-10
+    DB Date:   2025-10-23
+
+  Invoice: 4000000960
+    PDF Date:  2025-09-29
+    DB Date:   2025-10-23
+
+  Invoice: 4000004360
+    PDF Date:  2024-09-20
+    DB Date:   2025-10-23
+
+  Invoice: 4000004500
+    PDF Date:  2024-11-27
+    DB Date:   2025-10-23
+
+  Invoice: 4000004660
+    PDF Date:  2024-12-18
+    DB Date:   2025-10-23
+
+  ... and 31 more
+
+
+📆 DUE DATE DISCREPANCIES (86):
+───────────────────────────────────────────────────────
+  Invoice: 4600014680
+    PDF Due Date:  2024-01-12
+    DB Due Date:   2024-12-01
+
+  Invoice: 4600015300
+    PDF Due Date:  2024-01-12
+    DB Due Date:   2024-12-01
+
+  Invoice: 4600015337
+    PDF Due Date:  2024-01-12
+    DB Due Date:   2024-12-01
+
+  Invoice: 4600015399
+    PDF Due Date:  2024-03-12
+    DB Due Date:   2024-12-03
+
+  Invoice: 4600015445
+    PDF Due Date:  2024-02-12
+    DB Due Date:   2024-12-02
+
+  Invoice: 4600015483
+    PDF Due Date:  2024-02-12
+    DB Due Date:   2024-12-02
+
+  Invoice: 4600016655
+    PDF Due Date:  2024-11-12
+    DB Due Date:   2024-12-11
+
+  Invoice: 4600017007
+    PDF Due Date:  2025-02-01
+    DB Due Date:   2025-01-02
+
+  Invoice: 4600017223
+    PDF Due Date:  2025-02-01
+    DB Due Date:   2025-01-02
+
+  Invoice: 4600017918
+    PDF Due Date:  2025-01-02
+    DB Due Date:   2025-02-01
+
+  ... and 76 more
+
+
+👥 CLIENT NAME DISCREPANCIES (9):
+───────────────────────────────────────────────────────
+  Invoice: 6000000746
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 6000000801
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 6000000807
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 6000000808
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 3000001160
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 4000005221
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 4000005222
+    PDF Client:  Application Services
+    DB Client:   South Australia Health
+
+  Invoice: 3000001140
+    PDF Client:  Women's and Children's Hospital 
+    DB Client:   South Australia Health
+
+  Invoice: 4000005401
+    PDF Client:  Women's and Children's Hospital 
+    DB Client:   South Australia Health
+
+
+📋 INVOICES MISSING FROM DATABASE (17):
+───────────────────────────────────────────────────────
+  • 25-1620
+  • 3600005381
+  • 4000000780
+  • 4004687792
+  • 9000000081
+  • 9000000082
+  • 9000000083
+  • 9000000084
+  • 9000000085
+  • 9000000086
+  • 9000000087
+  • 9000000088
+  • 9000000089
+  • 9000000090
+  • 9000000092
+  • 9000000093
+  • 9000000087
+
+═══════════════════════════════════════════════════════
+                    CONCLUSION
+═══════════════════════════════════════════════════════
+
+Key Issues Identified:
+  1. 41 invoices have incorrect invoice dates in DB
+  2. 86 invoices have incorrect due dates in DB
+  3. 9 invoices have client name mismatches
+  4. 17 invoice PDFs not imported to database
+
+Recommendation:
+  - Focus on correcting the ${dateIssues.length} invoice date errors
+  - Review and correct the ${dueIssues.length} due date errors
+  - Import the ${data.missingInDatabase.length} missing invoices
+  - Payment status should NOT be changed during corrections
+

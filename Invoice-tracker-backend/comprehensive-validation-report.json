@@ -1,0 +1,6192 @@
+{
+  "summary": {
+    "timestamp": "2025-10-24T08:58:41.432Z",
+    "totalPDFs": 815,
+    "totalChecked": 814,
+    "perfectMatches": 342,
+    "totalDiscrepancies": 472,
+    "accuracyRate": "42.0%"
+  },
+  "missingInDatabase": [
+    {
+      "invoiceNumber": "25-1620",
+      "filename": "1761207984338-Altera - Inv 25-1620 16 Jan25 PO4000333 - Ceduna.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "3600005381",
+      "filename": "1761208031026-MDRX_AR_Standard_Invoice_3600005381.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "4000000780",
+      "filename": "1761208031190-MDRX_AR_Standard_Invoice_4000000780.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "4004687792",
+      "filename": "1761208070289-MDRX_AR_Standard_Invoice_4004687792.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000081",
+      "filename": "1761208104166-MDRX_AR_Standard_Invoice_9000000081.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000082",
+      "filename": "1761208104193-MDRX_AR_Standard_Invoice_9000000082.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000083",
+      "filename": "1761208104220-MDRX_AR_Standard_Invoice_9000000083.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000084",
+      "filename": "1761208104249-MDRX_AR_Standard_Invoice_9000000084.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000085",
+      "filename": "1761208104280-MDRX_AR_Standard_Invoice_9000000085.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000086",
+      "filename": "1761208104309-MDRX_AR_Standard_Invoice_9000000086.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000087",
+      "filename": "1761208104338-MDRX_AR_Standard_Invoice_9000000087.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000088",
+      "filename": "1761208105550-MDRX_AR_Standard_Invoice_9000000088.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000089",
+      "filename": "1761208105574-MDRX_AR_Standard_Invoice_9000000089.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000090",
+      "filename": "1761208105603-MDRX_AR_Standard_Invoice_9000000090.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000092",
+      "filename": "1761208105647-MDRX_AR_Standard_Invoice_9000000092.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000093",
+      "filename": "1761208105673-MDRX_AR_Standard_Invoice_9000000093.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    },
+    {
+      "invoiceNumber": "9000000087",
+      "filename": "1761268886746-MDRX_AR_Standard_Invoice_9000000087.pdf",
+      "issue": "MISSING_IN_DATABASE",
+      "details": "Invoice exists as PDF but not found in database"
+    }
+  ],
+  "dataMismatches": [
+    {
+      "invoiceNumber": "4000004480",
+      "filename": "1761207984427-Credit Memo 4000004480.pdf",
+      "dbId": "1761207984435gqrtrqhom",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-11-21",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004481",
+      "filename": "1761207984452-Credit Memo 4000004481.pdf",
+      "dbId": "1761207984459w2wxtmptq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-11-21",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004482",
+      "filename": "1761207984476-Credit Memo 4000004482.pdf",
+      "dbId": "1761207984484gb23w8xdr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-11-21",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000070746",
+      "filename": "1761207987007-Invoice 3000070746.pdf",
+      "dbId": "1761207987014xy99e1j3e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000091",
+      "filename": "1761207987028-MDRX_AR_Project_Invoice_11000000091.pdf",
+      "dbId": "1761207987036crmkvh3cp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000094",
+      "filename": "1761207987058-MDRX_AR_Project_Invoice_11000000094.pdf",
+      "dbId": "1761207987064krqbf8vcg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000095",
+      "filename": "1761207987080-MDRX_AR_Project_Invoice_11000000095.pdf",
+      "dbId": "17612079870887nk973dac",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000096",
+      "filename": "1761207987104-MDRX_AR_Project_Invoice_11000000096.pdf",
+      "dbId": "1761207987112z3kjvawxd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000097",
+      "filename": "1761207987134-MDRX_AR_Project_Invoice_11000000097.pdf",
+      "dbId": "1761207987143k5n6cembu",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000098",
+      "filename": "1761207988350-MDRX_AR_Project_Invoice_11000000098.pdf",
+      "dbId": "17612079883562xuqst1sc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000099",
+      "filename": "1761207988370-MDRX_AR_Project_Invoice_11000000099.pdf",
+      "dbId": "1761207988378zp1u8iwm4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000100",
+      "filename": "1761207988394-MDRX_AR_Project_Invoice_11000000100.pdf",
+      "dbId": "17612079883990q4u6oush",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000101",
+      "filename": "1761207988416-MDRX_AR_Project_Invoice_11000000101.pdf",
+      "dbId": "1761207988422pvgolwbi9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000102",
+      "filename": "1761207988439-MDRX_AR_Project_Invoice_11000000102.pdf",
+      "dbId": "1761207988446n395op3ck",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000103",
+      "filename": "1761207988463-MDRX_AR_Project_Invoice_11000000103.pdf",
+      "dbId": "17612079884715kvp2ndq1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000104",
+      "filename": "1761207988498-MDRX_AR_Project_Invoice_11000000104.pdf",
+      "dbId": "17612079885056c98sad7c",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000105",
+      "filename": "1761207988523-MDRX_AR_Project_Invoice_11000000105.pdf",
+      "dbId": "1761207988530zzojiya8q",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000106",
+      "filename": "1761207988543-MDRX_AR_Project_Invoice_11000000106.pdf",
+      "dbId": "1761207988572eyrfo1smr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000107",
+      "filename": "1761207988590-MDRX_AR_Project_Invoice_11000000107.pdf",
+      "dbId": "17612079885988frk5l3dk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000108",
+      "filename": "1761207989818-MDRX_AR_Project_Invoice_11000000108.pdf",
+      "dbId": "176120798982542nq1q9p6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000109",
+      "filename": "1761207989840-MDRX_AR_Project_Invoice_11000000109.pdf",
+      "dbId": "1761207989847p0058us6f",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000110",
+      "filename": "1761207989865-MDRX_AR_Project_Invoice_11000000110.pdf",
+      "dbId": "1761207989873i1po50tk7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000111",
+      "filename": "1761207989893-MDRX_AR_Project_Invoice_11000000111.pdf",
+      "dbId": "17612079899018e40m2jth",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000112",
+      "filename": "1761207989922-MDRX_AR_Project_Invoice_11000000112.pdf",
+      "dbId": "1761207989934sjcaze0n7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000113",
+      "filename": "1761207989954-MDRX_AR_Project_Invoice_11000000113.pdf",
+      "dbId": "1761207989961qnvfc0b74",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000114",
+      "filename": "1761207989979-MDRX_AR_Project_Invoice_11000000114.pdf",
+      "dbId": "1761207989985miae6uqks",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000115",
+      "filename": "1761207990013-MDRX_AR_Project_Invoice_11000000115.pdf",
+      "dbId": "1761207990022m9oojs9zz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000116",
+      "filename": "1761207990044-MDRX_AR_Project_Invoice_11000000116.pdf",
+      "dbId": "1761207990052uq2djo2ug",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000117",
+      "filename": "1761207990068-MDRX_AR_Project_Invoice_11000000117.pdf",
+      "dbId": "17612079900750ujwcz2xa",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000118",
+      "filename": "1761207991253-MDRX_AR_Project_Invoice_11000000118.pdf",
+      "dbId": "1761207991259c778rii1r",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000125",
+      "filename": "1761207991277-MDRX_AR_Project_Invoice_11000000125.pdf",
+      "dbId": "1761207991284ev9rdkbrs",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "11000000126",
+      "filename": "1761207991301-MDRX_AR_Project_Invoice_11000000126.pdf",
+      "dbId": "1761207991308oa9vo0py0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160005702",
+      "filename": "1761207991324-MDRX_AR_Project_Invoice_160005702.pdf",
+      "dbId": "1761207991334jwhbyhiu3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160005767",
+      "filename": "1761207991349-MDRX_AR_Project_Invoice_160005767.pdf",
+      "dbId": "17612079913575oax8rkj6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160005940",
+      "filename": "1761207991373-MDRX_AR_Project_Invoice_160005940.pdf",
+      "dbId": "1761207991383kgz63muw0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160006534",
+      "filename": "1761207991399-MDRX_AR_Project_Invoice_160006534.pdf",
+      "dbId": "17612079914076m3v5z9co",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160006635",
+      "filename": "1761207991425-MDRX_AR_Project_Invoice_160006635.pdf",
+      "dbId": "1761207991433dkplc3lbk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160006872",
+      "filename": "1761207991450-MDRX_AR_Project_Invoice_160006872.pdf",
+      "dbId": "1761207991458k01n28vt7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160007012",
+      "filename": "1761207991474-MDRX_AR_Project_Invoice_160007012.pdf",
+      "dbId": "1761207991483b9le7u3t2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160007190",
+      "filename": "1761207992661-MDRX_AR_Project_Invoice_160007190.pdf",
+      "dbId": "1761207992668c4dzcybsn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160007431",
+      "filename": "1761207992682-MDRX_AR_Project_Invoice_160007431.pdf",
+      "dbId": "17612079926899twenazw8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160007675",
+      "filename": "1761207992701-MDRX_AR_Project_Invoice_160007675.pdf",
+      "dbId": "1761207992710smoq5ij16",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008038",
+      "filename": "1761207992723-MDRX_AR_Project_Invoice_160008038.pdf",
+      "dbId": "17612079927315j1racjxn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008181",
+      "filename": "1761207992749-MDRX_AR_Project_Invoice_160008181.pdf",
+      "dbId": "1761207992757mi2xs1xu5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008245",
+      "filename": "1761207992773-MDRX_AR_Project_Invoice_160008245.pdf",
+      "dbId": "1761207992781sigvvnwzp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008457",
+      "filename": "1761207992792-MDRX_AR_Project_Invoice_160008457.pdf",
+      "dbId": "1761207992800xmtnst832",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008467",
+      "filename": "1761207992817-MDRX_AR_Project_Invoice_160008467.pdf",
+      "dbId": "1761207992825g1fhpqlwl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008628",
+      "filename": "1761207992840-MDRX_AR_Project_Invoice_160008628.pdf",
+      "dbId": "1761207992850z94v0f34d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008655",
+      "filename": "1761207992868-MDRX_AR_Project_Invoice_160008655.pdf",
+      "dbId": "17612079928769jz4yi2cr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008660",
+      "filename": "1761207994087-MDRX_AR_Project_Invoice_160008660.pdf",
+      "dbId": "1761207994095xdy9ezqd7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008661",
+      "filename": "1761207994113-MDRX_AR_Project_Invoice_160008661.pdf",
+      "dbId": "17612079941219aiu4gcj6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008662",
+      "filename": "1761207994136-MDRX_AR_Project_Invoice_160008662.pdf",
+      "dbId": "1761207994143vtdn3cw07",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008663",
+      "filename": "1761207994161-MDRX_AR_Project_Invoice_160008663.pdf",
+      "dbId": "1761207994169pinsndtm6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008722",
+      "filename": "1761207994185-MDRX_AR_Project_Invoice_160008722.pdf",
+      "dbId": "1761207994192hbqtzbg2f",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008723",
+      "filename": "1761207994211-MDRX_AR_Project_Invoice_160008723.pdf",
+      "dbId": "1761207994218exe9nm2ob",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008724",
+      "filename": "1761207994232-MDRX_AR_Project_Invoice_160008724.pdf",
+      "dbId": "17612079942400wi2xeg69",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008725",
+      "filename": "1761207994255-MDRX_AR_Project_Invoice_160008725.pdf",
+      "dbId": "17612079942630mh8xtze3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008750",
+      "filename": "1761207994276-MDRX_AR_Project_Invoice_160008750.pdf",
+      "dbId": "17612079942835n853eefl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008765",
+      "filename": "1761207994299-MDRX_AR_Project_Invoice_160008765.pdf",
+      "dbId": "1761207994307djeh3x57e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008766",
+      "filename": "1761207995538-MDRX_AR_Project_Invoice_160008766.pdf",
+      "dbId": "17612079955456sezsf2g3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008767",
+      "filename": "1761207995567-MDRX_AR_Project_Invoice_160008767.pdf",
+      "dbId": "17612079955759ifck6nqd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160008976",
+      "filename": "1761207995592-MDRX_AR_Project_Invoice_160008976.pdf",
+      "dbId": "1761207995600j281v35yz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009034",
+      "filename": "1761207995613-MDRX_AR_Project_Invoice_160009034.pdf",
+      "dbId": "1761207995620hvbki9lgf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009070",
+      "filename": "1761207995647-MDRX_AR_Project_Invoice_160009070.pdf",
+      "dbId": "17612079956552pdgbg4li",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009078",
+      "filename": "1761207995672-MDRX_AR_Project_Invoice_160009078.pdf",
+      "dbId": "17612079956799qbziusgv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009255",
+      "filename": "1761207995705-MDRX_AR_Project_Invoice_160009255.pdf",
+      "dbId": "17612079957149p8cp3ixz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009266",
+      "filename": "1761207995745-MDRX_AR_Project_Invoice_160009266.pdf",
+      "dbId": "1761207995756tqkbn0dof",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009302",
+      "filename": "1761207995777-MDRX_AR_Project_Invoice_160009302.pdf",
+      "dbId": "176120799578533pumekmd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009328",
+      "filename": "1761207995816-MDRX_AR_Project_Invoice_160009328.pdf",
+      "dbId": "176120799582436fyncxf9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009485",
+      "filename": "1761207997014-MDRX_AR_Project_Invoice_160009485.pdf",
+      "dbId": "17612079970228eklp1ovi",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009486",
+      "filename": "1761207997038-MDRX_AR_Project_Invoice_160009486.pdf",
+      "dbId": "1761207997046kpoyqlljw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009504",
+      "filename": "1761207997064-MDRX_AR_Project_Invoice_160009504.pdf",
+      "dbId": "1761207997072aje4qujvh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        },
+        {
+          "field": "customerContract",
+          "pdf": "Oracle",
+          "db": "125339"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009542",
+      "filename": "1761207997087-MDRX_AR_Project_Invoice_160009542.pdf",
+      "dbId": "17612079970954rtvk96k6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009564",
+      "filename": "1761207997121-MDRX_AR_Project_Invoice_160009564.pdf",
+      "dbId": "1761207997136pa6b7576s",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "160009588",
+      "filename": "1761207997177-MDRX_AR_Project_Invoice_160009588.pdf",
+      "dbId": "1761207997185o6ans54l8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000692",
+      "filename": "1761207997205-MDRX_AR_Project_Invoice_6000000692.pdf",
+      "dbId": "1761207997215ptp4awctz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000704",
+      "filename": "1761207997254-MDRX_AR_Project_Invoice_6000000704.pdf",
+      "dbId": "1761207997264hkyfhiasp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000705",
+      "filename": "1761207997283-MDRX_AR_Project_Invoice_6000000705.pdf",
+      "dbId": "17612079972921f9gokwn7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000706",
+      "filename": "1761207997323-MDRX_AR_Project_Invoice_6000000706.pdf",
+      "dbId": "17612079973311wapbsq78",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000707",
+      "filename": "1761207998604-MDRX_AR_Project_Invoice_6000000707.pdf",
+      "dbId": "1761207998609bz6anyw1p",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000708",
+      "filename": "1761207998630-MDRX_AR_Project_Invoice_6000000708.pdf",
+      "dbId": "1761207998636jpelsvoh1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000709",
+      "filename": "1761207998657-MDRX_AR_Project_Invoice_6000000709.pdf",
+      "dbId": "1761207998664b6ujkm5rs",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000711",
+      "filename": "1761207998683-MDRX_AR_Project_Invoice_6000000711.pdf",
+      "dbId": "1761207998691ei5nzb7i0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000712",
+      "filename": "1761207998722-MDRX_AR_Project_Invoice_6000000712.pdf",
+      "dbId": "1761207998729l1k5al80c",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000713",
+      "filename": "1761207998745-MDRX_AR_Project_Invoice_6000000713.pdf",
+      "dbId": "1761207998754xgxux1sp5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000714",
+      "filename": "1761207998769-MDRX_AR_Project_Invoice_6000000714.pdf",
+      "dbId": "1761207998776c2h5itowg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000715",
+      "filename": "1761207998791-MDRX_AR_Project_Invoice_6000000715.pdf",
+      "dbId": "1761207998799pedwsobtv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000716",
+      "filename": "1761207998815-MDRX_AR_Project_Invoice_6000000716.pdf",
+      "dbId": "1761207998824oy8yux2iq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000717",
+      "filename": "1761207998844-MDRX_AR_Project_Invoice_6000000717.pdf",
+      "dbId": "1761207998851qpjcg7n5x",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000718",
+      "filename": "1761208000085-MDRX_AR_Project_Invoice_6000000718.pdf",
+      "dbId": "17612080000934scm8l1vw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000719",
+      "filename": "1761208000110-MDRX_AR_Project_Invoice_6000000719.pdf",
+      "dbId": "1761208000118jwsynt3dp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000720",
+      "filename": "1761208000135-MDRX_AR_Project_Invoice_6000000720.pdf",
+      "dbId": "17612080001425302eoztn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000721",
+      "filename": "1761208000162-MDRX_AR_Project_Invoice_6000000721.pdf",
+      "dbId": "17612080001694ceykw2vl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000722",
+      "filename": "1761208000190-MDRX_AR_Project_Invoice_6000000722.pdf",
+      "dbId": "1761208000197bzdjfx2ib",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000723",
+      "filename": "1761208000213-MDRX_AR_Project_Invoice_6000000723.pdf",
+      "dbId": "1761208000222mssecpo6q",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000724",
+      "filename": "1761208000243-MDRX_AR_Project_Invoice_6000000724.pdf",
+      "dbId": "176120800025391wrj9wqq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000725",
+      "filename": "1761208000270-MDRX_AR_Project_Invoice_6000000725.pdf",
+      "dbId": "1761208000278s7411uj4m",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000726",
+      "filename": "1761208000298-MDRX_AR_Project_Invoice_6000000726.pdf",
+      "dbId": "17612080003063e4tftp71",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000727",
+      "filename": "1761208000323-MDRX_AR_Project_Invoice_6000000727.pdf",
+      "dbId": "1761208000331c1bv4410m",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000728",
+      "filename": "1761208001540-MDRX_AR_Project_Invoice_6000000728.pdf",
+      "dbId": "17612080015480bhqx5s98",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000729",
+      "filename": "1761208001563-MDRX_AR_Project_Invoice_6000000729.pdf",
+      "dbId": "1761208001570elbk1jtdk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000730",
+      "filename": "1761208001587-MDRX_AR_Project_Invoice_6000000730.pdf",
+      "dbId": "1761208001595nvr736ul7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000731",
+      "filename": "1761208001607-MDRX_AR_Project_Invoice_6000000731.pdf",
+      "dbId": "1761208001616m8b7i0fjq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000732",
+      "filename": "1761208001631-MDRX_AR_Project_Invoice_6000000732.pdf",
+      "dbId": "1761208001638ot67a4k56",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000733",
+      "filename": "1761208001659-MDRX_AR_Project_Invoice_6000000733.pdf",
+      "dbId": "176120800166733dd1h0e8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000734",
+      "filename": "1761208001688-MDRX_AR_Project_Invoice_6000000734.pdf",
+      "dbId": "1761208001697itlywnzld",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000735",
+      "filename": "1761208001730-MDRX_AR_Project_Invoice_6000000735.pdf",
+      "dbId": "1761208001739yxbnjpg7v",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000736",
+      "filename": "1761208001755-MDRX_AR_Project_Invoice_6000000736.pdf",
+      "dbId": "1761208001763sx5pmmy61",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000737",
+      "filename": "1761208001775-MDRX_AR_Project_Invoice_6000000737.pdf",
+      "dbId": "17612080017833on2x7r7b",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000738",
+      "filename": "1761208002945-MDRX_AR_Project_Invoice_6000000738.pdf",
+      "dbId": "1761208002948jcpvrqmbz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000739",
+      "filename": "1761208002962-MDRX_AR_Project_Invoice_6000000739.pdf",
+      "dbId": "1761208002970h8xnalntz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000740",
+      "filename": "1761208002985-MDRX_AR_Project_Invoice_6000000740.pdf",
+      "dbId": "1761208002994v5srlo8lq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000741",
+      "filename": "1761208003023-MDRX_AR_Project_Invoice_6000000741.pdf",
+      "dbId": "1761208003037w46g2lsbk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000743",
+      "filename": "1761208003068-MDRX_AR_Project_Invoice_6000000743.pdf",
+      "dbId": "1761208003081c1xs6ncb4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000744",
+      "filename": "1761208003108-MDRX_AR_Project_Invoice_6000000744.pdf",
+      "dbId": "1761208003116vel7i0qc7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000745",
+      "filename": "1761208003135-MDRX_AR_Project_Invoice_6000000745.pdf",
+      "dbId": "17612080031508bpl18rkf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000746",
+      "filename": "1761208003183-MDRX_AR_Project_Invoice_6000000746.pdf",
+      "dbId": "1761208003194tw1vc0rjm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000747",
+      "filename": "1761208003226-MDRX_AR_Project_Invoice_6000000747.pdf",
+      "dbId": "1761208003235g0xog2xeg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000748",
+      "filename": "1761208003250-MDRX_AR_Project_Invoice_6000000748.pdf",
+      "dbId": "1761208003254f7lu7jgg6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000749",
+      "filename": "1761208004466-MDRX_AR_Project_Invoice_6000000749.pdf",
+      "dbId": "1761208004474or30gjj8r",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000750",
+      "filename": "1761208004488-MDRX_AR_Project_Invoice_6000000750.pdf",
+      "dbId": "1761208004498l13hs8q5c",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000751",
+      "filename": "1761208004527-MDRX_AR_Project_Invoice_6000000751.pdf",
+      "dbId": "1761208004535oi81haaeb",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000753",
+      "filename": "1761208004555-MDRX_AR_Project_Invoice_6000000753.pdf",
+      "dbId": "17612080045620aj01821y",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000754",
+      "filename": "1761208004581-MDRX_AR_Project_Invoice_6000000754.pdf",
+      "dbId": "1761208004590h9jviackr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000755",
+      "filename": "1761208004607-MDRX_AR_Project_Invoice_6000000755.pdf",
+      "dbId": "1761208004614eywgcbgpr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000756",
+      "filename": "1761208004631-MDRX_AR_Project_Invoice_6000000756.pdf",
+      "dbId": "1761208004640ndtuo2jmy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000757",
+      "filename": "1761208004657-MDRX_AR_Project_Invoice_6000000757.pdf",
+      "dbId": "1761208004667z5ql0am0d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000758",
+      "filename": "1761208004684-MDRX_AR_Project_Invoice_6000000758.pdf",
+      "dbId": "1761208004694xfbk9n32q",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000759",
+      "filename": "1761208004717-MDRX_AR_Project_Invoice_6000000759.pdf",
+      "dbId": "1761208004727tog5qhiwf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000760",
+      "filename": "1761208005911-MDRX_AR_Project_Invoice_6000000760.pdf",
+      "dbId": "17612080059170yzjl3m7n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000761",
+      "filename": "1761208005936-MDRX_AR_Project_Invoice_6000000761.pdf",
+      "dbId": "1761208005942bpisxw86f",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000762",
+      "filename": "1761208005964-MDRX_AR_Project_Invoice_6000000762.pdf",
+      "dbId": "1761208005970idy8reh0z",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000764",
+      "filename": "1761208005987-MDRX_AR_Project_Invoice_6000000764.pdf",
+      "dbId": "1761208005994zdbmvvnek",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000765",
+      "filename": "1761208006010-MDRX_AR_Project_Invoice_6000000765.pdf",
+      "dbId": "1761208006019jh3c73k2r",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000766",
+      "filename": "1761208006036-MDRX_AR_Project_Invoice_6000000766.pdf",
+      "dbId": "1761208006043viw3tfjm1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000767",
+      "filename": "1761208006069-MDRX_AR_Project_Invoice_6000000767.pdf",
+      "dbId": "1761208006077tf84uhtoc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000768",
+      "filename": "1761208006097-MDRX_AR_Project_Invoice_6000000768.pdf",
+      "dbId": "17612080061098rnumhrra",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000769",
+      "filename": "1761208006127-MDRX_AR_Project_Invoice_6000000769.pdf",
+      "dbId": "17612080061353lfarz41x",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000770",
+      "filename": "1761208006150-MDRX_AR_Project_Invoice_6000000770.pdf",
+      "dbId": "1761208006161827x8vxmf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000771",
+      "filename": "1761208007387-MDRX_AR_Project_Invoice_6000000771.pdf",
+      "dbId": "1761208007393i5ttdyeq2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000772",
+      "filename": "1761208007408-MDRX_AR_Project_Invoice_6000000772.pdf",
+      "dbId": "1761208007415akcn712ts",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000773",
+      "filename": "1761208007430-MDRX_AR_Project_Invoice_6000000773.pdf",
+      "dbId": "1761208007436djo4koh2e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000774",
+      "filename": "1761208007460-MDRX_AR_Project_Invoice_6000000774.pdf",
+      "dbId": "17612080074680g98slmg7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000775",
+      "filename": "1761208007486-MDRX_AR_Project_Invoice_6000000775.pdf",
+      "dbId": "1761208007494ic4oi8jv9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000776",
+      "filename": "1761208007508-MDRX_AR_Project_Invoice_6000000776.pdf",
+      "dbId": "1761208007517ja7f5b1yx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000777",
+      "filename": "1761208007537-MDRX_AR_Project_Invoice_6000000777.pdf",
+      "dbId": "1761208007545lbyegqtc3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000778",
+      "filename": "1761208007563-MDRX_AR_Project_Invoice_6000000778.pdf",
+      "dbId": "1761208007571yiein22vz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000779",
+      "filename": "1761208007586-MDRX_AR_Project_Invoice_6000000779.pdf",
+      "dbId": "1761208007591p3zu5pjuh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000782",
+      "filename": "1761208007609-MDRX_AR_Project_Invoice_6000000782.pdf",
+      "dbId": "1761208007617uthiag37f",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000783",
+      "filename": "1761208008811-MDRX_AR_Project_Invoice_6000000783.pdf",
+      "dbId": "17612080088186q9lkhs8z",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000784",
+      "filename": "1761208008832-MDRX_AR_Project_Invoice_6000000784.pdf",
+      "dbId": "1761208008839imbo2kao4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000785",
+      "filename": "1761208008855-MDRX_AR_Project_Invoice_6000000785.pdf",
+      "dbId": "17612080088636ikgow6k3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000786",
+      "filename": "1761208008879-MDRX_AR_Project_Invoice_6000000786.pdf",
+      "dbId": "1761208008888kj6jewbwe",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000787",
+      "filename": "1761208008902-MDRX_AR_Project_Invoice_6000000787.pdf",
+      "dbId": "17612080089098y1hn1g87",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000788",
+      "filename": "1761208008918-MDRX_AR_Project_Invoice_6000000788.pdf",
+      "dbId": "1761208008925i2mc9khjn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000789",
+      "filename": "1761208008939-MDRX_AR_Project_Invoice_6000000789.pdf",
+      "dbId": "1761208008943xk2f4oi7b",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000790",
+      "filename": "1761208008970-MDRX_AR_Project_Invoice_6000000790.pdf",
+      "dbId": "17612080089741r8ipmaxk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000791",
+      "filename": "1761208008991-MDRX_AR_Project_Invoice_6000000791.pdf",
+      "dbId": "1761208008999h2rf4wkmf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000792",
+      "filename": "1761208009015-MDRX_AR_Project_Invoice_6000000792.pdf",
+      "dbId": "1761208009022lolq0m0x0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000793",
+      "filename": "1761208010191-MDRX_AR_Project_Invoice_6000000793.pdf",
+      "dbId": "1761208010196xix463ylw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000794",
+      "filename": "1761208010213-MDRX_AR_Project_Invoice_6000000794.pdf",
+      "dbId": "1761208010222vndygq99p",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000795",
+      "filename": "1761208010245-MDRX_AR_Project_Invoice_6000000795.pdf",
+      "dbId": "1761208010254gak3vx5cf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000796",
+      "filename": "1761208010277-MDRX_AR_Project_Invoice_6000000796.pdf",
+      "dbId": "17612080102856yqpn6zsf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000797",
+      "filename": "1761208010320-MDRX_AR_Project_Invoice_6000000797.pdf",
+      "dbId": "17612080103272bxdxz5mx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000798",
+      "filename": "1761208010339-MDRX_AR_Project_Invoice_6000000798.pdf",
+      "dbId": "17612080103479ee7x3p9z",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000799",
+      "filename": "1761208010368-MDRX_AR_Project_Invoice_6000000799.pdf",
+      "dbId": "1761208010376l4sjfbhgb",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000800",
+      "filename": "1761208010394-MDRX_AR_Project_Invoice_6000000800.pdf",
+      "dbId": "1761208010400n8tcooo3d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000801",
+      "filename": "1761208010415-MDRX_AR_Project_Invoice_6000000801.pdf",
+      "dbId": "1761208010425o1fz5wnpk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000802",
+      "filename": "1761208010445-MDRX_AR_Project_Invoice_6000000802.pdf",
+      "dbId": "176120801045526chx813l",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000803",
+      "filename": "1761208012089-MDRX_AR_Project_Invoice_6000000803.pdf",
+      "dbId": "1761208012095tuqlu8lm2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000804",
+      "filename": "1761208012112-MDRX_AR_Project_Invoice_6000000804.pdf",
+      "dbId": "17612080121197wksbsufj",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000805",
+      "filename": "1761208012140-MDRX_AR_Project_Invoice_6000000805.pdf",
+      "dbId": "1761208012146btl8fvc0j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000806",
+      "filename": "1761208012167-MDRX_AR_Project_Invoice_6000000806.pdf",
+      "dbId": "1761208012178edwvuumh2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000807",
+      "filename": "1761208012195-MDRX_AR_Project_Invoice_6000000807.pdf",
+      "dbId": "1761208012202wgyq9wj0j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000808",
+      "filename": "1761208012219-MDRX_AR_Project_Invoice_6000000808.pdf",
+      "dbId": "1761208012232a2k6pydns",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000809",
+      "filename": "1761208012251-MDRX_AR_Project_Invoice_6000000809.pdf",
+      "dbId": "1761208012258ao3a7xlvc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000810",
+      "filename": "1761208012273-MDRX_AR_Project_Invoice_6000000810.pdf",
+      "dbId": "1761208012281amapgyi4x",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000811",
+      "filename": "1761208012311-MDRX_AR_Project_Invoice_6000000811.pdf",
+      "dbId": "176120801232038nlqjbaw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000812",
+      "filename": "1761208012337-MDRX_AR_Project_Invoice_6000000812.pdf",
+      "dbId": "1761208012345ew9lx23nf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000813",
+      "filename": "1761208013554-MDRX_AR_Project_Invoice_6000000813.pdf",
+      "dbId": "17612080135612xejejk9y",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000814",
+      "filename": "1761208013585-MDRX_AR_Project_Invoice_6000000814.pdf",
+      "dbId": "17612080135997jvxbu7q1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000815",
+      "filename": "1761208013614-MDRX_AR_Project_Invoice_6000000815.pdf",
+      "dbId": "1761208013625xih6wk2st",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000816",
+      "filename": "1761208013645-MDRX_AR_Project_Invoice_6000000816.pdf",
+      "dbId": "1761208013654nepqinv44",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000817",
+      "filename": "1761208013672-MDRX_AR_Project_Invoice_6000000817.pdf",
+      "dbId": "1761208013681agvnp3ho3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000818",
+      "filename": "1761208013700-MDRX_AR_Project_Invoice_6000000818.pdf",
+      "dbId": "17612080137080pduvys48",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000819",
+      "filename": "1761208013729-MDRX_AR_Project_Invoice_6000000819.pdf",
+      "dbId": "176120801373775kqejrvv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000820",
+      "filename": "1761208013757-MDRX_AR_Project_Invoice_6000000820.pdf",
+      "dbId": "17612080137658s797hxba",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000821",
+      "filename": "1761208013805-MDRX_AR_Project_Invoice_6000000821.pdf",
+      "dbId": "1761208013814o5xyr2aa1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000822",
+      "filename": "1761208013829-MDRX_AR_Project_Invoice_6000000822.pdf",
+      "dbId": "1761208013835ed2hekfpa",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000823",
+      "filename": "1761208015051-MDRX_AR_Project_Invoice_6000000823.pdf",
+      "dbId": "17612080150588iwdw716y",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000824",
+      "filename": "1761208015072-MDRX_AR_Project_Invoice_6000000824.pdf",
+      "dbId": "17612080150797fhwtktk2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000825",
+      "filename": "1761208015101-MDRX_AR_Project_Invoice_6000000825.pdf",
+      "dbId": "1761208015107xnkcrd3dq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000826",
+      "filename": "1761208015122-MDRX_AR_Project_Invoice_6000000826.pdf",
+      "dbId": "17612080151299m17qczr8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000827",
+      "filename": "1761208015142-MDRX_AR_Project_Invoice_6000000827.pdf",
+      "dbId": "1761208015149qrtrvbo02",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000828",
+      "filename": "1761208015164-MDRX_AR_Project_Invoice_6000000828.pdf",
+      "dbId": "1761208015171es1sfdjgd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000829",
+      "filename": "1761208015193-MDRX_AR_Project_Invoice_6000000829.pdf",
+      "dbId": "1761208015206wxuw1t5b4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000830",
+      "filename": "1761208015229-MDRX_AR_Project_Invoice_6000000830.pdf",
+      "dbId": "176120801523831wrz62a0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000831",
+      "filename": "1761208015255-MDRX_AR_Project_Invoice_6000000831.pdf",
+      "dbId": "1761208015262s19ipqic0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000832",
+      "filename": "1761208015275-MDRX_AR_Project_Invoice_6000000832.pdf",
+      "dbId": "1761208015284bj5yrd95n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000833",
+      "filename": "1761208016485-MDRX_AR_Project_Invoice_6000000833.pdf",
+      "dbId": "1761208016492nj48uqebh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000834",
+      "filename": "1761208016519-MDRX_AR_Project_Invoice_6000000834.pdf",
+      "dbId": "1761208016525dm0w9z4h4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000835",
+      "filename": "1761208016539-MDRX_AR_Project_Invoice_6000000835.pdf",
+      "dbId": "1761208016546mz4k42xue",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000836",
+      "filename": "1761208016560-MDRX_AR_Project_Invoice_6000000836.pdf",
+      "dbId": "17612080165679r4mk5p59",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000837",
+      "filename": "1761208016579-MDRX_AR_Project_Invoice_6000000837.pdf",
+      "dbId": "1761208016585jzbdq574h",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000838",
+      "filename": "1761208016601-MDRX_AR_Project_Invoice_6000000838.pdf",
+      "dbId": "1761208016608zakth92n3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000839",
+      "filename": "1761208016628-MDRX_AR_Project_Invoice_6000000839.pdf",
+      "dbId": "1761208016636t46dhw33g",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000840",
+      "filename": "1761208016651-MDRX_AR_Project_Invoice_6000000840.pdf",
+      "dbId": "1761208016657d2z7iv2wv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000841",
+      "filename": "1761208016678-MDRX_AR_Project_Invoice_6000000841.pdf",
+      "dbId": "17612080166851aioiozgm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000842",
+      "filename": "1761208016700-MDRX_AR_Project_Invoice_6000000842.pdf",
+      "dbId": "17612080167110weemhhhz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000843",
+      "filename": "1761208017888-MDRX_AR_Project_Invoice_6000000843.pdf",
+      "dbId": "1761208017894d3b8j1l5m",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000844",
+      "filename": "1761208017909-MDRX_AR_Project_Invoice_6000000844.pdf",
+      "dbId": "1761208017916gbwzqcw6n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000845",
+      "filename": "1761208017941-MDRX_AR_Project_Invoice_6000000845.pdf",
+      "dbId": "1761208017949v0xm1n0sh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000846",
+      "filename": "1761208017965-MDRX_AR_Project_Invoice_6000000846.pdf",
+      "dbId": "1761208017974anqgw70mo",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000847",
+      "filename": "1761208017990-MDRX_AR_Project_Invoice_6000000847.pdf",
+      "dbId": "1761208017998vywp07qvw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000848",
+      "filename": "1761208018012-MDRX_AR_Project_Invoice_6000000848.pdf",
+      "dbId": "17612080180200oiid8i0m",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000850",
+      "filename": "1761208018031-MDRX_AR_Project_Invoice_6000000850.pdf",
+      "dbId": "1761208018039awg3l0xxz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000851",
+      "filename": "1761208018056-MDRX_AR_Project_Invoice_6000000851.pdf",
+      "dbId": "1761208018064vq30jqd9t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000852",
+      "filename": "1761208018092-MDRX_AR_Project_Invoice_6000000852.pdf",
+      "dbId": "1761208018100rlwqwo1vh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000853",
+      "filename": "1761208018114-MDRX_AR_Project_Invoice_6000000853.pdf",
+      "dbId": "1761208018128fsc6mfr12",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000854",
+      "filename": "1761208019327-MDRX_AR_Project_Invoice_6000000854.pdf",
+      "dbId": "17612080193364kvzhlwyb",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000855",
+      "filename": "1761208019351-MDRX_AR_Project_Invoice_6000000855.pdf",
+      "dbId": "17612080193602gvt9tygn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000856",
+      "filename": "1761208019377-MDRX_AR_Project_Invoice_6000000856.pdf",
+      "dbId": "1761208019384neygaja89",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000857",
+      "filename": "1761208019405-MDRX_AR_Project_Invoice_6000000857.pdf",
+      "dbId": "176120801941386d36u2s1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000858",
+      "filename": "1761208019434-MDRX_AR_Project_Invoice_6000000858.pdf",
+      "dbId": "1761208019441guehdnp1b",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000859",
+      "filename": "1761208019459-MDRX_AR_Project_Invoice_6000000859.pdf",
+      "dbId": "1761208019468thre4m53t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000860",
+      "filename": "1761208019484-MDRX_AR_Project_Invoice_6000000860.pdf",
+      "dbId": "17612080194925c25fwr6t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000861",
+      "filename": "1761208019519-MDRX_AR_Project_Invoice_6000000861.pdf",
+      "dbId": "1761208019528m67en4ylr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000862",
+      "filename": "1761208019545-MDRX_AR_Project_Invoice_6000000862.pdf",
+      "dbId": "1761208019552vq91xjiz1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000863",
+      "filename": "1761208019574-MDRX_AR_Project_Invoice_6000000863.pdf",
+      "dbId": "17612080195821f6rbc0vy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000864",
+      "filename": "1761208020780-MDRX_AR_Project_Invoice_6000000864.pdf",
+      "dbId": "1761208020787rtvyq4geg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000865",
+      "filename": "1761208020800-MDRX_AR_Project_Invoice_6000000865.pdf",
+      "dbId": "1761208020807xdgx97jrq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000866",
+      "filename": "1761208020823-MDRX_AR_Project_Invoice_6000000866.pdf",
+      "dbId": "17612080208299c5h1o6mv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000867",
+      "filename": "1761208020846-MDRX_AR_Project_Invoice_6000000867.pdf",
+      "dbId": "1761208020854g36fz3z3n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000868",
+      "filename": "1761208020867-MDRX_AR_Project_Invoice_6000000868.pdf",
+      "dbId": "17612080208746eip6h42j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000869",
+      "filename": "1761208020887-MDRX_AR_Project_Invoice_6000000869.pdf",
+      "dbId": "17612080208933383u77ge",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000870",
+      "filename": "1761208020908-MDRX_AR_Project_Invoice_6000000870.pdf",
+      "dbId": "17612080209155vhh5bz9r",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000871",
+      "filename": "1761208020932-MDRX_AR_Project_Invoice_6000000871.pdf",
+      "dbId": "17612080209380m92648d8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000872",
+      "filename": "1761208020953-MDRX_AR_Project_Invoice_6000000872.pdf",
+      "dbId": "1761208020960pn4dh3bdm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000873",
+      "filename": "1761208020972-MDRX_AR_Project_Invoice_6000000873.pdf",
+      "dbId": "1761208020982mqa5x6qxq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000874",
+      "filename": "1761208022174-MDRX_AR_Project_Invoice_6000000874.pdf",
+      "dbId": "1761208022182oaiz75l80",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000875",
+      "filename": "1761208022215-MDRX_AR_Project_Invoice_6000000875.pdf",
+      "dbId": "17612080222236jv3ytn2k",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000876",
+      "filename": "1761208022237-MDRX_AR_Project_Invoice_6000000876.pdf",
+      "dbId": "1761208022244k2f0zkcak",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000877",
+      "filename": "1761208022263-MDRX_AR_Project_Invoice_6000000877.pdf",
+      "dbId": "1761208022270t8pggj8uw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000878",
+      "filename": "1761208022295-MDRX_AR_Project_Invoice_6000000878.pdf",
+      "dbId": "17612080223034909oxisu",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000879",
+      "filename": "1761208022320-MDRX_AR_Project_Invoice_6000000879.pdf",
+      "dbId": "1761208022328n0w1jflxg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000880",
+      "filename": "1761208022346-MDRX_AR_Project_Invoice_6000000880.pdf",
+      "dbId": "1761208022356kwkea2z92",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000881",
+      "filename": "1761208022372-MDRX_AR_Project_Invoice_6000000881.pdf",
+      "dbId": "1761208022380kga5z3gly",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000882",
+      "filename": "1761208022392-MDRX_AR_Project_Invoice_6000000882.pdf",
+      "dbId": "1761208022400ytngore6d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000883",
+      "filename": "1761208022413-MDRX_AR_Project_Invoice_6000000883.pdf",
+      "dbId": "1761208022419fyknotftx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000884",
+      "filename": "1761208023639-MDRX_AR_Project_Invoice_6000000884.pdf",
+      "dbId": "1761208023646klyq4itsi",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000885",
+      "filename": "1761208023667-MDRX_AR_Project_Invoice_6000000885.pdf",
+      "dbId": "1761208023677bwjrb1yoa",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000886",
+      "filename": "1761208023697-MDRX_AR_Project_Invoice_6000000886.pdf",
+      "dbId": "1761208023707b5e28bv6w",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000887",
+      "filename": "1761208023720-MDRX_AR_Project_Invoice_6000000887.pdf",
+      "dbId": "1761208023728g778yp8cn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000888",
+      "filename": "1761208023746-MDRX_AR_Project_Invoice_6000000888.pdf",
+      "dbId": "17612080237552gi0zz11a",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000889",
+      "filename": "1761208023781-MDRX_AR_Project_Invoice_6000000889.pdf",
+      "dbId": "1761208023789ogz7id7kn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000485",
+      "filename": "1761208023813-MDRX_AR_Project_Invoice_9000000485.pdf",
+      "dbId": "1761208023821sawt2awdn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000486",
+      "filename": "1761208023838-MDRX_AR_Project_Invoice_9000000486.pdf",
+      "dbId": "1761208023846urtavd2tv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000487",
+      "filename": "1761208023863-MDRX_AR_Project_Invoice_9000000487.pdf",
+      "dbId": "1761208023871r491z9l6r",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000488",
+      "filename": "1761208023888-MDRX_AR_Project_Invoice_9000000488.pdf",
+      "dbId": "1761208023898zwj7ifsxz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000489",
+      "filename": "1761208025177-MDRX_AR_Project_Invoice_9000000489.pdf",
+      "dbId": "1761208025186l59n25fk3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000490",
+      "filename": "1761208025204-MDRX_AR_Project_Invoice_9000000490.pdf",
+      "dbId": "1761208025211q4zk8b0u",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000491",
+      "filename": "1761208025228-MDRX_AR_Project_Invoice_9000000491.pdf",
+      "dbId": "1761208025234hsskxhb2v",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000493",
+      "filename": "1761208025254-MDRX_AR_Project_Invoice_9000000493.pdf",
+      "dbId": "1761208025261e7qvk7hpp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000494",
+      "filename": "1761208025280-MDRX_AR_Project_Invoice_9000000494.pdf",
+      "dbId": "1761208025287bqgpzh0br",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000495",
+      "filename": "1761208025302-MDRX_AR_Project_Invoice_9000000495.pdf",
+      "dbId": "1761208025310x760s3no3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000496",
+      "filename": "1761208025327-MDRX_AR_Project_Invoice_9000000496.pdf",
+      "dbId": "17612080253354if4je7m4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000497",
+      "filename": "1761208025352-MDRX_AR_Project_Invoice_9000000497.pdf",
+      "dbId": "1761208025359bbvzcea4p",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000499",
+      "filename": "1761208025423-MDRX_AR_Project_Invoice_9000000499.pdf",
+      "dbId": "1761208025434dbeux33nl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000500",
+      "filename": "1761208026609-MDRX_AR_Project_Invoice_9000000500.pdf",
+      "dbId": "17612080266153rcjm5eg3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000501",
+      "filename": "1761208026632-MDRX_AR_Project_Invoice_9000000501.pdf",
+      "dbId": "1761208026638n7l8eweao",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000503",
+      "filename": "1761208026654-MDRX_AR_Project_Invoice_9000000503.pdf",
+      "dbId": "1761208026660psokosg4o",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000504",
+      "filename": "1761208026675-MDRX_AR_Project_Invoice_9000000504.pdf",
+      "dbId": "1761208026682i0d21lqiv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000505",
+      "filename": "1761208026698-MDRX_AR_Project_Invoice_9000000505.pdf",
+      "dbId": "1761208026705qxymizz81",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000506",
+      "filename": "1761208026719-MDRX_AR_Project_Invoice_9000000506.pdf",
+      "dbId": "17612080267262hudka2uy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000507",
+      "filename": "1761208026743-MDRX_AR_Project_Invoice_9000000507.pdf",
+      "dbId": "1761208026752qb4yh3500",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000508",
+      "filename": "1761208026774-MDRX_AR_Project_Invoice_9000000508.pdf",
+      "dbId": "17612080267842txhqreak",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000509",
+      "filename": "1761208026826-MDRX_AR_Project_Invoice_9000000509.pdf",
+      "dbId": "1761208026836qjbofubal",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000510",
+      "filename": "1761208026864-MDRX_AR_Project_Invoice_9000000510.pdf",
+      "dbId": "1761208026873p4gboot5g",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000511",
+      "filename": "1761208028084-MDRX_AR_Project_Invoice_9000000511.pdf",
+      "dbId": "1761208028092l05qpixw8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000512",
+      "filename": "1761208028112-MDRX_AR_Project_Invoice_9000000512.pdf",
+      "dbId": "1761208028118ham4xeopb",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000513",
+      "filename": "1761208028135-MDRX_AR_Project_Invoice_9000000513.pdf",
+      "dbId": "17612080281412krnstie8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000000240",
+      "filename": "1761208028159-MDRX_AR_Standard_Invoice_3000000240.pdf",
+      "dbId": "1761208028165j4pnopmtu",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000000320",
+      "filename": "1761208028230-MDRX_AR_Standard_Invoice_3000000320.pdf",
+      "dbId": "17612080282353q7ieog3w",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000000321",
+      "filename": "1761208028251-MDRX_AR_Standard_Invoice_3000000321.pdf",
+      "dbId": "1761208028258ar4b8pe11",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000000980",
+      "filename": "1761208029563-MDRX_AR_Standard_Invoice_3000000980.pdf",
+      "dbId": "1761208029566tupgy8r92",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001000",
+      "filename": "1761208029583-MDRX_AR_Standard_Invoice_3000001000.pdf",
+      "dbId": "1761208029588adu71oues",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001020",
+      "filename": "1761208029603-MDRX_AR_Standard_Invoice_3000001020.pdf",
+      "dbId": "1761208029609547jt5l2i",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001040",
+      "filename": "1761208029624-MDRX_AR_Standard_Invoice_3000001040.pdf",
+      "dbId": "1761208029629q2u1vyh3a",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001060",
+      "filename": "1761208029649-MDRX_AR_Standard_Invoice_3000001060.pdf",
+      "dbId": "1761208029654jzgxa93we",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001080",
+      "filename": "1761208029669-MDRX_AR_Standard_Invoice_3000001080.pdf",
+      "dbId": "17612080296735dd323qna",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001100",
+      "filename": "1761208029689-MDRX_AR_Standard_Invoice_3000001100.pdf",
+      "dbId": "176120802969615yhgfh4e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001120",
+      "filename": "1761208029711-MDRX_AR_Standard_Invoice_3000001120.pdf",
+      "dbId": "1761208029717o9b41iyp9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001141",
+      "filename": "1761208029739-MDRX_AR_Standard_Invoice_3000001141.pdf",
+      "dbId": "1761208029744utwz3fz2k",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001160",
+      "filename": "1761208029765-MDRX_AR_Standard_Invoice_3000001160.pdf",
+      "dbId": "17612080297695u6iatw5e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000089463",
+      "filename": "1761208030961-MDRX_AR_Standard_Invoice_3000089463.pdf",
+      "dbId": "1761208030967cyw98hyq2",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3600005161",
+      "filename": "1761208031001-MDRX_AR_Standard_Invoice_3600005161.pdf",
+      "dbId": "1761208031007kxdeve5mm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3600005501",
+      "filename": "1761208031061-MDRX_AR_Standard_Invoice_3600005501.pdf",
+      "dbId": "17612080310688emcjtqq0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3600006341",
+      "filename": "1761208031111-MDRX_AR_Standard_Invoice_3600006341.pdf",
+      "dbId": "1761208031116hqyudq6ty",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3600006361",
+      "filename": "1761208031136-MDRX_AR_Standard_Invoice_3600006361.pdf",
+      "dbId": "1761208031143ps44n2y9f",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3600006441",
+      "filename": "1761208031161-MDRX_AR_Standard_Invoice_3600006441.pdf",
+      "dbId": "17612080311684jjvnfs38",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000000840",
+      "filename": "1761208032396-MDRX_AR_Standard_Invoice_4000000840.pdf",
+      "dbId": "1761208032402gf3pujqld",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-02-27",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "customerContract",
+          "pdf": "489133",
+          "db": "487101"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000000880",
+      "filename": "1761208032448-MDRX_AR_Standard_Invoice_4000000880.pdf",
+      "dbId": "1761208032454oz6ju8fmo",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-06-10",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000000881",
+      "filename": "1761208032481-MDRX_AR_Standard_Invoice_4000000881.pdf",
+      "dbId": "1761208032486qp2srs6t4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-06-10",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000000960",
+      "filename": "1761208032585-MDRX_AR_Standard_Invoice_4000000960.pdf",
+      "dbId": "1761208032595l62bvrx7t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-09-29",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004360",
+      "filename": "1761208041413-MDRX_AR_Standard_Invoice_4000004360.pdf",
+      "dbId": "1761208041420zyzst1xps",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-09-20",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004500",
+      "filename": "1761208042881-MDRX_AR_Standard_Invoice_4000004500.pdf",
+      "dbId": "1761208042891gwbj13yjd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-11-27",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004660",
+      "filename": "1761208044796-MDRX_AR_Standard_Invoice_4000004660.pdf",
+      "dbId": "1761208044804su4tcl0ke",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-12-18",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004661",
+      "filename": "1761208044822-MDRX_AR_Standard_Invoice_4000004661.pdf",
+      "dbId": "1761208044832ynw4cn5y4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-12-18",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000004662",
+      "filename": "1761208044858-MDRX_AR_Standard_Invoice_4000004662.pdf",
+      "dbId": "1761208044865wheawx09h",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-12-18",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005221",
+      "filename": "1761208053826-MDRX_AR_Standard_Invoice_4000005221.pdf",
+      "dbId": "1761208053830l99mvbmta",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005222",
+      "filename": "1761208053846-MDRX_AR_Standard_Invoice_4000005222.pdf",
+      "dbId": "1761208053856kkifo6ij8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Application Services",
+          "db": "South Australia Health"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005520",
+      "filename": "1761208056859-MDRX_AR_Standard_Invoice_4000005520.pdf",
+      "dbId": "17612080568635urig2k8o",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-06-24",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005660",
+      "filename": "1761208061089-MDRX_AR_Standard_Invoice_4000005660.pdf",
+      "dbId": "1761208061097wz4srfzjc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-28",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005664",
+      "filename": "1761208061220-MDRX_AR_Standard_Invoice_4000005664.pdf",
+      "dbId": "17612080612288to4cumzu",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-28",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005780",
+      "filename": "1761208064283-MDRX_AR_Standard_Invoice_4000005780.pdf",
+      "dbId": "1761208064292f1fl63085",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-08-14",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005781",
+      "filename": "1761208064315-MDRX_AR_Standard_Invoice_4000005781.pdf",
+      "dbId": "176120806432641dl3asn8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-08-14",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005920",
+      "filename": "1761208065934-MDRX_AR_Standard_Invoice_4000005920.pdf",
+      "dbId": "1761208065941p49qnwgum",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-09-08",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000006001",
+      "filename": "1761208067332-MDRX_AR_Standard_Invoice_4000006001.pdf",
+      "dbId": "17612080673411axti3iyo",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-10-13",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "customerContract",
+          "pdf": "507053",
+          "db": "465128"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004404147",
+      "filename": "1761208067403-MDRX_AR_Standard_Invoice_4004404147.pdf",
+      "dbId": "17612080674137m81sq43g",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004641783",
+      "filename": "1761208067467-MDRX_AR_Standard_Invoice_4004641783.pdf",
+      "dbId": "1761208067478623f65qwj",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004641801",
+      "filename": "1761208068671-MDRX_AR_Standard_Invoice_4004641801.pdf",
+      "dbId": "1761208068681r1wqy8pno",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004644512",
+      "filename": "1761208068695-MDRX_AR_Standard_Invoice_4004644512.pdf",
+      "dbId": "17612080687030uey56u5t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004657001",
+      "filename": "1761208068716-MDRX_AR_Standard_Invoice_4004657001.pdf",
+      "dbId": "17612080687379t9whtm05",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004666081",
+      "filename": "1761208068751-MDRX_AR_Standard_Invoice_4004666081.pdf",
+      "dbId": "1761208068757k91qu3vna",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004666155",
+      "filename": "1761208068775-MDRX_AR_Standard_Invoice_4004666155.pdf",
+      "dbId": "1761208068782m5wpdr21e",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004666175",
+      "filename": "1761208068796-MDRX_AR_Standard_Invoice_4004666175.pdf",
+      "dbId": "1761208068801bajxjlfwh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004666202",
+      "filename": "1761208068817-MDRX_AR_Standard_Invoice_4004666202.pdf",
+      "dbId": "1761208068824n19l8xqul",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004668171",
+      "filename": "1761208068839-MDRX_AR_Standard_Invoice_4004668171.pdf",
+      "dbId": "1761208068850ab2ky9t0z",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677373",
+      "filename": "1761208068865-MDRX_AR_Standard_Invoice_4004677373.pdf",
+      "dbId": "1761208068870mmacxbll7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677374",
+      "filename": "1761208068883-MDRX_AR_Standard_Invoice_4004677374.pdf",
+      "dbId": "1761208068890ei5aqyisn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677472",
+      "filename": "1761208070082-MDRX_AR_Standard_Invoice_4004677472.pdf",
+      "dbId": "1761208070095b7tgph766",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677473",
+      "filename": "1761208070109-MDRX_AR_Standard_Invoice_4004677473.pdf",
+      "dbId": "1761208070120kn3o3cf3d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677615",
+      "filename": "1761208070141-MDRX_AR_Standard_Invoice_4004677615.pdf",
+      "dbId": "1761208070149jqgp62pxj",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004677832",
+      "filename": "1761208070165-MDRX_AR_Standard_Invoice_4004677832.pdf",
+      "dbId": "1761208070172kgy7xlldc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004686705",
+      "filename": "1761208070200-MDRX_AR_Standard_Invoice_4004686705.pdf",
+      "dbId": "17612080702080wfm13yg9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004686809",
+      "filename": "1761208070222-MDRX_AR_Standard_Invoice_4004686809.pdf",
+      "dbId": "1761208070230a4ngsousx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004686842",
+      "filename": "1761208070246-MDRX_AR_Standard_Invoice_4004686842.pdf",
+      "dbId": "1761208070252ho3zv14cv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004687791",
+      "filename": "1761208070265-MDRX_AR_Standard_Invoice_4004687791.pdf",
+      "dbId": "1761208070272dh27wtdum",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-09-17",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004690182",
+      "filename": "1761208070309-MDRX_AR_Standard_Invoice_4004690182.pdf",
+      "dbId": "1761208070315cxjt6atn1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004690229",
+      "filename": "1761208071496-MDRX_AR_Standard_Invoice_4004690229.pdf",
+      "dbId": "1761208071502h4a0u0r9s",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004690231",
+      "filename": "1761208071518-MDRX_AR_Standard_Invoice_4004690231.pdf",
+      "dbId": "1761208071523f8jcpkoay",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004892435",
+      "filename": "1761208071538-MDRX_AR_Standard_Invoice_4004892435.pdf",
+      "dbId": "1761208071546iu5je0jch",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004892436",
+      "filename": "1761208071564-MDRX_AR_Standard_Invoice_4004892436.pdf",
+      "dbId": "17612080715715wllba50j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600014680",
+      "filename": "1761208072978-MDRX_AR_Standard_Invoice_4600014680.pdf",
+      "dbId": "1761208072985ony2fkstc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-01-12",
+          "db": "2024-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600015300",
+      "filename": "1761208073110-MDRX_AR_Standard_Invoice_4600015300.pdf",
+      "dbId": "1761208073116k9vqzki29",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-01-12",
+          "db": "2024-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600015337",
+      "filename": "1761208073141-MDRX_AR_Standard_Invoice_4600015337.pdf",
+      "dbId": "17612080731490njw65vax",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-01-12",
+          "db": "2024-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600015399",
+      "filename": "1761208074368-MDRX_AR_Standard_Invoice_4600015399.pdf",
+      "dbId": "1761208074376nunofu3v0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-03-12",
+          "db": "2024-12-03"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600015445",
+      "filename": "1761208074395-MDRX_AR_Standard_Invoice_4600015445.pdf",
+      "dbId": "1761208074399s27gl46og",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-02-12",
+          "db": "2024-12-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600015483",
+      "filename": "1761208074416-MDRX_AR_Standard_Invoice_4600015483.pdf",
+      "dbId": "1761208074424nobt0yup4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-02-12",
+          "db": "2024-12-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600016655",
+      "filename": "1761208074517-MDRX_AR_Standard_Invoice_4600016655.pdf",
+      "dbId": "176120807452204jvnf3vj",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2024-11-12",
+          "db": "2024-12-11"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017007",
+      "filename": "1761208074560-MDRX_AR_Standard_Invoice_4600017007.pdf",
+      "dbId": "176120807456808nph1rvv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-01",
+          "db": "2025-01-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017195",
+      "filename": "1761208075819-MDRX_AR_Standard_Invoice_4600017195.pdf",
+      "dbId": "1761208075826e18pdsrqp",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-11-19",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "customerContract",
+          "pdf": "506519",
+          "db": "82363"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017223",
+      "filename": "1761208075880-MDRX_AR_Standard_Invoice_4600017223.pdf",
+      "dbId": "17612080758871h8mw88fl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-01",
+          "db": "2025-01-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017918",
+      "filename": "1761208075978-MDRX_AR_Standard_Invoice_4600017918.pdf",
+      "dbId": "1761208075986wn15dyigd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-02",
+          "db": "2025-02-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017921",
+      "filename": "1761208076003-MDRX_AR_Standard_Invoice_4600017921.pdf",
+      "dbId": "1761208076011qlit1akl3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-02",
+          "db": "2025-02-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600017964",
+      "filename": "1761208077766-MDRX_AR_Standard_Invoice_4600017964.pdf",
+      "dbId": "1761208077771fn1z8r7l4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-02",
+          "db": "2025-02-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600018030",
+      "filename": "1761208077790-MDRX_AR_Standard_Invoice_4600018030.pdf",
+      "dbId": "17612080777967lv6088os",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-02",
+          "db": "2025-02-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600018159",
+      "filename": "1761208077846-MDRX_AR_Standard_Invoice_4600018159.pdf",
+      "dbId": "17612080778570oevdeit4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2024-09-12",
+          "db": "2024-12-09"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-08-01",
+          "db": "2025-01-08"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600018575",
+      "filename": "1761208077897-MDRX_AR_Standard_Invoice_4600018575.pdf",
+      "dbId": "1761208077903c4j9x77tl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-02",
+          "db": "2025-02-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600019608",
+      "filename": "1761208077918-MDRX_AR_Standard_Invoice_4600019608.pdf",
+      "dbId": "17612080779263h2xa66s1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600019751",
+      "filename": "1761208079121-MDRX_AR_Standard_Invoice_4600019751.pdf",
+      "dbId": "1761208079128i636s1nj4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-09-01",
+          "db": "2025-01-09"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-08-02",
+          "db": "2025-02-08"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600019883",
+      "filename": "1761208079148-MDRX_AR_Standard_Invoice_4600019883.pdf",
+      "dbId": "176120807915286ql8osqj",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600020132",
+      "filename": "1761208079211-MDRX_AR_Standard_Invoice_4600020132.pdf",
+      "dbId": "176120807922363z6fny1t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600020263",
+      "filename": "1761208079256-MDRX_AR_Standard_Invoice_4600020263.pdf",
+      "dbId": "1761208079266r7us6vaf6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600020264",
+      "filename": "1761208079288-MDRX_AR_Standard_Invoice_4600020264.pdf",
+      "dbId": "176120807929726mvitp6o",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600020276",
+      "filename": "1761208079319-MDRX_AR_Standard_Invoice_4600020276.pdf",
+      "dbId": "17612080793286keiqe0oe",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-03",
+          "db": "2025-03-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600020300",
+      "filename": "1761208079376-MDRX_AR_Standard_Invoice_4600020300.pdf",
+      "dbId": "1761208079387g15hyo9y6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-03",
+          "db": "2025-03-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600021248",
+      "filename": "1761208080798-MDRX_AR_Standard_Invoice_4600021248.pdf",
+      "dbId": "1761208080806zs51wfwnn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-04",
+          "db": "2025-04-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600021568",
+      "filename": "1761208080825-MDRX_AR_Standard_Invoice_4600021568.pdf",
+      "dbId": "1761208080832uqrmfy4m0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-04",
+          "db": "2025-04-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600021824",
+      "filename": "1761208080888-MDRX_AR_Standard_Invoice_4600021824.pdf",
+      "dbId": "1761208080896f54i0gc7j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-04",
+          "db": "2025-04-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600021878",
+      "filename": "1761208080912-MDRX_AR_Standard_Invoice_4600021878.pdf",
+      "dbId": "17612080809202hlyfjtob",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-04",
+          "db": "2025-04-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600021974",
+      "filename": "1761208080939-MDRX_AR_Standard_Invoice_4600021974.pdf",
+      "dbId": "1761208080947xtee7s0ys",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-04",
+          "db": "2025-04-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600022189",
+      "filename": "1761208082162-MDRX_AR_Standard_Invoice_4600022189.pdf",
+      "dbId": "1761208082169495brhu54",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-02-19",
+          "db": "2025-10-23"
+        },
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600022290",
+      "filename": "1761208082214-MDRX_AR_Standard_Invoice_4600022290.pdf",
+      "dbId": "1761208082222uioebzoek",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-06-04",
+          "db": "2025-04-06"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600022931",
+      "filename": "1761208082345-MDRX_AR_Standard_Invoice_4600022931.pdf",
+      "dbId": "1761208082353htxxgay9n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023003",
+      "filename": "1761208082367-MDRX_AR_Standard_Invoice_4600023003.pdf",
+      "dbId": "1761208082375ij2vr3xnq",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-10-03",
+          "db": "2025-03-10"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-09-04",
+          "db": "2025-04-09"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023342",
+      "filename": "1761208083669-MDRX_AR_Standard_Invoice_4600023342.pdf",
+      "dbId": "176120808367715ol0g8yv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-05",
+          "db": "2025-05-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023517",
+      "filename": "1761208083695-MDRX_AR_Standard_Invoice_4600023517.pdf",
+      "dbId": "176120808371450tq1isfe",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-05",
+          "db": "2025-05-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023563",
+      "filename": "1761208083730-MDRX_AR_Standard_Invoice_4600023563.pdf",
+      "dbId": "17612080837392eyajoqgh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-03-05",
+          "db": "2025-05-03"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023698",
+      "filename": "1761208083755-MDRX_AR_Standard_Invoice_4600023698.pdf",
+      "dbId": "17612080837636xtrzd5qd",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-05",
+          "db": "2025-05-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023701",
+      "filename": "1761208083779-MDRX_AR_Standard_Invoice_4600023701.pdf",
+      "dbId": "1761208083788gw5nfge7u",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-05",
+          "db": "2025-05-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600023862",
+      "filename": "1761208083835-MDRX_AR_Standard_Invoice_4600023862.pdf",
+      "dbId": "1761208083846v4anibet4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-04-05",
+          "db": "2025-05-04"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600024858",
+      "filename": "1761208085332-MDRX_AR_Standard_Invoice_4600024858.pdf",
+      "dbId": "1761208085339p046xj7uo",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-11-04",
+          "db": "2025-04-11"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-11-05",
+          "db": "2025-05-11"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025015",
+      "filename": "1761208085356-MDRX_AR_Standard_Invoice_4600025015.pdf",
+      "dbId": "1761208085361gv0et65ee",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-04-16",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025016",
+      "filename": "1761208086589-MDRX_AR_Standard_Invoice_4600025016.pdf",
+      "dbId": "1761208086598bdqz7thsy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-04-16",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025070",
+      "filename": "1761208086687-MDRX_AR_Standard_Invoice_4600025070.pdf",
+      "dbId": "1761208086696hn2w889cs",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-06",
+          "db": "2025-06-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025159",
+      "filename": "1761208086713-MDRX_AR_Standard_Invoice_4600025159.pdf",
+      "dbId": "17612080867204t7p0s5wf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-06",
+          "db": "2025-06-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025317",
+      "filename": "1761208086751-MDRX_AR_Standard_Invoice_4600025317.pdf",
+      "dbId": "1761208086760t7vd9gzub",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-06",
+          "db": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025321",
+      "filename": "1761208086777-MDRX_AR_Standard_Invoice_4600025321.pdf",
+      "dbId": "1761208086785xf0rhnpr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-06",
+          "db": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025325",
+      "filename": "1761208086800-MDRX_AR_Standard_Invoice_4600025325.pdf",
+      "dbId": "1761208086809592ms1vfh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-06",
+          "db": "2025-06-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025935",
+      "filename": "1761208089659-MDRX_AR_Standard_Invoice_4600025935.pdf",
+      "dbId": "1761208089665k70s9ztg5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-05",
+          "db": "2025-05-07"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600025973",
+      "filename": "1761208089680-MDRX_AR_Standard_Invoice_4600025973.pdf",
+      "dbId": "1761208089688505wj6nvx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026080",
+      "filename": "1761208090878-MDRX_AR_Standard_Invoice_4600026080.pdf",
+      "dbId": "1761208090890yazvxtumh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-05",
+          "db": "2025-05-07"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026613",
+      "filename": "1761208090929-MDRX_AR_Standard_Invoice_4600026613.pdf",
+      "dbId": "1761208090937ru6g92iz5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026725",
+      "filename": "1761208090967-MDRX_AR_Standard_Invoice_4600026725.pdf",
+      "dbId": "17612080909797dym21r87",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-03-07",
+          "db": "2025-07-03"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026875",
+      "filename": "1761208091022-MDRX_AR_Standard_Invoice_4600026875.pdf",
+      "dbId": "17612080910295kecl71a5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026878",
+      "filename": "1761208091052-MDRX_AR_Standard_Invoice_4600026878.pdf",
+      "dbId": "1761208091060pzhldq5ib",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600027689",
+      "filename": "1761208092446-MDRX_AR_Standard_Invoice_4600027689.pdf",
+      "dbId": "1761208092454dlyu6v4vh",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-08",
+          "db": "2025-08-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600027706",
+      "filename": "1761208092500-MDRX_AR_Standard_Invoice_4600027706.pdf",
+      "dbId": "17612080925075z1i2vn9b",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-08",
+          "db": "2025-08-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600027856",
+      "filename": "1761208092531-MDRX_AR_Standard_Invoice_4600027856.pdf",
+      "dbId": "17612080925400s1acmrds",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-09-06",
+          "db": "2025-06-09"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-09-07",
+          "db": "2025-07-09"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600028153",
+      "filename": "1761208093897-MDRX_AR_Standard_Invoice_4600028153.pdf",
+      "dbId": "1761208093905lk1u7r2q3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-08",
+          "db": "2025-08-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600028272",
+      "filename": "1761208093926-MDRX_AR_Standard_Invoice_4600028272.pdf",
+      "dbId": "1761208093933y7z7i6lsr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-08",
+          "db": "2025-08-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600028354",
+      "filename": "1761208093951-MDRX_AR_Standard_Invoice_4600028354.pdf",
+      "dbId": "1761208093960cglbrcn33",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-08",
+          "db": "2025-08-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600028422",
+      "filename": "1761208093978-MDRX_AR_Standard_Invoice_4600028422.pdf",
+      "dbId": "1761208093986ogxow5yqu",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-08",
+          "db": "2025-08-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029368",
+      "filename": "1761208095349-MDRX_AR_Standard_Invoice_4600029368.pdf",
+      "dbId": "1761208095360v1amz4tqm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-04-07",
+          "db": "2025-07-04"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-03-08",
+          "db": "2025-08-03"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029527",
+      "filename": "1761208095378-MDRX_AR_Standard_Invoice_4600029527.pdf",
+      "dbId": "17612080953876z5iii383",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-09",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029528",
+      "filename": "1761208095404-MDRX_AR_Standard_Invoice_4600029528.pdf",
+      "dbId": "1761208095414l28yg4y8t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-09",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029529",
+      "filename": "1761208095436-MDRX_AR_Standard_Invoice_4600029529.pdf",
+      "dbId": "1761208095442l6epo9mtk",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-09",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029692",
+      "filename": "1761208096822-MDRX_AR_Standard_Invoice_4600029692.pdf",
+      "dbId": "1761208096830hyqi0y4yn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-09",
+          "db": "2025-09-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029722",
+      "filename": "1761208096847-MDRX_AR_Standard_Invoice_4600029722.pdf",
+      "dbId": "1761208096854igswsyjjg",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-09",
+          "db": "2025-09-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029839",
+      "filename": "1761208096873-MDRX_AR_Standard_Invoice_4600029839.pdf",
+      "dbId": "1761208096880s14sbp7fs",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-09",
+          "db": "2025-09-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600029841",
+      "filename": "1761208096897-MDRX_AR_Standard_Invoice_4600029841.pdf",
+      "dbId": "1761208096904i9zkjyoqf",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-09",
+          "db": "2025-09-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030036",
+      "filename": "1761208096919-MDRX_AR_Standard_Invoice_4600030036.pdf",
+      "dbId": "1761208096925rkj0wq7w3",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-09",
+          "db": "2025-09-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030039",
+      "filename": "1761208096947-MDRX_AR_Standard_Invoice_4600030039.pdf",
+      "dbId": "1761208096954n6g5ih60n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-05-09",
+          "db": "2025-09-05"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030083",
+      "filename": "1761208096981-MDRX_AR_Standard_Invoice_4600030083.pdf",
+      "dbId": "1761208096992cfa7ng7p4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-07-09",
+          "db": "2025-09-07"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030677",
+      "filename": "1761208098201-MDRX_AR_Standard_Invoice_4600030677.pdf",
+      "dbId": "17612080982150frxy44o8",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-08",
+          "db": "2025-08-07"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-06-09",
+          "db": "2025-09-06"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030690",
+      "filename": "1761208098232-MDRX_AR_Standard_Invoice_4600030690.pdf",
+      "dbId": "176120809823703ztlgf0d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-10",
+          "db": "2025-10-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030712",
+      "filename": "1761208098252-MDRX_AR_Standard_Invoice_4600030712.pdf",
+      "dbId": "17612080982589z71p81o6",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-10",
+          "db": "2025-10-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030852",
+      "filename": "1761208098283-MDRX_AR_Standard_Invoice_4600030852.pdf",
+      "dbId": "1761208098301gmmuofyhw",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-10",
+          "db": "2025-10-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600030902",
+      "filename": "1761208098315-MDRX_AR_Standard_Invoice_4600030902.pdf",
+      "dbId": "17612080983226cy4he1fx",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-10",
+          "db": "2025-10-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600031098",
+      "filename": "1761208098355-MDRX_AR_Standard_Invoice_4600031098.pdf",
+      "dbId": "1761208098361sm5cdi44n",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-03-10",
+          "db": "2025-10-03"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600031258",
+      "filename": "1761208098375-MDRX_AR_Standard_Invoice_4600031258.pdf",
+      "dbId": "1761208098382uip4m6zac",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-10",
+          "db": "2025-10-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032469",
+      "filename": "1761208099819-MDRX_AR_Standard_Invoice_4600032469.pdf",
+      "dbId": "1761208099826cf8m276z9",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-08-09",
+          "db": "2025-09-08"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-08-10",
+          "db": "2025-10-08"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032536",
+      "filename": "1761208101142-MDRX_AR_Standard_Invoice_4600032536.pdf",
+      "dbId": "1761208101152ngm6v9f1b",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-12-09",
+          "db": "2025-09-12"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-12-10",
+          "db": "2025-10-12"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032537",
+      "filename": "1761208101193-MDRX_AR_Standard_Invoice_4600032537.pdf",
+      "dbId": "1761208101206mvqcyqs6d",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-12-09",
+          "db": "2025-09-12"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-12-10",
+          "db": "2025-10-12"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032538",
+      "filename": "1761208101224-MDRX_AR_Standard_Invoice_4600032538.pdf",
+      "dbId": "1761208101233oovznbwje",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-09-12",
+          "db": "2025-10-23"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032668",
+      "filename": "1761208101258-MDRX_AR_Standard_Invoice_4600032668.pdf",
+      "dbId": "1761208101266hvhp3kjhn",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-02-11",
+          "db": "2025-11-02"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032703",
+      "filename": "1761208101319-MDRX_AR_Standard_Invoice_4600032703.pdf",
+      "dbId": "1761208101327yiapt6kwo",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-11",
+          "db": "2025-11-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032776",
+      "filename": "1761208101351-MDRX_AR_Standard_Invoice_4600032776.pdf",
+      "dbId": "1761208101361dr694jqs1",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-11",
+          "db": "2025-11-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032778",
+      "filename": "1761208101378-MDRX_AR_Standard_Invoice_4600032778.pdf",
+      "dbId": "1761208101387mf8crh98t",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-11",
+          "db": "2025-11-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032781",
+      "filename": "1761208101410-MDRX_AR_Standard_Invoice_4600032781.pdf",
+      "dbId": "1761208101417gvk2zmtn5",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-11",
+          "db": "2025-11-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600032787",
+      "filename": "1761208102655-MDRX_AR_Standard_Invoice_4600032787.pdf",
+      "dbId": "1761208102663dnbkuke8p",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-11",
+          "db": "2025-11-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600033191",
+      "filename": "1761208102683-MDRX_AR_Standard_Invoice_4600033191.pdf",
+      "dbId": "1761208102692ya3e5g1af",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "invoiceDate",
+          "pdf": "2025-07-10",
+          "db": "2025-10-07"
+        },
+        {
+          "field": "dueDate",
+          "pdf": "2025-06-11",
+          "db": "2025-11-06"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600034289",
+      "filename": "1761208102716-MDRX_AR_Standard_Invoice_4600034289.pdf",
+      "dbId": "1761208102736j705vquea",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-12",
+          "db": "2025-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600034399",
+      "filename": "1761208102752-MDRX_AR_Standard_Invoice_4600034399.pdf",
+      "dbId": "1761208102759cz7id2ug0",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-12",
+          "db": "2025-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600034403",
+      "filename": "1761208102772-MDRX_AR_Standard_Invoice_4600034403.pdf",
+      "dbId": "17612081027825b57e23oy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-12",
+          "db": "2025-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600034421",
+      "filename": "1761208102805-MDRX_AR_Standard_Invoice_4600034421.pdf",
+      "dbId": "1761208102814nlyz790nz",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-12",
+          "db": "2025-12-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "8600004201",
+      "filename": "1761208102881-MDRX_AR_Standard_Invoice_8600004201.pdf",
+      "dbId": "1761208102889dngtv3fey",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "8600004221",
+      "filename": "1761208102904-MDRX_AR_Standard_Invoice_8600004221.pdf",
+      "dbId": "1761208102910qvozmohn7",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "8600006301",
+      "filename": "1761208104113-MDRX_AR_Standard_Invoice_8600006301.pdf",
+      "dbId": "1761208104123786ruzx4a",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "8600006302",
+      "filename": "1761208104141-MDRX_AR_Standard_Invoice_8600006302.pdf",
+      "dbId": "17612081041485n2vynsnl",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Cre",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000780",
+      "filename": "1761208108265-Rebill Invoice 6000000780.pdf",
+      "dbId": "1761208108272p3psjctcr",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000781",
+      "filename": "1761208108293-Rebill Invoice 6000000781.pdf",
+      "dbId": "1761208108306k738pun68",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026853",
+      "filename": "1761209933192-MDRX_AR_Standard_Invoice_4600026853.pdf",
+      "dbId": "17612103584314wc88a3gc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026853",
+      "filename": "1761210180867-MDRX_AR_Standard_Invoice_4600026853.pdf",
+      "dbId": "17612103584314wc88a3gc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4600026853",
+      "filename": "1761210358423-MDRX_AR_Standard_Invoice_4600026853.pdf",
+      "dbId": "17612103584314wc88a3gc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "dueDate",
+          "pdf": "2025-01-07",
+          "db": "2025-07-01"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000893",
+      "filename": "1761261947789-MDRX_AR_Project_Invoice_6000000893.pdf",
+      "dbId": "17612619477918y13bl0lm",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000897",
+      "filename": "1761261969614-MDRX_AR_Project_Invoice_6000000897.pdf",
+      "dbId": "17612619696157jo51btur",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000476",
+      "filename": "1761267766514-MDRX_AR_Project_Invoice_9000000476.pdf",
+      "dbId": "17612677665166sfwmszog",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004578918",
+      "filename": "1761268007658-MDRX_AR_Standard_Invoice_4004578918.pdf",
+      "dbId": "176126800765957ad8mxiy",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4004589316",
+      "filename": "1761268047350-MDRX_AR_Standard_Invoice_4004589316.pdf",
+      "dbId": "1761268047351zaf95zvkc",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Mai",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "9000000498",
+      "filename": "1761269973255-MDRX_AR_Project_Invoice_9000000498.pdf",
+      "dbId": "176126997325789wfa7cvv",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "SGD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "3000001140",
+      "filename": "1761270139815-Inv_3000001140.pdf",
+      "dbId": "1761270139816wecldy4vt",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Women's and Children's Hospital ",
+          "db": "South Australia Health"
+        },
+        {
+          "field": "currency",
+          "pdf": "Sys",
+          "db": "USD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "6000000849",
+      "filename": "1761270601394-Inv_6000000849.pdf",
+      "dbId": "1761270601396k0w3gr6y4",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "currency",
+          "pdf": "Ser",
+          "db": "AUD"
+        }
+      ]
+    },
+    {
+      "invoiceNumber": "4000005401",
+      "filename": "1761271094450-Inv_4000005401.pdf",
+      "dbId": "1761271094451eiw9sy79j",
+      "issue": "DATA_MISMATCH",
+      "fields": [
+        {
+          "field": "client",
+          "pdf": "Women's and Children's Hospital ",
+          "db": "South Australia Health"
+        }
+      ]
+    }
+  ],
+  "parsingErrors": []
+}

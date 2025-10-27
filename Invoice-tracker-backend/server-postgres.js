@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const { formidable } = require('formidable');
-const initSqlJs = require('sql.js');
+const { db, pool } = require('./db-postgres');
 const path = require('path');
 const fs = require('fs');
 const pdfParse = require('pdf-parse');
@@ -24,139 +24,7 @@ if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 if (!fs.existsSync(pdfsDir)) fs.mkdirSync(pdfsDir);
 if (!fs.existsSync(deletedPdfsDir)) fs.mkdirSync(deletedPdfsDir);
 
-// Initialize SQL.js database (pure JavaScript, cross-platform)
-let SQL;
-let dbInstance;
-const dbPath = path.join(__dirname, 'invoices.db');
-
-// Load or create database
-async function initDatabase() {
-  SQL = await initSqlJs();
-
-  if (fs.existsSync(dbPath)) {
-    const buffer = fs.readFileSync(dbPath);
-    dbInstance = new SQL.Database(buffer);
-    console.log('Connected to existing SQLite database');
-  } else {
-    dbInstance = new SQL.Database();
-    console.log('Created new SQLite database');
-  }
-}
-
-// Save database to disk
-function saveDatabase() {
-  const data = dbInstance.export();
-  const buffer = Buffer.from(data);
-  fs.writeFileSync(dbPath, buffer);
-}
-
-// Auto-save every 5 seconds if there were changes
-let hasChanges = false;
-setInterval(() => {
-  if (hasChanges) {
-    saveDatabase();
-    hasChanges = false;
-  }
-}, 5000);
-
-// Database wrapper (compatible with previous API and Azure SQL migration)
-const db = {
-  exec: (sql) => {
-    dbInstance.exec(sql);
-    hasChanges = true;
-  },
-  run: (sql, ...params) => {
-    dbInstance.run(sql, params);
-    hasChanges = true;
-    return { changes: dbInstance.getRowsModified() };
-  },
-  get: (sql, ...params) => {
-    const stmt = dbInstance.prepare(sql);
-    stmt.bind(params);
-    const result = stmt.step() ? stmt.getAsObject() : undefined;
-    stmt.free();
-    return result;
-  },
-  all: (sql, ...params) => {
-    const stmt = dbInstance.prepare(sql);
-    stmt.bind(params);
-    const results = [];
-    while (stmt.step()) {
-      results.push(stmt.getAsObject());
-    }
-    stmt.free();
-    return results;
-  },
-  prepare: (sql) => {
-    // Create a statement-like object for compatibility
-    return {
-      run: (...params) => db.run(sql, ...params),
-      get: (...params) => db.get(sql, ...params),
-      all: (...params) => db.all(sql, ...params)
-    };
-  }
-};
-
-// Create tables
-function createTables() {
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS invoices (
-      id TEXT PRIMARY KEY,
-      invoiceNumber TEXT NOT NULL,
-      invoiceDate TEXT,
-      client TEXT NOT NULL,
-      customerContract TEXT,
-      oracleContract TEXT,
-      poNumber TEXT,
-      invoiceType TEXT,
-      amountDue REAL NOT NULL,
-      currency TEXT DEFAULT 'USD',
-      dueDate TEXT NOT NULL,
-      status TEXT DEFAULT 'Pending',
-      paymentDate TEXT,
-      frequency TEXT DEFAULT 'adhoc',
-      uploadDate TEXT,
-      services TEXT,
-      pdfPath TEXT,
-      pdfOriginalName TEXT,
-      contractValue REAL,
-      contractCurrency TEXT DEFAULT 'USD',
-      notes TEXT
-    )
-  `);
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS expected_invoices (
-      id TEXT PRIMARY KEY,
-      client TEXT NOT NULL,
-      customerContract TEXT,
-      invoiceType TEXT,
-      expectedAmount REAL,
-      currency TEXT DEFAULT 'USD',
-      expectedDate TEXT NOT NULL,
-      frequency TEXT NOT NULL,
-      lastInvoiceNumber TEXT,
-      lastInvoiceDate TEXT,
-      acknowledged INTEGER DEFAULT 0,
-      acknowledgedDate TEXT,
-      createdDate TEXT
-    )
-  `);
-
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS contracts (
-      id TEXT PRIMARY KEY,
-      contractName TEXT NOT NULL UNIQUE,
-      contractValue REAL NOT NULL,
-      currency TEXT DEFAULT 'USD',
-      createdDate TEXT,
-      updatedDate TEXT
-    )
-  `);
-
-  console.log('Database tables ready');
-  saveDatabase(); // Persist the schema
-}
+// Using PostgreSQL database from db-postgres.js
 
 // Exchange rate cache
 let exchangeRates = {
@@ -195,8 +63,8 @@ function convertToUSD(amount, currency) {
 }
 
 // Determine date format based on invoice number pattern
-function getDateFormatByInvoiceNumber(invoiceNumber) {
-  if (!invoiceNumber) return 'international'; // Default to international
+function getDateFormatByInvoiceNumber(invoice_number) {
+  if (!invoice_number) return 'international'; // Default to international
 
   const invoiceStr = invoiceNumber.toString();
 
@@ -225,7 +93,7 @@ function getDateFormatByInvoiceNumber(invoiceNumber) {
 }
 
 // Parse date - handles multiple formats based on invoice number
-function parseDate(dateStr, currency, invoiceNumber) {
+function parseDate(dateStr, currency, invoice_number) {
   if (!dateStr) return null;
 
   const cleaned = dateStr.trim();
@@ -295,7 +163,7 @@ function parseDate(dateStr, currency, invoiceNumber) {
   }
   // Otherwise, use invoice number pattern to determine format
   else {
-    const dateFormat = getDateFormatByInvoiceNumber(invoiceNumber);
+    const dateFormat = getDateFormatByInvoiceNumber(invoice_number);
 
     if (dateFormat === 'us') {
       // US format: MM-DD-YYYY
@@ -344,7 +212,7 @@ function formatDateForDisplay(dateStr) {
 }
 
 // Classify invoice type
-function classifyInvoiceType(services, invoiceNumber, amount) {
+function classifyInvoiceType(services, invoice_number, amount) {
   // Check if amount is negative - credit memos have negative amounts
   if (amount && amount < 0) {
     return 'Credit Memo';
@@ -466,8 +334,8 @@ function detectFrequency(services, amount) {
 }
 
 // Extract invoice data from PDF
-async function extractInvoiceData(pdfPath, originalName) {
-  const dataBuffer = fs.readFileSync(pdfPath);
+async function extractInvoiceData(pdf_path, originalName) {
+  const dataBuffer = fs.readFileSync(pdf_path);
   const pdfData = await pdfParse(dataBuffer);
   const text = pdfData.text;
 
@@ -842,7 +710,7 @@ async function extractInvoiceData(pdfPath, originalName) {
 // Get all invoices
 app.get('/api/invoices', async (req, res) => {
   try {
-    const rows = db.prepare('SELECT * FROM invoices ORDER BY invoiceDate DESC').all();
+    const rows = await db.all('SELECT * FROM invoices ORDER BY invoice_date DESC', );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -885,12 +753,12 @@ app.post('/api/upload-pdfs', async (req, res) => {
 
           // Check for duplicates (for tracking purposes, but allow upload)
           const existing = db.prepare(
-            'SELECT id, invoiceNumber FROM invoices WHERE LOWER(TRIM(invoiceNumber)) = LOWER(TRIM(?))'
-          ).get(invoiceData.invoiceNumber);
+            'SELECT id, invoice_number FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?))'
+          ).get(invoiceData.invoice_number);
 
           if (existing) {
             duplicates.push({
-              invoiceNumber: invoiceData.invoiceNumber,
+              invoiceNumber: invoiceData.invoice_number,
               filename: file.originalFilename,
               existingId: existing.id
             });
@@ -898,8 +766,8 @@ app.post('/api/upload-pdfs', async (req, res) => {
 
           // Move PDF to permanent storage
           const pdfFilename = `${Date.now()}-${file.originalFilename}`;
-          const pdfPath = path.join(pdfsDir, pdfFilename);
-          fs.renameSync(file.filepath, pdfPath);
+          const pdf_path = path.join(pdfsDir, pdfFilename);
+          fs.renameSync(file.filepath, pdf_path);
 
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
 
@@ -914,9 +782,9 @@ app.post('/api/upload-pdfs', async (req, res) => {
 
           db.prepare(`
             INSERT INTO invoices (
-              id, invoiceNumber, invoiceDate, client, customerContract,
-              oracleContract, poNumber, invoiceType, amountDue, currency,
-              dueDate, status, uploadDate, services, pdfPath, pdfOriginalName, frequency
+              id, invoice_number, invoice_date, client, customer_contract,
+              oracle_contract, po_number, invoice_type, amount_due, currency,
+              due_date, status, upload_date, services, pdf_path, pdf_original_name, frequency
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `).run(
             invoice.id, invoice.invoiceNumber, invoice.invoiceDate, invoice.client,
@@ -978,19 +846,19 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       }
 
       // Get existing invoice to delete old PDF
-      const existing = db.prepare('SELECT pdfPath FROM invoices WHERE id = ?').get(id);
+      const existing = await db.get('SELECT pdf_path FROM invoices WHERE id = ?', id);
 
       // Extract new invoice data
       const invoiceData = await extractInvoiceData(file.filepath, file.originalFilename);
 
       // Move new PDF to permanent storage
       const pdfFilename = `${Date.now()}-${file.originalFilename}`;
-      const pdfPath = path.join(pdfsDir, pdfFilename);
-      fs.renameSync(file.filepath, pdfPath);
+      const pdf_path = path.join(pdfsDir, pdfFilename);
+      fs.renameSync(file.filepath, pdf_path);
 
       // Delete old PDF
-      if (existing && existing.pdfPath) {
-        const oldPdfPath = path.join(__dirname, existing.pdfPath);
+      if (existing && existing.pdf_path) {
+        const oldPdfPath = path.join(__dirname, existing.pdf_path);
         if (fs.existsSync(oldPdfPath)) {
           fs.unlinkSync(oldPdfPath);
         }
@@ -999,15 +867,15 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       // Update invoice in database
       db.prepare(`
         UPDATE invoices
-        SET invoiceDate = ?, client = ?, customerContract = ?, oracleContract = ?,
-            poNumber = ?, invoiceType = ?, amountDue = ?, currency = ?, dueDate = ?,
-            services = ?, pdfPath = ?, pdfOriginalName = ?, frequency = ?,
-            uploadDate = ?
+        SET invoice_date = ?, client = ?, customer_contract = ?, oracle_contract = ?,
+            po_number = ?, invoice_type = ?, amount_due = ?, currency = ?, due_date = ?,
+            services = ?, pdf_path = ?, pdf_original_name = ?, frequency = ?,
+            upload_date = ?
         WHERE id = ?
       `).run(
-        invoiceData.invoiceDate, invoiceData.client, invoiceData.customerContract,
-        invoiceData.oracleContract, invoiceData.poNumber, invoiceData.invoiceType,
-        invoiceData.amountDue, invoiceData.currency, invoiceData.dueDate,
+        invoiceData.invoice_date, invoiceData.client, invoiceData.customer_contract,
+        invoiceData.oracle_contract, invoiceData.po_number, invoiceData.invoice_type,
+        invoiceData.amount_due, invoiceData.currency, invoiceData.due_date,
         invoiceData.services, `/pdfs/${pdfFilename}`, file.originalFilename,
         invoiceData.frequency, new Date().toISOString().split('T')[0], id
       );
@@ -1055,14 +923,14 @@ app.post('/api/upload-payments', async (req, res) => {
       const updates = [];
 
       worksheet.eachRow((row, rowNumber) => {
-        const invoiceNumber = row.getCell(1).value;
-        const paymentDate = row.getCell(2).value;
+        const invoice_number = row.getCell(1).value;
+        const payment_date = row.getCell(2).value;
 
-        if (!invoiceNumber) return;
+        if (!invoice_number) return;
 
-        const invoiceStr = String(invoiceNumber).trim();
-        const paymentDateStr = paymentDate ?
-          (paymentDate instanceof Date ? paymentDate.toISOString().split('T')[0] : String(paymentDate)) :
+        const invoiceStr = String(invoice_number).trim();
+        const paymentDateStr = payment_date ?
+          (payment_date instanceof Date ? paymentDate.toISOString().split('T')[0] : String(payment_date)) :
           new Date().toISOString().split('T')[0];
 
         updates.push({ invoiceNumber: invoiceStr, paymentDate: paymentDateStr });
@@ -1072,12 +940,12 @@ app.post('/api/upload-payments', async (req, res) => {
 
       const updateStmt = db.prepare(`
         UPDATE invoices
-        SET status = 'Paid', paymentDate = ?
-        WHERE LOWER(TRIM(invoiceNumber)) = LOWER(?)
+        SET status = 'Paid', payment_date = ?
+        WHERE LOWER(TRIM(invoice_number)) = LOWER(?)
       `);
 
       for (const update of updates) {
-        const result = updateStmt.run(update.paymentDate, update.invoiceNumber);
+        const result = updateStmt.run(update.payment_date, update.invoice_number);
         updatedCount += result.changes;
       }
 
@@ -1103,22 +971,32 @@ app.put('/api/invoices/:id', async (req, res) => {
 
     const fields = [];
     const values = [];
+    let paramIndex = 1;
+
+    // Convert camelCase to snake_case for PostgreSQL columns
+    const toSnakeCase = (str) => {
+      return str.replace(/([A-Z])/g, '_$1').toLowerCase();
+    };
 
     Object.keys(updates).forEach(key => {
       if (key !== 'id') {
-        fields.push(`${key} = ?`);
+        const snakeKey = toSnakeCase(key);
+        fields.push(`${snakeKey} = $${paramIndex}`);
         values.push(updates[key]);
+        paramIndex++;
       }
     });
 
     values.push(id);
 
-    const result = db.prepare(
-      `UPDATE invoices SET ${fields.join(', ')} WHERE id = ?`
-    ).run(...values);
+    const result = await db.run(
+      `UPDATE invoices SET ${fields.join(', ')} WHERE id = $${paramIndex}`,
+      values
+    );
 
     res.json({ success: true, changes: result.changes });
   } catch (error) {
+    console.error('Error updating invoice:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -1127,9 +1005,9 @@ app.put('/api/invoices/:id', async (req, res) => {
 app.delete('/api/invoices/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const row = db.prepare('SELECT pdfPath FROM invoices WHERE id = ?').get(id);
+    const row = await db.get('SELECT pdf_path FROM invoices WHERE id = ?', id);
 
-    if (row && row.pdfPath) {
+    if (row && row.pdf_path) {
       // Convert web path (/pdfs/file.pdf) to file system path (invoice_pdfs/file.pdf)
       const relativePath = row.pdfPath.replace(/^\/pdfs\//, 'invoice_pdfs/');
       const pdfFullPath = path.join(__dirname, relativePath);
@@ -1152,7 +1030,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
       }
     }
 
-    db.prepare('DELETE FROM invoices WHERE id = ?').run(id);
+    await db.run('DELETE FROM invoices WHERE id = ?', id);
     res.json({ success: true });
   } catch (error) {
     console.error('Error deleting invoice:', error);
@@ -1164,7 +1042,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
 app.delete('/api/invoices', async (req, res) => {
   try {
     // Get all invoice PDFs
-    const invoices = db.prepare('SELECT pdfPath FROM invoices').all();
+    const invoices = await db.all('SELECT pdf_path FROM invoices', );
 
     // Move all PDF files to deleted folder
     let movedFiles = 0;
@@ -1189,10 +1067,10 @@ app.delete('/api/invoices', async (req, res) => {
     }
 
     // Delete all invoices from database
-    const result = db.prepare('DELETE FROM invoices').run();
+    const result = await db.run('DELETE FROM invoices', );
 
     // Delete all expected invoices
-    db.prepare('DELETE FROM expected_invoices').run();
+    await db.run('DELETE FROM expected_invoices', );
 
     res.json({
       success: true,
@@ -1208,7 +1086,7 @@ app.delete('/api/invoices', async (req, res) => {
 // Get expected invoices
 app.get('/api/expected-invoices', async (req, res) => {
   try {
-    const rows = db.prepare('SELECT * FROM expected_invoices ORDER BY expectedDate ASC').all();
+    const rows = await db.all('SELECT * FROM expected_invoices ORDER BY expected_date ASC', );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1221,11 +1099,11 @@ app.put('/api/expected-invoices/:id', async (req, res) => {
     const { id } = req.params;
     const { acknowledged } = req.body;
 
-    const acknowledgedDate = acknowledged ? new Date().toISOString().split('T')[0] : null;
+    const acknowledged_date = acknowledged ? new Date().toISOString().split('T')[0] : null;
 
     db.prepare(
-      'UPDATE expected_invoices SET acknowledged = ?, acknowledgedDate = ? WHERE id = ?'
-    ).run(acknowledged ? 1 : 0, acknowledgedDate, id);
+      'UPDATE expected_invoices SET acknowledged = ?, acknowledged_date = ? WHERE id = ?'
+    ).run(acknowledged ? 1 : 0, acknowledged_date, id);
 
     res.json({ success: true });
   } catch (error) {
@@ -1237,7 +1115,7 @@ app.put('/api/expected-invoices/:id', async (req, res) => {
 app.delete('/api/expected-invoices/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    db.prepare('DELETE FROM expected_invoices WHERE id = ?').run(id);
+    await db.run('DELETE FROM expected_invoices WHERE id = ?', id);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1249,17 +1127,17 @@ async function generateExpectedInvoices() {
   try {
     const rows = db.prepare(`
       SELECT
-        client, customerContract, invoiceType, amountDue, currency,
-        invoiceDate, invoiceNumber, frequency
+        client, customer_contract, invoice_type, amount_due, currency,
+        invoice_date, invoice_number, frequency
       FROM invoices
       WHERE frequency != 'adhoc'
-      ORDER BY client, customerContract, invoiceDate DESC
+      ORDER BY client, customer_contract, invoice_date DESC
     `).all();
 
     const grouped = {};
 
     for (const row of rows) {
-      const key = `${row.client}-${row.customerContract || 'none'}-${row.frequency}`;
+      const key = `${row.client}-${row.customer_contract || 'none'}-${row.frequency}`;
       if (!grouped[key]) {
         grouped[key] = row;
       }
@@ -1301,23 +1179,23 @@ async function generateExpectedInvoices() {
         continue;
       }
 
-      const expectedDate = nextDate.toISOString().split('T')[0];
+      const expected_date = nextDate.toISOString().split('T')[0];
       const today = new Date().toISOString().split('T')[0];
 
-      if (expectedDate <= today) {
+      if (expected_date <= today) {
         const existing = db.prepare(
-          'SELECT id FROM expected_invoices WHERE client = ? AND customerContract = ? AND expectedDate = ?'
-        ).get(invoice.client, invoice.customerContract || '', expectedDate);
+          'SELECT id FROM expected_invoices WHERE client = ? AND customer_contract = ? AND expected_date = ?'
+        ).get(invoice.client, invoice.customerContract || '', expected_date);
 
         if (!existing) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
-          const createdDate = new Date().toISOString().split('T')[0];
+          const created_date = new Date().toISOString().split('T')[0];
 
           db.prepare(`
             INSERT INTO expected_invoices (
-              id, client, customerContract, invoiceType, expectedAmount,
-              currency, expectedDate, frequency, lastInvoiceNumber, lastInvoiceDate,
-              createdDate
+              id, client, customer_contract, invoice_type, expected_amount,
+              currency, expected_date, frequency, last_invoice_number, last_invoice_date,
+              created_date
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `).run(
             id,
@@ -1326,11 +1204,11 @@ async function generateExpectedInvoices() {
             invoice.invoiceType,
             invoice.amountDue,
             invoice.currency,
-            expectedDate,
+            expected_date,
             invoice.frequency,
             invoice.invoiceNumber,
             invoice.invoiceDate,
-            createdDate
+            created_date
           );
         }
       }
@@ -1351,25 +1229,25 @@ async function checkAndRemoveExpectedInvoice(invoice) {
     const typeMatch = invoice.invoiceType;
 
     // Parse invoice date
-    const invoiceDate = new Date(invoice.invoiceDate);
+    const invoice_date = new Date(invoice.invoiceDate);
 
     // Find matching expected invoices
     const expectedInvoices = db.prepare(`
-      SELECT id, expectedDate FROM expected_invoices
+      SELECT id, expected_date FROM expected_invoices
       WHERE client = ?
-        AND (customerContract = ? OR (customerContract IS NULL AND ? = ''))
-        AND invoiceType = ?
+        AND (customer_contract = ? OR (customer_contract IS NULL AND ? = ''))
+        AND invoice_type = ?
         AND frequency = ?
     `).all(clientMatch, contractMatch, contractMatch, typeMatch, invoice.frequency);
 
     // Remove expected invoices that match and are within reasonable date range
     for (const expected of expectedInvoices) {
-      const expectedDate = new Date(expected.expectedDate);
-      const daysDiff = Math.abs((invoiceDate - expectedDate) / (1000 * 60 * 60 * 24));
+      const expected_date = new Date(expected.expected_date);
+      const daysDiff = Math.abs((invoice_date - expected_date) / (1000 * 60 * 60 * 24));
 
       // Match if invoice is within 45 days of expected date
       if (daysDiff <= 45) {
-        db.prepare('DELETE FROM expected_invoices WHERE id = ?').run(expected.id);
+        await db.run('DELETE FROM expected_invoices WHERE id = ?', expected.id);
         console.log(`Removed expected invoice for ${clientMatch} - ${contractMatch} (${typeMatch})`);
       }
     }
@@ -1386,7 +1264,7 @@ async function cleanupAcknowledgedInvoices() {
     const cutoffDate = oneWeekAgo.toISOString().split('T')[0];
 
     db.prepare(
-      'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledgedDate < ?'
+      'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledged_date < ?'
     ).run(cutoffDate);
 
     console.log('Cleaned up old acknowledged invoices');
@@ -1408,7 +1286,7 @@ app.post('/api/query', async (req, res) => {
   try {
     const { query } = req.body;
 
-    const invoices = db.prepare('SELECT * FROM invoices').all();
+    const invoices = await db.all('SELECT * FROM invoices', );
 
     const queryLower = query.toLowerCase();
     let results = [...invoices];
@@ -1417,7 +1295,7 @@ app.post('/api/query', async (req, res) => {
     const types = ['ps', 'maint', 'sub', 'hosting', 'ms', 'sw', 'hw', '3pp', 'credit memo'];
     types.forEach(type => {
       if (queryLower.includes(type)) {
-        results = results.filter(inv => inv.invoiceType && inv.invoiceType.toLowerCase() === type);
+        results = results.filter(inv => inv.invoice_type && inv.invoiceType.toLowerCase() === type);
       }
     });
 
@@ -1435,9 +1313,9 @@ app.post('/api/query', async (req, res) => {
     // Match patterns: "contract X", "on contract X", "for contract X"
     const contractMatch = queryLower.match(/(?:contract|on contract|for contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|invoices|in|during|\?)|$)/i);
     if (contractMatch) {
-      const contractName = contractMatch[1].trim();
+      const contract_name = contractMatch[1].trim();
       results = results.filter(inv =>
-        inv.customerContract && inv.customerContract.toLowerCase().includes(contractName)
+        inv.customer_contract && inv.customerContract.toLowerCase().includes(contract_name)
       );
     }
 
@@ -1447,8 +1325,8 @@ app.post('/api/query', async (req, res) => {
       const today = new Date().toISOString().split('T')[0];
       results = results.filter(inv =>
         inv.status === 'Pending' &&
-        inv.dueDate &&
-        inv.dueDate < today &&
+        inv.due_date &&
+        inv.due_date < today &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
     } else if (queryLower.includes('unpaid') || queryLower.includes('pending') || queryLower.includes('outstanding')) {
@@ -1471,9 +1349,9 @@ app.post('/api/query', async (req, res) => {
       const monthEnd = new Date(currentYear, currentMonth + 1, 0).toISOString().split('T')[0];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
+        results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
       } else {
-        results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
+        results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
       }
     }
 
@@ -1483,9 +1361,9 @@ app.post('/api/query', async (req, res) => {
       const monthEnd = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
+        results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
       } else {
-        results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
+        results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
       }
     }
 
@@ -1495,9 +1373,9 @@ app.post('/api/query', async (req, res) => {
       const yearEnd = `${currentYear}-12-31`;
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.dueDate >= yearStart && inv.dueDate <= yearEnd);
+        results = results.filter(inv => inv.due_date >= yearStart && inv.due_date <= yearEnd);
       } else {
-        results = results.filter(inv => inv.invoiceDate >= yearStart && inv.invoiceDate <= yearEnd);
+        results = results.filter(inv => inv.invoice_date >= yearStart && inv.invoice_date <= yearEnd);
       }
     }
 
@@ -1507,9 +1385,9 @@ app.post('/api/query', async (req, res) => {
       const yearEnd = `${currentYear - 1}-12-31`;
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.dueDate >= yearStart && inv.dueDate <= yearEnd);
+        results = results.filter(inv => inv.due_date >= yearStart && inv.due_date <= yearEnd);
       } else {
-        results = results.filter(inv => inv.invoiceDate >= yearStart && inv.invoiceDate <= yearEnd);
+        results = results.filter(inv => inv.invoice_date >= yearStart && inv.invoice_date <= yearEnd);
       }
     }
 
@@ -1522,9 +1400,9 @@ app.post('/api/query', async (req, res) => {
         const monthEnd = new Date(year, index + 1, 0).toISOString().split('T')[0];
 
         if (queryLower.includes('due')) {
-          results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
+          results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
         } else {
-          results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
+          results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
         }
       }
     });
@@ -1536,9 +1414,9 @@ app.post('/api/query', async (req, res) => {
       const dateTo = betweenMatch[2];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.dueDate >= dateFrom && inv.dueDate <= dateTo);
+        results = results.filter(inv => inv.due_date >= dateFrom && inv.due_date <= dateTo);
       } else {
-        results = results.filter(inv => inv.invoiceDate >= dateFrom && inv.invoiceDate <= dateTo);
+        results = results.filter(inv => inv.invoice_date >= dateFrom && inv.invoice_date <= dateTo);
       }
     }
 
@@ -1566,7 +1444,7 @@ app.post('/api/query', async (req, res) => {
 
     // Calculate response
     if (wantsAverage) {
-      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amount_due, inv.currency), 0);
       const average = results.length > 0 ? total / results.length : 0;
 
       res.json({
@@ -1577,7 +1455,7 @@ app.post('/api/query', async (req, res) => {
         invoices: results
       });
     } else if (wantsTotal || (wantsCount && wantsTotal)) {
-      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amount_due, inv.currency), 0);
 
       res.json({
         type: 'total',
@@ -1608,7 +1486,7 @@ app.post('/api/query', async (req, res) => {
 // Get all contracts
 app.get('/api/contracts', async (req, res) => {
   try {
-    const rows = db.prepare('SELECT * FROM contracts').all();
+    const rows = await db.all('SELECT * FROM contracts', );
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1618,31 +1496,31 @@ app.get('/api/contracts', async (req, res) => {
 // Create or update contract value
 app.post('/api/contracts', async (req, res) => {
   try {
-    const { contractName, contractValue, currency } = req.body;
+    const { contract_name, contract_value, currency } = req.body;
 
-    if (!contractName || !contractValue) {
+    if (!contract_name || !contract_value) {
       return res.status(400).json({ error: 'Contract name and value are required' });
     }
 
-    const existing = db.prepare('SELECT id FROM contracts WHERE contractName = ?').get(contractName);
+    const existing = await db.get('SELECT id FROM contracts WHERE contract_name = ?', contract_name);
     const now = new Date().toISOString().split('T')[0];
 
     if (existing) {
       // Update existing contract
       db.prepare(`
         UPDATE contracts
-        SET contractValue = ?, currency = ?, updatedDate = ?
-        WHERE contractName = ?
-      `).run(contractValue, currency || 'USD', now, contractName);
+        SET contract_value = ?, currency = ?, updated_date = ?
+        WHERE contract_name = ?
+      `).run(contract_value, currency || 'USD', now, contract_name);
 
       res.json({ success: true, action: 'updated' });
     } else {
       // Create new contract
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
       db.prepare(`
-        INSERT INTO contracts (id, contractName, contractValue, currency, createdDate, updatedDate)
+        INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
         VALUES (?, ?, ?, ?, ?, ?)
-      `).run(id, contractName, contractValue, currency || 'USD', now, now);
+      `).run(id, contract_name, contract_value, currency || 'USD', now, now);
 
       res.json({ success: true, action: 'created' });
     }
@@ -1654,24 +1532,24 @@ app.post('/api/contracts', async (req, res) => {
 // Update contract value
 app.put('/api/contracts/:contractName', async (req, res) => {
   try {
-    const { contractName } = req.params;
-    const { contractValue, currency } = req.body;
+    const { contract_name } = req.params;
+    const { contract_value, currency } = req.body;
 
     const now = new Date().toISOString().split('T')[0];
 
     const result = db.prepare(`
       UPDATE contracts
-      SET contractValue = ?, currency = ?, updatedDate = ?
-      WHERE contractName = ?
-    `).run(contractValue, currency || 'USD', now, contractName);
+      SET contract_value = ?, currency = ?, updated_date = ?
+      WHERE contract_name = ?
+    `).run(contract_value, currency || 'USD', now, contract_name);
 
     if (result.changes === 0) {
       // Contract doesn't exist, create it
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
       db.prepare(`
-        INSERT INTO contracts (id, contractName, contractValue, currency, createdDate, updatedDate)
+        INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
         VALUES (?, ?, ?, ?, ?, ?)
-      `).run(id, contractName, contractValue, currency || 'USD', now, now);
+      `).run(id, contract_name, contract_value, currency || 'USD', now, now);
     }
 
     res.json({ success: true });
@@ -1683,8 +1561,8 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 // Delete contract
 app.delete('/api/contracts/:contractName', async (req, res) => {
   try {
-    const { contractName } = req.params;
-    db.prepare('DELETE FROM contracts WHERE contractName = ?').run(contractName);
+    const { contract_name } = req.params;
+    await db.run('DELETE FROM contracts WHERE contract_name = ?', contract_name);
     res.json({ success: true });
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1694,7 +1572,7 @@ app.delete('/api/contracts/:contractName', async (req, res) => {
 // Get all invoice numbers that have duplicates
 app.get('/api/duplicates', async (req, res) => {
   try {
-    const allInvoices = db.prepare('SELECT invoiceNumber FROM invoices').all();
+    const allInvoices = await db.all('SELECT invoice_number FROM invoices', );
     const invoiceCount = {};
 
     // Count occurrences of each invoice number
@@ -1710,7 +1588,7 @@ app.get('/api/duplicates', async (req, res) => {
         // Get the actual invoice number (with original casing)
         const original = allInvoices.find(inv => inv.invoiceNumber.toLowerCase().trim() === num);
         return {
-          invoiceNumber: original.invoiceNumber,
+          invoiceNumber: original.invoice_number,
           count: invoiceCount[num]
         };
       });
@@ -1724,10 +1602,10 @@ app.get('/api/duplicates', async (req, res) => {
 // Get duplicates by invoice number
 app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
-    const { invoiceNumber } = req.params;
+    const { invoice_number } = req.params;
     const duplicates = db.prepare(
-      'SELECT * FROM invoices WHERE LOWER(TRIM(invoiceNumber)) = LOWER(TRIM(?)) ORDER BY uploadDate DESC'
-    ).all(invoiceNumber);
+      'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?)) ORDER BY upload_date DESC'
+    ).all(invoice_number);
     res.json(duplicates);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1737,12 +1615,12 @@ app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
 // Delete invoices by invoice number (keep only the latest)
 app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
-    const { invoiceNumber } = req.params;
+    const { invoice_number } = req.params;
 
     // Get all records with this invoice number, ordered by upload date
     const records = db.prepare(
-      'SELECT id, uploadDate, pdfPath FROM invoices WHERE LOWER(TRIM(invoiceNumber)) = LOWER(TRIM(?)) ORDER BY uploadDate DESC'
-    ).all(invoiceNumber);
+      'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM(?)) ORDER BY upload_date DESC'
+    ).all(invoice_number);
 
     if (records.length <= 1) {
       return res.json({ success: true, message: 'No duplicates found', deleted: 0 });
@@ -1754,15 +1632,15 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
 
     for (const record of toDelete) {
       // Delete PDF file
-      if (record.pdfPath) {
-        const pdfFullPath = path.join(__dirname, record.pdfPath);
+      if (record.pdf_path) {
+        const pdfFullPath = path.join(__dirname, record.pdf_path);
         if (fs.existsSync(pdfFullPath)) {
           fs.unlinkSync(pdfFullPath);
         }
       }
 
       // Delete database record
-      db.prepare('DELETE FROM invoices WHERE id = ?').run(record.id);
+      await db.run('DELETE FROM invoices WHERE id = ?', record.id);
       deletedCount++;
     }
 
@@ -1775,8 +1653,6 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
 // Initialize database and start server
 async function startServer() {
   try {
-    await initDatabase();
-    createTables();
 
     app.listen(PORT, () => {
       console.log(`Invoice Tracker API running on http://localhost:${PORT}`);

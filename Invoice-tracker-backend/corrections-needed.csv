@@ -1,0 +1,31 @@
+Invoice Number,DB ID,Issue Type,Field Name,Current DB Value,Correct Value (from PDF),Notes
+4000004480,1761207984435gqrtrqhom,DATE_ERROR,invoiceDate,2025-10-23,2024-11-21,Credit Memo - wrong date in DB
+4000004481,1761207984459w2wxtmptq,DATE_ERROR,invoiceDate,2025-10-23,2024-11-21,Credit Memo - wrong date in DB
+4000004482,1761207984484gb23w8xdr,DATE_ERROR,invoiceDate,2025-10-23,2024-11-21,Credit Memo - wrong date in DB
+4000000840,1761208031125nbj20mkdm,DATE_ERROR,invoiceDate,2025-10-23,2025-02-27,Wrong invoice date in DB
+4000000880,1761208031150yczhkhkz4,DATE_ERROR,invoiceDate,2025-10-23,2025-06-10,Wrong invoice date in DB
+4000000881,1761208031174xk7xr34py,DATE_ERROR,invoiceDate,2025-10-23,2025-06-10,Wrong invoice date in DB
+4000000960,1761208031245fqxtq4krf,DATE_ERROR,invoiceDate,2025-10-23,2025-09-29,Wrong invoice date in DB
+4000004360,1761208045406ohy3m0o0u,DATE_ERROR,invoiceDate,2025-10-23,2024-09-20,Wrong invoice date in DB
+4000004500,1761208048207e0a31cbwd,DATE_ERROR,invoiceDate,2025-10-23,2024-11-27,Wrong invoice date in DB
+4000004660,1761208052052t9p36a0o8,DATE_ERROR,invoiceDate,2025-10-23,2024-12-18,Wrong invoice date in DB
+4000004661,1761208052076p65qvt2y8,DATE_ERROR,invoiceDate,2025-10-23,2024-12-18,Wrong invoice date in DB
+4000004662,1761208052102nzxhomwxm,DATE_ERROR,invoiceDate,2025-10-23,2024-12-18,Wrong invoice date in DB
+4000005221,1761208060004bbvfz3zw6,DATE_ERROR,invoiceDate,2025-10-23,2024-08-20,Wrong invoice date in DB
+4000005222,1761208060028sbe36b7s9,DATE_ERROR,invoiceDate,2025-10-23,2024-08-20,Wrong invoice date in DB
+4000005520,1761208064453y3c4evtw0,DATE_ERROR,invoiceDate,2025-10-23,2024-12-20,Wrong invoice date in DB
+4000005660,1761208067267ks4d24s0u,DATE_ERROR,invoiceDate,2025-10-23,2024-12-20,Wrong invoice date in DB
+4000005664,1761208067340qpzpvkkro,DATE_ERROR,invoiceDate,2025-10-23,2024-12-20,Wrong invoice date in DB
+4000005780,1761208069121zx8xhpbq5,DATE_ERROR,invoiceDate,2025-10-23,2024-09-20,Wrong invoice date in DB
+4000005781,1761208069145qkw1aqdhh,DATE_ERROR,invoiceDate,2025-10-23,2024-09-20,Wrong invoice date in DB
+4000005920,1761208071968u1wnedvbg,DATE_ERROR,invoiceDate,2025-10-23,2024-11-20,Wrong invoice date in DB
+4000006001,1761208073784hy2vwz8ht,DATE_ERROR,invoiceDate,2025-10-23,2024-12-20,Wrong invoice date in DB
+6000000746,1761207997212hhq66sqsq,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+6000000801,1761208010363vrmxjprxs,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+6000000807,1761208012140py9oynhz1,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+6000000808,1761208012167t9r9b67nb,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+3000001160,1761208029289b0qx5hwrk,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+4000005221,1761208060004bbvfz3zw6,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+4000005222,1761208060028sbe36b7s9,CLIENT_MISMATCH,client,South Australia Health,Application Services,Should be Application Services not South Australia Health
+3000001140,1761208104631ldjy2pfb9,CLIENT_MISMATCH,client,South Australia Health,Women's and Children's Hospital,Should be Women's and Children's Hospital not South Australia Health
+4000005401,1761208060753s63y5qnbj,CLIENT_MISMATCH,client,South Australia Health,Women's and Children's Hospital,Should be Women's and Children's Hospital not South Australia Health

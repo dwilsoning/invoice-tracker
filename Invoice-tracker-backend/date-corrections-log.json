@@ -1,0 +1,773 @@
+{
+  "timestamp": "2025-10-24T09:06:53.563Z",
+  "invoiceDatesFixed": 41,
+  "dueDatesFixed": 86,
+  "corrections": {
+    "invoiceDates": [
+      {
+        "invoiceNumber": "4000004480",
+        "id": "1761207984435gqrtrqhom",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-11-21"
+      },
+      {
+        "invoiceNumber": "4000004481",
+        "id": "1761207984459w2wxtmptq",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-11-21"
+      },
+      {
+        "invoiceNumber": "4000004482",
+        "id": "1761207984484gb23w8xdr",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-11-21"
+      },
+      {
+        "invoiceNumber": "4000000840",
+        "id": "1761208032402gf3pujqld",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-02-27"
+      },
+      {
+        "invoiceNumber": "4000000880",
+        "id": "1761208032454oz6ju8fmo",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-06-10"
+      },
+      {
+        "invoiceNumber": "4000000881",
+        "id": "1761208032486qp2srs6t4",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-06-10"
+      },
+      {
+        "invoiceNumber": "4000000960",
+        "id": "1761208032595l62bvrx7t",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-09-29"
+      },
+      {
+        "invoiceNumber": "4000004360",
+        "id": "1761208041420zyzst1xps",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-09-20"
+      },
+      {
+        "invoiceNumber": "4000004500",
+        "id": "1761208042891gwbj13yjd",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-11-27"
+      },
+      {
+        "invoiceNumber": "4000004660",
+        "id": "1761208044804su4tcl0ke",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-12-18"
+      },
+      {
+        "invoiceNumber": "4000004661",
+        "id": "1761208044832ynw4cn5y4",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-12-18"
+      },
+      {
+        "invoiceNumber": "4000004662",
+        "id": "1761208044865wheawx09h",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-12-18"
+      },
+      {
+        "invoiceNumber": "4000005520",
+        "id": "17612080568635urig2k8o",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-06-24"
+      },
+      {
+        "invoiceNumber": "4000005660",
+        "id": "1761208061097wz4srfzjc",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-07-28"
+      },
+      {
+        "invoiceNumber": "4000005664",
+        "id": "17612080612288to4cumzu",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-07-28"
+      },
+      {
+        "invoiceNumber": "4000005780",
+        "id": "1761208064292f1fl63085",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-08-14"
+      },
+      {
+        "invoiceNumber": "4000005781",
+        "id": "176120806432641dl3asn8",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-08-14"
+      },
+      {
+        "invoiceNumber": "4000005920",
+        "id": "1761208065941p49qnwgum",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-09-08"
+      },
+      {
+        "invoiceNumber": "4000006001",
+        "id": "17612080673411axti3iyo",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-10-13"
+      },
+      {
+        "invoiceNumber": "4004687791",
+        "id": "1761208070272dh27wtdum",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-09-17"
+      },
+      {
+        "invoiceNumber": "4600017195",
+        "id": "1761208075826e18pdsrqp",
+        "oldDate": "2025-10-23",
+        "newDate": "2024-11-19"
+      },
+      {
+        "invoiceNumber": "4600018159",
+        "id": "17612080778570oevdeit4",
+        "oldDate": "2024-12-09",
+        "newDate": "2024-09-12"
+      },
+      {
+        "invoiceNumber": "4600019751",
+        "id": "1761208079128i636s1nj4",
+        "oldDate": "2025-01-09",
+        "newDate": "2025-09-01"
+      },
+      {
+        "invoiceNumber": "4600022189",
+        "id": "1761208082169495brhu54",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-02-19"
+      },
+      {
+        "invoiceNumber": "4600023003",
+        "id": "1761208082375ij2vr3xnq",
+        "oldDate": "2025-03-10",
+        "newDate": "2025-10-03"
+      },
+      {
+        "invoiceNumber": "4600024858",
+        "id": "1761208085339p046xj7uo",
+        "oldDate": "2025-04-11",
+        "newDate": "2025-11-04"
+      },
+      {
+        "invoiceNumber": "4600025015",
+        "id": "1761208085361gv0et65ee",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-04-16"
+      },
+      {
+        "invoiceNumber": "4600025016",
+        "id": "1761208086598bdqz7thsy",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-04-16"
+      },
+      {
+        "invoiceNumber": "4600025935",
+        "id": "1761208089665k70s9ztg5",
+        "oldDate": "2025-05-07",
+        "newDate": "2025-07-05"
+      },
+      {
+        "invoiceNumber": "4600026080",
+        "id": "1761208090890yazvxtumh",
+        "oldDate": "2025-05-07",
+        "newDate": "2025-07-05"
+      },
+      {
+        "invoiceNumber": "4600027856",
+        "id": "17612080925400s1acmrds",
+        "oldDate": "2025-06-09",
+        "newDate": "2025-09-06"
+      },
+      {
+        "invoiceNumber": "4600029368",
+        "id": "1761208095360v1amz4tqm",
+        "oldDate": "2025-07-04",
+        "newDate": "2025-04-07"
+      },
+      {
+        "invoiceNumber": "4600029527",
+        "id": "17612080953876z5iii383",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-07-09"
+      },
+      {
+        "invoiceNumber": "4600029528",
+        "id": "1761208095414l28yg4y8t",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-07-09"
+      },
+      {
+        "invoiceNumber": "4600029529",
+        "id": "1761208095442l6epo9mtk",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-07-09"
+      },
+      {
+        "invoiceNumber": "4600030677",
+        "id": "17612080982150frxy44o8",
+        "oldDate": "2025-08-07",
+        "newDate": "2025-07-08"
+      },
+      {
+        "invoiceNumber": "4600032469",
+        "id": "1761208099826cf8m276z9",
+        "oldDate": "2025-09-08",
+        "newDate": "2025-08-09"
+      },
+      {
+        "invoiceNumber": "4600032536",
+        "id": "1761208101152ngm6v9f1b",
+        "oldDate": "2025-09-12",
+        "newDate": "2025-12-09"
+      },
+      {
+        "invoiceNumber": "4600032537",
+        "id": "1761208101206mvqcyqs6d",
+        "oldDate": "2025-09-12",
+        "newDate": "2025-12-09"
+      },
+      {
+        "invoiceNumber": "4600032538",
+        "id": "1761208101233oovznbwje",
+        "oldDate": "2025-10-23",
+        "newDate": "2025-09-12"
+      },
+      {
+        "invoiceNumber": "4600033191",
+        "id": "1761208102692ya3e5g1af",
+        "oldDate": "2025-10-07",
+        "newDate": "2025-07-10"
+      }
+    ],
+    "dueDates": [
+      {
+        "invoiceNumber": "4600014680",
+        "id": "1761208072985ony2fkstc",
+        "oldDate": "2024-12-01",
+        "newDate": "2024-01-12"
+      },
+      {
+        "invoiceNumber": "4600015300",
+        "id": "1761208073116k9vqzki29",
+        "oldDate": "2024-12-01",
+        "newDate": "2024-01-12"
+      },
+      {
+        "invoiceNumber": "4600015337",
+        "id": "17612080731490njw65vax",
+        "oldDate": "2024-12-01",
+        "newDate": "2024-01-12"
+      },
+      {
+        "invoiceNumber": "4600015399",
+        "id": "1761208074376nunofu3v0",
+        "oldDate": "2024-12-03",
+        "newDate": "2024-03-12"
+      },
+      {
+        "invoiceNumber": "4600015445",
+        "id": "1761208074399s27gl46og",
+        "oldDate": "2024-12-02",
+        "newDate": "2024-02-12"
+      },
+      {
+        "invoiceNumber": "4600015483",
+        "id": "1761208074424nobt0yup4",
+        "oldDate": "2024-12-02",
+        "newDate": "2024-02-12"
+      },
+      {
+        "invoiceNumber": "4600016655",
+        "id": "176120807452204jvnf3vj",
+        "oldDate": "2024-12-11",
+        "newDate": "2024-11-12"
+      },
+      {
+        "invoiceNumber": "4600017007",
+        "id": "176120807456808nph1rvv",
+        "oldDate": "2025-01-02",
+        "newDate": "2025-02-01"
+      },
+      {
+        "invoiceNumber": "4600017223",
+        "id": "17612080758871h8mw88fl",
+        "oldDate": "2025-01-02",
+        "newDate": "2025-02-01"
+      },
+      {
+        "invoiceNumber": "4600017918",
+        "id": "1761208075986wn15dyigd",
+        "oldDate": "2025-02-01",
+        "newDate": "2025-01-02"
+      },
+      {
+        "invoiceNumber": "4600017921",
+        "id": "1761208076011qlit1akl3",
+        "oldDate": "2025-02-01",
+        "newDate": "2025-01-02"
+      },
+      {
+        "invoiceNumber": "4600017964",
+        "id": "1761208077771fn1z8r7l4",
+        "oldDate": "2025-02-01",
+        "newDate": "2025-01-02"
+      },
+      {
+        "invoiceNumber": "4600018030",
+        "id": "17612080777967lv6088os",
+        "oldDate": "2025-02-01",
+        "newDate": "2025-01-02"
+      },
+      {
+        "invoiceNumber": "4600018159",
+        "id": "17612080778570oevdeit4",
+        "oldDate": "2025-01-08",
+        "newDate": "2025-08-01"
+      },
+      {
+        "invoiceNumber": "4600018575",
+        "id": "1761208077903c4j9x77tl",
+        "oldDate": "2025-02-01",
+        "newDate": "2025-01-02"
+      },
+      {
+        "invoiceNumber": "4600019608",
+        "id": "17612080779263h2xa66s1",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600019751",
+        "id": "1761208079128i636s1nj4",
+        "oldDate": "2025-02-08",
+        "newDate": "2025-08-02"
+      },
+      {
+        "invoiceNumber": "4600019883",
+        "id": "176120807915286ql8osqj",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600020132",
+        "id": "176120807922363z6fny1t",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600020263",
+        "id": "1761208079266r7us6vaf6",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600020264",
+        "id": "176120807929726mvitp6o",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600020276",
+        "id": "17612080793286keiqe0oe",
+        "oldDate": "2025-03-05",
+        "newDate": "2025-05-03"
+      },
+      {
+        "invoiceNumber": "4600020300",
+        "id": "1761208079387g15hyo9y6",
+        "oldDate": "2025-03-01",
+        "newDate": "2025-01-03"
+      },
+      {
+        "invoiceNumber": "4600021248",
+        "id": "1761208080806zs51wfwnn",
+        "oldDate": "2025-04-01",
+        "newDate": "2025-01-04"
+      },
+      {
+        "invoiceNumber": "4600021568",
+        "id": "1761208080832uqrmfy4m0",
+        "oldDate": "2025-04-01",
+        "newDate": "2025-01-04"
+      },
+      {
+        "invoiceNumber": "4600021824",
+        "id": "1761208080896f54i0gc7j",
+        "oldDate": "2025-04-01",
+        "newDate": "2025-01-04"
+      },
+      {
+        "invoiceNumber": "4600021878",
+        "id": "17612080809202hlyfjtob",
+        "oldDate": "2025-04-01",
+        "newDate": "2025-01-04"
+      },
+      {
+        "invoiceNumber": "4600021974",
+        "id": "1761208080947xtee7s0ys",
+        "oldDate": "2025-04-02",
+        "newDate": "2025-02-04"
+      },
+      {
+        "invoiceNumber": "4600022290",
+        "id": "1761208082222uioebzoek",
+        "oldDate": "2025-04-06",
+        "newDate": "2025-06-04"
+      },
+      {
+        "invoiceNumber": "4600023003",
+        "id": "1761208082375ij2vr3xnq",
+        "oldDate": "2025-04-09",
+        "newDate": "2025-09-04"
+      },
+      {
+        "invoiceNumber": "4600023342",
+        "id": "176120808367715ol0g8yv",
+        "oldDate": "2025-05-01",
+        "newDate": "2025-01-05"
+      },
+      {
+        "invoiceNumber": "4600023517",
+        "id": "176120808371450tq1isfe",
+        "oldDate": "2025-05-01",
+        "newDate": "2025-01-05"
+      },
+      {
+        "invoiceNumber": "4600023563",
+        "id": "17612080837392eyajoqgh",
+        "oldDate": "2025-05-03",
+        "newDate": "2025-03-05"
+      },
+      {
+        "invoiceNumber": "4600023698",
+        "id": "17612080837636xtrzd5qd",
+        "oldDate": "2025-05-01",
+        "newDate": "2025-01-05"
+      },
+      {
+        "invoiceNumber": "4600023701",
+        "id": "1761208083788gw5nfge7u",
+        "oldDate": "2025-05-01",
+        "newDate": "2025-01-05"
+      },
+      {
+        "invoiceNumber": "4600023862",
+        "id": "1761208083846v4anibet4",
+        "oldDate": "2025-05-04",
+        "newDate": "2025-04-05"
+      },
+      {
+        "invoiceNumber": "4600024858",
+        "id": "1761208085339p046xj7uo",
+        "oldDate": "2025-05-11",
+        "newDate": "2025-11-05"
+      },
+      {
+        "invoiceNumber": "4600025070",
+        "id": "1761208086696hn2w889cs",
+        "oldDate": "2025-06-02",
+        "newDate": "2025-02-06"
+      },
+      {
+        "invoiceNumber": "4600025159",
+        "id": "17612080867204t7p0s5wf",
+        "oldDate": "2025-06-01",
+        "newDate": "2025-01-06"
+      },
+      {
+        "invoiceNumber": "4600025317",
+        "id": "1761208086760t7vd9gzub",
+        "oldDate": "2025-06-05",
+        "newDate": "2025-05-06"
+      },
+      {
+        "invoiceNumber": "4600025321",
+        "id": "1761208086785xf0rhnpr",
+        "oldDate": "2025-06-05",
+        "newDate": "2025-05-06"
+      },
+      {
+        "invoiceNumber": "4600025325",
+        "id": "1761208086809592ms1vfh",
+        "oldDate": "2025-06-05",
+        "newDate": "2025-05-06"
+      },
+      {
+        "invoiceNumber": "4600025973",
+        "id": "1761208089688505wj6nvx",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600026613",
+        "id": "1761208090937ru6g92iz5",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600026725",
+        "id": "17612080909797dym21r87",
+        "oldDate": "2025-07-03",
+        "newDate": "2025-03-07"
+      },
+      {
+        "invoiceNumber": "4600026875",
+        "id": "17612080910295kecl71a5",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600026878",
+        "id": "1761208091060pzhldq5ib",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600027689",
+        "id": "1761208092454dlyu6v4vh",
+        "oldDate": "2025-08-01",
+        "newDate": "2025-01-08"
+      },
+      {
+        "invoiceNumber": "4600027706",
+        "id": "17612080925075z1i2vn9b",
+        "oldDate": "2025-08-01",
+        "newDate": "2025-01-08"
+      },
+      {
+        "invoiceNumber": "4600027856",
+        "id": "17612080925400s1acmrds",
+        "oldDate": "2025-07-09",
+        "newDate": "2025-09-07"
+      },
+      {
+        "invoiceNumber": "4600028153",
+        "id": "1761208093905lk1u7r2q3",
+        "oldDate": "2025-08-01",
+        "newDate": "2025-01-08"
+      },
+      {
+        "invoiceNumber": "4600028272",
+        "id": "1761208093933y7z7i6lsr",
+        "oldDate": "2025-08-02",
+        "newDate": "2025-02-08"
+      },
+      {
+        "invoiceNumber": "4600028354",
+        "id": "1761208093960cglbrcn33",
+        "oldDate": "2025-08-01",
+        "newDate": "2025-01-08"
+      },
+      {
+        "invoiceNumber": "4600028422",
+        "id": "1761208093986ogxow5yqu",
+        "oldDate": "2025-08-01",
+        "newDate": "2025-01-08"
+      },
+      {
+        "invoiceNumber": "4600029368",
+        "id": "1761208095360v1amz4tqm",
+        "oldDate": "2025-08-03",
+        "newDate": "2025-03-08"
+      },
+      {
+        "invoiceNumber": "4600029692",
+        "id": "1761208096830hyqi0y4yn",
+        "oldDate": "2025-09-01",
+        "newDate": "2025-01-09"
+      },
+      {
+        "invoiceNumber": "4600029722",
+        "id": "1761208096854igswsyjjg",
+        "oldDate": "2025-09-02",
+        "newDate": "2025-02-09"
+      },
+      {
+        "invoiceNumber": "4600029839",
+        "id": "1761208096880s14sbp7fs",
+        "oldDate": "2025-09-01",
+        "newDate": "2025-01-09"
+      },
+      {
+        "invoiceNumber": "4600029841",
+        "id": "1761208096904i9zkjyoqf",
+        "oldDate": "2025-09-01",
+        "newDate": "2025-01-09"
+      },
+      {
+        "invoiceNumber": "4600030036",
+        "id": "1761208096925rkj0wq7w3",
+        "oldDate": "2025-09-05",
+        "newDate": "2025-05-09"
+      },
+      {
+        "invoiceNumber": "4600030039",
+        "id": "1761208096954n6g5ih60n",
+        "oldDate": "2025-09-05",
+        "newDate": "2025-05-09"
+      },
+      {
+        "invoiceNumber": "4600030083",
+        "id": "1761208096992cfa7ng7p4",
+        "oldDate": "2025-09-07",
+        "newDate": "2025-07-09"
+      },
+      {
+        "invoiceNumber": "4600030677",
+        "id": "17612080982150frxy44o8",
+        "oldDate": "2025-09-06",
+        "newDate": "2025-06-09"
+      },
+      {
+        "invoiceNumber": "4600030690",
+        "id": "176120809823703ztlgf0d",
+        "oldDate": "2025-10-01",
+        "newDate": "2025-01-10"
+      },
+      {
+        "invoiceNumber": "4600030712",
+        "id": "17612080982589z71p81o6",
+        "oldDate": "2025-10-01",
+        "newDate": "2025-01-10"
+      },
+      {
+        "invoiceNumber": "4600030852",
+        "id": "1761208098301gmmuofyhw",
+        "oldDate": "2025-10-01",
+        "newDate": "2025-01-10"
+      },
+      {
+        "invoiceNumber": "4600030902",
+        "id": "17612080983226cy4he1fx",
+        "oldDate": "2025-10-01",
+        "newDate": "2025-01-10"
+      },
+      {
+        "invoiceNumber": "4600031098",
+        "id": "1761208098361sm5cdi44n",
+        "oldDate": "2025-10-03",
+        "newDate": "2025-03-10"
+      },
+      {
+        "invoiceNumber": "4600031258",
+        "id": "1761208098382uip4m6zac",
+        "oldDate": "2025-10-01",
+        "newDate": "2025-01-10"
+      },
+      {
+        "invoiceNumber": "4600032469",
+        "id": "1761208099826cf8m276z9",
+        "oldDate": "2025-10-08",
+        "newDate": "2025-08-10"
+      },
+      {
+        "invoiceNumber": "4600032536",
+        "id": "1761208101152ngm6v9f1b",
+        "oldDate": "2025-10-12",
+        "newDate": "2025-12-10"
+      },
+      {
+        "invoiceNumber": "4600032537",
+        "id": "1761208101206mvqcyqs6d",
+        "oldDate": "2025-10-12",
+        "newDate": "2025-12-10"
+      },
+      {
+        "invoiceNumber": "4600032668",
+        "id": "1761208101266hvhp3kjhn",
+        "oldDate": "2025-11-02",
+        "newDate": "2025-02-11"
+      },
+      {
+        "invoiceNumber": "4600032703",
+        "id": "1761208101327yiapt6kwo",
+        "oldDate": "2025-11-01",
+        "newDate": "2025-01-11"
+      },
+      {
+        "invoiceNumber": "4600032776",
+        "id": "1761208101361dr694jqs1",
+        "oldDate": "2025-11-01",
+        "newDate": "2025-01-11"
+      },
+      {
+        "invoiceNumber": "4600032778",
+        "id": "1761208101387mf8crh98t",
+        "oldDate": "2025-11-01",
+        "newDate": "2025-01-11"
+      },
+      {
+        "invoiceNumber": "4600032781",
+        "id": "1761208101417gvk2zmtn5",
+        "oldDate": "2025-11-01",
+        "newDate": "2025-01-11"
+      },
+      {
+        "invoiceNumber": "4600032787",
+        "id": "1761208102663dnbkuke8p",
+        "oldDate": "2025-11-01",
+        "newDate": "2025-01-11"
+      },
+      {
+        "invoiceNumber": "4600033191",
+        "id": "1761208102692ya3e5g1af",
+        "oldDate": "2025-11-06",
+        "newDate": "2025-06-11"
+      },
+      {
+        "invoiceNumber": "4600034289",
+        "id": "1761208102736j705vquea",
+        "oldDate": "2025-12-01",
+        "newDate": "2025-01-12"
+      },
+      {
+        "invoiceNumber": "4600034399",
+        "id": "1761208102759cz7id2ug0",
+        "oldDate": "2025-12-01",
+        "newDate": "2025-01-12"
+      },
+      {
+        "invoiceNumber": "4600034403",
+        "id": "17612081027825b57e23oy",
+        "oldDate": "2025-12-01",
+        "newDate": "2025-01-12"
+      },
+      {
+        "invoiceNumber": "4600034421",
+        "id": "1761208102814nlyz790nz",
+        "oldDate": "2025-12-01",
+        "newDate": "2025-01-12"
+      },
+      {
+        "invoiceNumber": "4600026853",
+        "id": "17612103584314wc88a3gc",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600026853",
+        "id": "17612103584314wc88a3gc",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      },
+      {
+        "invoiceNumber": "4600026853",
+        "id": "17612103584314wc88a3gc",
+        "oldDate": "2025-07-01",
+        "newDate": "2025-01-07"
+      }
+    ]
+  }
+}

@@ -1,0 +1,59 @@
+{
+  "summary": {
+    "totalPDFsChecked": 50,
+    "discrepanciesFound": 3,
+    "missingInDB": 2,
+    "parsingErrors": 0
+  },
+  "discrepancies": [
+    {
+      "file": "1761207984427-Credit Memo 4000004480.pdf",
+      "invoiceNumber": "4000004480",
+      "dbId": "1761207984435gqrtrqhom",
+      "issues": [
+        {
+          "field": "invoiceNumber",
+          "pdf": "Total",
+          "db": "4000004480"
+        }
+      ]
+    },
+    {
+      "file": "1761207984452-Credit Memo 4000004481.pdf",
+      "invoiceNumber": "4000004481",
+      "dbId": "1761207984459w2wxtmptq",
+      "issues": [
+        {
+          "field": "invoiceNumber",
+          "pdf": "Total",
+          "db": "4000004481"
+        }
+      ]
+    },
+    {
+      "file": "1761207984476-Credit Memo 4000004482.pdf",
+      "invoiceNumber": "4000004482",
+      "dbId": "1761207984484gb23w8xdr",
+      "issues": [
+        {
+          "field": "invoiceNumber",
+          "pdf": "Total",
+          "db": "4000004482"
+        }
+      ]
+    }
+  ],
+  "missingInDB": [
+    {
+      "file": "1761207984338-Altera - Inv 25-1620 16 Jan25 PO4000333 - Ceduna.pdf",
+      "invoiceNumber": "25-1620",
+      "reason": "Invoice not found in database"
+    },
+    {
+      "file": "1761207984496-EFT_REMITTANCE_267711414.pdf",
+      "invoiceNumber": "267711414",
+      "reason": "Invoice not found in database"
+    }
+  ],
+  "parsingErrors": []
+}

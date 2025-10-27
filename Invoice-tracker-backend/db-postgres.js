@@ -1,0 +1,142 @@
+const { Pool } = require('pg');
+require('dotenv').config();
+
+// Create PostgreSQL connection pool
+const pool = new Pool({
+  host: process.env.DB_HOST || 'localhost',
+  port: process.env.DB_PORT || 5432,
+  database: process.env.DB_NAME || 'invoice_tracker',
+  user: process.env.DB_USER || 'invoice_tracker_user',
+  password: process.env.DB_PASSWORD,
+  max: 20, // Maximum number of clients in the pool
+  idleTimeoutMillis: 30000, // How long a client can remain idle before being closed
+  connectionTimeoutMillis: 2000, // How long to wait for a connection
+});
+
+// Test database connection
+pool.on('connect', () => {
+  console.log('✓ Connected to PostgreSQL database');
+});
+
+pool.on('error', (err) => {
+  console.error('Unexpected error on idle PostgreSQL client', err);
+  process.exit(-1);
+});
+
+// Convert snake_case to camelCase
+function snakeToCamel(str) {
+  return str.replace(/_([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
+// Convert row object from snake_case to camelCase and fix types
+function convertRowToCamelCase(row) {
+  if (!row) return row;
+  const converted = {};
+
+  // Fields that should be numbers
+  const numericFields = ['amountDue', 'expectedAmount', 'contractValue'];
+
+  // Fields that should be dates (YYYY-MM-DD format)
+  const dateFields = ['invoiceDate', 'dueDate', 'paymentDate', 'uploadDate',
+                      'expectedDate', 'lastInvoiceDate', 'acknowledgedDate',
+                      'createdDate', 'updatedDate'];
+
+  for (const key in row) {
+    const camelKey = snakeToCamel(key);
+    let value = row[key];
+
+    // Convert numeric strings to numbers
+    if (numericFields.includes(camelKey) && value !== null && value !== undefined) {
+      value = parseFloat(value);
+    }
+
+    // Convert date timestamps to YYYY-MM-DD format
+    if (dateFields.includes(camelKey) && value !== null && value !== undefined) {
+      if (value instanceof Date || typeof value === 'string') {
+        const date = new Date(value);
+        if (!isNaN(date.getTime())) {
+          value = date.toISOString().split('T')[0];
+        }
+      }
+    }
+
+    converted[camelKey] = value;
+  }
+  return converted;
+}
+
+// Convert array of rows from snake_case to camelCase
+function convertRowsToCamelCase(rows) {
+  if (!rows) return rows;
+  return rows.map(convertRowToCamelCase);
+}
+
+// Database wrapper for compatibility with existing code
+const db = {
+  // Execute a query and return all results
+  async all(sql, params = []) {
+    const client = await pool.connect();
+    try {
+      const result = await client.query(sql, params);
+      return convertRowsToCamelCase(result.rows);
+    } finally {
+      client.release();
+    }
+  },
+
+  // Execute a query and return first result
+  async get(sql, params = []) {
+    const client = await pool.connect();
+    try {
+      const result = await client.query(sql, params);
+      return convertRowToCamelCase(result.rows[0] || null);
+    } finally {
+      client.release();
+    }
+  },
+
+  // Execute a query (INSERT, UPDATE, DELETE)
+  async run(sql, params = []) {
+    const client = await pool.connect();
+    try {
+      const result = await client.query(sql, params);
+      return {
+        changes: result.rowCount,
+        rows: convertRowsToCamelCase(result.rows)
+      };
+    } finally {
+      client.release();
+    }
+  },
+
+  // Execute raw SQL (for CREATE TABLE, etc.)
+  async exec(sql) {
+    const client = await pool.connect();
+    try {
+      await client.query(sql);
+    } finally {
+      client.release();
+    }
+  },
+
+  // Prepare statement (returns object with query methods)
+  prepare(sql) {
+    return {
+      all: (...params) => db.all(sql, params),
+      get: (...params) => db.get(sql, params),
+      run: (...params) => db.run(sql, params)
+    };
+  },
+
+  // Get pool for advanced operations
+  getPool() {
+    return pool;
+  },
+
+  // Close all connections
+  async close() {
+    await pool.end();
+  }
+};
+
+module.exports = { db, pool };

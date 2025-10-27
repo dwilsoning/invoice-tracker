@@ -1,0 +1,151 @@
+================================================================================
+INVOICE TRACKER - TEST FILES REFERENCE
+================================================================================
+
+All test files are located in:
+C:\Users\dwils\Claude-Projects\Invoice Tracker\Invoice-tracker-backend\
+
+================================================================================
+HOW TO RUN TESTS
+================================================================================
+
+Method 1: Double-click the .bat files (EASIEST)
+Method 2: Right-click .ps1 files → "Run with PowerShell"
+
+================================================================================
+AVAILABLE TEST FILES
+================================================================================
+
+NO SERVER REQUIRED:
+-------------------
+✅ test-unit.bat              - Unit tests only (38 tests)
+   → Calls: run-unit-tests.ps1
+
+REQUIRES SERVER RUNNING ON PORT 3001:
+--------------------------------------
+✅ test-all.bat               - ALL tests (124 tests)
+   → Calls: run-all-tests.ps1
+
+✅ test-api.bat               - API endpoint tests (60+ tests)
+   → Calls: run-api-tests.ps1
+
+✅ test-integration.bat       - Integration workflow tests (30+ tests)
+   → Calls: run-integration-tests.ps1
+
+✅ test-coverage.bat          - All tests + HTML coverage report
+   → Calls: run-coverage.ps1
+   → Opens coverage report in browser automatically
+
+================================================================================
+BEFORE RUNNING API/INTEGRATION TESTS
+================================================================================
+
+1. Open a command prompt
+2. Navigate to the backend folder:
+   cd C:\Users\dwils\Claude-Projects\Invoice Tracker\Invoice-tracker-backend
+
+3. Start the server:
+   npm start
+
+4. Leave that window open
+5. Run your tests using the batch files above
+
+================================================================================
+WHAT EACH TEST TYPE DOES
+================================================================================
+
+UNIT TESTS (test-unit.bat):
+- PDF text extraction
+- Date parsing (DD-MMM-YYYY format)
+- Frequency detection (monthly, quarterly, annual, etc.)
+- Invoice type classification
+- Currency extraction
+- Amount extraction
+- Invoice number extraction
+- Date formatting
+- Currency conversion
+
+API TESTS (test-api.bat):
+- GET /api/invoices
+- POST /api/upload-pdfs
+- PUT /api/invoices/:id
+- DELETE /api/invoices/:id
+- GET /api/expected-invoices
+- POST /api/contracts
+- GET /api/exchange-rates
+- POST /api/query (natural language)
+- POST /api/upload-payments
+- And more...
+
+INTEGRATION TESTS (test-integration.bat):
+- Complete invoice lifecycle (upload → update → delete)
+- Duplicate handling workflow
+- Contract management workflow
+- Payment processing workflow
+- Expected invoice workflow
+- Query and filtering workflow
+- Error recovery scenarios
+
+COVERAGE REPORT (test-coverage.bat):
+- Runs all tests
+- Generates HTML coverage report
+- Shows which code is tested
+- Opens report automatically in browser
+
+================================================================================
+EXPECTED RESULTS
+================================================================================
+
+Unit Tests:
+  Test Suites: 1 passed, 1 total
+  Tests:       38 passed, 38 total
+
+All Tests (with server running):
+  Test Suites: 3 passed, 3 total
+  Tests:       124 passed, 124 total
+
+================================================================================
+TROUBLESHOOTING
+================================================================================
+
+Issue: "Server should be running" error
+Fix: Start the server first (npm start)
+
+Issue: Window closes immediately
+Fix: Use the new .bat files (they keep window open)
+
+Issue: Tests timeout
+Fix: Check that server is responding on http://localhost:3001
+
+Issue: PowerShell security warning
+Fix: It's safe - the scripts just run tests. Click "Run anyway"
+
+================================================================================
+COMMAND LINE ALTERNATIVE
+================================================================================
+
+You can also run tests from command line:
+
+cd C:\Users\dwils\Claude-Projects\Invoice Tracker\Invoice-tracker-backend
+
+node .\node_modules\jest\bin\jest.js tests/unit           # Unit tests
+node .\node_modules\jest\bin\jest.js tests/api.test.js    # API tests
+node .\node_modules\jest\bin\jest.js tests/integration    # Integration
+node .\node_modules\jest\bin\jest.js --coverage           # Coverage
+
+Or use npm scripts:
+npm test                  # All tests
+npm run test:unit        # Unit tests only
+npm run test:api         # API tests only
+npm run test:integration # Integration tests only
+npm run test:coverage    # With coverage
+
+================================================================================
+DOCUMENTATION
+================================================================================
+
+For detailed documentation, see:
+- TESTING.md              (Full documentation)
+- TESTING-QUICK-START.md  (Quick reference guide)
+
+================================================================================

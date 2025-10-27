@@ -1,0 +1,1429 @@
+{
+  "timestamp": "2025-10-24T10:06:28.843Z",
+  "summary": {
+    "totalChecked": 797,
+    "matched": 620,
+    "mismatches": 177,
+    "unclassified": 0,
+    "accuracyRate": "77.8%"
+  },
+  "typeMismatches": [
+    {
+      "invoiceNumber": "6000000692",
+      "dbId": "1761207997215ptp4awctz",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000705",
+      "dbId": "17612079972921f9gokwn7",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000743",
+      "dbId": "1761208003081c1xs6ncb4",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000744",
+      "dbId": "1761208003116vel7i0qc7",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000747",
+      "dbId": "1761208003235g0xog2xeg",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000750",
+      "dbId": "1761208004498l13hs8q5c",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000757",
+      "dbId": "1761208004667z5ql0am0d",
+      "dbType": "Sub",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "6000000761",
+      "dbId": "1761208005942bpisxw86f",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000764",
+      "dbId": "1761208005994zdbmvvnek",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000776",
+      "dbId": "1761208007517ja7f5b1yx",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "6000000787",
+      "dbId": "17612080089098y1hn1g87",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000788",
+      "dbId": "1761208008925i2mc9khjn",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "6000000814",
+      "dbId": "17612080135997jvxbu7q1",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000816",
+      "dbId": "1761208013654nepqinv44",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000818",
+      "dbId": "17612080137080pduvys48",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000843",
+      "dbId": "1761208017894d3b8j1l5m",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Waikato District Health Board"
+    },
+    {
+      "invoiceNumber": "6000000845",
+      "dbId": "1761208017949v0xm1n0sh",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000848",
+      "dbId": "17612080180200oiid8i0m",
+      "dbType": "Hosting",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "6000000850",
+      "dbId": "1761208018039awg3l0xxz",
+      "dbType": "MS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "6000000855",
+      "dbId": "17612080193602gvt9tygn",
+      "dbType": "MS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Western Sydney Primary Health"
+    },
+    {
+      "invoiceNumber": "6000000870",
+      "dbId": "17612080209155vhh5bz9r",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "9000000506",
+      "dbId": "17612080267262hudka2uy",
+      "dbType": "Maint",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Singapore Health Services Pte Ltd"
+    },
+    {
+      "invoiceNumber": "9000000510",
+      "dbId": "1761208026873p4gboot5g",
+      "dbType": "Maint",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Singapore Health Services Pte Ltd"
+    },
+    {
+      "invoiceNumber": "9000000511",
+      "dbId": "1761208028092l05qpixw8",
+      "dbType": "Maint",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Singapore Health Services Pte Ltd"
+    },
+    {
+      "invoiceNumber": "9000000512",
+      "dbId": "1761208028118ham4xeopb",
+      "dbType": "Maint",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Singapore Health Services Pte Ltd"
+    },
+    {
+      "invoiceNumber": "4000000820",
+      "dbId": "1761208032379nyt00tlyw",
+      "dbType": "HW",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Sengkang General Hospital Pte. Ltd."
+    },
+    {
+      "invoiceNumber": "4000000860",
+      "dbId": "1761208032423my84tdkzj",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Changi General Hospital"
+    },
+    {
+      "invoiceNumber": "4000000900",
+      "dbId": "1761208032516tffs6mcrc",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Changi General Hospital"
+    },
+    {
+      "invoiceNumber": "4000000940",
+      "dbId": "1761208032565dyfaihpln",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Changi General Hospital"
+    },
+    {
+      "invoiceNumber": "4000003924",
+      "dbId": "1761208033891lecj9sl8u",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000003960",
+      "dbId": "1761208033942is8jtdnkt",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003961",
+      "dbId": "1761208033970fk3tz733y",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003964",
+      "dbId": "1761208034073oilomx77y",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003980",
+      "dbId": "1761208035328roi8jz0m6",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003981",
+      "dbId": "1761208035353odutco3j5",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003982",
+      "dbId": "1761208035381k5lazy4bt",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000003983",
+      "dbId": "1761208035408psiqmhwut",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004000",
+      "dbId": "1761208035510m4dwjhqrb",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004002",
+      "dbId": "176120803556314bqr46ay",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004100",
+      "dbId": "1761208036813cvbkc3e6r",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004101",
+      "dbId": "1761208036840nz2dbmamm",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004120",
+      "dbId": "1761208036868uttupa8j9",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004121",
+      "dbId": "1761208036896lyznecfmz",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004124",
+      "dbId": "17612080369819geifga2k",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004125",
+      "dbId": "1761208037010nehli75aa",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004128",
+      "dbId": "1761208038251iq0jj0xme",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004141",
+      "dbId": "1761208038302ikab5289f",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004143",
+      "dbId": "1761208038371q5ywb2ihl",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004161",
+      "dbId": "17612080384225e3l3u623",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004163",
+      "dbId": "1761208038489pvumksn6e",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004180",
+      "dbId": "1761208039764v9set0vkl",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Grampians Health"
+    },
+    {
+      "invoiceNumber": "4000004200",
+      "dbId": "1761208039858d948kvtdv",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004240",
+      "dbId": "1761208039946tj9dje65x",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004260",
+      "dbId": "17612080399718x6l80a84",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004263",
+      "dbId": "1761208041264hhxao7ndl",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004301",
+      "dbId": "1761208041328czvg5t4bt",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004320",
+      "dbId": "1761208041351elcp0731r",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004321",
+      "dbId": "1761208041373neneg5o4h",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004361",
+      "dbId": "176120804145799l5ioslv",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004380",
+      "dbId": "1761208041500ybar4ndjh",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004400",
+      "dbId": "1761208042738pmv44zw9i",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004420",
+      "dbId": "1761208042793b7ljzjole",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Grampians Health"
+    },
+    {
+      "invoiceNumber": "4000004441",
+      "dbId": "176120804286326tf17rh0",
+      "dbType": "3PP",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Barwon Health Australia"
+    },
+    {
+      "invoiceNumber": "4000004521",
+      "dbId": "1761208042948cix1fcb0m",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004540",
+      "dbId": "1761208042978herb251n6",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004580",
+      "dbId": "1761208044676a7sjav1w9",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004620",
+      "dbId": "1761208044732mwz6v6kj1",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004680",
+      "dbId": "17612080448908r1gqnlgf",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004681",
+      "dbId": "1761208044921rm0klqaix",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004701",
+      "dbId": "1761208046186ml4y7t8a4",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "The Royal Victorian Eye and Ear"
+    },
+    {
+      "invoiceNumber": "4000004801",
+      "dbId": "17612080462452xqervydt",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004820",
+      "dbId": "1761208046281jck0tdyg6",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Epworth HealthCare"
+    },
+    {
+      "invoiceNumber": "4000004821",
+      "dbId": "1761208046325l0qpcv04u",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Epworth HealthCare"
+    },
+    {
+      "invoiceNumber": "4000004860",
+      "dbId": "1761208046428ynk0fx1gs",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004900",
+      "dbId": "1761208046452lqnn9tcfd",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "The Royal Victorian Eye and Ear"
+    },
+    {
+      "invoiceNumber": "4000004940",
+      "dbId": "176120804776503ls3yegq",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004981",
+      "dbId": "1761208047814opjzjbbde",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000004982",
+      "dbId": "17612080478366rlfhas2a",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000004983",
+      "dbId": "17612080478608cwv6jlfn",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005000",
+      "dbId": "17612080479146o8t7lrah",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005001",
+      "dbId": "1761208047940yajiylb9v",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005020",
+      "dbId": "1761208049245419jlwkof",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Epworth HealthCare"
+    },
+    {
+      "invoiceNumber": "4000005060",
+      "dbId": "1761208049327u4ykvv2di",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005063",
+      "dbId": "17612080494431uzmam4cd",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005064",
+      "dbId": "1761208049463ipah5k4bv",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005066",
+      "dbId": "1761208049556wav2xt4yl",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005068",
+      "dbId": "1761208050859yu6f8njja",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005069",
+      "dbId": "1761208050876jx570047d",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005070",
+      "dbId": "1761208050899jcur79z34",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005073",
+      "dbId": "17612080509734ps33iyqr",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Waikato District Health Board"
+    },
+    {
+      "invoiceNumber": "4000005080",
+      "dbId": "17612080510499ekelm6wk",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005083",
+      "dbId": "1761208052287jlxafaesu",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005085",
+      "dbId": "1761208052337ff27qbbp0",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005100",
+      "dbId": "1761208052362a8f8yvp0v",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "The Royal Victorian Eye and Ear"
+    },
+    {
+      "invoiceNumber": "4000005160",
+      "dbId": "1761208052391xcmaxp9rh",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005180",
+      "dbId": "17612080524453cliyc92i",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005181",
+      "dbId": "17612080524730opyodyid",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005200",
+      "dbId": "1761208053785vvsf3jcwd",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005220",
+      "dbId": "17612080538138pjxb4iya",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005222",
+      "dbId": "1761208053856kkifo6ij8",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000005240",
+      "dbId": "1761208053880uaxvf8rbz",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005260",
+      "dbId": "1761208053905sgyf4aqzq",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000005280",
+      "dbId": "1761208053935dymw0kbo6",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005321",
+      "dbId": "17612080552346ug86f566",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005340",
+      "dbId": "1761208055261hj5q6tylk",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005341",
+      "dbId": "1761208055287szgwrr6zs",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005402",
+      "dbId": "1761208055392ixex2f3n0",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005403",
+      "dbId": "1761208055421y2a35dx15",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005420",
+      "dbId": "1761208056648fm4jw9ipw",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005440",
+      "dbId": "1761208056669ys0pmi2m6",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005441",
+      "dbId": "1761208056691bu8jswvx3",
+      "dbType": "Hosting",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005442",
+      "dbId": "1761208056716hr5rng829",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005460",
+      "dbId": "1761208056738v6u3oav32",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005480",
+      "dbId": "1761208056789cvt2tbluu",
+      "dbType": "Hosting",
+      "pdfType": "PS",
+      "description": "",
+      "client": "South Western Sydney Primary Health"
+    },
+    {
+      "invoiceNumber": "4000005481",
+      "dbId": "1761208056817qwb2fk69w",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Western Sydney Primary Health"
+    },
+    {
+      "invoiceNumber": "4000005500",
+      "dbId": "17612080568449accnd9ph",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Western Sydney Primary Health"
+    },
+    {
+      "invoiceNumber": "4000005561",
+      "dbId": "1761208058233qjbxikt9f",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005580",
+      "dbId": "17612080582586cxl6joyh",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Epworth HealthCare"
+    },
+    {
+      "invoiceNumber": "4000005581",
+      "dbId": "176120805830185u38pvmm",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005603",
+      "dbId": "1761208059702zf72lzxe3",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005604",
+      "dbId": "1761208059728gar90vz21",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005661",
+      "dbId": "176120806113895h8q9776",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005667",
+      "dbId": "1761208061318wuyahbvtc",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005701",
+      "dbId": "1761208062716b6f0hylvi",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005723",
+      "dbId": "1761208062818qruazgi6v",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005741",
+      "dbId": "1761208062873y57xivjyw",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005744",
+      "dbId": "1761208062987ud0wm2xmo",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "The Royal Victorian Eye and Ear"
+    },
+    {
+      "invoiceNumber": "4000005760",
+      "dbId": "1761208064203hk2qzmdau",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005782",
+      "dbId": "17612080643669vsu4e3nk",
+      "dbType": "3PP",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Barwon Health Australia"
+    },
+    {
+      "invoiceNumber": "4000005800",
+      "dbId": "1761208064436x98dk5imn",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005840",
+      "dbId": "1761208065772anx67ldya",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Western Australia Department Of Health"
+    },
+    {
+      "invoiceNumber": "4000005900",
+      "dbId": "17612080658970lhbljib2",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005960",
+      "dbId": "1761208067192tjdpbkalh",
+      "dbType": "MS",
+      "pdfType": "PS",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005961",
+      "dbId": "1761208067218o3wt9vfmy",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005962",
+      "dbId": "1761208067242811orat74",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Gippsland Health Alliance"
+    },
+    {
+      "invoiceNumber": "4000005963",
+      "dbId": "1761208067277z20f02ea7",
+      "dbType": "HW",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "SA Health AIMS Program"
+    },
+    {
+      "invoiceNumber": "4004404147",
+      "dbId": "17612080674137m81sq43g",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Parkway Hospitals Singapore PTE LTD"
+    },
+    {
+      "invoiceNumber": "4004588774",
+      "dbId": "1761208067445zm3vqp08v",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4004641783",
+      "dbId": "1761208067478623f65qwj",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4004666155",
+      "dbId": "1761208068782m5wpdr21e",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4004677472",
+      "dbId": "1761208070095b7tgph766",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4004677473",
+      "dbId": "1761208070120kn3o3cf3d",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4004686705",
+      "dbId": "17612080702080wfm13yg9",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4004686842",
+      "dbId": "1761208070252ho3zv14cv",
+      "dbType": "Hosting",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600013776",
+      "dbId": "1761208072956t2l1hd3ke",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4600014695",
+      "dbId": "17612080730099odr2h6de",
+      "dbType": "Maint",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "Parkway Hospitals Singapore PTE LTD"
+    },
+    {
+      "invoiceNumber": "4600015337",
+      "dbId": "17612080731490njw65vax",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600016443",
+      "dbId": "1761208074474iylrattzv",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600017918",
+      "dbId": "1761208075986wn15dyigd",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600019883",
+      "dbId": "176120807915286ql8osqj",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600020263",
+      "dbId": "1761208079266r7us6vaf6",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600020401",
+      "dbId": "1761208079410977oj8158",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4600020930",
+      "dbId": "17612080807613cthl06sw",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4600021824",
+      "dbId": "1761208080896f54i0gc7j",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600021878",
+      "dbId": "17612080809202hlyfjtob",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600022192",
+      "dbId": "176120808220030zwv815s",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4600023698",
+      "dbId": "17612080837636xtrzd5qd",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600023862",
+      "dbId": "1761208083846v4anibet4",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600025317",
+      "dbId": "1761208086760t7vd9gzub",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600025935",
+      "dbId": "1761208089665k70s9ztg5",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600025973",
+      "dbId": "1761208089688505wj6nvx",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600027684",
+      "dbId": "1761208092430kpmhe2do8",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "St Luke's Medical Center Global City Inc"
+    },
+    {
+      "invoiceNumber": "4600027689",
+      "dbId": "1761208092454dlyu6v4vh",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600027706",
+      "dbId": "17612080925075z1i2vn9b",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600029839",
+      "dbId": "1761208096880s14sbp7fs",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600030039",
+      "dbId": "1761208096954n6g5ih60n",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600030712",
+      "dbId": "17612080982589z71p81o6",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600030852",
+      "dbId": "1761208098301gmmuofyhw",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600032778",
+      "dbId": "1761208101387mf8crh98t",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600032781",
+      "dbId": "1761208101417gvk2zmtn5",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600034403",
+      "dbId": "17612081027825b57e23oy",
+      "dbType": "Maint",
+      "pdfType": "3PP",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4600034421",
+      "dbId": "1761208102814nlyz790nz",
+      "dbType": "PS",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    },
+    {
+      "invoiceNumber": "4000004483",
+      "dbId": "1761208108204qjipmnj0a",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4000004484",
+      "dbId": "1761208108225ozk1sbmwo",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000780",
+      "dbId": "1761208108272p3psjctcr",
+      "dbType": "PS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "6000000781",
+      "dbId": "1761208108306k738pun68",
+      "dbType": "MS",
+      "pdfType": "Sub",
+      "description": "",
+      "client": "South Australia Health"
+    },
+    {
+      "invoiceNumber": "4004589316",
+      "dbId": "1761268047351zaf95zvkc",
+      "dbType": "Sub",
+      "pdfType": "Maint",
+      "description": "",
+      "client": "Strategic Asia Pacific Partners,"
+    }
+  ],
+  "unclassifiedInvoices": []
+}
