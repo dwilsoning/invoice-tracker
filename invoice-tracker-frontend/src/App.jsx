@@ -864,8 +864,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const filteredInvoices = getFilteredInvoices();
   const groupedInvoices = groupInvoices(filteredInvoices);
 
-  const unacknowledgedExpected = expectedInvoices.filter(e => !e.acknowledged);
-  const acknowledgedExpected = expectedInvoices.filter(e => e.acknowledged);
+  // Sort expected invoices by expected date (newest first)
+  const sortedExpectedInvoices = [...expectedInvoices].sort((a, b) => {
+    return new Date(b.expectedDate) - new Date(a.expectedDate);
+  });
+
+  const unacknowledgedExpected = sortedExpectedInvoices.filter(e => !e.acknowledged);
+  const acknowledgedExpected = sortedExpectedInvoices.filter(e => e.acknowledged);
 
   return (
     <div className="min-h-screen bg-[#393392] p-4 md:p-8" style={{ fontFamily: 'Aptos, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif' }} onDragOver={handleDragOver}>
