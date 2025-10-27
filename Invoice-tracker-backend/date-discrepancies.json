@@ -1,0 +1,1682 @@
+[
+  {
+    "invoice_number": "11000000020",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000021",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000022",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000044",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000048",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000052",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000054",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-24",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-23",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000086",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000089",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000090",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000092",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "11000000093",
+    "client": "St Luke's Medical Center Global City Inc",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "160005702",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-07-31",
+    "pdf_invoice_date": "2024-07-30",
+    "db_due_date": "2024-08-30",
+    "pdf_due_date": "2024-08-29",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160005767",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-08",
+    "pdf_invoice_date": "2024-07-08",
+    "db_due_date": "2024-09-07",
+    "pdf_due_date": "2024-06-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160005940",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-05",
+    "pdf_invoice_date": "2024-04-09",
+    "db_due_date": "2024-10-05",
+    "pdf_due_date": "2024-04-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160006534",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-15",
+    "pdf_invoice_date": "2024-10-14",
+    "db_due_date": "2024-11-14",
+    "pdf_due_date": "2024-11-13",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160006635",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-07",
+    "pdf_invoice_date": "2024-06-11",
+    "db_due_date": "2024-12-07",
+    "pdf_due_date": "2024-06-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160006872",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-06",
+    "pdf_invoice_date": "2024-05-12",
+    "db_due_date": "2025-01-05",
+    "pdf_due_date": "2025-04-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160007012",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-12",
+    "pdf_invoice_date": "2024-11-12",
+    "db_due_date": "2025-01-11",
+    "pdf_due_date": "2025-10-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160007190",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-10",
+    "pdf_invoice_date": "2025-09-01",
+    "db_due_date": "2025-02-09",
+    "pdf_due_date": "2025-08-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160007431",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-11",
+    "pdf_invoice_date": "2025-10-02",
+    "db_due_date": "2025-03-13",
+    "pdf_due_date": "2025-12-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160007675",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-08",
+    "pdf_invoice_date": "2025-07-03",
+    "db_due_date": "2025-04-07",
+    "pdf_due_date": "2025-06-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008038",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-17",
+    "pdf_invoice_date": "2025-04-16",
+    "db_due_date": "2025-05-17",
+    "pdf_due_date": "2025-05-16",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008245",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-07",
+    "pdf_invoice_date": "2025-06-05",
+    "db_due_date": "2025-06-06",
+    "pdf_due_date": "2025-05-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008467",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-27",
+    "pdf_invoice_date": "2025-05-26",
+    "db_due_date": "2025-06-26",
+    "pdf_due_date": "2025-06-25",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008628",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-11",
+    "pdf_invoice_date": "2025-10-06",
+    "db_due_date": "2025-07-11",
+    "pdf_due_date": "2025-10-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008655",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-17",
+    "pdf_invoice_date": "2025-06-16",
+    "db_due_date": "2025-07-17",
+    "pdf_due_date": "2025-07-16",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008765",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-04",
+    "pdf_invoice_date": "2025-03-07",
+    "db_due_date": "2025-08-03",
+    "pdf_due_date": "2025-02-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160008976",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-26",
+    "pdf_invoice_date": "2025-07-25",
+    "db_due_date": "2025-08-25",
+    "pdf_due_date": "2025-08-24",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009078",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-09",
+    "pdf_invoice_date": "2025-08-08",
+    "db_due_date": "2025-09-08",
+    "pdf_due_date": "2025-07-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009255",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-01",
+    "pdf_invoice_date": "2025-08-31",
+    "db_due_date": "2025-10-01",
+    "pdf_due_date": "2025-09-30",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009266",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-05",
+    "pdf_invoice_date": "2025-04-09",
+    "db_due_date": "2025-10-05",
+    "pdf_due_date": "2025-04-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009485",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-19",
+    "pdf_invoice_date": "2025-09-18",
+    "db_due_date": "2025-10-19",
+    "pdf_due_date": "2025-10-18",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009504",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-24",
+    "pdf_invoice_date": "2025-09-23",
+    "db_due_date": "2025-10-24",
+    "pdf_due_date": "2025-10-23",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "160009542",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-07",
+    "pdf_invoice_date": "2025-06-10",
+    "db_due_date": "2025-11-06",
+    "pdf_due_date": "2025-05-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "3600004281",
+    "client": "Singapore Health Services Pte Ltd",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-10-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "4000000600",
+    "client": "National Heart Centre Of Singapore",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "4000006001",
+    "client": "Barwon Health Australia",
+    "db_invoice_date": "2025-10-12",
+    "pdf_invoice_date": "2025-10-13",
+    "db_due_date": "2025-11-21",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "4004406445",
+    "client": "Parkway Hospitals Singapore PTE LTD",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-09-17",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "4004578918",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-04-19",
+    "pdf_invoice_date": "2024-04-18",
+    "db_due_date": "2024-06-03",
+    "pdf_due_date": "2024-02-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004589316",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-05-08",
+    "pdf_invoice_date": "2024-07-05",
+    "db_due_date": "2024-06-07",
+    "pdf_due_date": "2024-06-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004641783",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-07-20",
+    "pdf_invoice_date": "2024-07-19",
+    "db_due_date": "2024-09-03",
+    "pdf_due_date": "2024-02-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004641801",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-07-19",
+    "pdf_invoice_date": "2024-07-18",
+    "db_due_date": "2024-09-02",
+    "pdf_due_date": "2024-01-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004644512",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-07-22",
+    "pdf_invoice_date": "2024-07-21",
+    "db_due_date": "2024-09-05",
+    "pdf_due_date": "2024-04-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004657001",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-09",
+    "pdf_invoice_date": "2024-08-08",
+    "db_due_date": "2024-09-08",
+    "pdf_due_date": "2024-07-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004666081",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-18",
+    "pdf_invoice_date": "2024-08-17",
+    "db_due_date": "2024-10-02",
+    "pdf_due_date": "2024-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004666155",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-20",
+    "pdf_invoice_date": "2024-08-19",
+    "db_due_date": "2024-10-04",
+    "pdf_due_date": "2024-03-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004666175",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-18",
+    "pdf_invoice_date": "2024-08-17",
+    "db_due_date": "2024-10-02",
+    "pdf_due_date": "2024-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004666202",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-18",
+    "pdf_invoice_date": "2024-08-17",
+    "db_due_date": "2024-10-02",
+    "pdf_due_date": "2024-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004668171",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-23",
+    "pdf_invoice_date": "2024-08-22",
+    "db_due_date": "2024-10-07",
+    "pdf_due_date": "2024-06-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004677472",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-18",
+    "pdf_invoice_date": "2024-09-17",
+    "db_due_date": "2024-11-02",
+    "pdf_due_date": "2024-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004677615",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-07",
+    "pdf_invoice_date": "2024-06-09",
+    "db_due_date": "2024-10-07",
+    "pdf_due_date": "2024-06-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004686809",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-18",
+    "pdf_invoice_date": "2024-09-17",
+    "db_due_date": "2024-11-02",
+    "pdf_due_date": "2024-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004686842",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-19",
+    "pdf_invoice_date": "2024-09-18",
+    "db_due_date": "2024-11-03",
+    "pdf_due_date": "2024-02-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004690182",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-20",
+    "pdf_invoice_date": "2024-09-19",
+    "db_due_date": "2024-11-04",
+    "pdf_due_date": "2024-03-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004690229",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-20",
+    "pdf_invoice_date": "2024-09-19",
+    "db_due_date": "2024-11-04",
+    "pdf_due_date": "2024-03-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4004690231",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-09-20",
+    "pdf_invoice_date": "2024-09-19",
+    "db_due_date": "2024-11-04",
+    "pdf_due_date": "2024-03-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600012939",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-08-23",
+    "pdf_invoice_date": "2024-08-22",
+    "db_due_date": "2024-09-22",
+    "pdf_due_date": "2024-09-21",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600014680",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-18",
+    "pdf_invoice_date": "2024-10-17",
+    "db_due_date": "2024-12-02",
+    "pdf_due_date": "2024-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600014762",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-15",
+    "pdf_invoice_date": "2024-10-14",
+    "db_due_date": "2024-11-14",
+    "pdf_due_date": "2024-11-13",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600015300",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-18",
+    "pdf_invoice_date": "2024-10-17",
+    "db_due_date": "2024-12-02",
+    "pdf_due_date": "2024-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600015337",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-18",
+    "pdf_invoice_date": "2024-10-17",
+    "db_due_date": "2024-12-02",
+    "pdf_due_date": "2024-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600015399",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-20",
+    "pdf_invoice_date": "2024-10-19",
+    "db_due_date": "2024-12-04",
+    "pdf_due_date": "2024-03-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600015445",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-19",
+    "pdf_invoice_date": "2024-10-18",
+    "db_due_date": "2024-12-03",
+    "pdf_due_date": "2024-02-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600015483",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-10-19",
+    "pdf_invoice_date": "2024-10-18",
+    "db_due_date": "2024-12-03",
+    "pdf_due_date": "2024-02-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600016443",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-18",
+    "pdf_invoice_date": "2024-11-17",
+    "db_due_date": "2025-01-02",
+    "pdf_due_date": "2025-01-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600016545",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-18",
+    "pdf_invoice_date": "2024-11-17",
+    "db_due_date": "2025-01-02",
+    "pdf_due_date": "2025-01-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600016655",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-12",
+    "pdf_invoice_date": "2024-11-11",
+    "db_due_date": "2024-12-12",
+    "pdf_due_date": "2024-11-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017003",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-18",
+    "pdf_invoice_date": "2024-11-17",
+    "db_due_date": "2025-01-02",
+    "pdf_due_date": "2025-01-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017007",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-19",
+    "pdf_invoice_date": "2024-11-18",
+    "db_due_date": "2025-01-03",
+    "pdf_due_date": "2025-02-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017181",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-18",
+    "pdf_invoice_date": "2024-11-17",
+    "db_due_date": "2025-01-02",
+    "pdf_due_date": "2025-01-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017223",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-11-19",
+    "pdf_invoice_date": "2024-11-18",
+    "db_due_date": "2025-01-03",
+    "pdf_due_date": "2025-02-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017918",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-19",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-02-02",
+    "pdf_due_date": "2025-01-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017921",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-19",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-02-02",
+    "pdf_due_date": "2025-01-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600017964",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-19",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-02-02",
+    "pdf_due_date": "2025-01-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600018030",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-19",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-02-02",
+    "pdf_due_date": "2025-01-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600018159",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-10",
+    "pdf_invoice_date": "2024-09-12",
+    "db_due_date": "2025-01-09",
+    "pdf_due_date": "2025-08-01",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600018558",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-20",
+    "pdf_invoice_date": "2024-12-19",
+    "db_due_date": "2025-02-03",
+    "pdf_due_date": "2025-02-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600018575",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2024-12-19",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-02-02",
+    "pdf_due_date": "2025-01-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600019608",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-16",
+    "pdf_invoice_date": "2025-01-15",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600019751",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-10",
+    "pdf_invoice_date": "2025-09-01",
+    "db_due_date": "2025-02-09",
+    "pdf_due_date": "2025-08-02",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600019883",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-16",
+    "pdf_invoice_date": "2025-01-15",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600020132",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-31",
+    "pdf_invoice_date": "2025-01-30",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600020263",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-16",
+    "pdf_invoice_date": "2025-01-15",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600020264",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-16",
+    "pdf_invoice_date": "2025-01-15",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600020276",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-20",
+    "pdf_invoice_date": "2025-01-19",
+    "db_due_date": "2025-03-06",
+    "pdf_due_date": "2025-05-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600020300",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-01-16",
+    "pdf_invoice_date": "2025-01-15",
+    "db_due_date": "2025-03-02",
+    "pdf_due_date": "2025-01-03",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021248",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-16",
+    "pdf_invoice_date": "2025-02-15",
+    "db_due_date": "2025-04-02",
+    "pdf_due_date": "2025-01-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021568",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-16",
+    "pdf_invoice_date": "2025-02-15",
+    "db_due_date": "2025-04-02",
+    "pdf_due_date": "2025-01-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021804",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-14",
+    "pdf_invoice_date": "2025-02-13",
+    "db_due_date": "2025-03-31",
+    "pdf_due_date": "2025-03-30",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021824",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-16",
+    "pdf_invoice_date": "2025-02-15",
+    "db_due_date": "2025-04-02",
+    "pdf_due_date": "2025-01-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021878",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-16",
+    "pdf_invoice_date": "2025-02-15",
+    "db_due_date": "2025-04-02",
+    "pdf_due_date": "2025-01-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600021974",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-17",
+    "pdf_invoice_date": "2025-02-16",
+    "db_due_date": "2025-04-03",
+    "pdf_due_date": "2025-02-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600022290",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-02-21",
+    "pdf_invoice_date": "2025-02-20",
+    "db_due_date": "2025-04-07",
+    "pdf_due_date": "2025-06-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023003",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-11",
+    "pdf_invoice_date": "2025-10-03",
+    "db_due_date": "2025-04-10",
+    "pdf_due_date": "2025-09-04",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023342",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-18",
+    "pdf_invoice_date": "2025-03-17",
+    "db_due_date": "2025-05-02",
+    "pdf_due_date": "2025-01-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023517",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-18",
+    "pdf_invoice_date": "2025-03-17",
+    "db_due_date": "2025-05-02",
+    "pdf_due_date": "2025-01-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023563",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-20",
+    "pdf_invoice_date": "2025-03-19",
+    "db_due_date": "2025-05-04",
+    "pdf_due_date": "2025-03-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023698",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-18",
+    "pdf_invoice_date": "2025-03-17",
+    "db_due_date": "2025-05-02",
+    "pdf_due_date": "2025-01-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023701",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-18",
+    "pdf_invoice_date": "2025-03-17",
+    "db_due_date": "2025-05-02",
+    "pdf_due_date": "2025-01-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600023862",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-03-21",
+    "pdf_invoice_date": "2025-03-20",
+    "db_due_date": "2025-05-05",
+    "pdf_due_date": "2025-04-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600024858",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-12",
+    "pdf_invoice_date": "2025-11-04",
+    "db_due_date": "2025-05-12",
+    "pdf_due_date": "2025-11-05",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025046",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-23",
+    "pdf_invoice_date": "2025-04-22",
+    "db_due_date": "2025-05-23",
+    "pdf_due_date": "2025-05-22",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025070",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-19",
+    "pdf_invoice_date": "2025-04-18",
+    "db_due_date": "2025-06-03",
+    "pdf_due_date": "2025-02-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025159",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-18",
+    "pdf_invoice_date": "2025-04-17",
+    "db_due_date": "2025-06-02",
+    "pdf_due_date": "2025-01-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025317",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-22",
+    "pdf_invoice_date": "2025-04-21",
+    "db_due_date": "2025-06-06",
+    "pdf_due_date": "2025-05-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025321",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-22",
+    "pdf_invoice_date": "2025-04-21",
+    "db_due_date": "2025-06-06",
+    "pdf_due_date": "2025-05-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025325",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-04-22",
+    "pdf_invoice_date": "2025-04-21",
+    "db_due_date": "2025-06-06",
+    "pdf_due_date": "2025-05-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025935",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-08",
+    "pdf_invoice_date": "2025-07-05",
+    "db_due_date": "2025-06-22",
+    "pdf_due_date": "2025-06-21",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600025973",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-18",
+    "pdf_invoice_date": "2025-05-17",
+    "db_due_date": "2025-07-02",
+    "pdf_due_date": "2025-01-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026080",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-08",
+    "pdf_invoice_date": "2025-07-05",
+    "db_due_date": "2025-06-07",
+    "pdf_due_date": "2025-06-06",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026613",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-18",
+    "pdf_invoice_date": "2025-05-17",
+    "db_due_date": "2025-07-02",
+    "pdf_due_date": "2025-01-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026725",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-20",
+    "pdf_invoice_date": "2025-05-19",
+    "db_due_date": "2025-07-04",
+    "pdf_due_date": "2025-03-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026853",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-18",
+    "pdf_invoice_date": "2025-05-17",
+    "db_due_date": "2025-07-02",
+    "pdf_due_date": "2025-01-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026875",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-18",
+    "pdf_invoice_date": "2025-05-17",
+    "db_due_date": "2025-07-02",
+    "pdf_due_date": "2025-01-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600026878",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-05-18",
+    "pdf_invoice_date": "2025-05-17",
+    "db_due_date": "2025-07-02",
+    "pdf_due_date": "2025-01-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600027689",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-18",
+    "pdf_invoice_date": "2025-06-17",
+    "db_due_date": "2025-08-02",
+    "pdf_due_date": "2025-01-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600027706",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-18",
+    "pdf_invoice_date": "2025-06-17",
+    "db_due_date": "2025-08-02",
+    "pdf_due_date": "2025-01-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600027856",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-10",
+    "pdf_invoice_date": "2025-09-06",
+    "db_due_date": "2025-07-10",
+    "pdf_due_date": "2025-09-07",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600028153",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-18",
+    "pdf_invoice_date": "2025-06-17",
+    "db_due_date": "2025-08-02",
+    "pdf_due_date": "2025-01-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600028272",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-19",
+    "pdf_invoice_date": "2025-06-18",
+    "db_due_date": "2025-08-03",
+    "pdf_due_date": "2025-02-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600028354",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-18",
+    "pdf_invoice_date": "2025-06-17",
+    "db_due_date": "2025-08-02",
+    "pdf_due_date": "2025-01-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600028422",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-06-18",
+    "pdf_invoice_date": "2025-06-17",
+    "db_due_date": "2025-08-02",
+    "pdf_due_date": "2025-01-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600028804",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-01",
+    "pdf_invoice_date": "2025-06-30",
+    "db_due_date": "2025-07-31",
+    "pdf_due_date": "2025-07-30",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029368",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-05",
+    "pdf_invoice_date": "2025-04-07",
+    "db_due_date": "2025-08-04",
+    "pdf_due_date": "2025-03-08",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029646",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-24",
+    "pdf_invoice_date": "2025-07-23",
+    "db_due_date": "2025-08-23",
+    "pdf_due_date": "2025-08-22",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029692",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-19",
+    "pdf_invoice_date": "2025-07-18",
+    "db_due_date": "2025-09-02",
+    "pdf_due_date": "2025-01-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029722",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-20",
+    "pdf_invoice_date": "2025-07-19",
+    "db_due_date": "2025-09-03",
+    "pdf_due_date": "2025-02-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029839",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-19",
+    "pdf_invoice_date": "2025-07-18",
+    "db_due_date": "2025-09-02",
+    "pdf_due_date": "2025-01-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600029841",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-19",
+    "pdf_invoice_date": "2025-07-18",
+    "db_due_date": "2025-09-02",
+    "pdf_due_date": "2025-01-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030036",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-23",
+    "pdf_invoice_date": "2025-07-22",
+    "db_due_date": "2025-09-06",
+    "pdf_due_date": "2025-05-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030039",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-23",
+    "pdf_invoice_date": "2025-07-22",
+    "db_due_date": "2025-09-06",
+    "pdf_due_date": "2025-05-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030083",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-07-25",
+    "pdf_invoice_date": "2025-07-24",
+    "db_due_date": "2025-09-08",
+    "pdf_due_date": "2025-07-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030677",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-08",
+    "pdf_invoice_date": "2025-07-08",
+    "db_due_date": "2025-09-07",
+    "pdf_due_date": "2025-06-09",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030690",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-18",
+    "pdf_invoice_date": "2025-08-17",
+    "db_due_date": "2025-10-02",
+    "pdf_due_date": "2025-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030712",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-18",
+    "pdf_invoice_date": "2025-08-17",
+    "db_due_date": "2025-10-02",
+    "pdf_due_date": "2025-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030852",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-18",
+    "pdf_invoice_date": "2025-08-17",
+    "db_due_date": "2025-10-02",
+    "pdf_due_date": "2025-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600030902",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-18",
+    "pdf_invoice_date": "2025-08-17",
+    "db_due_date": "2025-10-02",
+    "pdf_due_date": "2025-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600031098",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-20",
+    "pdf_invoice_date": "2025-08-19",
+    "db_due_date": "2025-10-04",
+    "pdf_due_date": "2025-03-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600031258",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-08-18",
+    "pdf_invoice_date": "2025-08-17",
+    "db_due_date": "2025-10-02",
+    "pdf_due_date": "2025-01-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032469",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-09",
+    "pdf_invoice_date": "2025-08-09",
+    "db_due_date": "2025-10-09",
+    "pdf_due_date": "2025-08-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032536",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-13",
+    "pdf_invoice_date": "2025-12-09",
+    "db_due_date": "2025-10-13",
+    "pdf_due_date": "2025-12-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032537",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-13",
+    "pdf_invoice_date": "2025-12-09",
+    "db_due_date": "2025-10-13",
+    "pdf_due_date": "2025-12-10",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032668",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-19",
+    "pdf_invoice_date": "2025-09-18",
+    "db_due_date": "2025-11-03",
+    "pdf_due_date": "2025-02-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032695",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-30",
+    "pdf_invoice_date": "2025-09-29",
+    "db_due_date": "2025-10-30",
+    "pdf_due_date": "2025-10-29",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032703",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-18",
+    "pdf_invoice_date": "2025-09-17",
+    "db_due_date": "2025-11-02",
+    "pdf_due_date": "2025-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032776",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-18",
+    "pdf_invoice_date": "2025-09-17",
+    "db_due_date": "2025-11-02",
+    "pdf_due_date": "2025-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032778",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-18",
+    "pdf_invoice_date": "2025-09-17",
+    "db_due_date": "2025-11-02",
+    "pdf_due_date": "2025-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032781",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-18",
+    "pdf_invoice_date": "2025-09-17",
+    "db_due_date": "2025-11-02",
+    "pdf_due_date": "2025-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600032787",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-09-18",
+    "pdf_invoice_date": "2025-09-17",
+    "db_due_date": "2025-11-02",
+    "pdf_due_date": "2025-01-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600033191",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-08",
+    "pdf_invoice_date": "2025-07-10",
+    "db_due_date": "2025-11-07",
+    "pdf_due_date": "2025-06-11",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600034289",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-18",
+    "pdf_invoice_date": "2025-10-17",
+    "db_due_date": "2025-12-02",
+    "pdf_due_date": "2025-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600034399",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-18",
+    "pdf_invoice_date": "2025-10-17",
+    "db_due_date": "2025-12-02",
+    "pdf_due_date": "2025-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600034403",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-18",
+    "pdf_invoice_date": "2025-10-17",
+    "db_due_date": "2025-12-02",
+    "pdf_due_date": "2025-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "4600034421",
+    "client": "Strategic Asia Pacific Partners,",
+    "db_invoice_date": "2025-10-18",
+    "pdf_invoice_date": "2025-10-17",
+    "db_due_date": "2025-12-02",
+    "pdf_due_date": "2025-01-12",
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": true
+  },
+  {
+    "invoice_number": "6000000704",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-05-31",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000760",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-09-06",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000771",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-10-18",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000777",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-07-04",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000778",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-08-27",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000779",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-09-30",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000802",
+    "client": "Epworth HealthCare",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-01-25",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000853",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000873",
+    "client": "South Australia Health",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2025-09-12",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "6000000893",
+    "client": "Department of Health - Victoria",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2025-10-14",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "9000000495",
+    "client": "National Cancer Centre Of Singapore",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-11",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "9000000496",
+    "client": "National Cancer Centre Of Singapore",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2024-12-18",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  },
+  {
+    "invoice_number": "9000000509",
+    "client": "Singapore Health Services Pte Ltd",
+    "db_invoice_date": "2025-10-23",
+    "pdf_invoice_date": "2025-06-20",
+    "db_due_date": "2025-11-22",
+    "pdf_due_date": null,
+    "invoice_date_mismatch": true,
+    "due_date_mismatch": null
+  }
+]
