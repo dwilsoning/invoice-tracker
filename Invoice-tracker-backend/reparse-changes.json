@@ -1,0 +1,164 @@
+[
+  {
+    "invoice_number": "4000004002",
+    "client": "Western Australia Department Of Health",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "annual",
+    "services": "Wheatbelt Health Site - Beverley Hospital / Multi-Purpose Health Service (Inc Aged Care);Bed Count-1"
+  },
+  {
+    "invoice_number": "4000005581",
+    "client": "Western Australia Department Of Health",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "annual",
+    "services": "Wheatbelt Health Site - Beverley Hospital / Multi-Purpose Health Service (Inc Aged Care);Bed Count-1"
+  },
+  {
+    "invoice_number": "4000005603",
+    "client": "Western Australia Department Of Health",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "annual",
+    "services": "Midwest Health Region - Leeman Nursing Post - Annual Maintenance:1:Opal Digital Health Record: - 05-"
+  },
+  {
+    "invoice_number": "4000005604",
+    "client": "Western Australia Department Of Health",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "annual",
+    "services": "Carnarvon Hospital - Annual Maintenance:1:Opal Digital Health Record: - 05- AUG-2025 to 04-AUG-2026 "
+  },
+  {
+    "invoice_number": "4004677472",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Allscripts Maintenance - ADT Interface: - 01-NOV-2024 to 30-NOV- Monthly Allscripts Maintena"
+  },
+  {
+    "invoice_number": "4004686705",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "PS",
+    "new_type": "PS",
+    "old_frequency": "adhoc",
+    "new_frequency": "tri-annual",
+    "services": "St Luke's Medical Center Global City Inc - Tri-Annual Allscripts SCM and BOSSnet Support Fee - Allsc"
+  },
+  {
+    "invoice_number": "4600019883",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-MAR-2025 to 31-MAR-2025 "
+  },
+  {
+    "invoice_number": "4600020930",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "PS",
+    "new_type": "PS",
+    "old_frequency": "adhoc",
+    "new_frequency": "tri-annual",
+    "services": "St Luke's Medical Center Global City Inc - Tri-Annual SCM and BOSSnet Support Fee - Base Content Ful"
+  },
+  {
+    "invoice_number": "4600021824",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-APR-2025 to 30-APR-2025 "
+  },
+  {
+    "invoice_number": "4600022192",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "PS",
+    "new_type": "PS",
+    "old_frequency": "adhoc",
+    "new_frequency": "tri-annual",
+    "services": "St Luke's Medical Center Global City Inc - Tri-Annual SCM and BOSSnet Support Fee - Base Content Ful"
+  },
+  {
+    "invoice_number": "4600023862",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-MAY-2025 to 31-MAY-2025 "
+  },
+  {
+    "invoice_number": "4600025317",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-JUN-2025 to 30-JUN-2025 "
+  },
+  {
+    "invoice_number": "4600027684",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "PS",
+    "new_type": "PS",
+    "old_frequency": "adhoc",
+    "new_frequency": "tri-annual",
+    "services": "St Luke's Medical Center Global City Inc - Tri-Annual SCM and BOSSnet Support Fee - Base Content Ful"
+  },
+  {
+    "invoice_number": "4600027689",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-AUG-2025 to 31-AUG-2025 "
+  },
+  {
+    "invoice_number": "4600030039",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-SEP-2025 to 30-SEP-2025 "
+  },
+  {
+    "invoice_number": "4600030852",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-OCT-2025 to 31-OCT-2025 "
+  },
+  {
+    "invoice_number": "4600032778",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-NOV-2025 to 30-NOV-2025 "
+  },
+  {
+    "invoice_number": "4600034421",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "PS",
+    "new_type": "Maint",
+    "old_frequency": "adhoc",
+    "new_frequency": "monthly",
+    "services": "Monthly Maintenance - Base Content Full (Physician and Non Physician): - 01-DEC-2025 to 20-DEC-2025 "
+  }
+]
