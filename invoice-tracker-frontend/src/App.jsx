@@ -507,31 +507,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       });
     }
 
-    // Sort invoices within each group by invoice number
+    // Sort invoices within each group by invoice date (newest first)
     Object.keys(grouped).forEach(key => {
       grouped[key].sort((a, b) => {
-        const aNum = String(a.invoiceNumber || '');
-        const bNum = String(b.invoiceNumber || '');
-
-        // Check if both are purely numeric
-        const aIsNumeric = /^\d+$/.test(aNum);
-        const bIsNumeric = /^\d+$/.test(bNum);
-
-        // If both are numeric, compare as numbers
-        if (aIsNumeric && bIsNumeric) {
-          // Convert to actual numbers for comparison
-          const aValue = parseInt(aNum, 10);
-          const bValue = parseInt(bNum, 10);
-          const result = aValue - bValue;
-          return result;
-        }
-
-        // If only one is numeric, numeric comes first
-        if (aIsNumeric) return -1;
-        if (bIsNumeric) return 1;
-
-        // Otherwise, sort alphabetically
-        return aNum.localeCompare(bNum);
+        // Sort by invoice date (newest first)
+        const dateA = new Date(a.invoiceDate);
+        const dateB = new Date(b.invoiceDate);
+        return dateB - dateA; // Newest first (descending order)
       });
     });
 
