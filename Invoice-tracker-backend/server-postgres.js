@@ -1553,8 +1553,12 @@ app.post('/api/contracts', async (req, res) => {
 // Update contract value
 app.put('/api/contracts/:contractName', async (req, res) => {
   try {
-    const { contract_name } = req.params;
-    const { contract_value, currency } = req.body;
+    const { contractName } = req.params;
+    const { contractValue, contract_value, currency } = req.body;
+
+    // Accept both camelCase and snake_case for backward compatibility
+    const contract_name = contractName;
+    const value = contractValue || contract_value;
 
     const now = new Date().toISOString().split('T')[0];
 
@@ -1562,7 +1566,7 @@ app.put('/api/contracts/:contractName', async (req, res) => {
       UPDATE contracts
       SET contract_value = $1, currency = $2, updated_date = $3
       WHERE contract_name = $4
-    `, contract_value, currency || 'USD', now, contract_name);
+    `, value, currency || 'USD', now, contract_name);
 
     if (result.rowCount === 0) {
       // Contract doesn't exist, create it
@@ -1570,7 +1574,7 @@ app.put('/api/contracts/:contractName', async (req, res) => {
       await db.run(`
         INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
         VALUES ($1, $2, $3, $4, $5, $6)
-      `, id, contract_name, contract_value, currency || 'USD', now, now);
+      `, id, contract_name, value, currency || 'USD', now, now);
     }
 
     res.json({ success: true });

@@ -74,10 +74,12 @@ function convertRowsToCamelCase(rows) {
 // Database wrapper for compatibility with existing code
 const db = {
   // Execute a query and return all results
-  async all(sql, params = []) {
+  async all(sql, ...params) {
     const client = await pool.connect();
     try {
-      const result = await client.query(sql, params);
+      // If first param is an array, use it as params array (for backward compatibility)
+      const paramsArray = (params.length === 1 && Array.isArray(params[0])) ? params[0] : params;
+      const result = await client.query(sql, paramsArray);
       return convertRowsToCamelCase(result.rows);
     } finally {
       client.release();
@@ -85,10 +87,12 @@ const db = {
   },
 
   // Execute a query and return first result
-  async get(sql, params = []) {
+  async get(sql, ...params) {
     const client = await pool.connect();
     try {
-      const result = await client.query(sql, params);
+      // If first param is an array, use it as params array (for backward compatibility)
+      const paramsArray = (params.length === 1 && Array.isArray(params[0])) ? params[0] : params;
+      const result = await client.query(sql, paramsArray);
       return convertRowToCamelCase(result.rows[0] || null);
     } finally {
       client.release();
@@ -96,12 +100,15 @@ const db = {
   },
 
   // Execute a query (INSERT, UPDATE, DELETE)
-  async run(sql, params = []) {
+  async run(sql, ...params) {
     const client = await pool.connect();
     try {
-      const result = await client.query(sql, params);
+      // If first param is an array, use it as params array (for backward compatibility)
+      const paramsArray = (params.length === 1 && Array.isArray(params[0])) ? params[0] : params;
+      const result = await client.query(sql, paramsArray);
       return {
         changes: result.rowCount,
+        rowCount: result.rowCount,
         rows: convertRowsToCamelCase(result.rows)
       };
     } finally {
