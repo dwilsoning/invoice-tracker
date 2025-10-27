@@ -1,0 +1,1332 @@
+[
+  {
+    "invoice_number": "160005767",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "MS",
+    "new_type": "PS",
+    "services": "MonthlyFeeAllscriptsManagedServicesBusiness Continuity- Sunrise1-SEP-2024TO30-SEP-2024"
+  },
+  {
+    "invoice_number": "160005940",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "MS",
+    "new_type": "PS",
+    "services": "MonthlyFeeAllscriptsManagedServicesBusiness Continuity- Sunrise1-OCT-2024TO31-OCT-2024"
+  },
+  {
+    "invoice_number": "3000000320",
+    "client": "Sengkang General Hospital Pte. Ltd.",
+    "old_type": "HW",
+    "new_type": "Maint",
+    "services": "PowerMic II Handheld microphone - 9ft - 100% payable upon Delivery. PowerMic II Handheld microphone - 9ft - yr Maintenance - 100% payable upon Delivery."
+  },
+  {
+    "invoice_number": "3000000321",
+    "client": "Changi General Hospital",
+    "old_type": "HW",
+    "new_type": "Maint",
+    "services": "PowerMic II Handheld microphone - 9ft - yr Maintenance - 100% payable upon Delivery. PowerMic II Handheld microphone - 9ft - 100% payable upon Delivery."
+  },
+  {
+    "invoice_number": "3000070746",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit - 100% payable upon Delivery."
+  },
+  {
+    "invoice_number": "3600006361",
+    "client": "Gippsland Health Alliance",
+    "old_type": "HW",
+    "new_type": "SW",
+    "services": "Hardware Software - 100% payable upon Delivery."
+  },
+  {
+    "invoice_number": "4000002980",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Altera Opal DMR Support Renewal: - 05-AUG-2023 to 04-AUG-2024"
+  },
+  {
+    "invoice_number": "4000003941",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Altera Opal DMR Support Renewal: - 05-AUG-2024 to 04-AUG-2025"
+  },
+  {
+    "invoice_number": "4000004340",
+    "client": "Albury Wodonga Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Quarterly Maintenance:1:BOSSnet Electronic Medical Record (EMR): - 01- NOV-2024 to 31-JAN-2025 Quarterly Third Party Subscription:1:Sunrise Scanning - Atalasoft: - 01-NOV- to 31-JAN-2025"
+  },
+  {
+    "invoice_number": "4000004400",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "NMHS - Bulter Commuinty Mental Health - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date: NMHS - East Perth Commuinty Mental Health - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date: NMHS - Graylands Hospital - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date: NMHS - Mirrabooka Commuinty Mental Health - ASCMS02030, Opal Scanning & Document Management"
+  },
+  {
+    "invoice_number": "4000004401",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "NMHS - Bulter Commuinty Mental Health - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only - Prorated For: - 28- AUG-2024 to 04-AUG-2025 NMHS - East Perth Commuinty Mental Health - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only - Prorated For: - 28- AUG-2024 to 04-AUG-2025 NMHS - Graylands Hospital - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only - Prorated For: - 28-AUG-2024 to 04-AUG-2025 NMHS - Mirrabooka Commuint"
+  },
+  {
+    "invoice_number": "4000004521",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Graylands Hospital & Selby Lodge - ASCMS02000, Opal Scanning & Document Management: 100% of Opal License for Graylands & Selby payable upon Go-live.: Graylands Hospital & Selby Lodge - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal License for Graylands & Selby payable upon Go-live.: Graylands Hospital & Selby Lodge - ASCMS02020, Opal Digital Health Record: 100% of Opal License for Graylands & Selby payable upon Go-live.:"
+  },
+  {
+    "invoice_number": "4000004620",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "EMHS - Bentley - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date: EMHS - St James - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date:"
+  },
+  {
+    "invoice_number": "4000004621",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "EMHS - Bentley - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 04-DEC-2024 to 04-AUG-2025 EMHS - St James - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 04-DEC-2024 to 04-AUG-2025"
+  },
+  {
+    "invoice_number": "4000004640",
+    "client": "Albury Wodonga Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Quarterly Maintenance:1:BOSSnet Electronic Medical Record (EMR): - 01- FEB-2025 to 30-APR-2025 Quarterly Third Party Subscription:1:Sunrise Scanning - Atalasoft: - 01-FEB- to 30-APR-2025"
+  },
+  {
+    "invoice_number": "4000004822",
+    "client": "Epworth HealthCare",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Maintenance:1:BOSSnet EMR License: - 16-NOV-2024 to 15-FEB-"
+  },
+  {
+    "invoice_number": "4000004840",
+    "client": "Epworth HealthCare",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Maintenance:1:BOSSnet EMR License: - 16-FEB-2025 to 15-MAY-"
+  },
+  {
+    "invoice_number": "4000004981",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Peel Health Campus - ASCMS02000, Opal Scanning & Document Management: 100% of Opal License fees for Peel payable upon Go-live.: Peel Health Campus - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal License fees for Peel payable upon Go-live.: Peel Health Campus - ASCMS02020, Opal Digital Health Record: 100% of Opal License fees for Peel payable upon Go-live.:"
+  },
+  {
+    "invoice_number": "4000004984",
+    "client": "Albury Wodonga Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Quarterly Maintenance:1:BOSSnet Electronic Medical Record (EMR): - 01- MAY-2025 to 31-JUL-2025 Quarterly Third Party Subscription:1:Sunrise Scanning - Atalasoft: - 01-MAY- to 31-JUL-2025"
+  },
+  {
+    "invoice_number": "4000005000",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Geraldton Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of License payable upon go-live of each site.: Geraldton Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Geraldton Hospital - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.:"
+  },
+  {
+    "invoice_number": "4000005001",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Morawa Multi-Purpose Health Service - ASCMS02000, Opal Scanning & Document Management: 100% of license payable upon go-live of each site.: Morawa Multi-Purpose Health Service - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Morawa Multi-Purpose Health Service - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.: Mullewa Multi-Purpose Health Service - ASCMS02000, Opal Scann"
+  },
+  {
+    "invoice_number": "4000005021",
+    "client": "Epworth HealthCare",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Maintenance:1:BOSSnet EMR License: - 16-MAY-2025 to 15- AUG-2025"
+  },
+  {
+    "invoice_number": "4000005060",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Dongara Multi-Purpose Health Centre - ASCMS02000, Opal Scanning & Document Management: 100% of license payable upon go-live of each site.: Dongara Multi-Purpose Health Centre - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Dongara Multi-Purpose Health Centre - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.: Kalbarri Multi-Purpose Health Centre - ASCMS02000, Opal Scann"
+  },
+  {
+    "invoice_number": "4000005063",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Carnarvon Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of License payable upon go-live of each site.: Carnarvon Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Carnarvon Hospital - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.:"
+  },
+  {
+    "invoice_number": "4000005064",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Exmouth Multi-Purpose Health Service - ASCMS02000, Opal Scanning & Document Management: 100% of license payable upon go-live of each site.: Exmouth Multi-Purpose Health Service - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Exmouth Multi-Purpose Health Service - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.:"
+  },
+  {
+    "invoice_number": "4000005066",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Meekatharra Hospital & Hostel - ASCMS02000, Opal Scanning & Document Management: 100% of License payable upon go-live of each site.: Meekatharra Hospital & Hostel - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license payable upon go-live of each site.: Meekatharra Hospital & Hostel - ASCMS02020, Opal Digital Health Record: 100% of license payable upon go-live of each site.:"
+  },
+  {
+    "invoice_number": "4000005072",
+    "client": "Waikato District Health Board",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "ASACU45000:Capsule Axon Annual Registration Fee:: - 23-MAY-2025 to 22-MAY-2026 36,000.00 Annual ASACU45000, SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit:: - 23-MAY-2025 to 22-MAY-2026 17,915.21 Annual ASACU45010, Critical Care Connectivity License-Multi Connection:: - 23-MAY-2025 to 22-MAY-2026 24,996.93 Annual BSIPRO001000X, iPro Anesthesia Core AIMS License and Maintenance - per OR:: - 23-MAY-2025 to 22-MAY-2026 203,351.61 Annual BSIPRO001040X, iPro Pre-anesthe"
+  },
+  {
+    "invoice_number": "4000005160",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "EMHS - Royal Perth Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at RPH.: EMHS - Royal Perth Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at RPH.: EMHS - Royal Perth Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal license payable upon go-live at RPH.:"
+  },
+  {
+    "invoice_number": "4000005180",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Kununurra Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Kununurra Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Kununurra Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal license payable upon"
+  },
+  {
+    "invoice_number": "4000005181",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Wyndham Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Wyndham Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Wyndham Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal license payable upon go-li"
+  },
+  {
+    "invoice_number": "4000005280",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Halls Creek Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Halls Creek Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Halls Creek Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal license payabl"
+  },
+  {
+    "invoice_number": "4000005300",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-JUN-2025 to 20-SEP-2025"
+  },
+  {
+    "invoice_number": "4000005361",
+    "client": "Albury Wodonga Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Quarterly Maintenance:1:BOSSnet Electronic Medical Record (EMR): - 01- AUG-2025 to 31-OCT-2025 Quarterly Third Party Subscription:1:Sunrise Scanning - Atalasoft: - 01-AUG- to 31-OCT-2025"
+  },
+  {
+    "invoice_number": "4000005400",
+    "client": "Department of Health - Victoria",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Vic Health dbMotion Primary Node support: - 21-JUN-2025 to 20- JUN-2026"
+  },
+  {
+    "invoice_number": "4000005401",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 29-JUL-2025 to 28-JUL-2026 Annual Third Party Subscription:1:iPro Anesthesia PACU Subscription: - 29- JUL-2025 to 28-JUL-2026"
+  },
+  {
+    "invoice_number": "4000005460",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Broome Hospital (including Inpatient Mental Health Unit) - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Broome Hospital (including Inpatient Mental Health Unit) - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Broome Hospital (i"
+  },
+  {
+    "invoice_number": "4000005540",
+    "client": "Department of Health - Victoria",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Eastern Health (Base Impl) - Annual Maintenance:1:dbMotion Core Provider License: - 25-OCT-2024 to 12-OCT-2025"
+  },
+  {
+    "invoice_number": "4000005541",
+    "client": "Department of Health - Victoria",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Austin Health (Base Impl) - Annual Maintenance:1:dbMotion Core Provider License: - 18-FEB-2025 to 12-OCT-2025"
+  },
+  {
+    "invoice_number": "4000005542",
+    "client": "Department of Health - Victoria",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Northern Health - Annual Maintenance:1:dbMotion Core Provider License: - 21-JAN-2025 to 12-OCT-2025"
+  },
+  {
+    "invoice_number": "4000005600",
+    "client": "Epworth HealthCare",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Maintenance:1:BOSSnet EMR License: - 16-AUG-2025 to 15- NOV-2025"
+  },
+  {
+    "invoice_number": "4000005601",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "EMHS - Bentley - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 05-AUG-2025 to 04-AUG-2026 EMHS - St James - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 05-AUG-2025 to 04-AUG-2026 NMHS - Bulter Commuinty Mental Health - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 05-AUG-2025 to 04-AUG-2026 NMHS - East Perth Commuinty Mental Health - Annual Maintenance:1:Opal Scanning & Document Management License R"
+  },
+  {
+    "invoice_number": "4000005602",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Altera Opal DMR Support Renewal: - 05-AUG-2025 to 04-AUG-2026"
+  },
+  {
+    "invoice_number": "4000005621",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Osborne Park Hospital - ASCMS02000, Opal Scanning & Document Management: 100% Year support payable on go-live at OPH: Osborne Park Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% Year support payable on go-live at OPH: Osborne Park Hospital - ASCMS02020, Opal Digital Health Record: 100% Year support payable on go-live at OPH:"
+  },
+  {
+    "invoice_number": "4000005667",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Fitzroy Crossing Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Fitzroy Crossing Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Fitzroy Crossing Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal"
+  },
+  {
+    "invoice_number": "4000005701",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Wangkatjungka Health Service - ASCMS02000, Opal Scanning & Document Management: 100% of license fees on Go-live at Wangkatjungka.: Wangkatjungka Health Service - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of license fees on Go-live at Wangkatjungka.: Wangkatjungka Health Service - ASCMS02020, Opal Digital Health Record: 100% of license fees on Go-live at Wangkatjungka.:"
+  },
+  {
+    "invoice_number": "4000005720",
+    "client": "Western Australia Department Of Health",
+    "old_type": "SW",
+    "new_type": "Sub",
+    "services": "Osborne Park Hospital (OPH) - Semi-Annual Maintenance:1:Opal Scanning & Document Management License Read-Only Fee Prorated For: - 07-MAR- to 04-AUG-2025 Sir Charles Gairdner Hospital (SCGH) - Semi-Annual Maintenance:1:Opal Scanning & Document Management License Read-Only Fee Prorated For: - 07-MAR-2025 to 04-AUG-2025"
+  },
+  {
+    "invoice_number": "4000005721",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Osborne Park Hospital (OPH) - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only Fee: - 05-AUG-2025 to 04-AUG- Sir Charles Gairdner Hospital (SCGH) - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only Fee: - 05-AUG- to 04-AUG-2026"
+  },
+  {
+    "invoice_number": "4000005723",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Osborne Park Hospital (OPH) - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live.: Sir Charles Gairdner Hospital (SCGH) - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live.:"
+  },
+  {
+    "invoice_number": "4000005740",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "SMHS - Peel Health Campus - Semi-Annual Maintenance:1:Opal Scanning & Document Management License Read-Only - Prorated For: - 12-FEB-2025 to 04-AUG-2025"
+  },
+  {
+    "invoice_number": "4000005741",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "SMHS - Peel Health Campus - ASCMS02030, Opal Scanning & Document Management License Read-Only: 100% payable upon Go Live date:"
+  },
+  {
+    "invoice_number": "4000005742",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "SMHS - Peel Health Campus - Annual Maintenance:1:Opal Scanning & Document Management License Read-Only: - 05-AUG-2025 to 04-AUG-"
+  },
+  {
+    "invoice_number": "4000005760",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "WA Country Health Service Kimberly - Derby Hospital - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go- live at WACHS Kimberly.: WA Country Health Service Kimberly - Derby Hospital - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at WACHS Kimberly.: WA Country Health Service Kimberly - Derby Hospital - ASCMS02020, Opal Digital Health Record: 100% of Opal license payable upon go-live at"
+  },
+  {
+    "invoice_number": "4000005820",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-SEP-2025 to 20-DEC-2025"
+  },
+  {
+    "invoice_number": "4000005840",
+    "client": "Western Australia Department Of Health",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "North Metropolitan Health Service - Sir Charles Gairdner Hospital (SCGH) - ASCMS02000, Opal Scanning & Document Management: 100% of Opal license payable upon go-live at SCGH which is confirmed as August 2025.: North Metropolitan Health Service - Sir Charles Gairdner Hospital (SCGH) - ASCMS02010, Opal Enterprise Content Management & Health Information Management: 100% of Opal license payable upon go-live at SCGH which is confirmed as August 2025.: North Metropolitan Health Service - Sir Charles G"
+  },
+  {
+    "invoice_number": "4000005860",
+    "client": "South Australia Health",
+    "old_type": "Hosting",
+    "new_type": "Maint",
+    "services": "Contract - ISC No. - Software,Hosting and Support Services Fees for Base and Activated Metro and Regional Sites for Year - 2; 10% Holdback Billing - 14-OCT-2024 to 25-JUN-2025 Contract - ISC No. - Software,Hosting and Support Services Fees for Base and Activated Metro and Regional Sites for Year - 2; 10% Holdback Billing - 16-SEP-2024 to 25-JUN-2025 Contract - ISC No. - Software,Hosting and Support Services Fees for Base and Activated Metro and Regional Sites for Year - 2; 10% Holdback Billing -"
+  },
+  {
+    "invoice_number": "4000005880",
+    "client": "SA Health AIMS Program",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "The Queen Elizabeth Hospital - TQEH ; Central Adelaide Local Health Network - CALHN - Annual Third Party Maintenance:1:MDI Connectivity License - Multi-Connect License with Maintenance: - 28-SEP-2025 to 27- SEP-2026 The Queen Elizabeth Hospital - TQEH ; Central Adelaide Local Health Network - CALHN - Annual Third Party Maintenance:1:MDI Connectivity License - Single Connect License with Maintenance: - 28-SEP-2025 to 27- SEP-2026 The Queen Elizabeth Hospital - TQEH ; Central Adelaide Local Health"
+  },
+  {
+    "invoice_number": "4000005941",
+    "client": "Albury Wodonga Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Quarterly Maintenance:1:BOSSnet Electronic Medical Record (EMR): - 01- NOV-2025 to 31-JAN-2026 Quarterly Third Party Subscription:1:Sunrise Scanning - Atalasoft: - 01-NOV- to 31-JAN-2026"
+  },
+  {
+    "invoice_number": "4000005980",
+    "client": "Epworth HealthCare",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Maintenance:1:BOSSnet EMR License: - 16-NOV-2025 to 15-FEB-"
+  },
+  {
+    "invoice_number": "4004404147",
+    "client": "Parkway Hospitals Singapore PTE LTD",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "Annual Non-Current Release Surcharge - Sunrise Software (Additional Uplift for last year's fee): - 04-OCT-2022 to 03-OCT-2023"
+  },
+  {
+    "invoice_number": "4004578918",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Hardware Maintenance Fee - Nuance Dragon Medical Enterprise Edition v10, Perpetual, Physician Client License, Add-on (1-125) Kit: - 01-JUN-2024 to 30-JUN-2024"
+  },
+  {
+    "invoice_number": "4004641801",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-SEP-2024 to 30-SEP-2024"
+  },
+  {
+    "invoice_number": "4004666081",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-OCT-2024 to 31-OCT-"
+  },
+  {
+    "invoice_number": "4004666175",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-OCT-2024 to 31-OCT- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- OCT-2024 to 31-OCT-2024"
+  },
+  {
+    "invoice_number": "4004666202",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-OCT-2024 to 31-OCT-2024"
+  },
+  {
+    "invoice_number": "4004677374",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges - Community Mental Health [Contract 271711]: - 01-OCT-2024 to 31-DEC-2024 EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges [Contract 271711]: - 01-OCT-2024 to 31-DEC-"
+  },
+  {
+    "invoice_number": "4004677832",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-OCT-2024 to 31- DEC-2024"
+  },
+  {
+    "invoice_number": "4004686809",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-NOV-2024 to 30-NOV-2024"
+  },
+  {
+    "invoice_number": "4004690182",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-NOV-2024 to 30-NOV-"
+  },
+  {
+    "invoice_number": "4004690229",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-NOV-2024 to 30-NOV- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- NOV-2024 to 30-NOV-2024"
+  },
+  {
+    "invoice_number": "4004892436",
+    "client": "South Western Sydney Primary Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Maintenance:1:dbMotion Clinical Analytics Gateway: - 09-MAY-2024 to 31-JAN-2025 Annual Maintenance:1:dbMotion Core Provider License: - 09-MAY-2024 to 31-JAN-2025"
+  },
+  {
+    "invoice_number": "4600010384",
+    "client": "Sengkang General Hospital Pte. Ltd.",
+    "old_type": "HW",
+    "new_type": "PS",
+    "services": "HARD1000, sets of Capsule Cables for SKH - PO Line No. - 50% payable upon Delivery.:"
+  },
+  {
+    "invoice_number": "4600012179",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "KK Women's and Children's Hospital - Semi-Annual Annual Maintenance Service Support Fee for License - iPro Anesthesia Core AIMS (BSIPRO001000X) x 24.: - 22-AUG-2024 to 22-FEB-2025 KK Women's and Children's Hospital - Semi-Annual Annual Support Fee for Capsule Software Support Connectivity License Fee - Critical Care Connectivity License Single Connection x 42: - 22-AUG-2024 to 22-FEB-"
+  },
+  {
+    "invoice_number": "4600012637",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-SEP-2024 to 20-DEC-2024 Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-SEP-2024 to 20-DEC-2024"
+  },
+  {
+    "invoice_number": "4600012956",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-SEP-2024 to 20-DEC-2024 Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-SEP-2024 to 20-DEC-2024 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-SEP-2024 to 20-DEC-2024 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-"
+  },
+  {
+    "invoice_number": "4600013635",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "ASACU10000, Sunrise Acute Care: 100% of License Fee payable when GHA reach Users on Sunrise.:"
+  },
+  {
+    "invoice_number": "4600013776",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Support Fees for Third Party Software - SQL License:"
+  },
+  {
+    "invoice_number": "4600014680",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-DEC-2024 to 31-DEC-"
+  },
+  {
+    "invoice_number": "4600014695",
+    "client": "Parkway Hospitals Singapore PTE LTD",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Multum License Annual Subscription and Support Fee: - 04-OCT-2024 to 03- OCT-2025"
+  },
+  {
+    "invoice_number": "4600015337",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-DEC-2024 to 31-DEC- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- DEC-2024 to 31-DEC-2024"
+  },
+  {
+    "invoice_number": "4600015445",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-DEC-2024 to 31-DEC-2024"
+  },
+  {
+    "invoice_number": "4600016443",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-JAN-2025 to 31-JAN-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- JAN-2025 to 31-JAN-2025"
+  },
+  {
+    "invoice_number": "4600016545",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-JAN-2025 to 31-JAN-"
+  },
+  {
+    "invoice_number": "4600017003",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-JAN-2025 to 31-JAN-2025"
+  },
+  {
+    "invoice_number": "4600017197",
+    "client": "Parkway Hospitals Singapore PTE LTD",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Support Fee - Sunrise Acute Care: - 04-OCT-2024 to 03-OCT-2025"
+  },
+  {
+    "invoice_number": "4600017238",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-DEC-2024 to 20-MAR-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-DEC-2024 to 20-MAR-2025"
+  },
+  {
+    "invoice_number": "4600017239",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-DEC-2024 to 20-MAR-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-DEC-2024 to 20-MAR-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-DEC-2024 to 20-MAR-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-"
+  },
+  {
+    "invoice_number": "4600017918",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-FEB-2025 to 28-FEB-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- FEB-2025 to 28-FEB-2025"
+  },
+  {
+    "invoice_number": "4600017921",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-FEB-2025 to 28-FEB-"
+  },
+  {
+    "invoice_number": "4600017962",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges - Community Mental Health [Contract 271711]: - 01-JAN-2025 to 31-MAR-2025 EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges [Contract 271711]: - 01-JAN-2025 to 31-MAR-"
+  },
+  {
+    "invoice_number": "4600018074",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-JAN-2025 to 31- MAR-2025"
+  },
+  {
+    "invoice_number": "4600018575",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-FEB-2025 to 28-FEB-2025"
+  },
+  {
+    "invoice_number": "4600019608",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-MAR-2025 to 31-MAR-2025"
+  },
+  {
+    "invoice_number": "4600020263",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-MAR-2025 to 31-MAR- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- MAR-2025 to 31-MAR-2025"
+  },
+  {
+    "invoice_number": "4600020300",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-MAR-2025 to 31-MAR-"
+  },
+  {
+    "invoice_number": "4600020401",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Support Fees for Third Party Software - SQL License:"
+  },
+  {
+    "invoice_number": "4600020555",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Changi General Hospital - Annual Maintenance Service Support Fee for License - iPro Anesthesia Core AIMS (BSIPRO001000X) x 16.: - 23-FEB- to 22-FEB-2026 Changi General Hospital - Annual Support Fee for Capsule Software Support Connectivity License Fee - Capsule Departmental Care Connectivity License x 2: - 23-FEB-2025 to 22-FEB-2026 Changi General Hospital - Annual Support Fee for Capsule Software Support Connectivity License Fee - Critical Care Connectivity License Single Connection x 28: - 23-"
+  },
+  {
+    "invoice_number": "4600020556",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "National Cancer Centre Of Singapore Pte Ltd - Annual Third Party Maintenance:1:Critical Care Connectivity License-Multi Connection: - 23- FEB-2025 to 22-FEB-2026 National Cancer Centre Of Singapore Pte Ltd - Annual Third Party Maintenance:1:iPro Anesthesia Core AIMS License and Maintenance - per OR: - 23-FEB-2025 to 22-FEB-2026"
+  },
+  {
+    "invoice_number": "4600021214",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-MAR-2025 to 20-JUN-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-MAR-2025 to 20-JUN-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-MAR-2025 to 20-JUN-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-"
+  },
+  {
+    "invoice_number": "4600021248",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-APR-2025 to 30-APR-"
+  },
+  {
+    "invoice_number": "4600021568",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-APR-2025 to 30-APR-2025"
+  },
+  {
+    "invoice_number": "4600021878",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-APR-2025 to 30-APR-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- APR-2025 to 30-APR-2025"
+  },
+  {
+    "invoice_number": "4600022014",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-MAR-2025 to 20-JUN-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-MAR-2025 to 20-JUN-2025"
+  },
+  {
+    "invoice_number": "4600022467",
+    "client": "Singapore General Hospital Pte Ltd",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "ASONC00040, Sunrise Oncology Care and Base Content License for SGH: 100% payable upon CCR Effective Date (as also knowns as the Altera Order Date).:"
+  },
+  {
+    "invoice_number": "4600022850",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "National Cancer Centre Of Singapore Pte Ltd - Annual PO Line No.:11 - Third Party Maintenance:1:iPro Anesthesia Core AIMS License and Maintenance - per OR - Inflation (2.4%): - 23-FEB-2025 to 22-FEB- National Cancer Centre Of Singapore Pte Ltd - Annual PO Line No.:12 - Third Party Maintenance:1:Critical Care Connectivity License-Multi Connection - Inflation (2.4%): - 23-FEB-2025 to 22-FEB-2026"
+  },
+  {
+    "invoice_number": "4600022851",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Sengkang General Hospital - PO Line No.: - Annual Maintenance Service Support Fee for License - iPro Anesthesia Core AIMS (BSIPRO001000X) x 30.- Inflation (2.4%): - 23-FEB-2025 to 22-FEB-2026 Sengkang General Hospital - PO Line No.: - Annual Support Fee for Capsule Software Support Connectivity License Fee - Critical Care Connectivity License Single Connection x - Inflation (2.4%): - 23- FEB-2025 to 22-FEB-2026 Singapore General Hospital - PO Line No.: - Annual Maintenance Service Support Fee fo"
+  },
+  {
+    "invoice_number": "4600023071",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges - Community Mental Health [Contract 271711]: - 01-APR-2025 to 30-JUN-2025 EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges [Contract 271711]: - 01-APR-2025 to 30-JUN-"
+  },
+  {
+    "invoice_number": "4600023342",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-MAY-2025 to 31-MAY-"
+  },
+  {
+    "invoice_number": "4600023517",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-MAY-2025 to 31-MAY-2025"
+  },
+  {
+    "invoice_number": "4600023698",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-MAY-2025 to 31-MAY- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- MAY-2025 to 31-MAY-2025"
+  },
+  {
+    "invoice_number": "4600023975",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-APR-2025 to 30- JUN-2025"
+  },
+  {
+    "invoice_number": "4600023976",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Annual Support Fees for Third Party Software - ABC Scales: - 01-APR-2025 to 31-MAR-2026 Annual Support Fees for Third Party Software - IMO Problem IT & Procedure IT Content - Ambulatory: - 01-APR-2025 to 31-MAR-2026 Annual Support Fees for Third Party Software - Multum: - 01-APR-2025 to 31-MAR-2026"
+  },
+  {
+    "invoice_number": "4600023977",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Annual Support Fees for Third Party Software - Microsoft SQL licences - Year 6:"
+  },
+  {
+    "invoice_number": "4600023997",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "FCA0437_792074, MDI Connectivity License - Single Connect License with Maintenance: 100% payable upon Order Date.:"
+  },
+  {
+    "invoice_number": "4600024135",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-JUL-2021 to 30-JUN-2022"
+  },
+  {
+    "invoice_number": "4600024136",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-JUL-2022 to 30-JUN-2023"
+  },
+  {
+    "invoice_number": "4600024137",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-JUL-2023 to 30-JUN-2024"
+  },
+  {
+    "invoice_number": "4600024138",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-JUL-2024 to 30-JUN-2025"
+  },
+  {
+    "invoice_number": "4600024595",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:MDI Connectivity License - Single Connect License with Maintenance: - 20-DEC-2024 to 19-DEC-2025"
+  },
+  {
+    "invoice_number": "4600025019",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:MDI Connectivity License - Single Connect License with Maintenance: - 20-DEC-2024 to 19-DEC-2025"
+  },
+  {
+    "invoice_number": "4600025159",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-JUN-2025 to 30-JUN-2025"
+  },
+  {
+    "invoice_number": "4600025321",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-JUN-2025 to 30-JUN-"
+  },
+  {
+    "invoice_number": "4600025526",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "PO Line.No.7 Annual Software Support Fees - KBMA - NHCS: - 28-MAY- to 27-MAY-2026 PO Line.No.8 - KBMA Annual Software Support Fee - SGH: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025527",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.13 - Sunrise Support Fee for Sengkang Community Hospital: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025529",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO.Line.No.15 Sunrise Surgical Care for Support Fee for Sengkang General Hospital: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025531",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.1 - Sunrise Support Fee: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025534",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.11 - Sunrise Support Fee for Sengkang General Hospital: - 28- MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025535",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.6 - KBMA - Annual Support Fees - CGH: - 28-MAY-2025 to 27- MAY-2026"
+  },
+  {
+    "invoice_number": "4600025542",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.14-SingHealth Surgical Care Support Fee for Singapore General Hospital, KK Hospital, National Heart Center, National Cancer Center & Singapore National Eye Centre. - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025545",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.5 - KBMA Annual Support Fee - KKH: - 28-MAY-2025 to 27- MAY-2026"
+  },
+  {
+    "invoice_number": "4600025546",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "PO Line.No.16 - Sunrise Surgical Care Support Fee for Changi General Hospital: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600025935",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-JUN-2025 to 30-JUN-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- JUN-2025 to 30-JUN-2025"
+  },
+  {
+    "invoice_number": "4600025973",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-JUL-2025 to 31-JUL-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- JUL-2025 to 31-JUL-2025"
+  },
+  {
+    "invoice_number": "4600026466",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-JUN-2025 to 20-SEP-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-JUN-2025 to 20-SEP-2025"
+  },
+  {
+    "invoice_number": "4600026613",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-JUL-2025 to 31-JUL-2025"
+  },
+  {
+    "invoice_number": "4600026853",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-JUL-2025 to 31-JUL-2025"
+  },
+  {
+    "invoice_number": "4600026915",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:Critical Care Connectivity License-Multi Connection: - 23-JUN-2023 to 22-JUN-2024 Annual Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 23-JUN-2023 to 22-JUN-2024"
+  },
+  {
+    "invoice_number": "4600026916",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:Critical Care Connectivity License-Multi Connection: - 23-JUN-2024 to 22-JUN-2025 Annual Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 23-JUN-2024 to 22-JUN-2025"
+  },
+  {
+    "invoice_number": "4600026917",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Third Party Maintenance:1:iPro Anesthesia Core AIMS License and Maintenance - per OR: - 28-APR-2025 to 27-APR-2026 Annual Third Party Maintenance:1:iPro PACU Nursing License Kit: - 28-APR- to 27-APR-2026 Annual Third Party Maintenance:1:iPro Pain Management License Kit: - 28- APR-2025 to 27-APR-2026 Annual Third Party Maintenance:1:iPro Pre-anesthesia evaluation license kit: - 28-APR-2025 to 27-APR-2026"
+  },
+  {
+    "invoice_number": "4600026918",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Third Party Maintenance:1:Critical Care Connectivity License-Multi Connection: - 23-JUN-2025 to 22-SEP-2025 Quarterly Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 23-JUN-2025 to 22-SEP-2025"
+  },
+  {
+    "invoice_number": "4600027315",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-JUN-2025 to 20-SEP-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-JUN-2025 to 20-SEP-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-JUN-2025 to 20-SEP-2025"
+  },
+  {
+    "invoice_number": "4600027706",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-AUG-2025 to 31-AUG- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- AUG-2025 to 31-AUG-2025"
+  },
+  {
+    "invoice_number": "4600027866",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges - Community Mental Health [Contract 271711]: - 01-JUL-2025 to 30-SEP-2025 EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges [Contract 271711]: - 01-JUL-2025 to 30-SEP- Quarterly Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-JUL-2025 to 30-SEP-2025"
+  },
+  {
+    "invoice_number": "4600027974",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-JUL-2025 to 30- SEP-2025"
+  },
+  {
+    "invoice_number": "4600028146",
+    "client": "Mount Alvernia Hospital",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Annual Support Fees. - 20-JUN-2025 to 19-JUN-2026"
+  },
+  {
+    "invoice_number": "4600028153",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-AUG-2025 to 31-AUG-2025"
+  },
+  {
+    "invoice_number": "4600028422",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-AUG-2025 to 31-AUG-"
+  },
+  {
+    "invoice_number": "4600028556",
+    "client": "Gippsland Health Alliance",
+    "old_type": "SW",
+    "new_type": "HW",
+    "services": "ASACU10000, Sunrise Acute Care: 100% payable upon Order Date.: ASACU10080, Patient Education Log: 100% payable upon Order Date.: ASACU10120, Rules Authoring: 100% payable upon Order Date.: ASACU10130, Secure Health Messaging / Inbox: 100% payable upon Order Date.: ASACU10190, Health Manager: 100% payable upon Order Date.: HARD1000, Hardware for Altera Solutions: 100% payable upon Order Date.:"
+  },
+  {
+    "invoice_number": "4600028557",
+    "client": "South Western Sydney Primary Health",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual Maintenance:1:dbMotion Core Provider License: - 09-MAY-2024 to 31-JAN-2025"
+  },
+  {
+    "invoice_number": "4600029059",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly PO Line 1: Maintenance:1:Sunrise Oncology Care and Base Content License Maintenance Prorated for: - 28-MAR-2025 to 27-MAY-2025"
+  },
+  {
+    "invoice_number": "4600029060",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "Sub",
+    "services": "Annual PO Line 20: Maintenance:1:Sunrise Oncology Care and Base Content License Maintenance: - 28-MAY-2025 to 27-MAY-2026"
+  },
+  {
+    "invoice_number": "4600029537",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Tracking Board - Enterprise: - 27-JUN-2025 to 26-SEP-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Transport: - 27-JUN-2025 to 26-SEP-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - eLink - Enterprise: - 27-JUN-2025 to 26-SEP-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Point-of-Service Scan"
+  },
+  {
+    "invoice_number": "4600029692",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-SEP-2025 to 30-SEP-2025"
+  },
+  {
+    "invoice_number": "4600029839",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-SEP-2025 to 30-SEP-2025 Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- SEP-2025 to 30-SEP-2025"
+  },
+  {
+    "invoice_number": "4600029841",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-SEP-2025 to 30-SEP-"
+  },
+  {
+    "invoice_number": "4600030712",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-OCT-2025 to 31-OCT- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- OCT-2025 to 31-OCT-2025"
+  },
+  {
+    "invoice_number": "4600030902",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-OCT-2025 to 31-OCT-"
+  },
+  {
+    "invoice_number": "4600031258",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-OCT-2025 to 31-OCT-2025"
+  },
+  {
+    "invoice_number": "4600031421",
+    "client": "St Luke's Medical Center Global City Inc",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Tracking Board - Enterprise: - 27-SEP-2025 to 26-DEC-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Transport: - 27-SEP-2025 to 26-DEC-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - eLink - Enterprise: - 27-SEP-2025 to 26-DEC-2025 St Luke's Medical Center Global City Inc - Quarterly SCM and BOSSnet Support Fee - Point-of-Service Scan"
+  },
+  {
+    "invoice_number": "4600031584",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-SEP-2025 to 20-DEC-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software (Other than Third Party Software): - 21-SEP-2025 to 20-DEC-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Third Party Software: - 21-SEP-2025 to 20-DEC-2025"
+  },
+  {
+    "invoice_number": "4600031586",
+    "client": "South Australia Health",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-SEP-2025 to 20-DEC-2025 Quarterly Fee - Support & Software Maintenance Services for Licensed Software - Application Monitoring: - 21-SEP-2025 to 20-DEC-2025"
+  },
+  {
+    "invoice_number": "4600032088",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges - Community Mental Health [Contract 271711]: - 01-OCT-2025 to 31-DEC-2025 EMRCH Phases and - Software Support inc Mental Health - Quarterly Software Support Charges [Contract 271711]: - 01-OCT-2025 to 31-DEC- Quarterly Stage 3A Capsule Device Integration Support Fees - Third Party Maintenance:1:SmartLinx Vitals Stream Application – Single Connection License (per bed) Kit: - 01-OCT-2025 to 31-DEC-2025"
+  },
+  {
+    "invoice_number": "4600032089",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-OCT-2025 to 31- DEC-2025"
+  },
+  {
+    "invoice_number": "4600032535",
+    "client": "NCS PTE Ltd",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Quarterly Support Fees for Allscripts Software Year : - 01-JAN-2026 to 31- MAR-2026"
+  },
+  {
+    "invoice_number": "4600032703",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-NOV-2025 to 30-NOV-2025"
+  },
+  {
+    "invoice_number": "4600032781",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-NOV-2025 to 30-NOV- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- NOV-2025 to 30-NOV-2025"
+  },
+  {
+    "invoice_number": "4600032787",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "Monthly Support Fee - Sunrise Radiology - Enterprise, ADT Interface HL7, Billing Interface HL7 & DICOM Viewer Interface - Enterprise, Order Entry Interface HL7, PACS back-end Interface HL7: - 01-NOV-2025 to 30-NOV-"
+  },
+  {
+    "invoice_number": "4600034289",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "SW",
+    "services": "Monthly Third Party Maintenance Fees - DataCaptor Status Application - Multiple Connection License (per bed): - 01-DEC-2025 to 20-DEC-2025"
+  },
+  {
+    "invoice_number": "4600034403",
+    "client": "Strategic Asia Pacific Partners,",
+    "old_type": "Maint",
+    "new_type": "3PP",
+    "services": "Monthly Support Fees - Reference Interface: - 01-DEC-2025 to 20-DEC- Monthly Third Party Support Fees - Interface Connection/Instrument: - 01- DEC-2025 to 20-DEC-2025"
+  },
+  {
+    "invoice_number": "6000000729",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "POLine1:ECPSProject-AgreedFeesfor ProfessionalServicesandSoftwareDevelopment associatedwithSingleMRN- Berri- assetoutin executedIndividualSupplyContractNo5.Proposal- 24Jun2024"
+  },
+  {
+    "invoice_number": "6000000730",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "POLine2:ECPSProject- AgreedFeesfor ProfessionalServicesandSoftwareDevelopment associatedwithSingleMRN- MurrayBridge- as setoutinexecutedIndividualSupplyContractNo 5. Proposal- 24Jun2024 PSASFF04200- iQemoProfessionalServices"
+  },
+  {
+    "invoice_number": "6000000731",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "POLine3:ECPSProject- AgreedFeesfor ProfessionalServicesandSoftwareDevelopment associatedwithSingleMRN- PtAugusta- asset outinexecutedIndividualSupplyContractNo5. Proposal- 24Jun2024 PSASFF04200- iQemoProfessionalServices"
+  },
+  {
+    "invoice_number": "6000000732",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "50%payableuponServicesCompletion. PSPROFF08820-iProAnesthesiaSoftware Implementation 60,426.43"
+  },
+  {
+    "invoice_number": "6000000734",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "POline4:ECPSProject-AgreedFeesfor ProfessionalServicesandSoftwareDevelopment associatedwithBillingChangeRequestassetoutin executedIndividualSupplyContractNo5.Proposal- 24Jun2024"
+  },
+  {
+    "invoice_number": "6000000746",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "50%ofProfessionalservicespayableupon PurchaseOrder# 53177515Orderdate. PSPROFF08820-iProAnesthesiaSoftware Implementation PSASFF04090- CapsuleTechDeviceIntegration"
+  },
+  {
+    "invoice_number": "6000000751",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 21-JAN-2024 3.60 HOURS 200.00 720.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 28-JAN-2024 20.00 HOURS 200.00 4,000.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 04-FEB-2024 16.60 HOURS 200.00 3,320.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 11-FEB-2024 13.60 HOURS 200.00 2,720.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 18-FEB-2024 18.30 HOURS 200.00 3,660.00 Brecke"
+  },
+  {
+    "invoice_number": "6000000757",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Sub",
+    "new_type": "SW",
+    "services": "Stage3BImplementationServices- 20%onBuild Configuration Stage3AImplementationServices- 20%onBuild Configuration Stage3AImplementationServices- 40%onUser AcceptanceTesting Stage3BImplementationServices- 40%onUser AcceptanceTesting Stage3BImplementationServices- 15%onGo Live(ProductionClinicalUse)oftheSunrise ClinicalManagerLicenseUplift Stage3AImplementationServices- 20%onGo Live(ProductionClinicalUse)oftheSunrise ClinicalManagerLicenseUplift Stage3BImplementationServices-5% PerformanceGuarantee "
+  },
+  {
+    "invoice_number": "6000000765",
+    "client": "Gippsland Health Alliance",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "ProvationDevelopmentServices- 100%Payable UponOderDate PSPROFF08820-iProAnesthesiaSoftware Implementation"
+  },
+  {
+    "invoice_number": "6000000774",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 08-SEP-2024 11.50 HOURS 200.00 2,300.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 15-SEP-2024 12.50 HOURS 200.00 2,500.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 22-SEP-2024 13.00 HOURS 200.00 2,600.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 29-SEP-2024 18.50 HOURS 200.00 3,700.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 06-OCT-2024 2.50 HOURS 200.00 500.00"
+  },
+  {
+    "invoice_number": "6000000782",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 13-OCT-2024 14.00 HOURS 200.00 2,800.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 20-OCT-2024 15.50 HOURS 200.00 3,100.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 27-OCT-2024 18.50 HOURS 200.00 3,700.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 03-NOV-2024 8.50 HOURS 200.00 1,700.00"
+  },
+  {
+    "invoice_number": "6000000784",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 06-OCT-2024 16.50 HOURS 200.00 3,300.00"
+  },
+  {
+    "invoice_number": "6000000798",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 03-NOV-2024 3.50 HOURS 200.00 700.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 10-NOV-2024 18.50 HOURS 200.00 3,700.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 17-NOV-2024 9.50 HOURS 200.00 1,900.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 24-NOV-2024 10.00 HOURS 200.00 2,000.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 01-DEC-2024 25.15 HOURS 200.00 5,030.00"
+  },
+  {
+    "invoice_number": "6000000805",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 01-DEC-2024 2.35 HOURS 200.00 470.00"
+  },
+  {
+    "invoice_number": "6000000807",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "30%ofprofessionalservicespayableatAltera completingconfigurationandmedicaldevice integrationconfiguration. PSPROFF08820-iProAnesthesiaSoftware Implementation 30%ofprofessionalservicespayableatAltera completingconfigurationandmedicaldevice integrationconfiguration. PSASFF04090- CapsuleTechDeviceIntegration"
+  },
+  {
+    "invoice_number": "6000000808",
+    "client": "South Australia Health",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "20%ofProfessionalservicespayableonthe earlierofGo-livewhichisfirstuseinthe productionsystembyaclinicaluseror12 monthsaftertheISCExecutionDateortheOrder DateonPurchaseOrder53177515. PSPROFF08820-iProAnesthesiaSoftware Implementation PSASFF04090- CapsuleTechDeviceIntegration"
+  },
+  {
+    "invoice_number": "6000000809",
+    "client": "Waikato District Health Board",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "iProAnesthesiaSoftwareImplementation Breckell,MissAlexandraJudeAlex-Labor Implementation 08-DEC-2024 18.50 HOURS 200.00 3,700.00 Breckell,MissAlexandraJudeAlex-Labor Implementation 15-DEC-2024 8.35 HOURS 200.00 1,670.00"
+  },
+  {
+    "invoice_number": "6000000844",
+    "client": "Gippsland Health Alliance",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "50%payableuponServicesCompletion. PSPROFF08820-iProAnesthesiaSoftware Implementation PSPROFF08830- iProAnesthesiaTraining PSASFF04090- CapsuleTechDeviceIntegration"
+  },
+  {
+    "invoice_number": "6000000848",
+    "client": "Gippsland Health Alliance",
+    "old_type": "Hosting",
+    "new_type": "PS",
+    "services": "ProfessionalServicesFee-HostingServices ImplementationFee- Installment03of"
+  },
+  {
+    "invoice_number": "6000000877",
+    "client": "SA Health AIMS Program",
+    "old_type": "PS",
+    "new_type": "SW",
+    "services": "10%completionofInitiationphase. PSPROFF08820-iProAnesthesiaSoftware Implementation"
+  },
+  {
+    "invoice_number": "9000000511",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "POline3:Tranche2- Wave3- CGH,SKH- ProfessionalServicesFee-PhilipsCapsule onsitecutoversupport- 50%payableuponCCR EffectiveDateofthesignedCCR0240addon1 PSASFF04090-PhilipsServices-Integration, ConsultingandTraining"
+  },
+  {
+    "invoice_number": "9000000512",
+    "client": "Singapore Health Services Pte Ltd",
+    "old_type": "Maint",
+    "new_type": "PS",
+    "services": "POLine1:Tranche1 - Wave2 - SGH,NHCS,NCCS - ProfessionalServicesFee- PhilipsCapsule onsitecutoversupport- 50%payableuponCCR EffectiveDateofthesignedCCR0240addon1 PSASFF04090-PhilipsServices-Integration, ConsultingandTraining"
+  }
+]
