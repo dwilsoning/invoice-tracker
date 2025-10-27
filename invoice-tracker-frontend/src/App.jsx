@@ -794,9 +794,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const loadDuplicates = async () => {
     try {
       const response = await axios.get(`${API_URL}/duplicates`);
-      console.log('RAW RESPONSE:', response);
-      console.log('RESPONSE DATA:', response.data);
-      console.log('STRINGIFIED:', JSON.stringify(response.data));
       setDuplicates(response.data);
     } catch (error) {
       console.error('Error loading duplicates:', error);
@@ -806,14 +803,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   const loadDuplicateDetails = async (invoiceNumber) => {
     try {
-      console.log('Loading duplicate details for:', invoiceNumber);
       const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}`);
-      console.log('Duplicate details response:', response.data);
-      console.log('Number of duplicates found:', response.data.length);
       setDuplicateDetails(response.data);
       setSelectedDuplicate(invoiceNumber);
-      console.log('State updated - selectedDuplicate:', invoiceNumber);
-      console.log('State updated - duplicateDetails length:', response.data.length);
     } catch (error) {
       console.error('Error loading duplicate details:', error);
       showMessage('error', 'Failed to load duplicate details');
@@ -1476,13 +1468,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 Duplicate Invoices ({duplicates.length})
               </span>
               <button
-                onClick={loadDuplicates}
-                className="px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700 transition text-sm"
-                title="Reload duplicates from server"
-              >
-                🔄 Reload
-              </button>
-              <button
                 onClick={() => setShowDuplicates(!showDuplicates)}
                 className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm flex items-center gap-1"
                 title={showDuplicates ? "Collapse Section" : "Expand Section"}
@@ -1546,7 +1531,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   </div>
 
                   {/* Duplicate Details */}
-                  {console.log('Render check - selectedDuplicate:', selectedDuplicate, 'duplicateDetails.length:', duplicateDetails.length)}
                   {selectedDuplicate && duplicateDetails.length > 0 && (
                     <div className="mt-6 p-4 bg-gray-50 rounded">
                       <div className="flex justify-between items-center mb-4">
