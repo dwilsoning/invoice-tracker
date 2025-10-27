@@ -1202,9 +1202,24 @@ async function generateExpectedInvoices() {
       const today = new Date().toISOString().split('T')[0];
 
       if (expected_date <= today) {
-        const existing = await db.get(
-          'SELECT id FROM expected_invoices WHERE client = $1 AND customer_contract = $2 AND expected_date = $3',
-          invoice.client, invoice.customerContract || '', expected_date
+        // Check for existing expected invoice within ±1 day to handle timezone differences
+        const dateMinus1 = new Date(expected_date);
+        dateMinus1.setDate(dateMinus1.getDate() - 1);
+        const datePlus1 = new Date(expected_date);
+        datePlus1.setDate(datePlus1.getDate() + 1);
+
+        const existing = await db.get(`
+          SELECT id FROM expected_invoices
+          WHERE client = $1
+            AND customer_contract = $2
+            AND invoice_type = $3
+            AND expected_date BETWEEN $4 AND $5
+        `,
+          invoice.client,
+          invoice.customerContract || '',
+          invoice.invoiceType,
+          dateMinus1.toISOString().split('T')[0],
+          datePlus1.toISOString().split('T')[0]
         );
 
         if (!existing) {
