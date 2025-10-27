@@ -1244,10 +1244,31 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               onClick={() => setShowExpectedUnack(!showExpectedUnack)}
               className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
             >
-              <span className="font-bold text-lg text-white">
-                Expected Invoices - Unacknowledged ({unacknowledgedExpected.length})
-              </span>
-              <span className="text-white">{showExpectedUnack ? '−' : '+'}</span>
+              <div className="flex items-center gap-3">
+                <span className="font-bold text-lg text-white">
+                  Expected Invoices - Unacknowledged ({unacknowledgedExpected.length})
+                </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowExpectedUnack(!showExpectedUnack);
+                  }}
+                  className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
+                  title={showExpectedUnack ? "Collapse Section" : "Expand Section"}
+                >
+                  {showExpectedUnack ? (
+                    <>
+                      <span>▲</span>
+                      <span>Hide</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>▼</span>
+                      <span>Show</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </button>
             
             {showExpectedUnack && unacknowledgedExpected.length > 0 && (
@@ -1326,10 +1347,31 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               onClick={() => setShowExpectedAck(!showExpectedAck)}
               className="w-full px-6 py-4 flex justify-between items-center hover:bg-[#5a6ad9] transition"
             >
-              <span className="font-bold text-lg text-white">
-                Expected Invoices - Acknowledged ({acknowledgedExpected.length})
-              </span>
-              <span className="text-white">{showExpectedAck ? '−' : '+'}</span>
+              <div className="flex items-center gap-3">
+                <span className="font-bold text-lg text-white">
+                  Expected Invoices - Acknowledged ({acknowledgedExpected.length})
+                </span>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowExpectedAck(!showExpectedAck);
+                  }}
+                  className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
+                  title={showExpectedAck ? "Collapse Section" : "Expand Section"}
+                >
+                  {showExpectedAck ? (
+                    <>
+                      <span>▲</span>
+                      <span>Hide</span>
+                    </>
+                  ) : (
+                    <>
+                      <span>▼</span>
+                      <span>Show</span>
+                    </>
+                  )}
+                </button>
+              </div>
             </button>
             
             {showExpectedAck && acknowledgedExpected.length > 0 && (
@@ -1407,10 +1449,31 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             onClick={() => setShowDuplicates(!showDuplicates)}
             className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
           >
-            <span className="font-bold text-lg text-red-600">
-              Duplicate Invoices ({duplicates.length})
-            </span>
-            <span>{showDuplicates ? '−' : '+'}</span>
+            <div className="flex items-center gap-3">
+              <span className="font-bold text-lg text-red-600">
+                Duplicate Invoices ({duplicates.length})
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowDuplicates(!showDuplicates);
+                }}
+                className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition text-sm flex items-center gap-1"
+                title={showDuplicates ? "Collapse Section" : "Expand Section"}
+              >
+                {showDuplicates ? (
+                  <>
+                    <span>▲</span>
+                    <span>Hide</span>
+                  </>
+                ) : (
+                  <>
+                    <span>▼</span>
+                    <span>Show</span>
+                  </>
+                )}
+              </button>
+            </div>
           </button>
 
           {showDuplicates && (
@@ -1787,10 +1850,31 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             onClick={() => setShowInvoiceTable(!showInvoiceTable)}
             className="w-full px-6 py-4 flex justify-between items-center hover:bg-gray-50 transition"
           >
-            <span className="font-bold text-lg">
-              Invoices ({filteredInvoices.length})
-            </span>
-            <span>{showInvoiceTable ? '−' : '+'}</span>
+            <div className="flex items-center gap-3">
+              <span className="font-bold text-lg">
+                Invoices ({filteredInvoices.length})
+              </span>
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setShowInvoiceTable(!showInvoiceTable);
+                }}
+                className="px-3 py-1 bg-[#707CF1] text-white rounded hover:bg-[#5a6ad9] transition text-sm flex items-center gap-1"
+                title={showInvoiceTable ? "Collapse Invoices" : "Expand Invoices"}
+              >
+                {showInvoiceTable ? (
+                  <>
+                    <span>▲</span>
+                    <span>Hide</span>
+                  </>
+                ) : (
+                  <>
+                    <span>▼</span>
+                    <span>Show</span>
+                  </>
+                )}
+              </button>
+            </div>
           </button>
           
           {showInvoiceTable && (
