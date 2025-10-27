@@ -103,20 +103,52 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Save contract value to database
   const saveContractValue = async (contract, value, currency) => {
+    // Handle empty value - delete the contract or set to 0
+    if (!value || value === '') {
+      // Update UI to show empty
+      const newValues = { ...contractValues };
+      delete newValues[contract];
+      setContractValues(newValues);
+
+      try {
+        // Delete the contract from database
+        await axios.delete(`${API_URL}/contracts/${encodeURIComponent(contract)}`);
+        showMessage('success', `Contract value cleared: ${contract}`);
+      } catch (error) {
+        console.error('Error deleting contract:', error);
+        showMessage('error', 'Failed to clear contract value');
+      }
+      return;
+    }
+
+    // Don't save if value is invalid
+    if (isNaN(parseFloat(value))) {
+      return;
+    }
+
+    const numericValue = parseFloat(value);
     const newValues = {
       ...contractValues,
-      [contract]: { value: parseFloat(value), currency: currency || 'USD' }
+      [contract]: { value: numericValue, currency: currency || 'USD' }
     };
     setContractValues(newValues);
 
     try {
-      await axios.put(`${API_URL}/contracts/${encodeURIComponent(contract)}`, {
-        contractValue: parseFloat(value),
+      const response = await axios.put(`${API_URL}/contracts/${encodeURIComponent(contract)}`, {
+        contractValue: numericValue,
         currency: currency || 'USD'
       });
+
+      if (response.data.success) {
+        showMessage('success', `Contract value saved: ${contract}`);
+      }
     } catch (error) {
       console.error('Error saving contract:', error);
-      showMessage('error', 'Failed to save contract value');
+      const errorMsg = error.response?.data?.error || 'Failed to save contract value';
+      showMessage('error', errorMsg);
+
+      // Reload contracts to get correct values
+      await loadContracts();
     }
   };
 
@@ -838,8 +870,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       // If the response includes invoices, filter the invoice table to show only those
       if (response.data.invoices && response.data.invoices.length > 0) {
         // Clear all other filters so we only show the AI query results
-        setStatusFilter('All');
-        setTypeFilter('All');
+        setStatusFilter([]);
+        setTypeFilter([]);
         setClientFilter('All');
         setContractFilter('All');
         setSearchTerm('');
@@ -1112,8 +1144,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               onClick={() => {
                 clearFilters();
                 setActiveStatBox('creditMemo');
-                setStatusFilter('All');
-                setTypeFilter('Credit Memo');
+                setStatusFilter([]);
+                setTypeFilter(['Credit Memo']);
                 setClientFilter('All');
                 setContractFilter('All');
                 setAgingFilter('All');
@@ -1220,6 +1252,52 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           
           {queryResult && (
             <div className="mt-4 p-4 bg-gray-50 rounded">
+              {/* Contract Summary - shown for percentage queries */}
+              {queryResult.contractSummary && (
+                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
+                  <h4 className="font-semibold text-blue-900 mb-2">
+                    Contracts {queryResult.contractSummary.operator === '=' ? 'at' :
+                              queryResult.contractSummary.operator === '<' ? 'less than' :
+                              queryResult.contractSummary.operator === '>' ? 'greater than' :
+                              queryResult.contractSummary.operator === '<=' ? 'at or below' :
+                              queryResult.contractSummary.operator === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage}% {
+                      queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
+                      queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
+                      'Invoiced'
+                    }
+                    <span className="ml-2 text-sm font-normal text-blue-700">
+                      ({queryResult.contractSummary.totalContracts} contract{queryResult.contractSummary.totalContracts !== 1 ? 's' : ''})
+                    </span>
+                  </h4>
+                  <div className="space-y-2">
+                    {queryResult.contractSummary.matchingContracts.map((contract, idx) => (
+                      <div key={idx} className="flex justify-between items-center text-sm bg-white p-2 rounded border border-blue-100">
+                        <div className="font-medium text-gray-900">{contract.contractName}</div>
+                        <div className="flex items-center gap-4">
+                          <div className="text-gray-600">
+                            {queryResult.contractSummary.queryType === 'paid' ? (
+                              <span>${contract.paidTotal.toLocaleString()} paid / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
+                            ) : queryResult.contractSummary.queryType === 'unpaid' ? (
+                              <span>${contract.unpaidTotal.toLocaleString()} unpaid / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
+                            ) : (
+                              <span>${contract.invoicedTotal.toLocaleString()} invoiced / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
+                            )}
+                          </div>
+                          <div className={`font-semibold px-2 py-1 rounded ${
+                            contract.percentage >= 95 ? 'bg-green-100 text-green-800' :
+                            contract.percentage >= 50 ? 'bg-yellow-100 text-yellow-800' :
+                            'bg-blue-100 text-blue-800'
+                          }`}>
+                            {contract.percentage}%
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {/* Standard Query Results */}
               {queryResult.type === 'total' ? (
                 <div>
                   <div className="text-2xl font-bold text-purple-600">
@@ -1932,7 +2010,18 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                   type="number"
                                   placeholder="Enter amount"
                                   value={contractInfo?.value || ''}
-                                  onChange={(e) => saveContractValue(contractName, e.target.value, contractInfo?.currency || 'USD')}
+                                  onChange={(e) => {
+                                    // Update UI immediately
+                                    const newValues = {
+                                      ...contractValues,
+                                      [contractName]: {
+                                        value: e.target.value,
+                                        currency: contractInfo?.currency || 'USD'
+                                      }
+                                    };
+                                    setContractValues(newValues);
+                                  }}
+                                  onBlur={(e) => saveContractValue(contractName, e.target.value, contractInfo?.currency || 'USD')}
                                   className="border rounded px-3 py-1 w-32"
                                 />
                                 <select

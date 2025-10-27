@@ -1,3 +1,42 @@
+// ============================================================================
+// ⚠️  CRITICAL WARNING - DATA DESTRUCTION RISK ⚠️
+// ============================================================================
+// This migration script OVERWRITES the PostgreSQL database with SQLite data.
+// Running this will DELETE all current PostgreSQL data!
+//
+// This script should NEVER run automatically.
+// It should ONLY be run manually when explicitly needed.
+//
+// BEFORE running this script:
+// 1. Create a backup of PostgreSQL: npm run backup
+// 2. Understand that ALL current PostgreSQL data will be LOST
+// 3. Confirm the SQLite database has the data you want to migrate
+// ============================================================================
+
+// SAFETY CHECK - Require explicit confirmation
+const readline = require('readline');
+
+async function confirmMigration() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+
+  return new Promise((resolve) => {
+    console.log('\n' + '='.repeat(80));
+    console.log('⚠️  WARNING: This will OVERWRITE PostgreSQL with SQLite data! ⚠️');
+    console.log('='.repeat(80));
+    console.log('This will DELETE all current data in PostgreSQL.');
+    console.log('Have you created a backup? (npm run backup)');
+    console.log('='.repeat(80) + '\n');
+
+    rl.question('Type "YES I UNDERSTAND AND HAVE A BACKUP" to continue: ', (answer) => {
+      rl.close();
+      resolve(answer === 'YES I UNDERSTAND AND HAVE A BACKUP');
+    });
+  });
+}
+
 const initSqlJs = require('sql.js');
 const { Pool } = require('pg');
 const fs = require('fs');
@@ -195,9 +234,20 @@ async function migrateSQLiteToPostgres() {
   }
 }
 
-// Run migration
+// Run migration with confirmation
 console.log('=====================================');
 console.log('SQLite to PostgreSQL Migration Tool');
 console.log('=====================================\n');
 
-migrateSQLiteToPostgres();
+(async function() {
+  const confirmed = await confirmMigration();
+
+  if (!confirmed) {
+    console.log('\n❌ Migration cancelled by user.');
+    console.log('No changes were made to the database.\n');
+    process.exit(0);
+  }
+
+  console.log('\n✓ Confirmation received. Starting migration...\n');
+  await migrateSQLiteToPostgres();
+})();

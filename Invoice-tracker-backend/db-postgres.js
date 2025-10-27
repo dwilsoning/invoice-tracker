@@ -1,5 +1,9 @@
-const { Pool } = require('pg');
+const { Pool, types } = require('pg');
 require('dotenv').config();
+
+// Override the default DATE type parser to return strings instead of Date objects
+// This prevents timezone conversion issues (type ID 1082 is DATE)
+types.setTypeParser(1082, val => val);
 
 // Create PostgreSQL connection pool
 const pool = new Pool({
@@ -52,11 +56,15 @@ function convertRowToCamelCase(row) {
 
     // Convert date timestamps to YYYY-MM-DD format
     if (dateFields.includes(camelKey) && value !== null && value !== undefined) {
-      if (value instanceof Date || typeof value === 'string') {
-        const date = new Date(value);
-        if (!isNaN(date.getTime())) {
-          value = date.toISOString().split('T')[0];
+      // With the type parser override above, DATE columns now return strings
+      // So we just need to handle the rare case of Date objects (from TIMESTAMP columns)
+      if (value instanceof Date) {
+        if (!isNaN(value.getTime())) {
+          value = value.toISOString().split('T')[0];
         }
+      } else if (typeof value === 'string') {
+        // Already a string - ensure it's in YYYY-MM-DD format
+        value = value.split('T')[0].split(' ')[0];
       }
     }
 

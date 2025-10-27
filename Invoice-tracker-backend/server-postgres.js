@@ -66,7 +66,7 @@ function convertToUSD(amount, currency) {
 function getDateFormatByInvoiceNumber(invoice_number) {
   if (!invoice_number) return 'international'; // Default to international
 
-  const invoiceStr = invoiceNumber.toString();
+  const invoiceStr = invoice_number.toString();
 
   // US format invoice series (MM-DD-YYYY)
   const usFormatPrefixes = ['46', '47', '48', '49'];
@@ -241,6 +241,19 @@ function classifyInvoiceType(services, invoice_number, amount) {
       lower.includes('professionalservicesfee') ||
       lower.includes('penetration testing')) return 'PS';
 
+  // Maintenance and Support - check BEFORE subscriptions to avoid misclassification
+  // More specific checks to avoid catching "support" in other contexts
+  if ((lower.includes('maintenance') ||
+       lower.includes('annual maintenance') ||
+       lower.includes('software support services') ||
+       lower.includes('support services') ||
+       lower.includes('license maintenance') ||
+       lower.includes('support fee')) &&
+      !lower.includes('managed') &&
+      !lower.includes('professional')) {
+    return 'Maint';
+  }
+
   // Software licenses (ad-hoc) - check BEFORE subscription
   // If it has "license/licence" with software-related terms but NO subscription indicators, it's SW
   if ((lower.includes('license') || lower.includes('licence')) &&
@@ -260,22 +273,11 @@ function classifyInvoiceType(services, invoice_number, amount) {
     return 'SW';
   }
 
-  // Subscription - only if NOT managed services
+  // Subscription - only if NOT managed services or maintenance
   // Now only catches explicit subscriptions with recurring patterns
   if (lower.includes('subscription') ||
       (lower.includes('license') && (lower.includes('annual') || lower.includes('yearly'))) ||
       lower.includes('saas')) return 'Sub';
-
-  // Maintenance and Support - but NOT if it's managed services or professional services
-  // More specific checks to avoid catching "support" in other contexts
-  if ((lower.includes('maintenance') ||
-       lower.includes('annual maintenance') ||
-       lower.includes('software support services') ||
-       lower.includes('support services')) &&
-      !lower.includes('managed') &&
-      !lower.includes('professional')) {
-    return 'Maint';
-  }
 
   if (lower.includes('hosting') || lower.includes('cloud services') || lower.includes('infrastructure')) return 'Hosting';
   if (lower.includes('software') || lower.includes('application') || lower.includes('program')) return 'SW';
@@ -1156,7 +1158,8 @@ async function generateExpectedInvoices() {
     const grouped = {};
 
     for (const row of rows) {
-      const key = `${row.client}-${row.customer_contract || 'none'}-${row.frequency}`;
+      // Group by client and contract only - one expected invoice per contract
+      const key = `${row.client}-${row.customer_contract || 'none'}`;
       if (!grouped[key]) {
         grouped[key] = row;
       }
@@ -1208,19 +1211,25 @@ async function generateExpectedInvoices() {
         const datePlus1 = new Date(expected_date);
         datePlus1.setDate(datePlus1.getDate() + 1);
 
+        // Check for existing expected invoice for this contract (regardless of invoice type)
         const existing = await db.get(`
           SELECT id FROM expected_invoices
-          WHERE client = $1
-            AND customer_contract = $2
-            AND invoice_type = $3
-            AND expected_date BETWEEN $4 AND $5
+          WHERE LOWER(TRIM(client)) = LOWER(TRIM($1))
+            AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2))
+            AND expected_date BETWEEN $3 AND $4
+            AND acknowledged = false
         `,
           invoice.client,
           invoice.customerContract || '',
-          invoice.invoiceType,
           dateMinus1.toISOString().split('T')[0],
           datePlus1.toISOString().split('T')[0]
         );
+
+        if (!existing) {
+          console.log(`Creating expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date}`);
+        } else {
+          console.log(`Skipping duplicate expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date} (already exists)`);
+        }
 
         if (!existing) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
@@ -1483,6 +1492,137 @@ app.post('/api/query', async (req, res) => {
       }
     });
 
+    // Filter by contract completion percentage
+    // Patterns: "50% invoiced", "<70% invoiced", ">50% paid", "<=80% complete", ">=25% billed"
+    const percentageMatch = queryLower.match(/([<>]=?|=)?\s*(\d+)\s*(?:%|percent|per cent)\s*(?:invoiced|complete|billed|done|paid|unpaid)/i);
+    let contractSummary = null;
+
+    if (percentageMatch) {
+      const operator = percentageMatch[1] || '='; // Default to equals if no operator
+      const targetPercentage = parseInt(percentageMatch[2]);
+
+      // Determine if we're looking at paid or unpaid percentages
+      const isPaidQuery = queryLower.includes('paid') && !queryLower.includes('unpaid');
+      const isUnpaidQuery = queryLower.includes('unpaid');
+
+      // Get all contracts
+      const contracts = await db.all('SELECT contract_name, contract_value, currency FROM contracts');
+
+      // Group invoices by contract and calculate totals (both total and paid)
+      const contractTotals = {};
+      const contractPaidTotals = {};
+
+      results.forEach(inv => {
+        const contractName = inv.customerContract || inv.customer_contract;
+        if (contractName) {
+          if (!contractTotals[contractName]) {
+            contractTotals[contractName] = 0;
+            contractPaidTotals[contractName] = 0;
+          }
+          // Convert to USD for comparison
+          const amountUSD = convertToUSD(inv.amountDue || inv.amount_due, inv.currency);
+          contractTotals[contractName] += amountUSD;
+
+          // Track paid amounts
+          if (inv.status === 'Paid') {
+            contractPaidTotals[contractName] += amountUSD;
+          }
+        }
+      });
+
+      // Find contracts matching the percentage criteria and build summary
+      const matchingContracts = [];
+      const contractDetails = [];
+
+      contracts.forEach(contract => {
+        const contractName = contract.contractName || contract.contract_name;
+        const contractValue = parseFloat(contract.contractValue || contract.contract_value);
+        const contractCurrency = contract.currency || 'USD';
+
+        // Skip contracts with no value or invalid value
+        if (!contractValue || isNaN(contractValue) || contractValue <= 0) {
+          return;
+        }
+
+        const contractValueUSD = convertToUSD(contractValue, contractCurrency);
+
+        const invoicedTotal = contractTotals[contractName] || 0;
+        const paidTotal = contractPaidTotals[contractName] || 0;
+        const unpaidTotal = invoicedTotal - paidTotal;
+
+        // Calculate percentage based on query type
+        let percentage;
+        if (isPaidQuery) {
+          percentage = contractValueUSD > 0 ? (paidTotal / contractValueUSD) * 100 : 0;
+        } else if (isUnpaidQuery) {
+          percentage = contractValueUSD > 0 ? (unpaidTotal / contractValueUSD) * 100 : 0;
+        } else {
+          // Default: total invoiced percentage
+          percentage = contractValueUSD > 0 ? (invoicedTotal / contractValueUSD) * 100 : 0;
+        }
+
+        // Check if percentage matches criteria based on operator
+        let matches = false;
+        const tolerance = 5;
+
+        switch(operator) {
+          case '<':
+            matches = percentage < targetPercentage;
+            break;
+          case '>':
+            matches = percentage > targetPercentage;
+            break;
+          case '<=':
+            matches = percentage <= targetPercentage;
+            break;
+          case '>=':
+            matches = percentage >= targetPercentage;
+            break;
+          case '=':
+          default:
+            // Use tolerance for equals
+            matches = Math.abs(percentage - targetPercentage) <= tolerance;
+            break;
+        }
+
+        if (matches) {
+          matchingContracts.push(contractName);
+          contractDetails.push({
+            contractName,
+            contractValue: contractValueUSD,
+            invoicedTotal,
+            paidTotal,
+            unpaidTotal,
+            percentage: Math.round(percentage * 10) / 10, // Round to 1 decimal
+            currency: contractCurrency,
+            originalValue: contractValue
+          });
+        }
+      });
+
+      // Create contract summary for response
+      if (contractDetails.length > 0) {
+        contractSummary = {
+          targetPercentage,
+          operator,
+          queryType: isPaidQuery ? 'paid' : isUnpaidQuery ? 'unpaid' : 'invoiced',
+          matchingContracts: contractDetails,
+          totalContracts: contractDetails.length
+        };
+      }
+
+      // Filter invoices to only those matching contracts
+      if (matchingContracts.length > 0) {
+        results = results.filter(inv => {
+          const contractName = inv.customerContract || inv.customer_contract;
+          return contractName && matchingContracts.includes(contractName);
+        });
+      } else {
+        // No contracts match the criteria, return empty results
+        results = [];
+      }
+    }
+
     // Determine response type
     const wantsCount = queryLower.includes('how many') || queryLower.includes('count') || queryLower.includes('number of');
     const wantsTotal = queryLower.includes('total') || queryLower.includes('sum') || queryLower.includes('how much') || queryLower.includes('value');
@@ -1499,7 +1639,8 @@ app.post('/api/query', async (req, res) => {
         value: average,
         total: total,
         count: results.length,
-        invoices: results
+        invoices: results,
+        contractSummary
       });
     } else if (wantsTotal || (wantsCount && wantsTotal)) {
       const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amount_due, inv.currency), 0);
@@ -1508,19 +1649,22 @@ app.post('/api/query', async (req, res) => {
         type: 'total',
         value: total,
         count: results.length,
-        invoices: results
+        invoices: results,
+        contractSummary
       });
     } else if (wantsCount) {
       res.json({
         type: 'count',
         count: results.length,
-        invoices: results
+        invoices: results,
+        contractSummary
       });
     } else {
       res.json({
         type: 'list',
         invoices: results,
-        count: results.length
+        count: results.length,
+        contractSummary
       });
     }
   } catch (error) {
@@ -1582,29 +1726,58 @@ app.put('/api/contracts/:contractName', async (req, res) => {
     const { contractName } = req.params;
     const { contractValue, contract_value, currency } = req.body;
 
+    // Debug logging
+    console.log('PUT /api/contracts - Received request:');
+    console.log('  contractName (param):', contractName);
+    console.log('  contractValue (body):', contractValue, typeof contractValue);
+    console.log('  contract_value (body):', contract_value, typeof contract_value);
+    console.log('  currency (body):', currency);
+    console.log('  Full body:', JSON.stringify(req.body));
+
     // Accept both camelCase and snake_case for backward compatibility
     const contract_name = contractName;
     const value = contractValue || contract_value;
 
+    console.log('  Extracted value:', value, typeof value);
+    console.log('  parseFloat(value):', parseFloat(value));
+    console.log('  isNaN(parseFloat(value)):', isNaN(parseFloat(value)));
+
+    // Validate inputs
+    if (!contract_name) {
+      console.log('  ❌ Validation failed: Contract name is required');
+      return res.status(400).json({ error: 'Contract name is required' });
+    }
+    if (!value || isNaN(parseFloat(value))) {
+      console.log('  ❌ Validation failed: Valid contract value is required');
+      return res.status(400).json({ error: 'Valid contract value is required' });
+    }
+
     const now = new Date().toISOString().split('T')[0];
+    const numericValue = parseFloat(value);
+
+    console.log('  ✅ Validation passed, updating contract:', contract_name, 'with value:', numericValue);
 
     const result = await db.run(`
       UPDATE contracts
       SET contract_value = $1, currency = $2, updated_date = $3
       WHERE contract_name = $4
-    `, value, currency || 'USD', now, contract_name);
+    `, numericValue, currency || 'USD', now, contract_name);
 
     if (result.rowCount === 0) {
       // Contract doesn't exist, create it
+      console.log('  📝 Contract not found, creating new entry');
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
       await db.run(`
         INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
         VALUES ($1, $2, $3, $4, $5, $6)
-      `, id, contract_name, value, currency || 'USD', now, now);
+      `, id, contract_name, numericValue, currency || 'USD', now, now);
+    } else {
+      console.log('  ✅ Contract updated successfully');
     }
 
     res.json({ success: true });
   } catch (error) {
+    console.error('❌ Error updating contract:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -1612,10 +1785,15 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 // Delete contract
 app.delete('/api/contracts/:contractName', async (req, res) => {
   try {
-    const { contract_name } = req.params;
-    await db.run('DELETE FROM contracts WHERE contract_name = $1', contract_name);
+    const { contractName } = req.params;
+    console.log('DELETE /api/contracts - Received request for:', contractName);
+
+    const result = await db.run('DELETE FROM contracts WHERE contract_name = $1', contractName);
+    console.log('  ✅ Contract deleted, rows affected:', result.rowCount);
+
     res.json({ success: true });
   } catch (error) {
+    console.error('❌ Error deleting contract:', error);
     res.status(500).json({ error: error.message });
   }
 });
@@ -1669,18 +1847,26 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
     const { invoiceNumber } = req.params;
 
+    console.log('DELETE /api/invoices/duplicates - Invoice number:', invoiceNumber);
+
     // Get all records with this invoice number, ordered by upload date
     const records = await db.all(
       'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
       invoiceNumber
     );
 
+    console.log('  Found', records.length, 'records with this invoice number');
+
     if (records.length <= 1) {
+      console.log('  ✅ No duplicates to delete');
       return res.json({ success: true, message: 'No duplicates found', deleted: 0 });
     }
 
     // Keep the first one (most recent), delete the rest
     const toDelete = records.slice(1);
+    console.log('  Keeping record ID:', records[0].id, 'uploaded:', records[0].upload_date);
+    console.log('  Deleting', toDelete.length, 'duplicate(s):', toDelete.map(r => `ID ${r.id}`).join(', '));
+
     let deletedCount = 0;
 
     for (const record of toDelete) {
@@ -1689,6 +1875,7 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
         const pdfFullPath = path.join(__dirname, record.pdf_path);
         if (fs.existsSync(pdfFullPath)) {
           fs.unlinkSync(pdfFullPath);
+          console.log('    Deleted PDF:', record.pdf_path);
         }
       }
 
@@ -1697,8 +1884,10 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
       deletedCount++;
     }
 
+    console.log('  ✅ Deleted', deletedCount, 'duplicate(s)');
     res.json({ success: true, message: `Deleted ${deletedCount} duplicate(s), kept the most recent`, deleted: deletedCount });
   } catch (error) {
+    console.error('❌ Error deleting duplicates:', error);
     res.status(500).json({ error: error.message });
   }
 });

@@ -1,3 +1,27 @@
+// ============================================================================
+// ⚠️  DEPRECATION NOTICE - THIS FILE IS NO LONGER USED ⚠️
+// ============================================================================
+// This server uses SQLite and has been SUPERSEDED by server-postgres.js
+//
+// DO NOT USE THIS FILE! Use server-postgres.js instead.
+//
+// This server is kept for reference only and should NOT be started.
+// To revert to SQLite in the future (if needed), remove this notice.
+// ============================================================================
+
+console.error('\n' + '='.repeat(80));
+console.error('⚠️  DEPRECATION WARNING ⚠️');
+console.error('='.repeat(80));
+console.error('This server (server.js) uses SQLite and has been SUPERSEDED.');
+console.error('');
+console.error('Please use: server-postgres.js');
+console.error('');
+console.error('This server contains OLD DATA and should NOT be used.');
+console.error('='.repeat(80) + '\n');
+
+// Uncomment the line below to prevent this server from starting
+// process.exit(1);
+
 const express = require('express');
 const cors = require('cors');
 const { formidable } = require('formidable');
