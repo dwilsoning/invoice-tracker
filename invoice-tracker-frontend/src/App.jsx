@@ -883,6 +883,12 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         setAgingFilter('All');
         setActiveStatBox(null);
 
+        // For "contracts with no value" queries, automatically set grouping
+        if (response.data.type === 'contracts_no_value') {
+          setGroupBy('Contract');
+          setSecondaryGroupBy('Client');
+        }
+
         // Set the query filter and show the table
         const invoiceIds = response.data.invoices.map(inv => inv.id);
         setQueryFilteredIds(invoiceIds);
@@ -1349,6 +1355,21 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   </div>
                   <div className="text-sm text-gray-600">
                     Average of {queryResult.count} invoices (Total: ${(queryResult.total || 0).toLocaleString()})
+                  </div>
+                </div>
+              ) : queryResult.type === 'contracts_no_value' ? (
+                <div>
+                  <div className="text-2xl font-bold text-orange-600">
+                    {queryResult.contractsWithNoValue.length}
+                  </div>
+                  <div className="text-sm text-gray-600 mb-2">
+                    contract(s) with no value • {queryResult.count} invoice(s)
+                  </div>
+                  <div className="text-xs text-gray-500 bg-orange-50 p-2 rounded border border-orange-200">
+                    <strong>Contracts:</strong> {queryResult.contractsWithNoValue.join(', ')}
+                  </div>
+                  <div className="text-xs text-blue-600 mt-2">
+                    💡 Invoice table below is grouped by Contract and Client
                   </div>
                 </div>
               ) : (

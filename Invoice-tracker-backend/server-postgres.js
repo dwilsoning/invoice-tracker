@@ -1492,6 +1492,35 @@ app.post('/api/query', async (req, res) => {
       }
     });
 
+    // Check for "contracts with no value" query
+    if (queryLower.match(/contracts?.*(with\s+no|without|no)\s+value/i) ||
+        queryLower.match(/which.*contracts.*no.*value/i) ||
+        queryLower.match(/contracts.*value.*null|empty|missing/i)) {
+
+      // Get all contracts
+      const allContracts = await db.all('SELECT * FROM contracts');
+
+      // Find contracts with no value (0, null, or undefined)
+      const contractsWithNoValue = allContracts
+        .filter(c => !c.contract_value || c.contract_value === 0)
+        .map(c => c.contract_name);
+
+      // Filter invoices to only those belonging to contracts with no value
+      results = results.filter(inv => {
+        const contractName = inv.customerContract || inv.customer_contract;
+        return contractName && contractsWithNoValue.includes(contractName);
+      });
+
+      // Return with special formatting to show grouped by contract and client
+      return res.json({
+        type: 'contracts_no_value',
+        count: results.length,
+        invoices: results,
+        contractsWithNoValue: contractsWithNoValue,
+        message: `Found ${contractsWithNoValue.length} contract(s) with no value and ${results.length} invoice(s)`
+      });
+    }
+
     // Filter by contract completion percentage
     // Patterns:
     // - Single: "50% invoiced", "<70% invoiced", ">50% paid", "<=80% complete", ">=25% billed"
