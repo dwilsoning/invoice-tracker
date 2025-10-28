@@ -1865,36 +1865,20 @@ app.put('/api/contracts/:contractName', async (req, res) => {
     const { contractName } = req.params;
     const { contractValue, contract_value, currency } = req.body;
 
-    // Debug logging
-    console.log('PUT /api/contracts - Received request:');
-    console.log('  contractName (param):', contractName);
-    console.log('  contractValue (body):', contractValue, typeof contractValue);
-    console.log('  contract_value (body):', contract_value, typeof contract_value);
-    console.log('  currency (body):', currency);
-    console.log('  Full body:', JSON.stringify(req.body));
-
     // Accept both camelCase and snake_case for backward compatibility
     const contract_name = contractName;
     const value = contractValue || contract_value;
 
-    console.log('  Extracted value:', value, typeof value);
-    console.log('  parseFloat(value):', parseFloat(value));
-    console.log('  isNaN(parseFloat(value)):', isNaN(parseFloat(value)));
-
     // Validate inputs
     if (!contract_name) {
-      console.log('  ❌ Validation failed: Contract name is required');
       return res.status(400).json({ error: 'Contract name is required' });
     }
     if (!value || isNaN(parseFloat(value))) {
-      console.log('  ❌ Validation failed: Valid contract value is required');
       return res.status(400).json({ error: 'Valid contract value is required' });
     }
 
     const now = new Date().toISOString().split('T')[0];
     const numericValue = parseFloat(value);
-
-    console.log('  ✅ Validation passed, updating contract:', contract_name, 'with value:', numericValue);
 
     const result = await db.run(`
       UPDATE contracts
@@ -1904,14 +1888,11 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 
     if (result.rowCount === 0) {
       // Contract doesn't exist, create it
-      console.log('  📝 Contract not found, creating new entry');
       const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
       await db.run(`
         INSERT INTO contracts (id, contract_name, contract_value, currency, created_date, updated_date)
         VALUES ($1, $2, $3, $4, $5, $6)
       `, id, contract_name, numericValue, currency || 'USD', now, now);
-    } else {
-      console.log('  ✅ Contract updated successfully');
     }
 
     res.json({ success: true });
@@ -1925,10 +1906,8 @@ app.put('/api/contracts/:contractName', async (req, res) => {
 app.delete('/api/contracts/:contractName', async (req, res) => {
   try {
     const { contractName } = req.params;
-    console.log('DELETE /api/contracts - Received request for:', contractName);
 
-    const result = await db.run('DELETE FROM contracts WHERE contract_name = $1', contractName);
-    console.log('  ✅ Contract deleted, rows affected:', result.rowCount);
+    await db.run('DELETE FROM contracts WHERE contract_name = $1', contractName);
 
     res.json({ success: true });
   } catch (error) {
@@ -1986,25 +1965,18 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   try {
     const { invoiceNumber } = req.params;
 
-    console.log('DELETE /api/invoices/duplicates - Invoice number:', invoiceNumber);
-
     // Get all records with this invoice number, ordered by upload date
     const records = await db.all(
       'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
       invoiceNumber
     );
 
-    console.log('  Found', records.length, 'records with this invoice number');
-
     if (records.length <= 1) {
-      console.log('  ✅ No duplicates to delete');
       return res.json({ success: true, message: 'No duplicates found', deleted: 0 });
     }
 
     // Keep the first one (most recent), delete the rest
     const toDelete = records.slice(1);
-    console.log('  Keeping record ID:', records[0].id, 'uploaded:', records[0].upload_date);
-    console.log('  Deleting', toDelete.length, 'duplicate(s):', toDelete.map(r => `ID ${r.id}`).join(', '));
 
     let deletedCount = 0;
 
@@ -2014,7 +1986,6 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
         const pdfFullPath = path.join(__dirname, record.pdf_path);
         if (fs.existsSync(pdfFullPath)) {
           fs.unlinkSync(pdfFullPath);
-          console.log('    Deleted PDF:', record.pdf_path);
         }
       }
 
@@ -2023,7 +1994,6 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
       deletedCount++;
     }
 
-    console.log('  ✅ Deleted', deletedCount, 'duplicate(s)');
     res.json({ success: true, message: `Deleted ${deletedCount} duplicate(s), kept the most recent`, deleted: deletedCount });
   } catch (error) {
     console.error('❌ Error deleting duplicates:', error);

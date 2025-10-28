@@ -785,12 +785,19 @@ const Analytics = ({ onNavigateBack }) => {
   const getExpectedVsActual = async () => {
     try {
       const response = await axios.get(`${API_URL}/expected-invoices`);
-      const expectedInvoices = response.data;
+      let expectedInvoices = response.data;
+
+      // Filter expected invoices in production mode - only show those based on invoices from Nov 2025 onwards
+      const productionStartDate = productionMode ? '2025-11-01' : null;
+      if (productionStartDate) {
+        expectedInvoices = expectedInvoices.filter(exp =>
+          exp.lastInvoiceDate && exp.lastInvoiceDate >= productionStartDate
+        );
+      }
 
       // Group by month
       const monthlyComparison = {};
       const today = new Date();
-      const productionStartDate = productionMode ? '2025-11-01' : null;
 
       // Last 6 months
       for (let i = 5; i >= 0; i--) {
