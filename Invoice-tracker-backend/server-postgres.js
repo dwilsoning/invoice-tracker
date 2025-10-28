@@ -1357,23 +1357,23 @@ app.post('/api/query', async (req, res) => {
       const allContracts = await db.all('SELECT * FROM contracts');
 
       // Get all unique contract names from invoices
+      // Note: db.all() returns camelCase field names (customerContract, not customer_contract)
       const uniqueContractNames = [...new Set(results
-        .map(inv => inv.customer_contract)
+        .map(inv => inv.customerContract)
         .filter(name => name))];
 
       // Find contracts with no value:
       // 1. Contracts in contracts table with value = NULL or 0
       // 2. Contracts in invoices but NOT in contracts table (no value entered yet)
-      const contractsInTable = allContracts.map(c => c.contract_name);
       const contractsWithNoValue = uniqueContractNames.filter(contractName => {
-        const contractRecord = allContracts.find(c => c.contract_name === contractName);
+        const contractRecord = allContracts.find(c => c.contractName === contractName);
         // No record = no value, or record exists but value is null/0
-        return !contractRecord || !contractRecord.contract_value || contractRecord.contract_value === 0;
+        return !contractRecord || !contractRecord.contractValue || contractRecord.contractValue === 0;
       });
 
       // Filter invoices to only those belonging to contracts with no value
       results = results.filter(inv => {
-        const contractName = inv.customer_contract;
+        const contractName = inv.customerContract;
         return contractName && contractsWithNoValue.includes(contractName);
       });
 
