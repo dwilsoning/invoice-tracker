@@ -225,7 +225,16 @@ function classifyInvoiceType(services, invoice_number, amount) {
   // Check in order of specificity
   if (lower.includes('credit') || lower.includes('negative')) return 'Credit Memo';
 
-  // Check for Managed Services - handle various formats (check this FIRST before subscription)
+  // Professional Services - check FIRST to catch explicit PS mentions even if "managed" appears elsewhere
+  // Check for professionalservice* (catches professionalservices, professionalservicestotal, etc)
+  if (lower.includes('consulting') ||
+      lower.includes('professional services') ||
+      lower.includes('professionalservice') ||  // catches professionalservices, professionalservicestotal, etc
+      lower.includes('professional service fee') ||
+      lower.includes('professionalservicesfee') ||
+      lower.includes('penetration testing')) return 'PS';
+
+  // Check for Managed Services - handle various formats (check AFTER professional services)
   // Pattern: "subscription" + "managed" = MS, not Sub
   if (lower.includes('managed services') ||
       lower.includes('managed/outsourcing services') ||
@@ -233,13 +242,6 @@ function classifyInvoiceType(services, invoice_number, amount) {
       (lower.includes('subscription') && lower.includes('managed'))) {
     return 'MS';
   }
-
-  // Professional Services - check BEFORE maintenance/support to avoid false positives
-  if (lower.includes('consulting') ||
-      lower.includes('professional services') ||
-      lower.includes('professional service fee') ||
-      lower.includes('professionalservicesfee') ||
-      lower.includes('penetration testing')) return 'PS';
 
   // Maintenance and Support - check BEFORE subscriptions to avoid misclassification
   // More specific checks to avoid catching "support" in other contexts
