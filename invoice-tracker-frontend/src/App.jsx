@@ -1331,7 +1331,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               {queryResult.type === 'total' ? (
                 <div>
                   <div className="text-2xl font-bold text-purple-600">
-                    ${queryResult.value.toLocaleString()}
+                    ${(queryResult.value || 0).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">{queryResult.count} invoices</div>
                 </div>
@@ -1345,10 +1345,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               ) : queryResult.type === 'average' ? (
                 <div>
                   <div className="text-2xl font-bold text-purple-600">
-                    ${queryResult.value.toLocaleString()}
+                    ${(queryResult.value || 0).toLocaleString()}
                   </div>
                   <div className="text-sm text-gray-600">
-                    Average of {queryResult.count} invoices (Total: ${queryResult.total.toLocaleString()})
+                    Average of {queryResult.count} invoices (Total: ${(queryResult.total || 0).toLocaleString()})
                   </div>
                 </div>
               ) : (
