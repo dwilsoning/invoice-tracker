@@ -32,7 +32,7 @@ function classifyInvoiceType(services, invoice_number, amount) {
     return 'MS';
   }
 
-  // Maintenance and Support - check BEFORE subscriptions to avoid misclassification
+  // Maintenance and Support - exclude if it's actually a subscription
   // More specific checks to avoid catching "support" in other contexts
   if ((lower.includes('maintenance') ||
        lower.includes('annual maintenance') ||
@@ -41,7 +41,8 @@ function classifyInvoiceType(services, invoice_number, amount) {
        lower.includes('support fee') ||
        lower.includes('license maintenance')) &&
       !lower.includes('managed') &&
-      !lower.includes('professional')) {
+      !lower.includes('professional') &&
+      !lower.includes('subscription')) {  // Exclude subscriptions (e.g., "Year Subscription Fee for Software Support Services")
     return 'Maint';
   }
 
