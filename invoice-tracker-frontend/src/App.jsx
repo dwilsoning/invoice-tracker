@@ -883,16 +883,29 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         setAgingFilter('All');
         setActiveStatBox(null);
 
-        // For "contracts with no value" queries, automatically set grouping
-        if (response.data.type === 'contracts_no_value') {
-          setGroupBy('Contract');
-          setSecondaryGroupBy('Client');
-        }
-
         // Set the query filter and show the table
         const invoiceIds = response.data.invoices.map(inv => inv.id);
         setQueryFilteredIds(invoiceIds);
         setShowInvoiceTable(true);
+
+        // For "contracts with no value" queries, automatically set grouping
+        // Set this AFTER other state updates to ensure it takes effect
+        if (response.data.type === 'contracts_no_value') {
+          // Use setTimeout to ensure state updates happen after table is shown
+          setTimeout(() => {
+            setGroupBy('Contract');
+            setSecondaryGroupBy('Client');
+
+            // Auto-expand all groups after a brief delay
+            setTimeout(() => {
+              const groups = {};
+              response.data.contractsWithNoValue.forEach(contract => {
+                groups[contract] = true;
+              });
+              setExpandedGroups(groups);
+            }, 100);
+          }, 0);
+        }
       }
     } catch (error) {
       showMessage('error', 'Query failed');
