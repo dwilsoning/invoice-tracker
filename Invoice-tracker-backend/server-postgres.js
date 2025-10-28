@@ -1347,6 +1347,46 @@ app.post('/api/query', async (req, res) => {
     const queryLower = query.toLowerCase();
     let results = [...invoices];
 
+    // Check for "contracts with no value" query FIRST (before other filters)
+    // This needs to be first to avoid the client filter matching "to no" as a client name
+    if (queryLower.match(/contracts?.*(with\s+no|without|no)\s+value/i) ||
+        queryLower.match(/which.*contracts.*no.*value/i) ||
+        queryLower.match(/contracts.*value.*null|empty|missing/i)) {
+
+      // Get all contracts from contracts table
+      const allContracts = await db.all('SELECT * FROM contracts');
+
+      // Get all unique contract names from invoices
+      const uniqueContractNames = [...new Set(results
+        .map(inv => inv.customer_contract)
+        .filter(name => name))];
+
+      // Find contracts with no value:
+      // 1. Contracts in contracts table with value = NULL or 0
+      // 2. Contracts in invoices but NOT in contracts table (no value entered yet)
+      const contractsInTable = allContracts.map(c => c.contract_name);
+      const contractsWithNoValue = uniqueContractNames.filter(contractName => {
+        const contractRecord = allContracts.find(c => c.contract_name === contractName);
+        // No record = no value, or record exists but value is null/0
+        return !contractRecord || !contractRecord.contract_value || contractRecord.contract_value === 0;
+      });
+
+      // Filter invoices to only those belonging to contracts with no value
+      results = results.filter(inv => {
+        const contractName = inv.customer_contract;
+        return contractName && contractsWithNoValue.includes(contractName);
+      });
+
+      // Return with special formatting to show grouped by contract and client
+      return res.json({
+        type: 'contracts_no_value',
+        count: results.length,
+        invoices: results,
+        contractsWithNoValue: contractsWithNoValue,
+        message: `Found ${contractsWithNoValue.length} contract(s) with no value and ${results.length} invoice(s)`
+      });
+    }
+
     // Filter by invoice type
     const types = ['ps', 'maint', 'sub', 'hosting', 'ms', 'sw', 'hw', '3pp', 'credit memo'];
     types.forEach(type => {
@@ -1491,45 +1531,6 @@ app.post('/api/query', async (req, res) => {
         results = results.filter(inv => inv.currency && inv.currency.toLowerCase() === curr);
       }
     });
-
-    // Check for "contracts with no value" query
-    if (queryLower.match(/contracts?.*(with\s+no|without|no)\s+value/i) ||
-        queryLower.match(/which.*contracts.*no.*value/i) ||
-        queryLower.match(/contracts.*value.*null|empty|missing/i)) {
-
-      // Get all contracts from contracts table
-      const allContracts = await db.all('SELECT * FROM contracts');
-
-      // Get all unique contract names from invoices
-      const uniqueContractNames = [...new Set(results
-        .map(inv => inv.customer_contract)
-        .filter(name => name))];
-
-      // Find contracts with no value:
-      // 1. Contracts in contracts table with value = NULL or 0
-      // 2. Contracts in invoices but NOT in contracts table (no value entered yet)
-      const contractsInTable = allContracts.map(c => c.contract_name);
-      const contractsWithNoValue = uniqueContractNames.filter(contractName => {
-        const contractRecord = allContracts.find(c => c.contract_name === contractName);
-        // No record = no value, or record exists but value is null/0
-        return !contractRecord || !contractRecord.contract_value || contractRecord.contract_value === 0;
-      });
-
-      // Filter invoices to only those belonging to contracts with no value
-      results = results.filter(inv => {
-        const contractName = inv.customer_contract;
-        return contractName && contractsWithNoValue.includes(contractName);
-      });
-
-      // Return with special formatting to show grouped by contract and client
-      return res.json({
-        type: 'contracts_no_value',
-        count: results.length,
-        invoices: results,
-        contractsWithNoValue: contractsWithNoValue,
-        message: `Found ${contractsWithNoValue.length} contract(s) with no value and ${results.length} invoice(s)`
-      });
-    }
 
     // Filter by contract completion percentage
     // Patterns:
