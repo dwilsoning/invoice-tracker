@@ -1601,6 +1601,9 @@ app.post('/api/query', async (req, res) => {
           percentage = contractValueUSD > 0 ? (invoicedTotal / contractValueUSD) * 100 : 0;
         }
 
+        // Cap percentage at 100% (exchange rate fluctuations can cause values over 100%)
+        percentage = Math.min(percentage, 100);
+
         // Check if percentage matches criteria based on operator(s)
         let matches = false;
         const tolerance = 5;

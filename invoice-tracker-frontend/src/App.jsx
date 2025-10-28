@@ -2005,7 +2005,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 const contractValueUSD = contractInfo ? convertToUSD(contractInfo.value, contractInfo.currency) : 0;
                 const totalPaid = groupInvs.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 const remaining = contractValueUSD - groupTotal;
-                const percentage = contractValueUSD > 0 ? Math.round((groupTotal / contractValueUSD) * 100) : 0;
+                // Cap percentage at 100% (exchange rate fluctuations can cause values over 100%)
+                const percentage = contractValueUSD > 0 ? Math.min(Math.round((groupTotal / contractValueUSD) * 100), 100) : 0;
                 
                 return (
                   <div key={groupName} className="mb-4">

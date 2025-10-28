@@ -509,7 +509,8 @@ const Analytics = ({ onNavigateBack }) => {
         );
 
         const contractValueUSD = contract.contractValue * (exchangeRates[contract.currency] || 1);
-        const utilization = (totalInvoiced / contractValueUSD) * 100;
+        // Cap utilization at 100% (exchange rate fluctuations can cause values over 100%)
+        const utilization = Math.min((totalInvoiced / contractValueUSD) * 100, 100);
 
         return {
           contract: contract.contractName.length > 25 ? contract.contractName.substring(0, 25) + '...' : contract.contractName,
