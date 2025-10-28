@@ -1,0 +1,1537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Tracker - Training Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        nav {
+            background: #2d3748;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        nav h3 {
+            color: white;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .nav-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #4a5568;
+            color: white;
+        }
+
+        main {
+            padding: 2rem;
+        }
+
+        section {
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h2 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #667eea;
+        }
+
+        h3 {
+            color: #4a5568;
+            font-size: 1.5rem;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        h4 {
+            color: #2d3748;
+            font-size: 1.2rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            color: #4a5568;
+        }
+
+        ul, ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        .example-query {
+            background: #edf2f7;
+            border-left: 4px solid #667eea;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            border-radius: 4px;
+        }
+
+        .tip-box {
+            background: #e6fffa;
+            border-left: 4px solid #38b2ac;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .warning-box {
+            background: #fff5f5;
+            border-left: 4px solid #fc8181;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        .info-box {
+            background: #ebf8ff;
+            border-left: 4px solid #4299e1;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        tr:hover {
+            background: #f7fafc;
+        }
+
+        .step-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 0.5rem;
+        }
+
+        .do-dont {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .do-box {
+            background: #f0fff4;
+            border: 2px solid #48bb78;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .do-box h4 {
+            color: #22543d;
+        }
+
+        .dont-box {
+            background: #fff5f5;
+            border: 2px solid #fc8181;
+            border-radius: 8px;
+            padding: 1rem;
+        }
+
+        .dont-box h4 {
+            color: #742a2a;
+        }
+
+        code {
+            background: #edf2f7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #c53030;
+        }
+
+        .keyboard-shortcut {
+            display: inline-block;
+            background: #2d3748;
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.9em;
+            margin: 0 0.2rem;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+
+        @media print {
+            nav {
+                position: static;
+            }
+
+            .no-print {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .do-dont {
+                grid-template-columns: 1fr;
+            }
+
+            nav {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                flex-direction: column;
+            }
+
+            header h1 {
+                font-size: 1.8rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Invoice Tracker Training Guide</h1>
+            <p>Comprehensive guide for all features and functionality</p>
+        </header>
+
+        <nav class="no-print">
+            <h3>Quick Navigation</h3>
+            <div class="nav-links">
+                <a href="#getting-started">Getting Started</a>
+                <a href="#interface">Interface</a>
+                <a href="#uploading">Uploading</a>
+                <a href="#managing">Managing</a>
+                <a href="#filtering">Filtering</a>
+                <a href="#ai-query">AI Queries</a>
+                <a href="#contracts">Contracts</a>
+                <a href="#expected">Expected Invoices</a>
+                <a href="#duplicates">Duplicates</a>
+                <a href="#analytics">Analytics</a>
+                <a href="#maintenance">Maintenance</a>
+                <a href="#troubleshooting">Troubleshooting</a>
+            </div>
+        </nav>
+
+        <main>
+            <!-- Getting Started -->
+            <section id="getting-started">
+                <h2>Getting Started</h2>
+
+                <h3>Accessing the Application</h3>
+                <p>The Invoice Tracker is a web-based application. Access it through your web browser:</p>
+                <ol>
+                    <li>Open your preferred web browser (Chrome, Firefox, Edge)</li>
+                    <li>Navigate to the application URL provided by your IT department</li>
+                    <li>Bookmark the URL for easy access</li>
+                </ol>
+
+                <div class="tip-box">
+                    <strong>Recommended Browsers:</strong> Google Chrome or Microsoft Edge for best performance and compatibility.
+                </div>
+
+                <h3>Logging In</h3>
+                <p>Currently the application does not require login. Simply navigate to the URL to access the tracker.</p>
+                <p><strong>Note:</strong> Multi-user authentication with login credentials is planned for future releases.</p>
+            </section>
+
+            <!-- Main Interface -->
+            <section id="interface">
+                <h2>Main Interface Overview</h2>
+
+                <h3>Top Section - Upload & Filters</h3>
+
+                <h4>Upload Area</h4>
+                <ul>
+                    <li><strong>Drop Zone:</strong> Drag and drop PDF invoices here</li>
+                    <li><strong>Browse Button:</strong> Click to select files from file explorer</li>
+                    <li><strong>Multi-upload:</strong> Can upload multiple invoices at once</li>
+                    <li><strong>Progress Indicator:</strong> Shows upload and processing status</li>
+                </ul>
+
+                <h4>Filter Controls</h4>
+                <ul>
+                    <li><strong>Invoice Type:</strong> Filter by PS, Maint, Sub, SW, HW, Hosting, MS, 3PP, Credit Memo</li>
+                    <li><strong>Status:</strong> Filter by Paid, Unpaid, All</li>
+                    <li><strong>Date Range:</strong> Filter by invoice date or due date</li>
+                    <li><strong>Contract:</strong> Filter by specific contract number</li>
+                    <li><strong>Client:</strong> Filter by client name</li>
+                    <li><strong>Frequency:</strong> Filter by monthly, quarterly, annual, bi-annual, tri-annual, adhoc</li>
+                </ul>
+
+                <h4>AI Query Box</h4>
+                <p>Ask questions in natural language:</p>
+                <div class="example-query">
+                    Show me unpaid invoices for Western Australia Department<br>
+                    What's the total for South Australia Health?<br>
+                    Which contracts are 50% invoiced?<br>
+                    Show invoices greater than $10,000
+                </div>
+
+                <h3>Middle Section - Invoice Table</h3>
+
+                <h4>Group By Options</h4>
+                <ul>
+                    <li><strong>None:</strong> Show all invoices in flat list</li>
+                    <li><strong>Client:</strong> Group invoices by client name</li>
+                    <li><strong>Contract:</strong> Group invoices by contract number</li>
+                    <li><strong>Type:</strong> Group invoices by invoice type</li>
+                    <li><strong>Status:</strong> Group invoices by paid/unpaid status</li>
+                    <li><strong>Month:</strong> Group invoices by month</li>
+                </ul>
+
+                <h4>Invoice Display</h4>
+                <p>Each invoice row shows:</p>
+                <ul>
+                    <li>Invoice Number (clickable to view details)</li>
+                    <li>Client Name</li>
+                    <li>Invoice Date & Due Date</li>
+                    <li>Amount Due & Currency</li>
+                    <li>Status (Paid/Unpaid)</li>
+                    <li>Type & Frequency</li>
+                    <li>Contract (if applicable)</li>
+                </ul>
+            </section>
+
+            <!-- Uploading Invoices -->
+            <section id="uploading">
+                <h2>Uploading Invoices</h2>
+
+                <h3>Supported Format</h3>
+                <ul>
+                    <li><strong>File Type:</strong> PDF only</li>
+                    <li><strong>Size Limit:</strong> Recommend &lt; 10MB per file</li>
+                    <li><strong>Multiple Files:</strong> Yes, can upload multiple at once</li>
+                </ul>
+
+                <h3>Upload Process</h3>
+                <ol>
+                    <li><strong>Select or Drop Files</strong> - Drag PDFs to drop zone OR click "Browse"</li>
+                    <li><strong>Automatic Processing</strong> - System extracts all data from PDF</li>
+                    <li><strong>Duplicate Detection</strong> - System checks for existing invoice numbers</li>
+                    <li><strong>Success Confirmation</strong> - Green message and invoice appears in table</li>
+                </ol>
+
+                <h3>What Gets Auto-Detected</h3>
+
+                <h4>Invoice Type Classification</h4>
+                <table>
+                    <tr>
+                        <th>Type</th>
+                        <th>Full Name</th>
+                        <th>Examples</th>
+                    </tr>
+                    <tr>
+                        <td><strong>PS</strong></td>
+                        <td>Professional Services</td>
+                        <td>Consulting, implementation, training</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Maint</strong></td>
+                        <td>Maintenance</td>
+                        <td>Support fees, maintenance contracts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Sub</strong></td>
+                        <td>Subscription</td>
+                        <td>SaaS, recurring licenses</td>
+                    </tr>
+                    <tr>
+                        <td><strong>SW</strong></td>
+                        <td>Software</td>
+                        <td>Software licenses, applications</td>
+                    </tr>
+                    <tr>
+                        <td><strong>HW</strong></td>
+                        <td>Hardware</td>
+                        <td>Equipment purchases, devices</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hosting</strong></td>
+                        <td>Hosting</td>
+                        <td>Cloud hosting, infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MS</strong></td>
+                        <td>Managed Services</td>
+                        <td>Outsourcing, managed IT</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3PP</strong></td>
+                        <td>Third Party</td>
+                        <td>Third-party software/services</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Credit Memo</strong></td>
+                        <td>Credit Memo</td>
+                        <td>Credits, refunds (negative amounts)</td>
+                    </tr>
+                </table>
+
+                <h4>Frequency Detection</h4>
+                <table>
+                    <tr>
+                        <th>Frequency</th>
+                        <th>Description</th>
+                        <th>Months Between</th>
+                    </tr>
+                    <tr>
+                        <td><strong>monthly</strong></td>
+                        <td>Monthly recurring</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td><strong>quarterly</strong></td>
+                        <td>Quarterly recurring</td>
+                        <td>3</td>
+                    </tr>
+                    <tr>
+                        <td><strong>bi-annual</strong></td>
+                        <td>Semi-annual</td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td><strong>tri-annual</strong></td>
+                        <td>Tri-annual</td>
+                        <td>4</td>
+                    </tr>
+                    <tr>
+                        <td><strong>annual</strong></td>
+                        <td>Annual/Yearly</td>
+                        <td>12</td>
+                    </tr>
+                    <tr>
+                        <td><strong>adhoc</strong></td>
+                        <td>One-time, no pattern</td>
+                        <td>N/A</td>
+                    </tr>
+                </table>
+            </section>
+
+            <!-- Invoice Management -->
+            <section id="managing">
+                <h2>Invoice Management</h2>
+
+                <h3>Viewing Invoice Details</h3>
+                <ol>
+                    <li>Click Invoice Number in table</li>
+                    <li>Details modal opens showing all information</li>
+                    <li>PDF viewer embedded on right side</li>
+                    <li>Available actions: View PDF, Download, Edit, Delete</li>
+                </ol>
+
+                <h3>Editing an Invoice</h3>
+                <ol>
+                    <li>Open invoice details</li>
+                    <li>Click <strong>Edit</strong> button</li>
+                    <li>Modify fields (date, amount, client, contract, status, type, frequency)</li>
+                    <li>Click <strong>Save Changes</strong></li>
+                    <li>Confirmation message appears</li>
+                </ol>
+
+                <h3>Marking Invoice as Paid/Unpaid</h3>
+                <ol>
+                    <li>Open invoice details</li>
+                    <li>Toggle <strong>Status</strong> dropdown</li>
+                    <li>Select "Paid" or "Unpaid"</li>
+                    <li>Save changes - updates immediately</li>
+                </ol>
+
+                <div class="tip-box">
+                    <strong>Quick Tip:</strong> Click the invoice number to quickly view and update status without full edit mode.
+                </div>
+            </section>
+
+            <!-- Filtering & Search -->
+            <section id="filtering">
+                <h2>Filtering & Search</h2>
+
+                <h3>Basic Filtering</h3>
+                <p>All filters work independently and can be combined:</p>
+                <ul>
+                    <li><strong>By Invoice Type:</strong> Select one or more types (PS, Maint, Sub, etc.)</li>
+                    <li><strong>By Status:</strong> Choose All, Paid, or Unpaid</li>
+                    <li><strong>By Date Range:</strong> Last 30 Days, Last 90 Days, This Year, or Custom Range</li>
+                    <li><strong>By Client:</strong> Select from list of clients</li>
+                    <li><strong>By Contract:</strong> Select contract number</li>
+                    <li><strong>By Frequency:</strong> Select monthly, quarterly, annual, etc.</li>
+                </ul>
+
+                <h3>Combining Filters</h3>
+                <div class="info-box">
+                    <strong>Example:</strong> Show all unpaid maintenance invoices for SA Health
+                    <ol>
+                        <li>Type: Select "Maint"</li>
+                        <li>Status: Select "Unpaid"</li>
+                        <li>Client: Select "South Australia Health"</li>
+                    </ol>
+                    Result: Only unpaid maintenance invoices for SA Health
+                </div>
+
+                <h3>Clearing Filters</h3>
+                <ul>
+                    <li><strong>Option 1:</strong> Click individual filter and select "All"</li>
+                    <li><strong>Option 2:</strong> Refresh page (<span class="keyboard-shortcut">F5</span>)</li>
+                    <li><strong>Option 3:</strong> Click "Clear All" button (if visible)</li>
+                </ul>
+            </section>
+
+            <!-- AI Query System -->
+            <section id="ai-query">
+                <h2>AI Query System</h2>
+
+                <p>The AI Query system allows natural language questions about your invoices. No need to remember filter combinations - just ask!</p>
+
+                <h3>Basic Queries</h3>
+
+                <h4>By Client</h4>
+                <div class="example-query">
+                    Show me invoices for Western Australia Department<br>
+                    Invoices from South Australia Health<br>
+                    List all Gippsland Health invoices
+                </div>
+
+                <h4>By Type</h4>
+                <div class="example-query">
+                    Show all maintenance invoices<br>
+                    List professional services<br>
+                    Display software licenses
+                </div>
+
+                <h4>By Status</h4>
+                <div class="example-query">
+                    Show unpaid invoices<br>
+                    What invoices are paid?<br>
+                    Display outstanding invoices
+                </div>
+
+                <h4>By Amount</h4>
+                <div class="example-query">
+                    Show invoices over $50,000<br>
+                    Invoices greater than $100,000<br>
+                    Display invoices less than $5,000<br>
+                    Invoices between $10,000 and $50,000
+                </div>
+
+                <h3>Advanced Queries</h3>
+
+                <h4>Totals and Summaries</h4>
+                <div class="example-query">
+                    What's the total for South Australia Health?<br>
+                    How much has Gippsland Health invoiced?<br>
+                    Total unpaid for Western Australia<br>
+                    Sum of all maintenance invoices
+                </div>
+
+                <h4>Counts</h4>
+                <div class="example-query">
+                    How many invoices for SA Health?<br>
+                    Count unpaid invoices<br>
+                    Number of maintenance invoices over $10,000
+                </div>
+
+                <h4>Combined Criteria</h4>
+                <div class="example-query">
+                    Show unpaid maintenance invoices over $10,000<br>
+                    List all paid professional services for SA Health<br>
+                    Unpaid invoices for Western Australia over $50,000
+                </div>
+
+                <h3>Contract Percentage Queries</h3>
+
+                <h4>Exact Percentage</h4>
+                <div class="example-query">
+                    Which contracts are 50% invoiced?<br>
+                    Show contracts that are 75% complete<br>
+                    Contracts at 80% invoiced
+                </div>
+
+                <h4>Comparison Operators</h4>
+                <div class="example-query">
+                    Which contracts are &gt;50% invoiced?<br>
+                    Show contracts &lt;70% complete<br>
+                    Contracts &gt;=80% invoiced<br>
+                    Contracts &lt;=25% complete
+                </div>
+
+                <h4>Paid/Unpaid Status</h4>
+                <div class="example-query">
+                    Which contracts are &gt;50% paid?<br>
+                    Show contracts &lt;30% unpaid<br>
+                    Contracts at 60% paid<br>
+                    Contracts with &gt;75% unpaid
+                </div>
+
+                <div class="tip-box">
+                    <h4>Query Tips</h4>
+                    <strong>DO:</strong>
+                    <ul>
+                        <li>Use natural language</li>
+                        <li>Be specific about criteria</li>
+                        <li>Combine multiple filters</li>
+                        <li>Use common abbreviations (SA Health, etc.)</li>
+                    </ul>
+                    <strong>DON'T:</strong>
+                    <ul>
+                        <li>Need exact syntax</li>
+                        <li>Worry about spelling (fuzzy match works)</li>
+                        <li>Use complex logic operators</li>
+                        <li>Quote strings (system handles it)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Contract Management -->
+            <section id="contracts">
+                <h2>Contract Management</h2>
+
+                <p>Contracts track the total value of work and compare against invoiced/paid amounts.</p>
+
+                <h3>Viewing Contracts</h3>
+                <ul>
+                    <li><strong>Method 1:</strong> Click Group By → Select "Contract"</li>
+                    <li><strong>Method 2:</strong> Use contract filter dropdown</li>
+                </ul>
+
+                <h3>Contract Summary Display</h3>
+                <p>When grouped by contract, each contract shows:</p>
+                <ul>
+                    <li><strong>Contract Number:</strong> e.g., "541577"</li>
+                    <li><strong>Client Name:</strong> e.g., "South Australia Health"</li>
+                    <li><strong>Contract Value:</strong> Total contract amount with currency</li>
+                    <li><strong>Total Invoiced:</strong> Sum of all invoices (paid + unpaid)</li>
+                    <li><strong>Total Paid:</strong> Sum of paid invoices only</li>
+                    <li><strong>Remaining:</strong> Contract value - Total invoiced</li>
+                    <li><strong>Percentage Complete:</strong> Visual progress bar and percentage</li>
+                </ul>
+
+                <h3>Setting Contract Values</h3>
+                <ol>
+                    <li>Find contract (group by contract or use filter)</li>
+                    <li>Locate input field under contract header</li>
+                    <li>Enter amount (numbers only)</li>
+                    <li>Click away or press Tab</li>
+                    <li>Value saves automatically with success message</li>
+                </ol>
+
+                <h3>Clearing Contract Values</h3>
+                <ol>
+                    <li>Find contract value field</li>
+                    <li>Select all text (triple-click or <span class="keyboard-shortcut">Ctrl+A</span>)</li>
+                    <li>Press Delete or Backspace</li>
+                    <li>Click away - value clears from database</li>
+                    <li>Success message: "Contract value cleared"</li>
+                </ol>
+
+                <h3>Contract Progress Tracking</h3>
+
+                <h4>Visual Indicators (Progress Bar Colors)</h4>
+                <ul>
+                    <li><strong>Green (75-100%):</strong> Nearly complete or complete</li>
+                    <li><strong>Blue (50-74%):</strong> Good progress</li>
+                    <li><strong>Yellow (25-49%):</strong> Some progress</li>
+                    <li><strong>Red (0-24%):</strong> Just started</li>
+                    <li><strong>Red &gt;100%:</strong> Over budget - shows overrun amount</li>
+                </ul>
+
+                <h4>Key Metrics Explained</h4>
+                <ul>
+                    <li><strong>Total Invoiced:</strong> All invoices for contract (paid + unpaid) - shows what's been billed</li>
+                    <li><strong>Total Paid:</strong> Only paid invoices - shows actual revenue received</li>
+                    <li><strong>Remaining:</strong> Contract Value - Total Invoiced (can be negative if over budget)</li>
+                    <li><strong>Percentage:</strong> (Total Invoiced / Contract Value) × 100</li>
+                </ul>
+
+                <h3>Contract Analytics</h3>
+                <div class="example-query">
+                    Which contracts are &gt;80% invoiced?<br>
+                    Show contracts less than 50% complete<br>
+                    Contracts at exactly 75% invoiced<br>
+                    Which contracts are &gt;50% paid?<br>
+                    Show contracts with &gt;30% unpaid
+                </div>
+            </section>
+
+            <!-- Expected Invoices -->
+            <section id="expected">
+                <h2>Expected Invoices</h2>
+
+                <p>Expected Invoices predict when the next invoice should arrive based on frequency, last invoice date, and historical patterns.</p>
+
+                <h3>Viewing Expected Invoices</h3>
+                <p><strong>Location:</strong> Bottom of main page, two sections:</p>
+                <ul>
+                    <li><strong>Unacknowledged</strong> (Red/Purple header) - Needs attention</li>
+                    <li><strong>Acknowledged</strong> (Gray header) - Already reviewed</li>
+                </ul>
+
+                <h3>Expected Invoice Cards</h3>
+                <p>Each card shows:</p>
+                <ul>
+                    <li>Client Name & Contract Number</li>
+                    <li>Invoice Type & Frequency</li>
+                    <li>Expected Date & Amount</li>
+                    <li>Currency</li>
+                    <li>Last Invoice (number and date)</li>
+                    <li>Created Date</li>
+                </ul>
+
+                <h3>Actions on Expected Invoices</h3>
+
+                <h4>Acknowledge (Mark as Reviewed)</h4>
+                <p>Use case: "Yes, I'm aware this is coming"</p>
+                <ol>
+                    <li>Find expected invoice in unacknowledged section</li>
+                    <li>Click "Acknowledge" button</li>
+                    <li>Moves to acknowledged section</li>
+                </ol>
+
+                <h4>Unacknowledge (Bring Back to Attention)</h4>
+                <p>Use case: "Actually, I need to track this"</p>
+                <ol>
+                    <li>Find in acknowledged section</li>
+                    <li>Click "Unacknowledge" button</li>
+                    <li>Moves back to unacknowledged</li>
+                </ol>
+
+                <h4>Delete (Remove Expectation)</h4>
+                <p>Use case: "This contract ended" or "Wrong expectation"</p>
+                <ol>
+                    <li>Click "Delete" button</li>
+                    <li>Confirm deletion</li>
+                    <li>Expectation removed (won't regenerate)</li>
+                </ol>
+
+                <h3>When Expected Invoices Are Generated</h3>
+
+                <h4>Automatic Generation (Daily)</h4>
+                <ul>
+                    <li><strong>Frequency:</strong> Once per day at midnight</li>
+                    <li><strong>Logic:</strong> System checks all recurring invoices</li>
+                    <li><strong>Creates if:</strong> Invoice has frequency (not adhoc), expected date is today or past, no expectation exists</li>
+                </ul>
+
+                <h4>After Upload</h4>
+                <ul>
+                    <li><strong>When:</strong> Immediately after invoice uploaded</li>
+                    <li><strong>Logic:</strong> Calculates next expected date based on frequency</li>
+                    <li><strong>Example:</strong> Upload monthly invoice dated Jan 15 → System creates expected invoice for Feb 15</li>
+                </ul>
+
+                <h4>Frequency Calculations</h4>
+                <ul>
+                    <li><strong>Monthly:</strong> +1 month from last invoice</li>
+                    <li><strong>Quarterly:</strong> +3 months</li>
+                    <li><strong>Bi-Annual:</strong> +6 months</li>
+                    <li><strong>Tri-Annual:</strong> +4 months</li>
+                    <li><strong>Annual:</strong> +1 year</li>
+                    <li><strong>Adhoc:</strong> No expectation generated</li>
+                </ul>
+
+                <h3>Matching Expected with Actual</h3>
+                <p>When you upload an invoice, system checks:</p>
+                <ol>
+                    <li>Client Match - Same client name</li>
+                    <li>Contract Match - Same contract number (if both have one)</li>
+                    <li>Type Match - Same invoice type</li>
+                    <li>Date Range - Within 45 days of expected date</li>
+                    <li>Frequency Match - Same frequency</li>
+                </ol>
+                <p><strong>If all match:</strong> Expected invoice automatically deleted</p>
+
+                <div class="tip-box">
+                    <h4>Recommended Review Schedule</h4>
+                    <p>Check weekly:</p>
+                    <ol>
+                        <li>Look at unacknowledged section</li>
+                        <li>For each expected invoice: Has it arrived? Is it late? Still valid?</li>
+                        <li>Acknowledge ones you've checked</li>
+                        <li>Delete invalid expectations</li>
+                    </ol>
+                </div>
+            </section>
+
+            <!-- Duplicate Management -->
+            <section id="duplicates">
+                <h2>Duplicate Management</h2>
+
+                <p>Duplicates occur when same invoice number is uploaded multiple times. System allows this for version control but flags duplicates.</p>
+
+                <h3>Viewing Duplicates</h3>
+                <p><strong>Location:</strong> Bottom of main page, "Duplicates" section</p>
+                <p>Shows invoice number, count of versions, and "View Details" button</p>
+
+                <h3>Duplicate Details</h3>
+                <p>Click "View Details" to see:</p>
+                <ul>
+                    <li>All versions listed with upload dates</li>
+                    <li>PDF preview (click to view each version)</li>
+                    <li>Most recent highlighted (usually top)</li>
+                    <li>File size for each version</li>
+                </ul>
+
+                <h3>Dealing with Duplicates</h3>
+
+                <h4>Option 1: Replace All with New Upload</h4>
+                <ol>
+                    <li>Click "Browse to Replace All" button</li>
+                    <li>Select correct PDF file</li>
+                    <li>Confirm replacement</li>
+                    <li><strong>Result:</strong> All old versions deleted, new one kept</li>
+                </ol>
+
+                <h4>Option 2: Keep Specific Version</h4>
+                <ol>
+                    <li>Find the correct version in list</li>
+                    <li>Click "Keep This Version" button</li>
+                    <li>Confirm deletion of others</li>
+                    <li><strong>Result:</strong> Selected version kept, others deleted</li>
+                </ol>
+
+                <h4>Option 3: Delete All Duplicates (Keep Latest)</h4>
+                <ol>
+                    <li>Click "Delete Duplicates" button</li>
+                    <li>Confirm action</li>
+                    <li><strong>Result:</strong> Keeps most recent, deletes older versions</li>
+                </ol>
+
+                <h4>Option 4: Do Nothing</h4>
+                <p>Keep multiple versions for audit trail - useful if need to compare versions</p>
+
+                <div class="warning-box">
+                    <h4>Preventing Duplicates - Best Practice</h4>
+                    <ol>
+                        <li>Check invoice number before uploading</li>
+                        <li>Search existing invoices first</li>
+                        <li>If replacing, delete old one first, then upload new</li>
+                    </ol>
+                    <p><strong>Note:</strong> System warns about duplicates but allows them intentionally</p>
+                </div>
+            </section>
+
+            <!-- Analytics & Reporting -->
+            <section id="analytics">
+                <h2>Analytics Dashboard</h2>
+
+                <div class="info-box">
+                    <strong>Access Analytics:</strong> Click the "View Analytics →" button in the top-right corner of the main tracker. This opens a completely separate dashboard view with advanced financial insights.
+                </div>
+
+                <h3>Overview: Analytics Dashboard vs Main Tracker</h3>
+
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Main Tracker</th>
+                        <th>Analytics Dashboard</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Purpose</strong></td>
+                        <td>Daily operations</td>
+                        <td>Strategic insights & reporting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Focus</strong></td>
+                        <td>Individual invoices</td>
+                        <td>Aggregate data analysis</td>
+                    </tr>
+                    <tr>
+                        <td><strong>View</strong></td>
+                        <td>Table with filters</td>
+                        <td>Charts, graphs, dashboards</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Upload, edit, find invoices</td>
+                        <td>Reports, trends, forecasts</td>
+                    </tr>
+                    <tr>
+                        <td><strong>User</strong></td>
+                        <td>Operations team</td>
+                        <td>Finance/Management</td>
+                    </tr>
+                </table>
+
+                <h3>Key Analytics Features (34 Total)</h3>
+
+                <h4>1. Key Performance Metrics</h4>
+                <ul>
+                    <li><strong>Total Revenue:</strong> Sum of all invoices (filtered by date range) in USD</li>
+                    <li><strong>Days Invoices Outstanding (DSI):</strong> Average days receivables are outstanding - measures collection efficiency (lower is better, industry standard: 30-45 days)</li>
+                    <li><strong>Outstanding Amount:</strong> Total unpaid/pending invoices</li>
+                    <li><strong>Collection Rate:</strong> Percentage of invoices paid on time</li>
+                    <li><strong>Average Days to Pay:</strong> How long clients typically take to pay</li>
+                    <li><strong>On-Time Payment Rate:</strong> % paid before/on due date</li>
+                </ul>
+
+                <h4>2. Visual Charts & Trends</h4>
+                <ul>
+                    <li><strong>Top 10 Clients by Revenue:</strong> Bar chart showing highest revenue clients</li>
+                    <li><strong>DSI Trend (6 months):</strong> Line chart showing if collections improving or worsening</li>
+                    <li><strong>Aging Trend (6 months):</strong> Stacked area chart showing Current, 1-30 Days, 31-60 Days, 61-90 Days, 90+ Days overdue</li>
+                    <li><strong>Payment Velocity by Client:</strong> Bar chart showing average days each client takes to pay</li>
+                    <li><strong>Revenue by Type (6 months):</strong> Stacked bar chart showing PS, Maint, Sub, SW, HW, Hosting, MS, 3PP breakdown over time</li>
+                    <li><strong>Revenue Forecast:</strong> 6-month projection based on historical trends</li>
+                    <li><strong>Seasonal Trends:</strong> Average revenue by month across all years</li>
+                </ul>
+
+                <h4>3. Risk Management</h4>
+                <ul>
+                    <li><strong>Client Payment Scorecard:</strong> Top 10 clients graded A+ to F based on payment behavior</li>
+                    <li><strong>High Risk Clients Table:</strong> Clients with significant overdue amounts, risk levels (Low/Medium/High/Critical)</li>
+                    <li><strong>Payment Probability:</strong> Top 10 risk invoices ranked by payment likelihood</li>
+                    <li><strong>Revenue Concentration Risk:</strong> Shows % of revenue from top 1, 3, 5, 10 clients (>40% from 1 client = high risk)</li>
+                    <li><strong>Total At-Risk Amount:</strong> Sum of high-risk client overdue amounts</li>
+                </ul>
+
+                <h4>4. Contract Analysis</h4>
+                <ul>
+                    <li><strong>Contract Value vs Actual:</strong> Grouped bar chart comparing contract value vs invoiced vs paid</li>
+                    <li><strong>Contract Utilization:</strong> Detailed table showing % complete for each contract</li>
+                    <li><strong>Expected vs Actual Invoices:</strong> Chart comparing expected invoice count vs actual received</li>
+                </ul>
+
+                <h4>5. Financial Forecasting</h4>
+                <ul>
+                    <li><strong>Cash Flow Projection:</strong> Expected cash inflow in next 30, 60, 90 days based on invoice due dates</li>
+                    <li><strong>Revenue Forecast:</strong> 6-month projection using linear regression</li>
+                    <li><strong>Seasonal Trends:</strong> Identify monthly patterns for planning</li>
+                </ul>
+
+                <h4>6. Performance Dashboards</h4>
+                <ul>
+                    <li><strong>Monthly Performance:</strong> Current month vs last month (invoice count, revenue, paid count, avg value)</li>
+                    <li><strong>Invoice Volume Trends:</strong> 12-month chart showing invoice count and revenue</li>
+                    <li><strong>Average Invoice Value:</strong> Track pricing trends and deal sizes over 12 months</li>
+                    <li><strong>Year-over-Year Growth:</strong> Current year vs previous year comparison with growth %</li>
+                </ul>
+
+                <h4>7. Currency & Exposure</h4>
+                <ul>
+                    <li><strong>Currency Exposure:</strong> Pie chart showing outstanding receivables by currency</li>
+                    <li><strong>Collection Efficiency:</strong> Pie chart of Collected, Outstanding, Overdue distribution</li>
+                </ul>
+
+                <h3>How to Read Key Metrics</h3>
+
+                <h4>DSI (Days Invoices Outstanding)</h4>
+                <table>
+                    <tr>
+                        <th>DSI Value</th>
+                        <th>Assessment</th>
+                        <th>Action</th>
+                    </tr>
+                    <tr>
+                        <td>30 days</td>
+                        <td style="color: #10B981;">Excellent</td>
+                        <td>Collecting fast, maintain practices</td>
+                    </tr>
+                    <tr>
+                        <td>45 days</td>
+                        <td style="color: #0076A2;">Good</td>
+                        <td>On track, industry standard</td>
+                    </tr>
+                    <tr>
+                        <td>60+ days</td>
+                        <td style="color: #DC2626;">Poor</td>
+                        <td>Collection issues, take action</td>
+                    </tr>
+                </table>
+                <p><strong>Trend Analysis:</strong> Rising DSI trend = Getting worse (collection problems). Falling DSI trend = Improving (better collections).</p>
+
+                <h4>Client Payment Grades</h4>
+                <table>
+                    <tr>
+                        <th>Grade</th>
+                        <th>Color</th>
+                        <th>Meaning</th>
+                    </tr>
+                    <tr>
+                        <td><strong>A+</strong></td>
+                        <td style="background: #10B981; color: white; padding: 4px; border-radius: 4px;">Green</td>
+                        <td>Excellent - always pays on time</td>
+                    </tr>
+                    <tr>
+                        <td><strong>A/B</strong></td>
+                        <td style="background: #0076A2; color: white; padding: 4px; border-radius: 4px;">Blue</td>
+                        <td>Good - reliable payer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>C/D</strong></td>
+                        <td style="background: #F59E0B; color: white; padding: 4px; border-radius: 4px;">Yellow</td>
+                        <td>Fair - occasional delays, watch closely</td>
+                    </tr>
+                    <tr>
+                        <td><strong>F</strong></td>
+                        <td style="background: #DC2626; color: white; padding: 4px; border-radius: 4px;">Red</td>
+                        <td>Poor - chronic late payer, high risk</td>
+                    </tr>
+                </table>
+
+                <h4>Aging Buckets</h4>
+                <table>
+                    <tr>
+                        <th>Bucket</th>
+                        <th>Status</th>
+                        <th>Action Required</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Current</strong></td>
+                        <td style="color: #10B981;">Healthy (Green)</td>
+                        <td>Not due yet, no action</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1-30 Days</strong></td>
+                        <td style="color: #0076A2;">Normal (Blue)</td>
+                        <td>Slightly overdue, standard follow-up</td>
+                    </tr>
+                    <tr>
+                        <td><strong>31-60 Days</strong></td>
+                        <td style="color: #F59E0B;">Moderate (Yellow)</td>
+                        <td>Moderately overdue, follow up required</td>
+                    </tr>
+                    <tr>
+                        <td><strong>61-90 Days</strong></td>
+                        <td style="color: #EF4444;">Serious (Orange)</td>
+                        <td>Seriously overdue, escalate</td>
+                    </tr>
+                    <tr>
+                        <td><strong>90+ Days</strong></td>
+                        <td style="color: #DC2626;">Urgent (Red)</td>
+                        <td>Severely overdue, urgent action needed</td>
+                    </tr>
+                </table>
+
+                <h4>Revenue Concentration Risk</h4>
+                <table>
+                    <tr>
+                        <th>Top 1 Client %</th>
+                        <th>Risk Level</th>
+                    </tr>
+                    <tr>
+                        <td>&lt;20%</td>
+                        <td style="color: #10B981;">Low Risk (Diversified)</td>
+                    </tr>
+                    <tr>
+                        <td>20-40%</td>
+                        <td style="color: #F59E0B;">Moderate Risk (Watch carefully)</td>
+                    </tr>
+                    <tr>
+                        <td>&gt;40%</td>
+                        <td style="color: #DC2626;">High Risk (Too dependent)</td>
+                    </tr>
+                </table>
+                <p><strong>Top 10 Clients:</strong> &lt;80% = Well diversified, &gt;80% = Concentrated (risky)</p>
+
+                <h3>Common Use Cases</h3>
+
+                <h4>Executive Reporting</h4>
+                <ol>
+                    <li>Click "View Analytics →"</li>
+                    <li>Set date filter to "This Year" or desired quarter</li>
+                    <li>Screenshot key metrics: Total Revenue, DSI, Top 10 Clients, Revenue by Type, Growth Comparison</li>
+                    <li>Share with leadership team</li>
+                </ol>
+
+                <h4>Monthly Financial Review</h4>
+                <ol>
+                    <li>Navigate to Analytics Dashboard</li>
+                    <li>Check Monthly Performance section</li>
+                    <li>Compare current vs last month metrics</li>
+                    <li>Review revenue trends and collection efficiency</li>
+                    <li>Identify risks requiring action</li>
+                </ol>
+
+                <h4>Client Credit Decisions</h4>
+                <ol>
+                    <li>View Client Payment Scorecard</li>
+                    <li>Find client and check grade (A+ to F)</li>
+                    <li>Review payment velocity (avg days to pay)</li>
+                    <li>Check if client appears in High Risk table</li>
+                    <li>Make informed credit limit decision</li>
+                </ol>
+
+                <h4>Cash Flow Planning</h4>
+                <ol>
+                    <li>Check Cash Flow Projection (30/60/90 days)</li>
+                    <li>Review DSI trend</li>
+                    <li>Check aging trend</li>
+                    <li>Identify overdue amounts</li>
+                    <li>Plan collection activities and expenses</li>
+                </ol>
+
+                <h4>Collection Priorities</h4>
+                <ol>
+                    <li>Review High Risk Clients table</li>
+                    <li>Check Total At-Risk Amount</li>
+                    <li>Review Payment Probability rankings</li>
+                    <li>Prioritize high-value, high-probability invoices</li>
+                    <li>Make collection calls</li>
+                </ol>
+
+                <h4>Strategic Planning</h4>
+                <ol>
+                    <li>Review Revenue Forecast (6 months)</li>
+                    <li>Check Seasonal Trends</li>
+                    <li>Analyze Revenue Concentration Risk</li>
+                    <li>Review Contract Utilization</li>
+                    <li>Assess Year-over-Year Growth</li>
+                    <li>Plan resource allocation</li>
+                </ol>
+
+                <h3>Date Filtering</h3>
+                <p>All analytics can be filtered by date range:</p>
+                <ul>
+                    <li><strong>This Year:</strong> January 1 to December 31 of current year - best for annual tracking</li>
+                    <li><strong>All Time:</strong> All production invoices (from Nov 1, 2025 onwards) - best for historical analysis</li>
+                    <li><strong>Custom Range:</strong> Pick your own start and end dates - best for quarterly reports or specific periods</li>
+                </ul>
+
+                <div class="warning-box">
+                    <h4>Production Mode</h4>
+                    <p><strong>Automatically Enabled:</strong> November 1, 2025</p>
+                    <p>Production mode hides all test/dummy data before Nov 1, 2025 to ensure clean production reports. This cannot be disabled to prevent test data pollution.</p>
+                </div>
+
+                <h3>Built-In Analytics (Main Tracker)</h3>
+                <p>The main tracker also provides quick analytics through grouping:</p>
+
+                <h4>By Client</h4>
+                <ol>
+                    <li>Group By Client</li>
+                    <li>View summary: Total invoiced, total paid, outstanding balance, invoice count</li>
+                </ol>
+
+                <h4>By Contract</h4>
+                <ol>
+                    <li>Group By Contract</li>
+                    <li>View summary: Contract value, total invoiced, total paid, remaining budget, completion %</li>
+                </ol>
+
+                <h4>By Type</h4>
+                <ol>
+                    <li>Group By Type</li>
+                    <li>View summary: Total amount, invoice count, average invoice amount</li>
+                </ol>
+
+                <h4>By Month</h4>
+                <ol>
+                    <li>Group By Month</li>
+                    <li>View summary: Monthly revenue, invoice count, paid vs unpaid</li>
+                </ol>
+
+                <h3>Quick Analytics with AI Query</h3>
+
+                <h4>Revenue Analysis</h4>
+                <div class="example-query">
+                    What's the total for all invoices?<br>
+                    Total revenue this year<br>
+                    How much in Q1 2025?<br>
+                    Total by client
+                </div>
+
+                <h4>Outstanding Invoices</h4>
+                <div class="example-query">
+                    Total unpaid invoices<br>
+                    How much is outstanding?<br>
+                    Sum of unpaid for each client
+                </div>
+
+                <h4>Invoice Counts</h4>
+                <div class="example-query">
+                    How many invoices per client?<br>
+                    Count of maintenance invoices<br>
+                    Number of invoices over $50,000
+                </div>
+
+                <h3>Tips for Using Analytics</h3>
+
+                <div class="tip-box">
+                    <ul>
+                        <li>Use Analytics Dashboard for INSIGHTS, Main Tracker for OPERATIONS</li>
+                        <li>Analytics loads slower due to extensive calculations - be patient</li>
+                        <li>Filter date range for faster performance with large datasets</li>
+                        <li>All amounts converted to USD for consistency</li>
+                        <li>Charts use color coding: green = good, red = bad, yellow = caution</li>
+                        <li>Lower DSI = Better collections</li>
+                        <li>Higher grades = Better clients</li>
+                        <li>Screenshot charts for reports and presentations</li>
+                    </ul>
+                </div>
+
+                <div class="info-box">
+                    <h4>Future Enhancements</h4>
+                    <ul>
+                        <li>Export to Excel/PDF (planned)</li>
+                        <li>Click charts to drill down to invoices (planned)</li>
+                        <li>Custom dashboards (planned)</li>
+                        <li>Scheduled email reports (planned)</li>
+                        <li>Alerts and notifications (planned)</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Database Maintenance -->
+            <section id="maintenance">
+                <h2>Database Maintenance</h2>
+
+                <h3>Automatic Backups</h3>
+                <p>The system is configured with automatic daily backups:</p>
+                <ul>
+                    <li><strong>Schedule:</strong> Runs every day at 2:00 AM</li>
+                    <li><strong>Location:</strong> Backups saved to server backup directory</li>
+                    <li><strong>Retention:</strong> Old backups automatically deleted after 30 days</li>
+                    <li><strong>Filename:</strong> Format includes date and time for easy identification</li>
+                </ul>
+
+                <h3>Manual Backups</h3>
+                <p><strong>When needed:</strong> Before major changes, bulk deletions, or testing new features</p>
+                <p><strong>How to request:</strong> Contact IT department to create an on-demand backup</p>
+
+                <h3>Data Validation</h3>
+
+                <h4>System Validation</h4>
+                <p>The system includes built-in validation tools that:</p>
+                <ul>
+                    <li>Verify database data matches original PDF files</li>
+                    <li>Check invoice classifications (type and frequency)</li>
+                    <li>Identify any data discrepancies</li>
+                    <li>Generate detailed validation reports</li>
+                </ul>
+                <p><strong>To request validation:</strong> Contact IT department if you suspect data issues</p>
+
+                <div class="warning-box">
+                    <h4>Restoring from Backup</h4>
+                    <p><strong>IMPORTANT:</strong> Only restore if database is corrupted, major data loss occurred, or need to rollback changes.</p>
+                    <p><strong>Process:</strong> Contact IT department immediately - requires stopping servers, using specialized restore tools, and verifying data integrity.</p>
+                </div>
+            </section>
+
+            <!-- Troubleshooting -->
+            <section id="troubleshooting">
+                <h2>Troubleshooting</h2>
+
+                <h3>Application Won't Load</h3>
+
+                <h4>Cannot Connect to Server</h4>
+                <p><strong>Symptoms:</strong> Blank page, "Server Offline" indicator, or connection errors</p>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Refresh the page (<span class="keyboard-shortcut">F5</span> or <span class="keyboard-shortcut">Ctrl+R</span>)</li>
+                    <li>Clear browser cache (<span class="keyboard-shortcut">Ctrl+Shift+Delete</span>)</li>
+                    <li>Check server status indicator (top-right corner)</li>
+                    <li>If problem persists, contact IT department</li>
+                </ol>
+
+                <h4>Page Loads Slowly</h4>
+                <p><strong>Possible Causes:</strong></p>
+                <ul>
+                    <li>Large number of invoices being loaded</li>
+                    <li>Network connectivity issues</li>
+                    <li>Server under heavy load</li>
+                </ul>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Apply date filters to reduce data</li>
+                    <li>Use specific client or contract filters</li>
+                    <li>Try during off-peak hours</li>
+                    <li>Contact IT if consistently slow</li>
+                </ol>
+
+                <h3>Upload Issues</h3>
+
+                <h4>PDF Won't Upload</h4>
+                <p><strong>Possible Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>File Too Large:</strong> Compress PDF first using online PDF compressor</li>
+                    <li><strong>File Corrupted:</strong> Re-download or re-export PDF, test by opening in Adobe Reader</li>
+                    <li><strong>Server Offline:</strong> Check both server windows are running, restart if necessary</li>
+                </ul>
+
+                <h4>Data Extracted Incorrectly</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li><strong>Edit Invoice:</strong> Click invoice → Edit → Fix data</li>
+                    <li><strong>Replace PDF:</strong> Use duplicate management to upload better quality PDF</li>
+                    <li><strong>Report Issue:</strong> Note invoice number for IT review</li>
+                </ol>
+
+                <h3>Filter & Search Issues</h3>
+
+                <h4>Query Returns No Results</h4>
+                <p><strong>Check:</strong></p>
+                <ol>
+                    <li>Clear all other filters first</li>
+                    <li>Try simpler query</li>
+                    <li>Check spelling (but fuzzy match should work)</li>
+                    <li>Verify data exists (browse all invoices)</li>
+                </ol>
+
+                <h4>Filter Not Working</h4>
+                <p><strong>Solutions:</strong></p>
+                <ol>
+                    <li>Refresh page (<span class="keyboard-shortcut">F5</span>)</li>
+                    <li>Clear browser cache (<span class="keyboard-shortcut">Ctrl+Shift+Delete</span>)</li>
+                    <li>Check if other filters are active</li>
+                    <li>Try selecting "All" then reselecting</li>
+                </ol>
+
+                <h3>Contract Issues</h3>
+
+                <h4>Contract Value Won't Save</h4>
+                <p><strong>Check:</strong></p>
+                <ul>
+                    <li>Are you entering numbers only? (no $ or commas)</li>
+                    <li>Did you click away from field? (to trigger save)</li>
+                    <li>Check browser console for errors (<span class="keyboard-shortcut">F12</span>)</li>
+                    <li>Check backend server window for errors</li>
+                </ul>
+
+                <h4>Can't Clear Contract Value</h4>
+                <p><strong>Solution:</strong></p>
+                <ol>
+                    <li>Click in field</li>
+                    <li>Select all (<span class="keyboard-shortcut">Ctrl+A</span> or triple-click)</li>
+                    <li>Press Delete</li>
+                    <li>Click away from field</li>
+                    <li>Should show "Contract value cleared"</li>
+                </ol>
+
+                <h3>Performance Issues</h3>
+
+                <h4>Application Slow</h4>
+                <p><strong>Causes & Solutions:</strong></p>
+                <ul>
+                    <li><strong>Too Many Invoices Displayed:</strong> Apply filters, group by client/contract, use date range</li>
+                    <li><strong>Memory Issue:</strong> Close other applications, restart browser, restart servers</li>
+                    <li><strong>Database Size:</strong> Run cleanup scripts, remove old duplicates, archive old data (contact IT)</li>
+                </ul>
+
+                <h3>Common Error Messages</h3>
+                <ul>
+                    <li><strong>"Failed to save contract value":</strong> Check backend server logs, try again, contact IT if persists</li>
+                    <li><strong>"Database connection lost":</strong> Check PostgreSQL service is running, restart application</li>
+                    <li><strong>"PDF file not found":</strong> Run diagnostic tool, may need to re-upload PDF</li>
+                    <li><strong>"Duplicate invoice number":</strong> This is a warning, not an error - you can proceed if intentional</li>
+                </ul>
+            </section>
+
+            <!-- Best Practices -->
+            <section id="best-practices">
+                <h2>Best Practices & Tips</h2>
+
+                <h3>Keyboard Shortcuts</h3>
+                <ul>
+                    <li><span class="keyboard-shortcut">Ctrl+F</span> - Open browser find (search on page)</li>
+                    <li><span class="keyboard-shortcut">F5</span> - Refresh application</li>
+                    <li><span class="keyboard-shortcut">Esc</span> - Close modal dialogs</li>
+                </ul>
+
+                <h3>Workflow Optimization</h3>
+
+                <h4>Daily Workflow</h4>
+                <ol>
+                    <li>Check Expected Invoices - Review unacknowledged</li>
+                    <li>Upload New Invoices - Drag and drop PDFs</li>
+                    <li>Review Duplicates - Clean up any duplicates</li>
+                    <li>Update Contract Values - Set values for new contracts</li>
+                    <li>Mark Paid - Update invoice statuses</li>
+                </ol>
+
+                <h4>Weekly Workflow</h4>
+                <ol>
+                    <li>Run Reports - Review client totals, contract progress</li>
+                    <li>Clean Up - Delete outdated expected invoices</li>
+                    <li>Validate Data - Run diagnostic on recent uploads</li>
+                    <li>Backup - Create manual backup before major changes</li>
+                </ol>
+
+                <h4>Monthly Workflow</h4>
+                <ol>
+                    <li>Month-End Reports - Group by month, analyze trends</li>
+                    <li>Contract Reviews - Check completion percentages</li>
+                    <li>Expected Invoice Cleanup - Remove old acknowledged items</li>
+                    <li>Data Validation - Run full diagnostic check</li>
+                </ol>
+
+                <div class="do-dont">
+                    <div class="do-box">
+                        <h4>DO</h4>
+                        <ul>
+                            <li>Upload promptly when invoices received</li>
+                            <li>Use high-quality PDF scans</li>
+                            <li>Check data after upload</li>
+                            <li>Fix errors immediately</li>
+                            <li>Set contract values as soon as contract signed</li>
+                            <li>Monitor completion percentages</li>
+                            <li>Review expected invoices weekly</li>
+                            <li>Run validation checks regularly</li>
+                        </ul>
+                    </div>
+                    <div class="dont-box">
+                        <h4>DON'T</h4>
+                        <ul>
+                            <li>Upload non-invoice PDFs</li>
+                            <li>Upload same invoice multiple times (unless replacing)</li>
+                            <li>Forget to check duplicates section</li>
+                            <li>Leave contracts without values</li>
+                            <li>Ignore unacknowledged expected invoices</li>
+                            <li>Assume data is always correct</li>
+                            <li>Skip diagnostic checks</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Getting Help -->
+            <section id="help">
+                <h2>Getting Help</h2>
+
+                <h3>Documentation</h3>
+                <ul>
+                    <li><strong>This Training Guide:</strong> Comprehensive reference</li>
+                    <li><strong>README-DIAGNOSTIC.md:</strong> Diagnostic tool details</li>
+                    <li><strong>Database Schema:</strong> Available in backend folder</li>
+                </ul>
+
+                <h3>Support Resources</h3>
+                <ol>
+                    <li><strong>Backend Server Logs:</strong> Check command window for errors</li>
+                    <li><strong>Browser Console:</strong> Press <span class="keyboard-shortcut">F12</span> to see JavaScript errors</li>
+                    <li><strong>Database Logs:</strong> PostgreSQL logs in data directory</li>
+                </ol>
+
+                <h3>Common Questions</h3>
+                <dl>
+                    <dt><strong>Q: Can I export data to Excel?</strong></dt>
+                    <dd>A: Not currently built-in. Manual copy/paste or future enhancement.</dd>
+
+                    <dt><strong>Q: How long is data kept?</strong></dt>
+                    <dd>A: Indefinitely unless manually deleted. Backups kept 30 days.</dd>
+
+                    <dt><strong>Q: Can multiple users access simultaneously?</strong></dt>
+                    <dd>A: Currently single-user application. Multi-user access planned.</dd>
+
+                    <dt><strong>Q: What happens if power fails during backup?</strong></dt>
+                    <dd>A: Partial backup deleted automatically. Next backup will be complete.</dd>
+
+                    <dt><strong>Q: Can I restore individual invoices from backup?</strong></dt>
+                    <dd>A: No, backup restores entire database. Keep original PDFs as backup.</dd>
+
+                    <dt><strong>Q: How accurate is the AI query system?</strong></dt>
+                    <dd>A: Very accurate for standard queries. Complex queries may need refinement.</dd>
+                </dl>
+            </section>
+        </main>
+
+        <footer>
+            <p><strong>Invoice Tracker Training Guide</strong></p>
+            <p>Version 1.0 - October 2025</p>
+            <p>For technical support, contact IT department</p>
+        </footer>
+    </div>
+</body>
+</html>

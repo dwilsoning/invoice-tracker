@@ -245,10 +245,10 @@ function classifyInvoiceType(services, invoice_number, amount) {
   // More specific checks to avoid catching "support" in other contexts
   if ((lower.includes('maintenance') ||
        lower.includes('annual maintenance') ||
-       lower.includes('software support services') ||
+       lower.includes('software support') ||
        lower.includes('support services') ||
-       lower.includes('license maintenance') ||
-       lower.includes('support fee')) &&
+       lower.includes('support fee') ||
+       lower.includes('license maintenance')) &&
       !lower.includes('managed') &&
       !lower.includes('professional')) {
     return 'Maint';
@@ -1356,8 +1356,8 @@ app.post('/api/query', async (req, res) => {
     });
 
     // Filter by client name
-    // Match patterns: "for X", "from X", "by X", "to X", "issued to X", "sent to X"
-    const clientMatch = queryLower.match(/(?:for|from|by|to|issued to|sent to)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|\?)|$)/i);
+    // Match patterns: "for X", "from X", "by X", "to X", "issued to X", "sent to X", "relating to X"
+    const clientMatch = queryLower.match(/(?:relating to|issued to|sent to|for|from|by|to)\s+([a-z0-9\s&'.,-]+?)(?:\?|$|(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|and|>|<)))/i);
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
       results = results.filter(inv =>
@@ -1493,13 +1493,45 @@ app.post('/api/query', async (req, res) => {
     });
 
     // Filter by contract completion percentage
-    // Patterns: "50% invoiced", "<70% invoiced", ">50% paid", "<=80% complete", ">=25% billed"
-    const percentageMatch = queryLower.match(/([<>]=?|=)?\s*(\d+)\s*(?:%|percent|per cent)\s*(?:invoiced|complete|billed|done|paid|unpaid)/i);
-    let contractSummary = null;
+    // Patterns:
+    // - Single: "50% invoiced", "<70% invoiced", ">50% paid", "<=80% complete", ">=25% billed"
+    // - Range: ">50% and <70% invoiced", ">=40% and <=60% paid", "between 30% and 50% invoiced"
 
-    if (percentageMatch) {
-      const operator = percentageMatch[1] || '='; // Default to equals if no operator
-      const targetPercentage = parseInt(percentageMatch[2]);
+    // First check for range queries (two percentage comparisons with "and" or "between")
+    const rangeMatch = queryLower.match(/([<>]=?)\s*(\d+)\s*(?:%|percent)?\s+(?:and|&)\s+([<>]=?)\s*(\d+)\s*(?:%|percent)?\s*(?:invoiced|complete|billed|done|paid|unpaid)/i) ||
+                       queryLower.match(/(?:between|from)\s+(\d+)\s*(?:%|percent)?\s+(?:and|to|-)\s+(\d+)\s*(?:%|percent)?\s*(?:invoiced|complete|billed|done|paid|unpaid)/i);
+
+    // Then check for single percentage match
+    const percentageMatch = queryLower.match(/([<>]=?|=)?\s*(\d+)\s*(?:%|percent|per cent)\s*(?:invoiced|complete|billed|done|paid|unpaid)/i);
+
+    let contractSummary = null;
+    let isRangeQuery = false;
+    let operator1, operator2, targetPercentage1, targetPercentage2;
+
+    if (rangeMatch) {
+      isRangeQuery = true;
+      if (rangeMatch[1] && rangeMatch[3]) {
+        // Pattern: >50% and <70%
+        operator1 = rangeMatch[1];
+        targetPercentage1 = parseInt(rangeMatch[2]);
+        operator2 = rangeMatch[3];
+        targetPercentage2 = parseInt(rangeMatch[4]);
+      } else {
+        // Pattern: between 50% and 70% (treat as >= and <=)
+        operator1 = '>=';
+        targetPercentage1 = parseInt(rangeMatch[1]);
+        operator2 = '<=';
+        targetPercentage2 = parseInt(rangeMatch[2]);
+      }
+    }
+
+    if (percentageMatch || isRangeQuery) {
+      let operator, targetPercentage;
+
+      if (!isRangeQuery) {
+        operator = percentageMatch[1] || '='; // Default to equals if no operator
+        targetPercentage = parseInt(percentageMatch[2]);
+      }
 
       // Determine if we're looking at paid or unpaid percentages
       const isPaidQuery = queryLower.includes('paid') && !queryLower.includes('unpaid');
@@ -1511,10 +1543,12 @@ app.post('/api/query', async (req, res) => {
       // Group invoices by contract and calculate totals (both total and paid)
       const contractTotals = {};
       const contractPaidTotals = {};
+      const contractsInResults = new Set();
 
       results.forEach(inv => {
         const contractName = inv.customerContract || inv.customer_contract;
         if (contractName) {
+          contractsInResults.add(contractName);
           if (!contractTotals[contractName]) {
             contractTotals[contractName] = 0;
             contractPaidTotals[contractName] = 0;
@@ -1536,6 +1570,12 @@ app.post('/api/query', async (req, res) => {
 
       contracts.forEach(contract => {
         const contractName = contract.contractName || contract.contract_name;
+
+        // Only process contracts that have invoices in the filtered results
+        if (!contractsInResults.has(contractName)) {
+          return;
+        }
+
         const contractValue = parseFloat(contract.contractValue || contract.contract_value);
         const contractCurrency = contract.currency || 'USD';
 
@@ -1561,28 +1601,67 @@ app.post('/api/query', async (req, res) => {
           percentage = contractValueUSD > 0 ? (invoicedTotal / contractValueUSD) * 100 : 0;
         }
 
-        // Check if percentage matches criteria based on operator
+        // Check if percentage matches criteria based on operator(s)
         let matches = false;
         const tolerance = 5;
 
-        switch(operator) {
-          case '<':
-            matches = percentage < targetPercentage;
-            break;
-          case '>':
-            matches = percentage > targetPercentage;
-            break;
-          case '<=':
-            matches = percentage <= targetPercentage;
-            break;
-          case '>=':
-            matches = percentage >= targetPercentage;
-            break;
-          case '=':
-          default:
-            // Use tolerance for equals
-            matches = Math.abs(percentage - targetPercentage) <= tolerance;
-            break;
+        if (isRangeQuery) {
+          // For range queries, both conditions must be true
+          let condition1 = false;
+          let condition2 = false;
+
+          switch(operator1) {
+            case '<':
+              condition1 = percentage < targetPercentage1;
+              break;
+            case '>':
+              condition1 = percentage > targetPercentage1;
+              break;
+            case '<=':
+              condition1 = percentage <= targetPercentage1;
+              break;
+            case '>=':
+              condition1 = percentage >= targetPercentage1;
+              break;
+          }
+
+          switch(operator2) {
+            case '<':
+              condition2 = percentage < targetPercentage2;
+              break;
+            case '>':
+              condition2 = percentage > targetPercentage2;
+              break;
+            case '<=':
+              condition2 = percentage <= targetPercentage2;
+              break;
+            case '>=':
+              condition2 = percentage >= targetPercentage2;
+              break;
+          }
+
+          matches = condition1 && condition2;
+        } else {
+          // Single condition
+          switch(operator) {
+            case '<':
+              matches = percentage < targetPercentage;
+              break;
+            case '>':
+              matches = percentage > targetPercentage;
+              break;
+            case '<=':
+              matches = percentage <= targetPercentage;
+              break;
+            case '>=':
+              matches = percentage >= targetPercentage;
+              break;
+            case '=':
+            default:
+              // Use tolerance for equals
+              matches = Math.abs(percentage - targetPercentage) <= tolerance;
+              break;
+          }
         }
 
         if (matches) {
@@ -1602,13 +1681,27 @@ app.post('/api/query', async (req, res) => {
 
       // Create contract summary for response
       if (contractDetails.length > 0) {
-        contractSummary = {
-          targetPercentage,
-          operator,
-          queryType: isPaidQuery ? 'paid' : isUnpaidQuery ? 'unpaid' : 'invoiced',
-          matchingContracts: contractDetails,
-          totalContracts: contractDetails.length
-        };
+        if (isRangeQuery) {
+          contractSummary = {
+            isRange: true,
+            targetPercentage1,
+            operator1,
+            targetPercentage2,
+            operator2,
+            queryType: isPaidQuery ? 'paid' : isUnpaidQuery ? 'unpaid' : 'invoiced',
+            matchingContracts: contractDetails,
+            totalContracts: contractDetails.length
+          };
+        } else {
+          contractSummary = {
+            isRange: false,
+            targetPercentage,
+            operator,
+            queryType: isPaidQuery ? 'paid' : isUnpaidQuery ? 'unpaid' : 'invoiced',
+            matchingContracts: contractDetails,
+            totalContracts: contractDetails.length
+          };
+        }
       }
 
       // Filter invoices to only those matching contracts

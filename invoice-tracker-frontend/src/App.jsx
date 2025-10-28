@@ -84,6 +84,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   // Server Status
   const [serverStatus, setServerStatus] = useState('checking'); // 'online', 'offline', 'checking'
 
+  // Help Modal
+  const [showHelp, setShowHelp] = useState(false);
+
   // Load contract values from database
   const loadContracts = async () => {
     try {
@@ -981,6 +984,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               </span>
             </div>
             <button
+              onClick={() => setShowHelp(true)}
+              className="px-6 py-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-white hover:bg-opacity-30 transition font-semibold border-2 border-white"
+              title="Open Training Guide"
+            >
+              Help
+            </button>
+            <button
               onClick={onNavigateToAnalytics}
               className="px-6 py-3 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition shadow font-semibold"
             >
@@ -1256,15 +1266,35 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               {queryResult.contractSummary && (
                 <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
                   <h4 className="font-semibold text-blue-900 mb-2">
-                    Contracts {queryResult.contractSummary.operator === '=' ? 'at' :
-                              queryResult.contractSummary.operator === '<' ? 'less than' :
-                              queryResult.contractSummary.operator === '>' ? 'greater than' :
-                              queryResult.contractSummary.operator === '<=' ? 'at or below' :
-                              queryResult.contractSummary.operator === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage}% {
-                      queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
-                      queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
-                      'Invoiced'
-                    }
+                    {queryResult.contractSummary.isRange ? (
+                      <>
+                        Contracts {queryResult.contractSummary.operator1 === '=' ? 'at' :
+                                  queryResult.contractSummary.operator1 === '<' ? 'less than' :
+                                  queryResult.contractSummary.operator1 === '>' ? 'greater than' :
+                                  queryResult.contractSummary.operator1 === '<=' ? 'at or below' :
+                                  queryResult.contractSummary.operator1 === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage1}% and {queryResult.contractSummary.operator2 === '=' ? 'at' :
+                                  queryResult.contractSummary.operator2 === '<' ? 'less than' :
+                                  queryResult.contractSummary.operator2 === '>' ? 'greater than' :
+                                  queryResult.contractSummary.operator2 === '<=' ? 'at or below' :
+                                  queryResult.contractSummary.operator2 === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage2}% {
+                          queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
+                          queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
+                          'Invoiced'
+                        }
+                      </>
+                    ) : (
+                      <>
+                        Contracts {queryResult.contractSummary.operator === '=' ? 'at' :
+                                  queryResult.contractSummary.operator === '<' ? 'less than' :
+                                  queryResult.contractSummary.operator === '>' ? 'greater than' :
+                                  queryResult.contractSummary.operator === '<=' ? 'at or below' :
+                                  queryResult.contractSummary.operator === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage}% {
+                          queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
+                          queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
+                          'Invoiced'
+                        }
+                      </>
+                    )}
                     <span className="ml-2 text-sm font-normal text-blue-700">
                       ({queryResult.contractSummary.totalContracts} contract{queryResult.contractSummary.totalContracts !== 1 ? 's' : ''})
                     </span>
@@ -2493,6 +2523,32 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           </div>
         )}
       </div>
+
+      {/* Help Modal */}
+      {showHelp && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-lg w-full max-w-6xl h-[90vh] flex flex-col">
+            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-[#667eea] to-[#764ba2]">
+              <h2 className="text-2xl font-bold text-white">Invoice Tracker - Training Guide</h2>
+              <button
+                onClick={() => setShowHelp(false)}
+                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            <div className="flex-1 overflow-auto">
+              <iframe
+                src="/training-guide.html"
+                className="w-full h-full border-0"
+                title="Training Guide"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
