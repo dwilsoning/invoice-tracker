@@ -1507,7 +1507,7 @@ app.post('/api/query', async (req, res) => {
 
       // Filter invoices to only those belonging to contracts with no value
       results = results.filter(inv => {
-        const contractName = inv.customerContract || inv.customer_contract;
+        const contractName = inv.customer_contract;
         return contractName && contractsWithNoValue.includes(contractName);
       });
 
