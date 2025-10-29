@@ -936,6 +936,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   // Filter by contract from expected invoices
   const filterByContract = (contract, expectedInvoiceId) => {
     if (contract && contract !== '-') {
+      // Toggle: if clicking the same contract again, clear the selection
+      if (selectedExpectedInvoiceId === expectedInvoiceId) {
+        setSelectedExpectedInvoiceId(null);
+        setContractFilter('');
+        return;
+      }
+
       setContractFilter(contract);
       setSelectedExpectedInvoiceId(expectedInvoiceId);
       setShowInvoiceTable(true);

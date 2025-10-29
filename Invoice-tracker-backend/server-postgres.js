@@ -1167,8 +1167,8 @@ async function generateExpectedInvoices() {
     const grouped = {};
 
     for (const row of rows) {
-      // Group by client and contract only - one expected invoice per contract
-      const key = `${row.client}-${row.customerContract || 'none'}`;
+      // Group by client, contract, and invoice type - one expected invoice per contract per service type
+      const key = `${row.client}-${row.customerContract || 'none'}-${row.invoiceType}`;
       if (!grouped[key]) {
         grouped[key] = row;
       }
@@ -1220,27 +1220,52 @@ async function generateExpectedInvoices() {
         const datePlus1 = new Date(expected_date);
         datePlus1.setDate(datePlus1.getDate() + 1);
 
-        // Check for existing expected invoice for this contract (regardless of invoice type)
+        // Check for existing expected invoice for this contract and service type
         const existing = await db.get(`
           SELECT id FROM expected_invoices
           WHERE LOWER(TRIM(client)) = LOWER(TRIM($1))
             AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2))
-            AND expected_date BETWEEN $3 AND $4
+            AND invoice_type = $3
+            AND expected_date BETWEEN $4 AND $5
             AND acknowledged = false
         `,
           invoice.client,
           invoice.customerContract || '',
+          invoice.invoiceType,
           dateMinus1.toISOString().split('T')[0],
           datePlus1.toISOString().split('T')[0]
         );
 
-        if (!existing) {
+        // Check if ANY invoice (including adhoc) was recently uploaded that would satisfy this expected date
+        // This prevents recreating expected invoices that were just fulfilled
+        const expectedDateMinus45 = new Date(expected_date);
+        expectedDateMinus45.setDate(expectedDateMinus45.getDate() - 45);
+        const expectedDatePlus45 = new Date(expected_date);
+        expectedDatePlus45.setDate(expectedDatePlus45.getDate() + 45);
+
+        const recentInvoice = await db.get(`
+          SELECT id FROM invoices
+          WHERE LOWER(TRIM(client)) = LOWER(TRIM($1))
+            AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2))
+            AND invoice_type = $3
+            AND invoice_date BETWEEN $4 AND $5
+        `,
+          invoice.client,
+          invoice.customerContract || '',
+          invoice.invoiceType,
+          expectedDateMinus45.toISOString().split('T')[0],
+          expectedDatePlus45.toISOString().split('T')[0]
+        );
+
+        if (!existing && !recentInvoice) {
           console.log(`Creating expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date}`);
-        } else {
+        } else if (existing) {
           console.log(`Skipping duplicate expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date} (already exists)`);
+        } else if (recentInvoice) {
+          console.log(`Skipping expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date} (recently fulfilled)`);
         }
 
-        if (!existing) {
+        if (!existing && !recentInvoice) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
           const created_date = new Date().toISOString().split('T')[0];
 
@@ -1284,35 +1309,48 @@ generateExpectedInvoices();
 
 // Check and remove expected invoice when actual invoice received
 async function checkAndRemoveExpectedInvoice(invoice) {
-  // Skip adhoc invoices - they shouldn't have expected entries
-  if (invoice.frequency === 'adhoc') return;
-
   try {
     const clientMatch = invoice.client;
     const contractMatch = invoice.customerContract || '';
     const typeMatch = invoice.invoiceType;
 
+    console.log(`🔍 Checking for expected invoice match:`, {
+      client: clientMatch,
+      contract: contractMatch,
+      type: typeMatch,
+      invoiceDate: invoice.invoiceDate,
+      invoiceNumber: invoice.invoiceNumber
+    });
+
     // Parse invoice date
     const invoice_date = new Date(invoice.invoiceDate);
 
-    // Find matching expected invoices
+    // Find matching expected invoices - don't filter by frequency initially
+    // This allows us to match expected invoices even if the uploaded invoice
+    // has a different detected frequency (e.g., detected as adhoc but expected as monthly)
     const expectedInvoices = await db.all(`
-      SELECT id, expected_date FROM expected_invoices
+      SELECT id, expected_date, frequency FROM expected_invoices
       WHERE client = $1
         AND (customer_contract = $2 OR (customer_contract IS NULL AND $3 = ''))
         AND invoice_type = $4
-        AND frequency = $5
-    `, clientMatch, contractMatch, contractMatch, typeMatch, invoice.frequency);
+    `, clientMatch, contractMatch, contractMatch, typeMatch);
+
+    console.log(`📋 Found ${expectedInvoices.length} matching expected invoices`);
 
     // Remove expected invoices that match and are within reasonable date range
     for (const expected of expectedInvoices) {
-      const expected_date = new Date(expected.expected_date);
+      // The db wrapper converts snake_case to camelCase
+      const expected_date = new Date(expected.expectedDate);
       const daysDiff = Math.abs((invoice_date - expected_date) / (1000 * 60 * 60 * 24));
+
+      console.log(`📅 Comparing dates: invoice=${invoice.invoiceDate}, expected=${expected.expectedDate}, diff=${daysDiff} days`);
 
       // Match if invoice is within 45 days of expected date
       if (daysDiff <= 45) {
         await db.run('DELETE FROM expected_invoices WHERE id = $1', expected.id);
-        console.log(`Removed expected invoice for ${clientMatch} - ${contractMatch} (${typeMatch})`);
+        console.log(`✅ Removed expected invoice for ${clientMatch} - ${contractMatch} (${typeMatch}), expected: ${expected.frequency}, uploaded: ${invoice.frequency}`);
+      } else {
+        console.log(`❌ Date diff ${daysDiff} days exceeds 45 day threshold`);
       }
     }
   } catch (error) {
