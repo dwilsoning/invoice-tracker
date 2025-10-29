@@ -1346,6 +1346,16 @@ app.post('/api/query', async (req, res) => {
     const { query } = req.body;
 
     const invoices = await db.all('SELECT * FROM invoices');
+    console.log(`\n🔍 Query: "${query}"`);
+    console.log(`📊 Total invoices: ${invoices.length}`);
+    if (invoices.length > 0) {
+      console.log(`📋 Sample invoice fields:`, Object.keys(invoices[0]));
+      console.log(`📋 Sample invoice:`, {
+        status: invoices[0].status,
+        invoiceType: invoices[0].invoiceType,
+        dueDate: invoices[0].dueDate
+      });
+    }
 
     const queryLower = query.toLowerCase();
     let results = [...invoices];
@@ -1413,7 +1423,13 @@ app.post('/api/query', async (req, res) => {
 
     for (const [key, value] of Object.entries(typeMap)) {
       if (queryLower.includes(key)) {
+        console.log(`🔎 Filtering for invoice type: "${key}" → "${value}"`);
+        const before = results.length;
         results = results.filter(inv => inv.invoiceType && inv.invoiceType.toLowerCase() === value);
+        console.log(`✅ Type filter: ${before} → ${results.length} invoices`);
+        if (results.length > 0) {
+          console.log(`   Sample type: "${results[0].invoiceType}"`);
+        }
         break; // Only match first type found
       }
     }
@@ -1465,19 +1481,31 @@ app.post('/api/query', async (req, res) => {
     // Check for unpaid/pending/overdue BEFORE checking for paid (since "unpaid" contains "paid")
     if (queryLower.includes('overdue')) {
       const today = new Date().toISOString().split('T')[0];
+      console.log(`🔎 Filtering for overdue (before ${today})`);
+      const before = results.length;
       results = results.filter(inv =>
         inv.status === 'Pending' &&
         inv.dueDate &&
         inv.dueDate < today &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
+      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
     } else if (queryLower.includes('unpaid') || queryLower.includes('pending') || queryLower.includes('outstanding')) {
+      console.log(`🔎 Filtering for unpaid/pending/outstanding`);
+      const before = results.length;
       results = results.filter(inv =>
         inv.status === 'Pending' &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
+      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
+      if (results.length > 0) {
+        console.log(`   Sample: status="${results[0].status}", type="${results[0].invoiceType}"`);
+      }
     } else if (queryLower.includes('paid')) {
+      console.log(`🔎 Filtering for paid`);
+      const before = results.length;
       results = results.filter(inv => inv.status === 'Paid');
+      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
     }
 
     // Filter by date range
