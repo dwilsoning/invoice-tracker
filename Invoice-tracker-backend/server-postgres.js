@@ -1485,9 +1485,16 @@ app.post('/api/query', async (req, res) => {
     let contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|invoices?|\?)|$)/i);
     if (contractMatch) {
       const contract_name = contractMatch[1].trim();
+      console.log(`🔎 Filtering for contract: "${contract_name}"`);
+      const before = results.length;
       results = results.filter(inv =>
-        inv.customerContract && inv.customerContract.toLowerCase().includes(contract_name)
+        (inv.customerContract && inv.customerContract.toLowerCase() === contract_name) ||
+        (inv.oracleContract && inv.oracleContract.toLowerCase() === contract_name)
       );
+      console.log(`✅ Contract filter: ${before} → ${results.length} invoices`);
+      if (results.length > 0) {
+        console.log(`   Sample: contract="${results[0].customerContract}", oracle="${results[0].oracleContract}"`);
+      }
     }
 
     // Filter by status
