@@ -2297,28 +2297,33 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     {groupBy !== 'None' && (
                       <div className="bg-gray-100 px-4 py-3 rounded">
                         <div
-                          onClick={() => setExpandedGroups({
-                            ...expandedGroups,
-                            [groupName]: !isExpanded
-                          })}
-                          className="cursor-pointer hover:bg-gray-200 transition flex justify-between items-center p-2 rounded"
+                          onClick={(e) => {
+                            // Don't toggle when clicking on input fields
+                            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'SELECT') {
+                              setExpandedGroups({
+                                ...expandedGroups,
+                                [groupName]: !isExpanded
+                              });
+                            }
+                          }}
+                          className="cursor-pointer hover:bg-gray-200 transition p-2 rounded"
                         >
-                          <div className="flex items-center gap-2">
-                            <span className="text-xl font-bold select-none">{isExpanded ? '▼' : '▶'}</span>
-                            <span className="font-bold text-gray-900">{groupName}</span>
-                            <span className="text-sm text-gray-600">({groupInvs.length} invoices)</span>
+                          <div className="flex justify-between items-center">
+                            <div className="flex items-center gap-2">
+                              <span className="text-xl font-bold select-none">{isExpanded ? '▼' : '▶'}</span>
+                              <span className="font-bold text-gray-900">{groupName}</span>
+                              <span className="text-sm text-gray-600">({groupInvs.length} invoices)</span>
+                            </div>
+                            <div className="flex items-center gap-4">
+                              <span className="font-bold text-blue-600">
+                                ${groupTotal.toLocaleString()} USD
+                              </span>
+                            </div>
                           </div>
-                          <div className="flex items-center gap-4">
-                            <span className="font-bold text-blue-600">
-                              ${groupTotal.toLocaleString()} USD
-                            </span>
-                          </div>
-                        </div>
-                        
-                        {/* Contract Value Management */}
-                        {isContractGroup && isExpanded && (
-                          <div className="mt-3 pt-3 border-t border-gray-300">
-                            <div className="flex gap-4 items-center mb-3">
+
+                          {/* Contract Value Management - Always visible for contract groups */}
+                          {isContractGroup && (
+                            <div className="flex gap-4 items-center justify-between mt-3 pt-3 border-t border-gray-300">
                               <div className="flex gap-2 items-center">
                                 <label className="text-sm font-medium">Contract Value:</label>
                                 <input
@@ -2337,11 +2342,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                     setContractValues(newValues);
                                   }}
                                   onBlur={(e) => saveContractValue(contractName, e.target.value, contractInfo?.currency || 'USD')}
+                                  onClick={(e) => e.stopPropagation()}
                                   className="border rounded px-3 py-1 w-32"
                                 />
                                 <select
                                   value={contractInfo?.currency || 'USD'}
                                   onChange={(e) => saveContractValue(contractName, contractInfo?.value || 0, e.target.value)}
+                                  onClick={(e) => e.stopPropagation()}
                                   className="border rounded px-2 py-1"
                                 >
                                   <option value="USD">USD</option>
@@ -2351,36 +2358,49 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                   <option value="SGD">SGD</option>
                                 </select>
                               </div>
-                            </div>
-                            
-                            {contractValueUSD > 0 && (
-                              <div className="space-y-2">
-                                <div className="flex justify-between text-sm">
-                                  <span>Total Invoiced:</span>
-                                  <span className="font-bold">${groupTotal.toLocaleString()} USD</span>
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                  <span>Amount Paid:</span>
-                                  <span className="font-bold text-green-600">${totalPaid.toLocaleString()} USD</span>
-                                </div>
-                                <div className="flex justify-between text-sm">
-                                  <span>Remaining Balance:</span>
-                                  <span className="font-bold text-orange-600">${remaining.toLocaleString()} USD</span>
-                                </div>
-                                <div className="mt-2">
-                                  <div className="flex justify-between text-sm mb-1">
-                                    <span>Contract Progress:</span>
-                                    <span className="font-bold">{percentage}%</span>
-                                  </div>
-                                  <div className="w-full bg-gray-200 rounded-full h-4">
-                                    <div 
-                                      className="bg-blue-600 h-4 rounded-full transition-all"
+                              {contractValueUSD > 0 && (
+                                <div className="flex items-center gap-2">
+                                  <span className="text-sm font-medium">Progress:</span>
+                                  <span className="font-bold text-blue-600">{percentage}%</span>
+                                  <div className="w-24 bg-gray-200 rounded-full h-3">
+                                    <div
+                                      className="bg-blue-600 h-3 rounded-full transition-all"
                                       style={{ width: `${Math.min(percentage, 100)}%` }}
                                     ></div>
                                   </div>
                                 </div>
+                              )}
+                            </div>
+                          )}
+                        </div>
+
+                        {/* Contract Progress Metrics - Only visible when expanded */}
+                        {isContractGroup && isExpanded && contractValueUSD > 0 && (
+                          <div className="mt-3 pt-3 border-t border-gray-300 space-y-2">
+                            <div className="flex justify-between text-sm">
+                              <span>Total Invoiced:</span>
+                              <span className="font-bold">${groupTotal.toLocaleString()} USD</span>
+                            </div>
+                            <div className="flex justify-between text-sm">
+                              <span>Amount Paid:</span>
+                              <span className="font-bold text-green-600">${totalPaid.toLocaleString()} USD</span>
+                            </div>
+                            <div className="flex justify-between text-sm">
+                              <span>Remaining Balance:</span>
+                              <span className="font-bold text-orange-600">${remaining.toLocaleString()} USD</span>
+                            </div>
+                            <div className="mt-2">
+                              <div className="flex justify-between text-sm mb-1">
+                                <span>Contract Progress:</span>
+                                <span className="font-bold">{percentage}%</span>
                               </div>
-                            )}
+                              <div className="w-full bg-gray-200 rounded-full h-4">
+                                <div
+                                  className="bg-blue-600 h-4 rounded-full transition-all"
+                                  style={{ width: `${Math.min(percentage, 100)}%` }}
+                                ></div>
+                              </div>
+                            </div>
                           </div>
                         )}
                       </div>
