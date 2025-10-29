@@ -2596,7 +2596,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               <div className="mt-6 flex gap-2 flex-wrap">
                 {selectedInvoice.pdfPath && (
                   <a
-                    href={`http://localhost:3001${selectedInvoice.pdfPath}`}
+                    href={`http://localhost:3001${encodeURI(selectedInvoice.pdfPath)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
@@ -2810,7 +2810,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 <div className="flex gap-2">
                   {editingInvoice.pdfPath && (
                     <button
-                      onClick={() => window.open(`http://localhost:3001${editingInvoice.pdfPath}`, '_blank')}
+                      onClick={() => window.open(`http://localhost:3001${encodeURI(editingInvoice.pdfPath)}`, '_blank')}
                       className="px-4 py-2 bg-[#0076A2] text-white rounded hover:bg-[#005a7a] transition"
                     >
                       View PDF

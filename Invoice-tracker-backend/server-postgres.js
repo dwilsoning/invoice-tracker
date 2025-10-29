@@ -792,7 +792,9 @@ app.post('/api/upload-pdfs', async (req, res) => {
           }
 
           // Move PDF to permanent storage
-          const pdfFilename = `${Date.now()}-${file.originalFilename}`;
+          // Sanitize filename: replace URL-unsafe characters with underscores
+          const sanitizedFilename = file.originalFilename.replace(/[#%&{}\\<>*?/$!'":@+`|=]/g, '_');
+          const pdfFilename = `${Date.now()}-${sanitizedFilename}`;
           const pdf_path = path.join(pdfsDir, pdfFilename);
           fs.renameSync(file.filepath, pdf_path);
 
@@ -879,7 +881,9 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       const invoiceData = await extractInvoiceData(file.filepath, file.originalFilename);
 
       // Move new PDF to permanent storage
-      const pdfFilename = `${Date.now()}-${file.originalFilename}`;
+      // Sanitize filename: replace URL-unsafe characters with underscores
+      const sanitizedFilename = file.originalFilename.replace(/[#%&{}\\<>*?/$!'":@+`|=]/g, '_');
+      const pdfFilename = `${Date.now()}-${sanitizedFilename}`;
       const pdf_path = path.join(pdfsDir, pdfFilename);
       fs.renameSync(file.filepath, pdf_path);
 
