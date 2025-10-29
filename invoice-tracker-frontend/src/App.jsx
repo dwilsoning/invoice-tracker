@@ -914,11 +914,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  const loadDuplicateDetails = async (invoiceNumber) => {
+  const loadDuplicateDetails = async (invoiceNumber, client) => {
     try {
-      const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}`);
+      const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}/${encodeURIComponent(client)}`);
       setDuplicateDetails(response.data);
-      setSelectedDuplicate(invoiceNumber);
+      setSelectedDuplicate({ invoiceNumber, client });
 
       // Filter the invoice table to show only this invoice number
       setSearchTerm(invoiceNumber);
@@ -929,11 +929,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  const deleteDuplicates = async (invoiceNumber) => {
-    if (!window.confirm(`Delete all duplicate invoices for "${invoiceNumber}" except the most recent?`)) return;
+  const deleteDuplicates = async (invoiceNumber, client) => {
+    if (!window.confirm(`Delete all duplicate invoices for "${invoiceNumber}" (${client}) except the most recent?`)) return;
 
     try {
-      await axios.delete(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}`);
+      await axios.delete(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}/${encodeURIComponent(client)}`);
       await loadDuplicates();
       await loadInvoices();
       setSelectedDuplicate(null);
@@ -992,6 +992,53 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       }
     } catch (error) {
       showMessage('error', 'Query failed');
+    } finally {
+      setIsQuerying(false);
+    }
+  };
+
+  // Quick filter for contracts with no value
+  const handleContractsWithNoValue = async () => {
+    setIsQuerying(true);
+    try {
+      const response = await axios.post(`${API_URL}/query`, { query: 'Contracts with no value' });
+      setQueryResult(response.data);
+
+      // If the response includes invoices, filter the invoice table to show only those
+      if (response.data.invoices && response.data.invoices.length > 0) {
+        // Clear all other filters so we only show the AI query results
+        setStatusFilter([]);
+        setTypeFilter([]);
+        setClientFilter('All');
+        setContractFilter('All');
+        setSearchTerm('');
+        setDateFrom('');
+        setDateTo('');
+        setAgingFilter('All');
+        setActiveStatBox(null);
+
+        // Set the query filter and show the table
+        const invoiceIds = response.data.invoices.map(inv => inv.id);
+        setQueryFilteredIds(invoiceIds);
+        setShowInvoiceTable(true);
+
+        // For "contracts with no value" queries, automatically set grouping
+        setTimeout(() => {
+          setGroupBy('Contract');
+          setSecondaryGroupBy('Client');
+
+          // Auto-expand all groups after a brief delay
+          setTimeout(() => {
+            const groups = {};
+            response.data.contractsWithNoValue.forEach(contract => {
+              groups[contract] = true;
+            });
+            setExpandedGroups(groups);
+          }, 100);
+        }, 0);
+      }
+    } catch (error) {
+      showMessage('error', 'Failed to load contracts with no value');
     } finally {
       setIsQuerying(false);
     }
@@ -1832,24 +1879,26 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                       <thead className="bg-gray-50">
                         <tr>
                           <th className="px-4 py-2 text-left">Invoice Number</th>
+                          <th className="px-4 py-2 text-left">Client</th>
                           <th className="px-4 py-2 text-left">Count</th>
                           <th className="px-4 py-2 text-left">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
                         {duplicates.map(dup => (
-                          <tr key={dup.invoiceNumber} className="border-t hover:bg-gray-50">
+                          <tr key={`${dup.invoiceNumber}-${dup.client}`} className="border-t hover:bg-gray-50">
                             <td className="px-4 py-2 font-medium text-gray-900">{dup.invoiceNumber}</td>
+                            <td className="px-4 py-2 text-gray-900">{dup.client}</td>
                             <td className="px-4 py-2 text-gray-900">{dup.count}</td>
                             <td className="px-4 py-2">
                               <button
-                                onClick={() => loadDuplicateDetails(dup.invoiceNumber)}
+                                onClick={() => loadDuplicateDetails(dup.invoiceNumber, dup.client)}
                                 className="px-3 py-1 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a] mr-2"
                               >
                                 View Details
                               </button>
                               <button
-                                onClick={() => deleteDuplicates(dup.invoiceNumber)}
+                                onClick={() => deleteDuplicates(dup.invoiceNumber, dup.client)}
                                 className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
                               >
                                 Delete Duplicates
@@ -1866,7 +1915,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     <div className="mt-6 p-4 bg-gray-50 rounded">
                       <div className="flex justify-between items-center mb-4">
                         <h3 className="font-bold text-lg">
-                          All Instances of "{selectedDuplicate}"
+                          All Instances of "{selectedDuplicate.invoiceNumber}" ({selectedDuplicate.client})
                         </h3>
                         <button
                           onClick={() => {
@@ -1959,12 +2008,24 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
-            <button
-              onClick={clearFilters}
-              className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
-            >
-              Clear All Filters
-            </button>
+            <div className="flex gap-2">
+              <button
+                onClick={handleContractsWithNoValue}
+                disabled={isQuerying}
+                className={`px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition ${
+                  isQuerying ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                title="Show contracts with no value"
+              >
+                {isQuerying ? '⏳ Loading...' : '📋 Contracts with No Value'}
+              </button>
+              <button
+                onClick={clearFilters}
+                className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
+              >
+                Clear All Filters
+              </button>
+            </div>
           </div>
 
           {!filtersCollapsed && (

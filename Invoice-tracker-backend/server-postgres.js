@@ -775,15 +775,17 @@ app.post('/api/upload-pdfs', async (req, res) => {
         try {
           const invoiceData = await extractInvoiceData(file.filepath, file.originalFilename);
 
-          // Check for duplicates (for tracking purposes, but allow upload)
+          // Check for duplicates (same invoice number AND client name)
           const existing = await db.get(
-            'SELECT id, invoice_number FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1))',
-            invoiceData.invoice_number
+            'SELECT id, invoice_number, client FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) AND LOWER(TRIM(client)) = LOWER(TRIM($2))',
+            invoiceData.invoice_number,
+            invoiceData.client
           );
 
           if (existing) {
             duplicates.push({
               invoiceNumber: invoiceData.invoice_number,
+              client: invoiceData.client,
               filename: file.originalFilename,
               existingId: existing.id
             });
@@ -2041,27 +2043,32 @@ app.delete('/api/contracts/:contractName', async (req, res) => {
   }
 });
 
-// Get all invoice numbers that have duplicates
+// Get all invoice numbers that have duplicates (same invoice number AND client)
 app.get('/api/duplicates', async (req, res) => {
   try {
-    const allInvoices = await db.all('SELECT invoice_number FROM invoices');
+    const allInvoices = await db.all('SELECT invoice_number, client FROM invoices');
     const invoiceCount = {};
 
-    // Count occurrences of each invoice number
+    // Count occurrences of each invoice number + client combination
     allInvoices.forEach(inv => {
-      const num = inv.invoiceNumber.toLowerCase().trim();
-      invoiceCount[num] = (invoiceCount[num] || 0) + 1;
+      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}`;
+      invoiceCount[key] = (invoiceCount[key] || 0) + 1;
     });
 
-    // Get invoice numbers that appear more than once
+    // Get combinations that appear more than once
     const duplicateNumbers = Object.keys(invoiceCount)
-      .filter(num => invoiceCount[num] > 1)
-      .map(num => {
-        // Get the actual invoice number (with original casing)
-        const original = allInvoices.find(inv => inv.invoiceNumber.toLowerCase().trim() === num);
+      .filter(key => invoiceCount[key] > 1)
+      .map(key => {
+        const [invoiceNum, clientName] = key.split('|||');
+        // Get the actual invoice number and client (with original casing)
+        const original = allInvoices.find(inv =>
+          inv.invoiceNumber.toLowerCase().trim() === invoiceNum &&
+          inv.client.toLowerCase().trim() === clientName
+        );
         return {
           invoiceNumber: original.invoiceNumber,
-          count: invoiceCount[num]
+          client: original.client,
+          count: invoiceCount[key]
         };
       });
 
@@ -2071,13 +2078,14 @@ app.get('/api/duplicates', async (req, res) => {
   }
 });
 
-// Get duplicates by invoice number
-app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
+// Get duplicates by invoice number and client
+app.get('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
   try {
-    const { invoiceNumber } = req.params;
+    const { invoiceNumber, client } = req.params;
     const duplicates = await db.all(
-      'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
-      invoiceNumber
+      'SELECT * FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) AND LOWER(TRIM(client)) = LOWER(TRIM($2)) ORDER BY upload_date DESC',
+      invoiceNumber,
+      client
     );
     res.json(duplicates);
   } catch (error) {
@@ -2085,15 +2093,16 @@ app.get('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
   }
 });
 
-// Delete invoices by invoice number (keep only the latest)
-app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
+// Delete invoices by invoice number and client (keep only the latest)
+app.delete('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
   try {
-    const { invoiceNumber } = req.params;
+    const { invoiceNumber, client } = req.params;
 
-    // Get all records with this invoice number, ordered by upload date
+    // Get all records with this invoice number and client, ordered by upload date
     const records = await db.all(
-      'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) ORDER BY upload_date DESC',
-      invoiceNumber
+      'SELECT id, upload_date, pdf_path FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) AND LOWER(TRIM(client)) = LOWER(TRIM($2)) ORDER BY upload_date DESC',
+      invoiceNumber,
+      client
     );
 
     if (records.length <= 1) {
