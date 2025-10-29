@@ -360,7 +360,11 @@ const Analytics = ({ onNavigateBack }) => {
     const days90 = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const todayStr = today.toISOString().split('T')[0];
 
-    const pendingInvoices = invoices.filter(inv => inv.status === 'Pending' && inv.dueDate);
+    const pendingInvoices = invoices.filter(inv =>
+      inv.status === 'Pending' &&
+      inv.dueDate &&
+      inv.invoiceType !== 'Credit Memo' // Exclude credit memos from cash flow projection
+    );
 
     let next30 = 0, next31to60 = 0, next61to90 = 0, beyond90 = 0;
 
