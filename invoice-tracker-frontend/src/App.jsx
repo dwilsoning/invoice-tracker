@@ -575,6 +575,43 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     return grouped;
   };
 
+  // Sort group names, with special handling for numeric contracts
+  const getSortedGroupNames = (grouped) => {
+    return Object.keys(grouped).sort((a, b) => {
+      // Special handling when grouping by Contract
+      if (groupBy === 'Contract') {
+        // Extract the contract number from the group name (handle secondary grouping with " > ")
+        const contractA = a.split(' > ')[0];
+        const contractB = b.split(' > ')[0];
+
+        // If both are "Uncategorized", they're equal
+        if (contractA === 'Uncategorized' && contractB === 'Uncategorized') return 0;
+        // "Uncategorized" always goes to the end
+        if (contractA === 'Uncategorized') return 1;
+        if (contractB === 'Uncategorized') return -1;
+
+        // Try to parse as numbers
+        const numA = parseInt(contractA, 10);
+        const numB = parseInt(contractB, 10);
+
+        // If both are numbers, sort numerically (ascending)
+        if (!isNaN(numA) && !isNaN(numB)) {
+          return numA - numB;
+        }
+
+        // If only one is a number, number comes first
+        if (!isNaN(numA)) return -1;
+        if (!isNaN(numB)) return 1;
+
+        // Otherwise, alphabetical sort
+        return contractA.localeCompare(contractB);
+      }
+
+      // For other groupings, alphabetical sort
+      return a.localeCompare(b);
+    });
+  };
+
   // Calculate aging statistics
   const calculateAgingStats = () => {
     // Exclude credit memos from aging report (only regular unpaid invoices)
@@ -841,6 +878,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}`);
       setDuplicateDetails(response.data);
       setSelectedDuplicate(invoiceNumber);
+
+      // Filter the invoice table to show only this invoice number
+      setSearchTerm(invoiceNumber);
+      setShowInvoiceTable(true);
     } catch (error) {
       console.error('Error loading duplicate details:', error);
       showMessage('error', 'Failed to load duplicate details');
@@ -2026,7 +2067,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           
           {showInvoiceTable && (
             <div className="px-6 pb-6">
-              {Object.keys(groupedInvoices).map(groupName => {
+              {getSortedGroupNames(groupedInvoices).map(groupName => {
                 const groupInvs = groupedInvoices[groupName];
                 const groupTotal = groupInvs.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 // Always show invoices when no grouping, otherwise use collapsed by default
