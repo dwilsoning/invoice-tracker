@@ -85,6 +85,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   // Server Status
   const [serverStatus, setServerStatus] = useState('checking'); // 'online', 'offline', 'checking'
 
+  // Auto-refresh
+  const [autoRefresh, setAutoRefresh] = useState(false);
+  const [lastRefresh, setLastRefresh] = useState(new Date());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
   // Help Modal
   const [showHelp, setShowHelp] = useState(false);
 
@@ -201,6 +206,36 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       console.error('Error loading expected invoices:', error);
     }
   };
+
+  // Manual refresh all data
+  const refreshAllData = async () => {
+    setIsRefreshing(true);
+    try {
+      await Promise.all([
+        loadInvoices(),
+        loadExpectedInvoices(),
+        loadDuplicates(),
+        loadContracts()
+      ]);
+      setLastRefresh(new Date());
+    } catch (error) {
+      console.error('Error refreshing data:', error);
+      showMessage('error', 'Failed to refresh data');
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  // Auto-refresh effect
+  useEffect(() => {
+    if (!autoRefresh) return;
+
+    const interval = setInterval(() => {
+      refreshAllData();
+    }, 30000); // Refresh every 30 seconds
+
+    return () => clearInterval(interval);
+  }, [autoRefresh]);
 
   const loadExchangeRates = async () => {
     try {
@@ -1039,6 +1074,29 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             <h1 className="text-4xl font-bold text-white">APAC Invoice Tracker</h1>
           </div>
           <div className="flex items-center gap-4">
+            {/* Refresh Controls */}
+            <div className="flex items-center gap-2">
+              <button
+                onClick={refreshAllData}
+                disabled={isRefreshing}
+                className={`px-4 py-2 bg-white bg-opacity-20 text-white rounded-lg hover:bg-white hover:bg-opacity-30 transition font-medium ${
+                  isRefreshing ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+                title={`Last refresh: ${lastRefresh.toLocaleTimeString()}`}
+              >
+                {isRefreshing ? '🔄 Refreshing...' : '🔄 Refresh'}
+              </button>
+              <label className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-lg cursor-pointer hover:bg-white hover:bg-opacity-30 transition">
+                <input
+                  type="checkbox"
+                  checked={autoRefresh}
+                  onChange={(e) => setAutoRefresh(e.target.checked)}
+                  className="w-4 h-4 cursor-pointer"
+                />
+                <span className="text-sm text-white font-medium">Auto-refresh (30s)</span>
+              </label>
+            </div>
+
             {/* Server Status Indicator */}
             <div className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-lg">
               <div className={`w-3 h-3 rounded-full ${
