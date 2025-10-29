@@ -1982,15 +1982,15 @@ app.delete('/api/invoices/duplicates/:invoiceNumber', async (req, res) => {
 
     for (const record of toDelete) {
       // Delete PDF file
-      if (record.pdf_path) {
-        const pdfFullPath = path.join(__dirname, record.pdf_path);
+      if (record.pdfPath) {
+        const pdfFullPath = path.join(__dirname, record.pdfPath);
         if (fs.existsSync(pdfFullPath)) {
           fs.unlinkSync(pdfFullPath);
         }
       }
 
       // Delete database record
-      await db.run('DELETE FROM invoices WHERE id = ?', record.id);
+      await db.run('DELETE FROM invoices WHERE id = $1', record.id);
       deletedCount++;
     }
 
