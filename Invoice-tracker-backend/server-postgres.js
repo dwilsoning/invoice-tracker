@@ -882,8 +882,8 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
       fs.renameSync(file.filepath, pdf_path);
 
       // Delete old PDF
-      if (existing && existing.pdf_path) {
-        const oldPdfPath = path.join(__dirname, existing.pdf_path);
+      if (existing && existing.pdfPath) {
+        const oldPdfPath = path.join(__dirname, existing.pdfPath);
         if (fs.existsSync(oldPdfPath)) {
           fs.unlinkSync(oldPdfPath);
         }
@@ -1030,7 +1030,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
     const { id } = req.params;
     const row = await db.get('SELECT pdf_path FROM invoices WHERE id = $1', id);
 
-    if (row && row.pdf_path) {
+    if (row && row.pdfPath) {
       // Convert web path (/pdfs/file.pdf) to file system path (invoice_pdfs/file.pdf)
       const relativePath = row.pdfPath.replace(/^\/pdfs\//, 'invoice_pdfs/');
       const pdfFullPath = path.join(__dirname, relativePath);
@@ -1162,7 +1162,7 @@ async function generateExpectedInvoices() {
 
     for (const row of rows) {
       // Group by client and contract only - one expected invoice per contract
-      const key = `${row.client}-${row.customer_contract || 'none'}`;
+      const key = `${row.client}-${row.customerContract || 'none'}`;
       if (!grouped[key]) {
         grouped[key] = row;
       }
@@ -1467,8 +1467,8 @@ app.post('/api/query', async (req, res) => {
       const today = new Date().toISOString().split('T')[0];
       results = results.filter(inv =>
         inv.status === 'Pending' &&
-        inv.due_date &&
-        inv.due_date < today &&
+        inv.dueDate &&
+        inv.dueDate < today &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
     } else if (queryLower.includes('unpaid') || queryLower.includes('pending') || queryLower.includes('outstanding')) {
@@ -1491,9 +1491,9 @@ app.post('/api/query', async (req, res) => {
       const monthEnd = new Date(currentYear, currentMonth + 1, 0).toISOString().split('T')[0];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
+        results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
       } else {
-        results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
+        results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
       }
     }
 
@@ -1503,9 +1503,9 @@ app.post('/api/query', async (req, res) => {
       const monthEnd = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
+        results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
       } else {
-        results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
+        results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
       }
     }
 
@@ -1515,9 +1515,9 @@ app.post('/api/query', async (req, res) => {
       const yearEnd = `${currentYear}-12-31`;
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.due_date >= yearStart && inv.due_date <= yearEnd);
+        results = results.filter(inv => inv.dueDate >= yearStart && inv.dueDate <= yearEnd);
       } else {
-        results = results.filter(inv => inv.invoice_date >= yearStart && inv.invoice_date <= yearEnd);
+        results = results.filter(inv => inv.invoiceDate >= yearStart && inv.invoiceDate <= yearEnd);
       }
     }
 
@@ -1527,9 +1527,9 @@ app.post('/api/query', async (req, res) => {
       const yearEnd = `${currentYear - 1}-12-31`;
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.due_date >= yearStart && inv.due_date <= yearEnd);
+        results = results.filter(inv => inv.dueDate >= yearStart && inv.dueDate <= yearEnd);
       } else {
-        results = results.filter(inv => inv.invoice_date >= yearStart && inv.invoice_date <= yearEnd);
+        results = results.filter(inv => inv.invoiceDate >= yearStart && inv.invoiceDate <= yearEnd);
       }
     }
 
@@ -1542,9 +1542,9 @@ app.post('/api/query', async (req, res) => {
         const monthEnd = new Date(year, index + 1, 0).toISOString().split('T')[0];
 
         if (queryLower.includes('due')) {
-          results = results.filter(inv => inv.due_date >= monthStart && inv.due_date <= monthEnd);
+          results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
         } else {
-          results = results.filter(inv => inv.invoice_date >= monthStart && inv.invoice_date <= monthEnd);
+          results = results.filter(inv => inv.invoiceDate >= monthStart && inv.invoiceDate <= monthEnd);
         }
       }
     });
@@ -1556,9 +1556,9 @@ app.post('/api/query', async (req, res) => {
       const dateTo = betweenMatch[2];
 
       if (queryLower.includes('due')) {
-        results = results.filter(inv => inv.due_date >= dateFrom && inv.due_date <= dateTo);
+        results = results.filter(inv => inv.dueDate >= dateFrom && inv.dueDate <= dateTo);
       } else {
-        results = results.filter(inv => inv.invoice_date >= dateFrom && inv.invoice_date <= dateTo);
+        results = results.filter(inv => inv.invoiceDate >= dateFrom && inv.invoiceDate <= dateTo);
       }
     }
 
@@ -1632,7 +1632,7 @@ app.post('/api/query', async (req, res) => {
       const contractsInResults = new Set();
 
       results.forEach(inv => {
-        const contractName = inv.customerContract || inv.customer_contract;
+        const contractName = inv.customerContract;
         if (contractName) {
           contractsInResults.add(contractName);
           if (!contractTotals[contractName]) {
@@ -1640,7 +1640,7 @@ app.post('/api/query', async (req, res) => {
             contractPaidTotals[contractName] = 0;
           }
           // Convert to USD for comparison
-          const amountUSD = convertToUSD(inv.amountDue || inv.amount_due, inv.currency);
+          const amountUSD = convertToUSD(inv.amountDue, inv.currency);
           contractTotals[contractName] += amountUSD;
 
           // Track paid amounts
@@ -1796,7 +1796,7 @@ app.post('/api/query', async (req, res) => {
       // Filter invoices to only those matching contracts
       if (matchingContracts.length > 0) {
         results = results.filter(inv => {
-          const contractName = inv.customerContract || inv.customer_contract;
+          const contractName = inv.customerContract;
           return contractName && matchingContracts.includes(contractName);
         });
       } else {
@@ -1813,7 +1813,7 @@ app.post('/api/query', async (req, res) => {
 
     // Calculate response
     if (wantsAverage) {
-      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amount_due, inv.currency), 0);
+      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
       const average = results.length > 0 ? total / results.length : 0;
 
       res.json({
@@ -1825,7 +1825,7 @@ app.post('/api/query', async (req, res) => {
         contractSummary
       });
     } else if (wantsTotal || (wantsCount && wantsTotal)) {
-      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amount_due, inv.currency), 0);
+      const total = results.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
       res.json({
         type: 'total',
