@@ -90,8 +90,8 @@ const Analytics = ({ onNavigateBack }) => {
   const getBaseFilteredInvoices = () => {
     let filtered = [...invoices];
 
-    // Exclude credit memos from all analytics calculations
-    filtered = filtered.filter(inv => inv.invoiceType !== 'Credit Memo');
+    // Credit memos are now INCLUDED in analytics as they represent actual financial events
+    // Their due dates have been corrected to match invoice dates for accurate forecasting
 
     // Production mode filter - only show invoices from 1 Nov 2025 onwards
     if (productionMode) {
@@ -353,6 +353,7 @@ const Analytics = ({ onNavigateBack }) => {
   // 6. Cash Flow Projection (30/60/90 days)
   // NOTE: Cashflow uses ALL invoices (not filtered by production mode) because it's forward-looking
   // and shows expected cash inflows based on due dates, regardless of when invoices were created
+  // Credit memos are INCLUDED as they represent reductions in expected cash inflows
   const getCashFlowProjection = () => {
     const today = new Date();
     const days30 = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
@@ -362,8 +363,7 @@ const Analytics = ({ onNavigateBack }) => {
 
     const pendingInvoices = invoices.filter(inv =>
       inv.status === 'Pending' &&
-      inv.dueDate &&
-      inv.invoiceType !== 'Credit Memo' // Exclude credit memos from cash flow projection
+      inv.dueDate
     );
 
     let next30 = 0, next31to60 = 0, next61to90 = 0, beyond90 = 0;
