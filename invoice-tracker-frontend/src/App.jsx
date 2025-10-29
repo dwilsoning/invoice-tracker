@@ -484,7 +484,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
 
     // Search filter
-    if (searchTerm) {
+    if (searchTerm && typeof searchTerm === 'string') {
       const term = searchTerm.toLowerCase();
       filtered = filtered.filter(inv =>
         inv.invoiceNumber?.toLowerCase().includes(term) ||
@@ -938,6 +938,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       await loadInvoices();
       setSelectedDuplicate(null);
       setDuplicateDetails([]);
+      setSearchTerm(''); // Clear search filter after deleting duplicates
       showMessage('success', 'Duplicate invoices deleted');
     } catch (error) {
       showMessage('error', 'Failed to delete duplicates');
