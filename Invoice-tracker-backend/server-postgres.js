@@ -1458,10 +1458,14 @@ app.post('/api/query', async (req, res) => {
         const captured = pattern3Match[1].trim();
         // Exclude temporal keywords that should be handled by date filtering
         const temporalKeywords = ['this month', 'last month', 'next month', 'this year', 'last year', 'next year',
-                                  'current month', 'previous month', 'current year', 'previous year',
-                                  'january', 'february', 'march', 'april', 'may', 'june',
-                                  'july', 'august', 'september', 'october', 'november', 'december'];
-        if (!temporalKeywords.includes(captured)) {
+                                  'current month', 'previous month', 'current year', 'previous year'];
+        const monthNames = ['january', 'february', 'march', 'april', 'may', 'june',
+                           'july', 'august', 'september', 'october', 'november', 'december'];
+
+        // Check if captured text is a temporal keyword OR starts with a month name (e.g., "january 2025")
+        const isTemporal = temporalKeywords.includes(captured) || monthNames.some(month => captured.startsWith(month));
+
+        if (!isTemporal) {
           clientMatch = pattern3Match;
         }
       }
