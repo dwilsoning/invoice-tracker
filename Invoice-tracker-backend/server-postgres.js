@@ -1399,8 +1399,22 @@ app.post('/api/query', async (req, res) => {
     });
 
     // Filter by client name
-    // Match patterns: "for X", "from X", "by X", "to X", "issued to X", "sent to X", "relating to X"
-    const clientMatch = queryLower.match(/(?:relating to|issued to|sent to|for|from|by|to)\s+([a-z0-9\s&'.,-]+?)(?:\?|$|(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|and|>|<)))/i);
+    // Match patterns:
+    // - "for X", "from X", "by X", "to X", "issued to X", "sent to X", "relating to X"
+    // - "X contracts", "X invoices" (where X is the client name)
+    // - "which X contracts" (where X is the client name)
+    let clientMatch = queryLower.match(/(?:relating to|issued to|sent to|for|from|by|to)\s+([a-z0-9\s&'.,-]+?)(?:\?|$|(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|and|>|<)))/i);
+
+    // If no match, try pattern "which X contracts/invoices"
+    if (!clientMatch) {
+      clientMatch = queryLower.match(/(?:which|what)\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
+    }
+
+    // If still no match, try pattern "X contracts/invoices" at the beginning
+    if (!clientMatch) {
+      clientMatch = queryLower.match(/^([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
+    }
+
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
       results = results.filter(inv =>
