@@ -351,8 +351,9 @@ const Analytics = ({ onNavigateBack }) => {
   // PHASE 2 ANALYTICS
 
   // 6. Cash Flow Projection (30/60/90 days)
-  // NOTE: Cashflow uses ALL invoices (not filtered by production mode) because it's forward-looking
-  // and shows expected cash inflows based on due dates, regardless of when invoices were created
+  // NOTE: Cash flow projection filters based on DUE DATE, not invoice date
+  // When production mode is enabled, only includes invoices with due dates on/after Nov 1, 2025
+  // This ensures we only project cash flow for relevant future payment expectations
   // Credit memos are INCLUDED as they represent reductions in expected cash inflows
   const getCashFlowProjection = () => {
     const today = new Date();
@@ -361,10 +362,16 @@ const Analytics = ({ onNavigateBack }) => {
     const days90 = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const todayStr = today.toISOString().split('T')[0];
 
-    const pendingInvoices = invoices.filter(inv =>
-      inv.status === 'Pending' &&
-      inv.dueDate
-    );
+    // Filter pending invoices by due date (not invoice date)
+    const productionStartDate = '2025-11-01';
+    const pendingInvoices = invoices.filter(inv => {
+      if (inv.status !== 'Pending' || !inv.dueDate) return false;
+
+      // In production mode, only include invoices with due dates on/after production start
+      if (productionMode && inv.dueDate < productionStartDate) return false;
+
+      return true;
+    });
 
     let next30 = 0, next31to60 = 0, next61to90 = 0, beyond90 = 0;
 
