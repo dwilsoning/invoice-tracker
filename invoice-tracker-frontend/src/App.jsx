@@ -77,6 +77,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [filtersCollapsed, setFiltersCollapsed] = useState(false);
   const [groupingCollapsed, setGroupingCollapsed] = useState(false);
 
+  // Sorting State
+  const [sortBy, setSortBy] = useState('invoiceDate');
+  const [sortOrder, setSortOrder] = useState('desc'); // 'asc' or 'desc'
+
   // Duplicates State
   const [duplicates, setDuplicates] = useState([]);
   const [selectedDuplicate, setSelectedDuplicate] = useState(null);
@@ -500,6 +504,47 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
 
     return filtered;
+  };
+
+  // Handle sorting
+  const handleSort = (column) => {
+    if (sortBy === column) {
+      // Toggle sort order if clicking the same column
+      setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
+    } else {
+      // Set new column and default to ascending
+      setSortBy(column);
+      setSortOrder('asc');
+    }
+  };
+
+  // Sort invoices
+  const sortInvoices = (invoices) => {
+    return [...invoices].sort((a, b) => {
+      let aVal = a[sortBy];
+      let bVal = b[sortBy];
+
+      // Handle null/undefined values
+      if (aVal === null || aVal === undefined) aVal = '';
+      if (bVal === null || bVal === undefined) bVal = '';
+
+      // Convert to USD for amount comparison
+      if (sortBy === 'amountDue') {
+        aVal = convertToUSD(a.amountDue, a.currency);
+        bVal = convertToUSD(b.amountDue, b.currency);
+      }
+
+      // String comparison (case-insensitive)
+      if (typeof aVal === 'string' && typeof bVal === 'string') {
+        aVal = aVal.toLowerCase();
+        bVal = bVal.toLowerCase();
+      }
+
+      // Compare
+      if (aVal < bVal) return sortOrder === 'asc' ? -1 : 1;
+      if (aVal > bVal) return sortOrder === 'asc' ? 1 : -1;
+      return 0;
+    });
   };
 
   // Get dashboard date range
@@ -2278,7 +2323,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           {showInvoiceTable && (
             <div className="px-6 pb-6">
               {getSortedGroupNames(groupedInvoices).map(groupName => {
-                const groupInvs = groupedInvoices[groupName];
+                const groupInvs = sortInvoices(groupedInvoices[groupName]);
                 const groupTotal = groupInvs.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 // Always show invoices when no grouping, otherwise use collapsed by default
                 const isExpanded = groupBy === 'None' ? true : expandedGroups[groupName] === true;
@@ -2412,15 +2457,78 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                         <table className="w-full">
                           <thead className="bg-gray-50">
                             <tr>
-                              <th className="px-4 py-2 text-left">Invoice #</th>
-                              <th className="px-4 py-2 text-left">Client</th>
-                              <th className="px-4 py-2 text-left">Contract</th>
-                              <th className="px-4 py-2 text-left">PO Number</th>
-                              <th className="px-4 py-2 text-left">Type</th>
-                              <th className="px-4 py-2 text-left">Date</th>
-                              <th className="px-4 py-2 text-left">Due Date</th>
-                              <th className="px-4 py-2 text-left">Amount</th>
-                              <th className="px-4 py-2 text-left">Status</th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('invoiceNumber')}>
+                                <div className="flex items-center gap-1">
+                                  Invoice #
+                                  {sortBy === 'invoiceNumber' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('client')}>
+                                <div className="flex items-center gap-1">
+                                  Client
+                                  {sortBy === 'client' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('customerContract')}>
+                                <div className="flex items-center gap-1">
+                                  Contract
+                                  {sortBy === 'customerContract' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('poNumber')}>
+                                <div className="flex items-center gap-1">
+                                  PO Number
+                                  {sortBy === 'poNumber' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('invoiceType')}>
+                                <div className="flex items-center gap-1">
+                                  Type
+                                  {sortBy === 'invoiceType' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('invoiceDate')}>
+                                <div className="flex items-center gap-1">
+                                  Date
+                                  {sortBy === 'invoiceDate' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('dueDate')}>
+                                <div className="flex items-center gap-1">
+                                  Due Date
+                                  {sortBy === 'dueDate' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('amountDue')}>
+                                <div className="flex items-center gap-1">
+                                  Amount
+                                  {sortBy === 'amountDue' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
+                              <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('status')}>
+                                <div className="flex items-center gap-1">
+                                  Status
+                                  {sortBy === 'status' && (
+                                    <span className="text-xs">{sortOrder === 'asc' ? '▲' : '▼'}</span>
+                                  )}
+                                </div>
+                              </th>
                               <th className="px-4 py-2 text-left">Actions</th>
                             </tr>
                           </thead>
