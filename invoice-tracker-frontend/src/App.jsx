@@ -73,6 +73,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [queryText, setQueryText] = useState('');
   const [queryResult, setQueryResult] = useState(null);
   const [queryFilteredIds, setQueryFilteredIds] = useState(null);
+  const [isQuerying, setIsQuerying] = useState(false);
   const [filtersCollapsed, setFiltersCollapsed] = useState(false);
   const [groupingCollapsed, setGroupingCollapsed] = useState(false);
 
@@ -907,6 +908,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const handleQuery = async () => {
     if (!queryText.trim()) return;
 
+    setIsQuerying(true);
     try {
       const response = await axios.post(`${API_URL}/query`, { query: queryText });
       setQueryResult(response.data);
@@ -950,6 +952,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       }
     } catch (error) {
       showMessage('error', 'Query failed');
+    } finally {
+      setIsQuerying(false);
     }
   };
 
@@ -1303,9 +1307,14 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             />
             <button
               onClick={handleQuery}
-              className="px-6 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
+              disabled={isQuerying || !queryText.trim()}
+              className={`px-6 py-2 rounded transition ${
+                isQuerying || !queryText.trim()
+                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                  : 'bg-[#151744] text-white hover:bg-[#0d0e2a] active:scale-95'
+              }`}
             >
-              Ask
+              {isQuerying ? 'Asking...' : 'Ask'}
             </button>
             <button
               onClick={() => {
