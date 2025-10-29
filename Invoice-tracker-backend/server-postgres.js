@@ -1442,8 +1442,12 @@ app.post('/api/query', async (req, res) => {
     clientMatch = queryLower.match(/(?:which|what)\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
 
     // Pattern 2: "show me X invoices/contracts" (must come early to avoid "from" matching later)
+    // But exclude if "invoices/contracts" is followed by "on contract" (contract query, not client query)
     if (!clientMatch) {
-      clientMatch = queryLower.match(/show\s+me\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
+      const pattern2Match = queryLower.match(/show\s+me\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)(?:\s+(?:on|for)\s+contract)?/i);
+      if (pattern2Match && !pattern2Match[0].includes(' on contract') && !pattern2Match[0].includes(' for contract')) {
+        clientMatch = pattern2Match;
+      }
     }
 
     // Pattern 3: "invoices/contracts for/from/to X" - must check this BEFORE pattern 4
