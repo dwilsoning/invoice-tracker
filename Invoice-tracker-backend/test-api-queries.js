@@ -73,8 +73,17 @@ const testQueries = [
       if (results.length === 0) return { pass: false, reason: 'Returned 0 invoices' };
       const allMatch = results.every(inv =>
         inv.client.toLowerCase().includes('barwon health') &&
-        inv.invoiceType === 'Maintenance'
+        inv.invoiceType === 'Maint'
       );
+      if (!allMatch && results.length > 0) {
+        const mismatched = results.filter(inv =>
+          !inv.client.toLowerCase().includes('barwon health') || inv.invoiceType !== 'Maint'
+        );
+        return {
+          pass: false,
+          reason: `Found ${mismatched.length} mismatched: ${mismatched.map(inv => `${inv.invoiceNumber} (${inv.client}, ${inv.invoiceType})`).join(', ')}`
+        };
+      }
       return { pass: allMatch, reason: allMatch ? 'All match client and type' : 'Found mismatched invoices' };
     }
   }

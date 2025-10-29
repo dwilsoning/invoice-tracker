@@ -1607,8 +1607,12 @@ app.post('/api/query', async (req, res) => {
     months.forEach((month, index) => {
       if (queryLower.includes(month)) {
         const year = queryLower.match(/\b(20\d{2})\b/) ? parseInt(queryLower.match(/\b(20\d{2})\b/)[1]) : currentYear;
-        const monthStart = new Date(year, index, 1).toISOString().split('T')[0];
-        const monthEnd = new Date(year, index + 1, 0).toISOString().split('T')[0];
+        // Use string formatting to avoid timezone issues
+        const monthNum = String(index + 1).padStart(2, '0');
+        const monthStart = `${year}-${monthNum}-01`;
+        // Calculate last day of month
+        const lastDay = new Date(year, index + 1, 0).getDate();
+        const monthEnd = `${year}-${monthNum}-${String(lastDay).padStart(2, '0')}`;
 
         if (queryLower.includes('due')) {
           results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
