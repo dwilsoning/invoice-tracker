@@ -1451,8 +1451,20 @@ app.post('/api/query', async (req, res) => {
     }
 
     // Pattern 3: "invoices/contracts for/from/to X" - must check this BEFORE pattern 4
+    // But exclude temporal phrases (date/time keywords)
     if (!clientMatch) {
-      clientMatch = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|\?)|$)/i);
+      const pattern3Match = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|\?)|$)/i);
+      if (pattern3Match) {
+        const captured = pattern3Match[1].trim();
+        // Exclude temporal keywords that should be handled by date filtering
+        const temporalKeywords = ['this month', 'last month', 'next month', 'this year', 'last year', 'next year',
+                                  'current month', 'previous month', 'current year', 'previous year',
+                                  'january', 'february', 'march', 'april', 'may', 'june',
+                                  'july', 'august', 'september', 'october', 'november', 'december'];
+        if (!temporalKeywords.includes(captured)) {
+          clientMatch = pattern3Match;
+        }
+      }
     }
 
     // Pattern 4: "X contracts/invoices" at the beginning (only if X is not a status/type word)
