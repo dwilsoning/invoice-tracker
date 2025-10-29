@@ -1451,20 +1451,33 @@ app.post('/api/query', async (req, res) => {
       clientMatch = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|\?)|$)/i);
     }
 
-    // Pattern 4: "X contracts/invoices" at the beginning (only if no preposition follows)
+    // Pattern 4: "X contracts/invoices" at the beginning (only if X is not a status/type word)
     if (!clientMatch) {
-      // Only match if there's NO "for/from/to/by" after "invoices/contracts"
       const potentialMatch = queryLower.match(/^([a-z0-9\s&'.,-]+?)\s+(contracts?|invoices?)(?:\s+(?:for|from|to|by))?/i);
       if (potentialMatch && !potentialMatch[0].match(/\s+(?:for|from|to|by)\s*$/i)) {
-        clientMatch = [potentialMatch[0], potentialMatch[1]];
+        const potentialClient = potentialMatch[1].trim();
+
+        // Exclude status words and invoice type words from being treated as client names
+        const excludedWords = ['unpaid', 'paid', 'overdue', 'pending', 'outstanding',
+                               'professional', 'maintenance', 'subscription', 'hosting',
+                               'managed', 'software', 'hardware', 'ps', 'maint', 'sub',
+                               'ms', 'sw', 'hw', '3pp', 'third', 'credit', 'monthly',
+                               'quarterly', 'annual', 'adhoc'];
+
+        if (!excludedWords.includes(potentialClient)) {
+          clientMatch = [potentialMatch[0], potentialMatch[1]];
+        }
       }
     }
 
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
+      console.log(`🔎 Filtering for client: "${clientName}"`);
+      const before = results.length;
       results = results.filter(inv =>
         inv.client && inv.client.toLowerCase().includes(clientName)
       );
+      console.log(`✅ Client filter: ${before} → ${results.length} invoices`);
     }
 
     // Filter by contract
