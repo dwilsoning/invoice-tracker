@@ -1459,10 +1459,10 @@ app.post('/api/query', async (req, res) => {
 
         // Exclude status words and invoice type words from being treated as client names
         const excludedWords = ['unpaid', 'paid', 'overdue', 'pending', 'outstanding',
-                               'professional', 'maintenance', 'subscription', 'hosting',
-                               'managed', 'software', 'hardware', 'ps', 'maint', 'sub',
-                               'ms', 'sw', 'hw', '3pp', 'third', 'credit', 'monthly',
-                               'quarterly', 'annual', 'adhoc'];
+                               'professional', 'professional services', 'maintenance', 'subscription', 'hosting',
+                               'managed', 'managed services', 'software', 'hardware', 'ps', 'maint', 'sub',
+                               'ms', 'sw', 'hw', '3pp', 'third', 'third party', 'credit', 'credit memo',
+                               'monthly', 'quarterly', 'annual', 'adhoc'];
 
         if (!excludedWords.includes(potentialClient)) {
           clientMatch = [potentialMatch[0], potentialMatch[1]];
