@@ -1419,26 +1419,29 @@ app.post('/api/query', async (req, res) => {
     }
 
     // Filter by client name
-    // Match patterns:
-    // - "for X", "from X", "by X", "to X", "issued to X", "sent to X", "relating to X"
-    // - "X contracts", "X invoices" (where X is the client name)
-    // - "which X contracts" (where X is the client name)
-    // - "show me X invoices" (where X is the client name)
-    let clientMatch = queryLower.match(/(?:relating to|issued to|sent to|for|from|by|to)\s+([a-z0-9\s&'.,-]+?)(?:\?|$|(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|and|>|<)))/i);
+    // Try more specific patterns first to avoid false matches
+    let clientMatch = null;
 
-    // If no match, try pattern "which X contracts/invoices"
-    if (!clientMatch) {
-      clientMatch = queryLower.match(/(?:which|what)\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
-    }
+    // Pattern 1: "which/what X contracts/invoices"
+    clientMatch = queryLower.match(/(?:which|what)\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
 
-    // If still no match, try pattern "show me X invoices/contracts"
+    // Pattern 2: "show me X invoices/contracts" (must come early to avoid "from" matching later)
     if (!clientMatch) {
       clientMatch = queryLower.match(/show\s+me\s+([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
     }
 
-    // If still no match, try pattern "X contracts/invoices" at the beginning
+    // Pattern 3: "invoices/contracts for/from/to X" - must check this BEFORE pattern 4
     if (!clientMatch) {
-      clientMatch = queryLower.match(/^([a-z0-9\s&'.,-]+?)\s+(?:contracts?|invoices?)/i);
+      clientMatch = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|\?)|$)/i);
+    }
+
+    // Pattern 4: "X contracts/invoices" at the beginning (only if no preposition follows)
+    if (!clientMatch) {
+      // Only match if there's NO "for/from/to/by" after "invoices/contracts"
+      const potentialMatch = queryLower.match(/^([a-z0-9\s&'.,-]+?)\s+(contracts?|invoices?)(?:\s+(?:for|from|to|by))?/i);
+      if (potentialMatch && !potentialMatch[0].match(/\s+(?:for|from|to|by)\s*$/i)) {
+        clientMatch = [potentialMatch[0], potentialMatch[1]];
+      }
     }
 
     if (clientMatch) {
