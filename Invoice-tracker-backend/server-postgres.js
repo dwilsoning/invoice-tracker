@@ -1556,8 +1556,11 @@ app.post('/api/query', async (req, res) => {
 
     // This month
     if (queryLower.includes('this month') || queryLower.includes('current month')) {
-      const monthStart = new Date(currentYear, currentMonth, 1).toISOString().split('T')[0];
-      const monthEnd = new Date(currentYear, currentMonth + 1, 0).toISOString().split('T')[0];
+      // Use string formatting to avoid timezone issues
+      const monthNum = String(currentMonth + 1).padStart(2, '0');
+      const monthStart = `${currentYear}-${monthNum}-01`;
+      const lastDay = new Date(currentYear, currentMonth + 1, 0).getDate();
+      const monthEnd = `${currentYear}-${monthNum}-${String(lastDay).padStart(2, '0')}`;
 
       if (queryLower.includes('due')) {
         results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);
@@ -1568,8 +1571,14 @@ app.post('/api/query', async (req, res) => {
 
     // Last month
     if (queryLower.includes('last month') || queryLower.includes('previous month')) {
-      const monthStart = new Date(currentYear, currentMonth - 1, 1).toISOString().split('T')[0];
-      const monthEnd = new Date(currentYear, currentMonth, 0).toISOString().split('T')[0];
+      // Use string formatting to avoid timezone issues
+      const lastMonthDate = new Date(currentYear, currentMonth - 1);
+      const lastMonthYear = lastMonthDate.getFullYear();
+      const lastMonth = lastMonthDate.getMonth();
+      const monthNum = String(lastMonth + 1).padStart(2, '0');
+      const monthStart = `${lastMonthYear}-${monthNum}-01`;
+      const lastDay = new Date(lastMonthYear, lastMonth + 1, 0).getDate();
+      const monthEnd = `${lastMonthYear}-${monthNum}-${String(lastDay).padStart(2, '0')}`;
 
       if (queryLower.includes('due')) {
         results = results.filter(inv => inv.dueDate >= monthStart && inv.dueDate <= monthEnd);

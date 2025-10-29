@@ -19,11 +19,11 @@ const testQueries = [
   },
   {
     category: 'Client Filtering',
-    query: 'Invoices for Minister for Health',
+    query: 'Invoices for Department of Health',
     validate: (results) => {
       if (results.length === 0) return { pass: false, reason: 'Returned 0 invoices' };
       const allMatch = results.every(inv =>
-        inv.client.toLowerCase().includes('minister for health')
+        inv.client.toLowerCase().includes('department of health')
       );
       return { pass: allMatch, reason: allMatch ? `All ${results.length} invoices match` : 'Found non-matching clients' };
     }
