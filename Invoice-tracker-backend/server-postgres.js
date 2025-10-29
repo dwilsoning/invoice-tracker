@@ -1705,6 +1705,19 @@ app.post('/api/query', async (req, res) => {
       if (!isRangeQuery) {
         operator = percentageMatch[1] || '='; // Default to equals if no operator
         targetPercentage = parseInt(percentageMatch[2]);
+
+        // Handle word-based operators: "over", "above", "under", "below", "at least", "at most"
+        if (!percentageMatch[1]) {
+          if (queryLower.match(/\b(over|above|more\s+than|greater\s+than)\s+\d+\s*%/i)) {
+            operator = '>';
+          } else if (queryLower.match(/\b(under|below|less\s+than)\s+\d+\s*%/i)) {
+            operator = '<';
+          } else if (queryLower.match(/\b(at\s+least|minimum\s+of)\s+\d+\s*%/i)) {
+            operator = '>=';
+          } else if (queryLower.match(/\b(at\s+most|maximum\s+of)\s+\d+\s*%/i)) {
+            operator = '<=';
+          }
+        }
       }
 
       // Determine if we're looking at paid or unpaid percentages
