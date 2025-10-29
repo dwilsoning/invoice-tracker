@@ -1423,12 +1423,12 @@ app.post('/api/query', async (req, res) => {
     }
 
     // Filter by contract
-    // Match patterns: "contract X", "on contract X", "for contract X"
-    const contractMatch = queryLower.match(/(?:contract|on contract|for contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|invoices|in|during|\?)|$)/i);
+    // Match patterns: "contract X", "on contract X", "for contract X", "show me invoices on contract X"
+    const contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|\?)|$)/i);
     if (contractMatch) {
       const contract_name = contractMatch[1].trim();
       results = results.filter(inv =>
-        inv.customer_contract && inv.customerContract.toLowerCase().includes(contract_name)
+        inv.customerContract && inv.customerContract.toLowerCase().includes(contract_name)
       );
     }
 
