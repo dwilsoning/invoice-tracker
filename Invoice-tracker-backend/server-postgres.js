@@ -1402,30 +1402,31 @@ app.post('/api/query', async (req, res) => {
 
     // Filter by invoice type
     // Support both abbreviations and full names
+    // Values must match database casing: PS, Maint, Sub, Hosting, MS, SW, HW, 3PP, Credit Memo
     const typeMap = {
-      'ps': 'ps',
-      'professional services': 'ps',
-      'maint': 'maint',
-      'maintenance': 'maint',
-      'sub': 'sub',
-      'subscription': 'sub',
-      'hosting': 'hosting',
-      'ms': 'ms',
-      'managed services': 'ms',
-      'sw': 'sw',
-      'software': 'sw',
-      'hw': 'hw',
-      'hardware': 'hw',
-      '3pp': '3pp',
-      'third party': '3pp',
-      'credit memo': 'credit memo'
+      'ps': 'PS',
+      'professional services': 'PS',
+      'maint': 'Maint',
+      'maintenance': 'Maint',
+      'sub': 'Sub',
+      'subscription': 'Sub',
+      'hosting': 'Hosting',
+      'ms': 'MS',
+      'managed services': 'MS',
+      'sw': 'SW',
+      'software': 'SW',
+      'hw': 'HW',
+      'hardware': 'HW',
+      '3pp': '3PP',
+      'third party': '3PP',
+      'credit memo': 'Credit Memo'
     };
 
     for (const [key, value] of Object.entries(typeMap)) {
       if (queryLower.includes(key)) {
         console.log(`🔎 Filtering for invoice type: "${key}" → "${value}"`);
         const before = results.length;
-        results = results.filter(inv => inv.invoiceType && inv.invoiceType.toLowerCase() === value);
+        results = results.filter(inv => inv.invoiceType && inv.invoiceType === value);
         console.log(`✅ Type filter: ${before} → ${results.length} invoices`);
         if (results.length > 0) {
           console.log(`   Sample type: "${results[0].invoiceType}"`);
