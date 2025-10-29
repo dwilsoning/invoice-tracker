@@ -1331,7 +1331,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
                   <li>"Which Barwon Health contracts are unpaid"</li>
                   <li>"Invoices for Minister for Health"</li>
-                  <li>"Show me [client name] invoices from last month"</li>
+                  <li>"Show me Barwon Health invoices from last month"</li>
                 </ul>
               </div>
 
@@ -1347,7 +1347,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               <div>
                 <p className="font-semibold mb-1">Filter by Invoice Type:</p>
                 <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"PS invoices" (Professional Services)</li>
+                  <li>"Professional Services invoices" or "PS invoices"</li>
                   <li>"Maintenance invoices for Barwon Health"</li>
                   <li>"Subscription invoices this month"</li>
                 </ul>
@@ -1390,7 +1390,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
               <div className="pt-2 border-t border-white border-opacity-20">
                 <p className="italic text-gray-200">
-                  💡 Tip: You can combine multiple filters! Try: "Unpaid PS invoices for Barwon Health this year"
+                  💡 Tip: You can combine multiple filters! Try: "Unpaid Professional Services invoices for Barwon Health this year"
                 </p>
               </div>
             </div>
