@@ -302,6 +302,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         }
 
         showMessage('success', `Uploaded ${response.data.invoices.length} invoices`);
+
+        // Clear query filter so newly uploaded invoices are visible
+        setQueryFilteredIds(null);
+        setQueryResult(null);
+
         await loadInvoices();
         await loadExpectedInvoices();
         await loadDuplicates();
