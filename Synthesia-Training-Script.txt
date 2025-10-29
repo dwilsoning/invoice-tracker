@@ -1,0 +1,142 @@
+INVOICE TRACKER - SYNTHESIA VIDEO TRAINING SCRIPT
+=================================================
+
+[INTRODUCTION - 30 seconds]
+
+Welcome to the Invoice Tracker training video. This comprehensive system helps you manage invoices, track contracts, analyze financial data, and predict upcoming invoices. Let's explore the key features.
+
+[MAIN INTERFACE - 1 minute]
+
+The main interface is divided into three sections. At the top, you'll find the upload area and filters. Simply drag and drop PDF invoices, or click Browse to upload. The system automatically extracts all data including invoice number, client, amount, date, and type.
+
+Use the filter controls to narrow down your view by invoice type, status, date range, contract, client, or frequency. The AI Query box lets you ask natural language questions like "Show me unpaid invoices for Western Australia Department" or "Which contracts are 50% invoiced?"
+
+[GROUPING FEATURE - 1.5 minutes]
+
+One of the most powerful features is the Group By functionality. You can group invoices by Client, Contract, Type, Status, or Month. This provides instant summaries and analytics.
+
+When you group by Contract, you get a collapsed view showing the contract number, invoice count, and total amount. Here's what makes this feature exceptional: you can see and edit the contract value, select the currency, and view the progress percentage with a compact progress bar - all without expanding the group.
+
+Simply enter the contract value in the input field, select your currency from the dropdown - we support USD, AUD, EUR, GBP, and SGD - and the system immediately calculates and displays the completion percentage with a visual progress bar right on the collapsed view.
+
+When you expand a contract group, you'll see detailed metrics including Total Invoiced, Amount Paid in green, Remaining Balance in orange, and a full-size progress bar showing contract progress. This gives you complete visibility into contract performance at a glance.
+
+The system prevents accidental collapse when you're interacting with the input fields, making data entry smooth and intuitive.
+
+[INVOICE MANAGEMENT - 1 minute]
+
+Click any invoice number to view full details. You'll see all extracted information plus an embedded PDF viewer on the right side. From here, you can edit any field, mark invoices as paid or unpaid, download the PDF, or delete the invoice if needed.
+
+The system automatically detects invoice types: PS for Professional Services, Maint for Maintenance, Sub for Subscription, SW for Software, HW for Hardware, Hosting, MS for Managed Services, 3PP for Third Party, and Credit Memo for credits.
+
+It also identifies frequency patterns: monthly, quarterly, bi-annual, tri-annual, annual, or adhoc for one-time invoices.
+
+[AI QUERY SYSTEM - 1 minute]
+
+The AI Query system is incredibly powerful. Ask questions in plain English. For example: "Show me invoices over $50,000", "What's the total for South Australia Health?", or "Which contracts are greater than 80% invoiced?"
+
+You can combine multiple criteria: "Show unpaid maintenance invoices over $10,000" or "List all paid professional services for SA Health". The system uses fuzzy matching, so you don't need to worry about exact spelling.
+
+For contract analysis, ask "Which contracts are greater than 50% paid?" or "Show contracts less than 30% complete". The system instantly filters and displays matching results.
+
+[CONTRACT MANAGEMENT - 1.5 minutes]
+
+Contract management is a core feature. When you group by contract, each contract displays its value, total invoiced amount, total paid, and remaining balance. The system automatically converts all currencies to USD for consistency.
+
+Setting contract values is simple: Group by Contract, locate the contract, enter the amount in the value field visible right on the collapsed view, select the currency, and click away. The value saves automatically. You'll immediately see the progress percentage and mini progress bar appear.
+
+The progress bar uses color coding: blue shows good progress, and the percentage caps at 100%. If a contract exceeds its value, the system displays the overrun amount. This helps you track budget compliance in real-time.
+
+Expand any contract to see the full breakdown: Total Invoiced shows what's been billed, Amount Paid shows actual revenue received, and Remaining Balance can be negative if you're over budget. The percentage is calculated as Total Invoiced divided by Contract Value times 100.
+
+To clear a contract value, select all the text using Ctrl+A or triple-click, press Delete, and click away. The system removes it from the database with a confirmation message.
+
+[EXPECTED INVOICES - 1 minute]
+
+The Expected Invoices feature predicts when the next invoice should arrive based on frequency and historical patterns. At the bottom of the page, you'll see two sections: Unacknowledged in red - these need your attention, and Acknowledged in gray - these have been reviewed.
+
+Each card shows the client, contract, type, frequency, expected date and amount, currency, last invoice details, and creation date.
+
+You can Acknowledge an expected invoice when you're aware it's coming, Unacknowledge to bring it back to your attention, or Delete if the expectation is no longer valid, such as when a contract ends.
+
+The system automatically generates expected invoices daily at midnight and immediately after you upload a recurring invoice. When you upload an invoice that matches an expectation, the system automatically removes it.
+
+[DUPLICATES - 45 seconds]
+
+The Duplicates section at the bottom of the page shows when the same invoice number has been uploaded multiple times. This is allowed for version control but flagged for your review.
+
+Click View Details to see all versions with upload dates and PDF previews. You can replace all versions with a new upload, keep a specific version and delete others, or click Delete Duplicates to keep only the most recent version.
+
+[ANALYTICS DASHBOARD - 2 minutes]
+
+Click "View Analytics" in the top-right corner to access the comprehensive Analytics Dashboard. This separate view provides 34 advanced financial insights and strategic analytics.
+
+Key Performance Metrics include Total Revenue, Days Invoices Outstanding or DSI which measures collection efficiency - lower is better with 30 to 45 days being industry standard, Outstanding Amount showing total unpaid invoices, Collection Rate, Average Days to Pay, and On-Time Payment Rate.
+
+Visual charts show your Top 10 Clients by Revenue in a bar chart, DSI Trend over 6 months showing if collections are improving or worsening, Aging Trend with a stacked area chart displaying Current, 1-30 Days, 31-60 Days, 61-90 Days, and 90+ Days overdue buckets.
+
+You'll also see Payment Velocity by Client showing how long each client takes to pay, Revenue by Type over 6 months with a breakdown of PS, Maint, Sub, SW, HW, Hosting, MS, and 3PP, Revenue Forecast for the next 6 months based on historical trends, and Seasonal Trends showing average revenue by month.
+
+Risk Management features include a Client Payment Scorecard grading top 10 clients from A+ to F based on payment behavior, a High Risk Clients table showing significant overdue amounts with risk levels ranging from Low to Critical, Payment Probability ranking top risk invoices by payment likelihood, Revenue Concentration Risk showing percentage of revenue from top 1, 3, 5, and 10 clients - over 40% from one client indicates high risk, and Total At-Risk Amount summing high-risk client overdue amounts.
+
+Contract Analysis shows Contract Value vs Actual with grouped bar charts comparing contract value versus invoiced versus paid amounts, Contract Utilization with a detailed table showing percentage complete for each contract, and Expected vs Actual Invoices comparing expected invoice count versus actual received.
+
+Financial Forecasting provides Cash Flow Projection showing expected inflow in the next 30, 60, and 90 days based on due dates, Revenue Forecast for 6 months using linear regression, and Seasonal Trends to identify monthly patterns for planning.
+
+Performance Dashboards display Monthly Performance comparing current month versus last month for invoice count, revenue, paid count, and average value, Invoice Volume Trends over 12 months showing invoice count and revenue, Average Invoice Value tracking pricing trends and deal sizes over time, and Year-over-Year Growth comparing current year versus previous year with growth percentage.
+
+Currency and Exposure features include a pie chart showing outstanding receivables by currency and a Collection Efficiency pie chart showing Collected, Outstanding, and Overdue distribution.
+
+All analytics can be filtered by date range: This Year for January 1 to December 31, All Time for all production invoices from November 1, 2025 onwards, or Custom Range for quarterly reports or specific periods.
+
+[WORKFLOW BEST PRACTICES - 1 minute]
+
+For daily workflow, check Expected Invoices and review unacknowledged items, upload new invoices by dragging and dropping PDFs, review and clean up any duplicates, update contract values for new contracts, and mark invoices as paid.
+
+Weekly tasks include running reports to review client totals and contract progress, cleaning up outdated expected invoices, validating data on recent uploads, and creating manual backups before major changes.
+
+Monthly activities involve generating month-end reports by grouping by month and analyzing trends, conducting contract reviews to check completion percentages, performing expected invoice cleanup to remove old acknowledged items, and running full diagnostic validation checks.
+
+[TIPS AND SHORTCUTS - 45 seconds]
+
+Here are some helpful tips: Use Ctrl+F to search on the page, F5 to refresh the application, and Esc to close modal dialogs. The system automatically backs up daily at 2 AM with backups retained for 30 days.
+
+For best results, upload high-quality PDF scans promptly when invoices are received, always check data after upload and fix errors immediately, set contract values as soon as contracts are signed, monitor completion percentages regularly, and review expected invoices weekly.
+
+The Group By Contract feature with visible contract values and progress at the collapsed level makes it faster than ever to track and manage your contracts without extra clicks.
+
+[CLOSING - 20 seconds]
+
+That covers the key features of the Invoice Tracker. Remember: use the main tracker for daily operations and invoice management, and use the Analytics Dashboard for strategic insights and executive reporting. For additional help, refer to the Training Guide accessible from the Help button. Thank you for watching!
+
+[END]
+
+========================================
+VIDEO TIMING BREAKDOWN:
+========================================
+Total Duration: Approximately 12-13 minutes
+
+Introduction: 30 seconds
+Main Interface: 1 minute
+Grouping Feature: 1.5 minutes (with emphasis on new collapsed view features)
+Invoice Management: 1 minute
+AI Query System: 1 minute
+Contract Management: 1.5 minutes (detailed coverage of new features)
+Expected Invoices: 1 minute
+Duplicates: 45 seconds
+Analytics Dashboard: 2 minutes
+Workflow Best Practices: 1 minute
+Tips and Shortcuts: 45 seconds
+Closing: 20 seconds
+
+========================================
+KEY TALKING POINTS FOR CONTRACT GROUPING:
+========================================
+1. Contract value input field visible at collapsed level
+2. Currency selection dropdown at collapsed level
+3. Progress percentage and compact bar at collapsed level
+4. No need to expand to see/edit key contract information
+5. Click handling prevents accidental collapse during input
+6. Detailed metrics still available when expanded
+7. Immediate visual feedback on contract progress
+8. All changes save automatically
