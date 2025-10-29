@@ -90,6 +90,9 @@ const Analytics = ({ onNavigateBack }) => {
   const getBaseFilteredInvoices = () => {
     let filtered = [...invoices];
 
+    // Exclude credit memos from all analytics calculations
+    filtered = filtered.filter(inv => inv.invoiceType !== 'Credit Memo');
+
     // Production mode filter - only show invoices from 1 Nov 2025 onwards
     if (productionMode) {
       const productionStartDate = '2025-11-01';

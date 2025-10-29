@@ -447,7 +447,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     // Status filter (multi-select)
     if (statusFilter.length > 0) {
       filtered = filtered.filter(inv =>
-        statusFilter.some(status => matchesStatusFilter(inv, status))
+        statusFilter.some(status => matchesStatusFilter(inv, status)) &&
+        inv.invoiceType !== 'Credit Memo' // Exclude credit memos from status filters
       );
     }
 
@@ -481,10 +482,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
     // Date range filter (by due date)
     if (dateFrom) {
-      filtered = filtered.filter(inv => inv.dueDate >= dateFrom);
+      filtered = filtered.filter(inv => inv.dueDate >= dateFrom && inv.invoiceType !== 'Credit Memo');
     }
     if (dateTo) {
-      filtered = filtered.filter(inv => inv.dueDate <= dateTo);
+      filtered = filtered.filter(inv => inv.dueDate <= dateTo && inv.invoiceType !== 'Credit Memo');
     }
 
     // Search filter
