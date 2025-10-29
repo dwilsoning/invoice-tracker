@@ -1319,6 +1319,82 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               Clear
             </button>
           </div>
+
+          {/* Query Examples Guide */}
+          <details className="mt-3 bg-white bg-opacity-10 rounded p-3">
+            <summary className="cursor-pointer text-white font-semibold hover:text-gray-200">
+              💡 Query Examples & Tips
+            </summary>
+            <div className="mt-3 text-white text-sm space-y-3">
+              <div>
+                <p className="font-semibold mb-1">Filter by Client:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Which Barwon Health contracts are unpaid"</li>
+                  <li>"Invoices for Minister for Health"</li>
+                  <li>"Show me [client name] invoices from last month"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Filter by Status:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Unpaid invoices" or "Outstanding invoices"</li>
+                  <li>"Overdue invoices"</li>
+                  <li>"Paid invoices this year"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Filter by Invoice Type:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"PS invoices" (Professional Services)</li>
+                  <li>"Maintenance invoices for Barwon Health"</li>
+                  <li>"Subscription invoices this month"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Filter by Contract:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Show me invoices on contract 527995"</li>
+                  <li>"Contract 12345 invoices"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Filter by Date:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Invoices from this month" or "Last month"</li>
+                  <li>"This year" or "Last year"</li>
+                  <li>"Invoices from January 2025"</li>
+                  <li>"Between 2025-01-01 and 2025-03-31"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Contract Percentage Queries:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Contracts over 80% invoiced"</li>
+                  <li>"Which contracts are less than 50% paid"</li>
+                  <li>"Contracts between 40% and 60% invoiced"</li>
+                </ul>
+              </div>
+
+              <div>
+                <p className="font-semibold mb-1">Special Queries:</p>
+                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
+                  <li>"Contracts with no value"</li>
+                  <li>"Monthly invoices in USD"</li>
+                </ul>
+              </div>
+
+              <div className="pt-2 border-t border-white border-opacity-20">
+                <p className="italic text-gray-200">
+                  💡 Tip: You can combine multiple filters! Try: "Unpaid PS invoices for Barwon Health this year"
+                </p>
+              </div>
+            </div>
+          </details>
           
           {queryResult && (
             <div className="mt-4 p-4 bg-gray-50 rounded">
