@@ -2564,7 +2564,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                     onClick={() => setSelectedInvoice(inv)}
                                     className="text-blue-600 hover:underline font-semibold"
                                   >
-                                    {inv.invoiceNumber}
+                                    {inv.invoiceNumber || '(no invoice number)'}
                                   </button>
                                 </td>
                                 <td className="px-4 py-2 text-gray-900">{inv.client}</td>
@@ -2654,7 +2654,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <div className="text-sm text-gray-600">Invoice Number</div>
-                    <div className="font-bold">{selectedInvoice.invoiceNumber}</div>
+                    <div className="font-bold">{selectedInvoice.invoiceNumber || '(no invoice number)'}</div>
                   </div>
                   <div>
                     <div className="text-sm text-gray-600">Client</div>
