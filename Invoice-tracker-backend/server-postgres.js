@@ -2098,32 +2098,42 @@ app.delete('/api/contracts/:contractName', async (req, res) => {
   }
 });
 
-// Get all invoice numbers that have duplicates (same invoice number AND client)
+// Get all invoice numbers that have duplicates (same invoice number AND client AND invoice date)
 app.get('/api/duplicates', async (req, res) => {
   try {
-    const allInvoices = await db.all('SELECT invoice_number, client FROM invoices');
+    const allInvoices = await db.all('SELECT id, invoice_number, client, invoice_date FROM invoices');
     const invoiceCount = {};
 
-    // Count occurrences of each invoice number + client combination
+    // Count occurrences of each invoice number + client + invoice date combination
     allInvoices.forEach(inv => {
-      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}`;
-      invoiceCount[key] = (invoiceCount[key] || 0) + 1;
+      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}|||${inv.invoiceDate || ''}`;
+      if (!invoiceCount[key]) {
+        invoiceCount[key] = {
+          count: 0,
+          ids: []
+        };
+      }
+      invoiceCount[key].count++;
+      invoiceCount[key].ids.push(inv.id);
     });
 
     // Get combinations that appear more than once
     const duplicateNumbers = Object.keys(invoiceCount)
-      .filter(key => invoiceCount[key] > 1)
+      .filter(key => invoiceCount[key].count > 1)
       .map(key => {
-        const [invoiceNum, clientName] = key.split('|||');
+        const [invoiceNum, clientName, invoiceDate] = key.split('|||');
         // Get the actual invoice number and client (with original casing)
         const original = allInvoices.find(inv =>
           inv.invoiceNumber.toLowerCase().trim() === invoiceNum &&
-          inv.client.toLowerCase().trim() === clientName
+          inv.client.toLowerCase().trim() === clientName &&
+          (inv.invoiceDate || '') === invoiceDate
         );
         return {
           invoiceNumber: original.invoiceNumber,
           client: original.client,
-          count: invoiceCount[key]
+          invoiceDate: original.invoiceDate,
+          count: invoiceCount[key].count,
+          ids: invoiceCount[key].ids
         };
       });
 
@@ -2133,7 +2143,26 @@ app.get('/api/duplicates', async (req, res) => {
   }
 });
 
-// Get duplicates by invoice number and client
+// Get duplicates by IDs (for handling empty invoice numbers and viewing specific duplicate groups)
+app.post('/api/invoices/duplicates/by-ids', async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Invalid IDs array' });
+    }
+
+    const placeholders = ids.map((_, i) => `$${i + 1}`).join(',');
+    const duplicates = await db.all(
+      `SELECT * FROM invoices WHERE id IN (${placeholders}) ORDER BY upload_date DESC`,
+      ...ids
+    );
+    res.json(duplicates);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get duplicates by invoice number and client (legacy endpoint, now also checks invoice date)
 app.get('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
   try {
     const { invoiceNumber, client } = req.params;
@@ -2144,6 +2173,51 @@ app.get('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
     );
     res.json(duplicates);
   } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete duplicates by IDs (keep only the latest)
+app.post('/api/invoices/duplicates/delete-by-ids', async (req, res) => {
+  try {
+    const { ids } = req.body;
+    if (!ids || !Array.isArray(ids) || ids.length === 0) {
+      return res.status(400).json({ error: 'Invalid IDs array' });
+    }
+
+    // Get all records with these IDs, ordered by upload date
+    const placeholders = ids.map((_, i) => `$${i + 1}`).join(',');
+    const records = await db.all(
+      `SELECT id, upload_date, pdf_path FROM invoices WHERE id IN (${placeholders}) ORDER BY upload_date DESC`,
+      ...ids
+    );
+
+    if (records.length <= 1) {
+      return res.json({ success: true, message: 'No duplicates found', deleted: 0 });
+    }
+
+    // Keep the first one (most recent), delete the rest
+    const toDelete = records.slice(1);
+
+    let deletedCount = 0;
+
+    for (const record of toDelete) {
+      // Delete PDF file
+      if (record.pdfPath) {
+        const pdfFullPath = path.join(__dirname, record.pdfPath);
+        if (fs.existsSync(pdfFullPath)) {
+          fs.unlinkSync(pdfFullPath);
+        }
+      }
+
+      // Delete database record
+      await db.run('DELETE FROM invoices WHERE id = $1', record.id);
+      deletedCount++;
+    }
+
+    res.json({ success: true, message: `Deleted ${deletedCount} duplicate(s), kept the most recent`, deleted: deletedCount });
+  } catch (error) {
+    console.error('❌ Error deleting duplicates:', error);
     res.status(500).json({ error: error.message });
   }
 });

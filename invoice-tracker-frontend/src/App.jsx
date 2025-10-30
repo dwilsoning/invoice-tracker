@@ -882,6 +882,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Edit invoice
   const startEditInvoice = (invoice) => {
+    console.log('Starting edit for invoice:', invoice);
     setEditingInvoice(invoice);
     setEditForm({
       invoiceNumber: invoice.invoiceNumber,
@@ -900,13 +901,24 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   const saveEditInvoice = async () => {
     try {
-      await axios.put(`${API_URL}/invoices/${editingInvoice.id}`, editForm);
+      console.log('Saving invoice with data:', editForm);
+      const response = await axios.put(`${API_URL}/invoices/${editingInvoice.id}`, editForm);
+      console.log('Save response:', response.data);
       await loadInvoices();
+      await loadDuplicates(); // Refresh duplicates in case changes affect duplicate status
+
+      // If we're viewing duplicate details, reload them to show the updated data
+      if (selectedDuplicate && duplicateDetails.length > 0) {
+        await loadDuplicateDetails(selectedDuplicate);
+      }
+
       setEditingInvoice(null);
       setSelectedInvoice(null);
       showMessage('success', 'Invoice updated');
     } catch (error) {
-      showMessage('error', 'Failed to update invoice');
+      console.error('Error saving invoice:', error);
+      console.error('Error response:', error.response?.data);
+      showMessage('error', `Failed to update invoice: ${error.response?.data?.error || error.message}`);
     }
   };
 
@@ -967,26 +979,37 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  const loadDuplicateDetails = async (invoiceNumber, client) => {
+  const loadDuplicateDetails = async (duplicate) => {
     try {
-      const response = await axios.get(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}/${encodeURIComponent(client)}`);
+      console.log('Loading duplicate details for:', duplicate);
+      // Use the new IDs-based endpoint to handle empty invoice numbers
+      const response = await axios.post(`${API_URL}/invoices/duplicates/by-ids`, { ids: duplicate.ids });
+      console.log('Loaded duplicate details:', response.data);
       setDuplicateDetails(response.data);
-      setSelectedDuplicate({ invoiceNumber, client });
+      setSelectedDuplicate(duplicate);
 
-      // Filter the invoice table to show only this invoice number
-      setSearchTerm(invoiceNumber);
+      // Filter the invoice table to show only this invoice number (if not empty)
+      if (duplicate.invoiceNumber && duplicate.invoiceNumber.trim()) {
+        setSearchTerm(duplicate.invoiceNumber);
+      } else {
+        // For empty invoice numbers, we'll show all invoices but highlight in the message
+        setSearchTerm('');
+      }
       setShowInvoiceTable(true);
     } catch (error) {
       console.error('Error loading duplicate details:', error);
-      showMessage('error', 'Failed to load duplicate details');
+      console.error('Error response:', error.response?.data);
+      showMessage('error', `Failed to load duplicate details: ${error.response?.data?.error || error.message}`);
     }
   };
 
-  const deleteDuplicates = async (invoiceNumber, client) => {
-    if (!window.confirm(`Delete all duplicate invoices for "${invoiceNumber}" (${client}) except the most recent?`)) return;
+  const deleteDuplicates = async (duplicate) => {
+    const invoiceDesc = duplicate.invoiceNumber || '(no invoice number)';
+    if (!window.confirm(`Delete all duplicate invoices for "${invoiceDesc}" (${duplicate.client}) except the most recent?`)) return;
 
     try {
-      await axios.delete(`${API_URL}/invoices/duplicates/${encodeURIComponent(invoiceNumber)}/${encodeURIComponent(client)}`);
+      // Use the new IDs-based endpoint
+      await axios.post(`${API_URL}/invoices/duplicates/delete-by-ids`, { ids: duplicate.ids });
       await loadDuplicates();
       await loadInvoices();
       setSelectedDuplicate(null);
@@ -1926,7 +1949,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               ) : (
                 <div>
                   <div className="mb-4 text-sm text-gray-600">
-                    <p>These invoice numbers appear multiple times in the system. Click "View Details" to see all instances, or "Delete Duplicates" to keep only the most recent version.</p>
+                    <p>These invoices have the same invoice number, client, AND invoice date. Click "View Details" to see all instances, or "Delete Duplicates" to keep only the most recent version.</p>
                   </div>
                   <div className="overflow-x-auto">
                     <table className="min-w-full bg-white border rounded">
@@ -1934,25 +1957,27 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                         <tr>
                           <th className="px-4 py-2 text-left">Invoice Number</th>
                           <th className="px-4 py-2 text-left">Client</th>
+                          <th className="px-4 py-2 text-left">Invoice Date</th>
                           <th className="px-4 py-2 text-left">Count</th>
                           <th className="px-4 py-2 text-left">Actions</th>
                         </tr>
                       </thead>
                       <tbody>
-                        {duplicates.map(dup => (
-                          <tr key={`${dup.invoiceNumber}-${dup.client}`} className="border-t hover:bg-gray-50">
-                            <td className="px-4 py-2 font-medium text-gray-900">{dup.invoiceNumber}</td>
+                        {duplicates.map((dup, index) => (
+                          <tr key={`${dup.invoiceNumber}-${dup.client}-${dup.invoiceDate}-${index}`} className="border-t hover:bg-gray-50">
+                            <td className="px-4 py-2 font-medium text-gray-900">{dup.invoiceNumber || '(no invoice number)'}</td>
                             <td className="px-4 py-2 text-gray-900">{dup.client}</td>
+                            <td className="px-4 py-2 text-gray-900">{dup.invoiceDate || '(no date)'}</td>
                             <td className="px-4 py-2 text-gray-900">{dup.count}</td>
                             <td className="px-4 py-2">
                               <button
-                                onClick={() => loadDuplicateDetails(dup.invoiceNumber, dup.client)}
+                                onClick={() => loadDuplicateDetails(dup)}
                                 className="px-3 py-1 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a] mr-2"
                               >
                                 View Details
                               </button>
                               <button
-                                onClick={() => deleteDuplicates(dup.invoiceNumber, dup.client)}
+                                onClick={() => deleteDuplicates(dup)}
                                 className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
                               >
                                 Delete Duplicates
