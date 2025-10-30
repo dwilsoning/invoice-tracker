@@ -942,8 +942,6 @@ app.post('/api/upload-payments', async (req, res) => {
         uploadedFiles = Array.isArray(files.spreadsheet) ? files.spreadsheet : [files.spreadsheet];
       }
 
-      console.log(`Processing ${uploadedFiles.length} file(s)`);
-
       if (uploadedFiles.length === 0) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
@@ -954,8 +952,6 @@ app.post('/api/upload-payments', async (req, res) => {
       // Process each uploaded file
       for (const file of uploadedFiles) {
         try {
-          console.log(`Processing file: ${file.originalFilename}`);
-
           // Ensure file is fully written before reading
           // Wait for file to be stable (size stops changing)
           let previousSize = 0;
@@ -1041,8 +1037,6 @@ app.post('/api/upload-payments', async (req, res) => {
           }
 
           totalUpdatedCount += fileUpdatedCount;
-
-          console.log(`File ${file.originalFilename}: Updated ${fileUpdatedCount} invoices`);
 
           fileResults.push({
             filename: file.originalFilename,
