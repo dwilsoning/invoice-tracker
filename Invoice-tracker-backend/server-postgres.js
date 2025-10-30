@@ -925,7 +925,8 @@ app.post('/api/upload-payments', async (req, res) => {
   const form = formidable({
     uploadDir: uploadsDir,
     keepExtensions: true,
-    maxFileSize: 10 * 1024 * 1024
+    maxFileSize: 10 * 1024 * 1024,
+    multiples: true // Enable multiple file uploads
   });
 
   form.parse(req, async (err, fields, files) => {
@@ -935,54 +936,138 @@ app.post('/api/upload-payments', async (req, res) => {
     }
 
     try {
-      const file = files.spreadsheet ? (Array.isArray(files.spreadsheet) ? files.spreadsheet[0] : files.spreadsheet) : null;
+      // Support both single and multiple file uploads
+      let uploadedFiles = [];
+      if (files.spreadsheet) {
+        uploadedFiles = Array.isArray(files.spreadsheet) ? files.spreadsheet : [files.spreadsheet];
+      }
 
-      if (!file) {
+      console.log(`Processing ${uploadedFiles.length} file(s)`);
+
+      if (uploadedFiles.length === 0) {
         return res.status(400).json({ error: 'No file uploaded' });
       }
 
-      const workbook = new ExcelJS.Workbook();
+      let totalUpdatedCount = 0;
+      const fileResults = [];
 
-      // Read the file based on extension
-      if (file.originalFilename.endsWith('.csv')) {
-        await workbook.csv.readFile(file.filepath);
-      } else {
-        await workbook.xlsx.readFile(file.filepath);
+      // Process each uploaded file
+      for (const file of uploadedFiles) {
+        try {
+          console.log(`Processing file: ${file.originalFilename}`);
+
+          // Ensure file is fully written before reading
+          // Wait for file to be stable (size stops changing)
+          let previousSize = 0;
+          let currentSize = 0;
+          let attempts = 0;
+          const maxAttempts = 50; // Max 5 seconds
+
+          while (attempts < maxAttempts) {
+            try {
+              currentSize = fs.statSync(file.filepath).size;
+              if (currentSize > 0 && currentSize === previousSize) {
+                // File size stabilized, ready to read
+                break;
+              }
+              previousSize = currentSize;
+              await new Promise(resolve => setTimeout(resolve, 100));
+              attempts++;
+            } catch (err) {
+              // File might not exist yet, wait
+              await new Promise(resolve => setTimeout(resolve, 100));
+              attempts++;
+            }
+          }
+
+          // Verify file exists and has size
+          const stats = fs.statSync(file.filepath);
+          if (stats.size === 0) {
+            fileResults.push({
+              filename: file.originalFilename,
+              success: false,
+              error: 'File is empty',
+              updatedCount: 0
+            });
+            continue;
+          }
+
+          const workbook = new ExcelJS.Workbook();
+
+          // Read the file based on extension
+          if (file.originalFilename.endsWith('.csv')) {
+            await workbook.csv.readFile(file.filepath);
+          } else {
+            await workbook.xlsx.readFile(file.filepath);
+          }
+
+          const worksheet = workbook.worksheets[0];
+          const updates = [];
+
+          worksheet.eachRow((row, rowNumber) => {
+            const invoice_number = row.getCell(1).value;
+            const payment_date = row.getCell(2).value;
+
+            if (!invoice_number) return;
+
+            const invoiceStr = String(invoice_number).trim();
+            const paymentDateStr = payment_date ?
+              (payment_date instanceof Date ? payment_date.toISOString().split('T')[0] : String(payment_date)) :
+              new Date().toISOString().split('T')[0];
+
+            updates.push({ invoiceNumber: invoiceStr, paymentDate: paymentDateStr });
+          });
+
+          let fileUpdatedCount = 0;
+
+          for (const update of updates) {
+            const result = await db.run(`
+              UPDATE invoices
+              SET status = 'Paid', payment_date = $1
+              WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
+            `, update.paymentDate, update.invoiceNumber);
+            fileUpdatedCount += result.rowCount || 0;
+          }
+
+          totalUpdatedCount += fileUpdatedCount;
+
+          console.log(`File ${file.originalFilename}: Updated ${fileUpdatedCount} invoices`);
+
+          fileResults.push({
+            filename: file.originalFilename,
+            success: true,
+            updatedCount: fileUpdatedCount
+          });
+
+          // Clean up the uploaded file
+          fs.unlinkSync(file.filepath);
+
+        } catch (fileError) {
+          console.error(`Error processing file ${file.originalFilename}:`, fileError);
+          fileResults.push({
+            filename: file.originalFilename,
+            success: false,
+            error: fileError.message,
+            updatedCount: 0
+          });
+
+          // Clean up the file even if there was an error
+          try {
+            if (fs.existsSync(file.filepath)) {
+              fs.unlinkSync(file.filepath);
+            }
+          } catch (unlinkError) {
+            console.error('Error deleting file:', unlinkError);
+          }
+        }
       }
-
-      const worksheet = workbook.worksheets[0];
-      const updates = [];
-
-      worksheet.eachRow((row, rowNumber) => {
-        const invoice_number = row.getCell(1).value;
-        const payment_date = row.getCell(2).value;
-
-        if (!invoice_number) return;
-
-        const invoiceStr = String(invoice_number).trim();
-        const paymentDateStr = payment_date ?
-          (payment_date instanceof Date ? paymentDate.toISOString().split('T')[0] : String(payment_date)) :
-          new Date().toISOString().split('T')[0];
-
-        updates.push({ invoiceNumber: invoiceStr, paymentDate: paymentDateStr });
-      });
-
-      let updatedCount = 0;
-
-      for (const update of updates) {
-        const result = await db.run(`
-          UPDATE invoices
-          SET status = 'Paid', payment_date = $1
-          WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
-        `, update.paymentDate, update.invoiceNumber);
-        updatedCount += result.rowCount || 0;
-      }
-
-      fs.unlinkSync(file.filepath);
 
       res.json({
         success: true,
-        updatedCount
+        updatedCount: totalUpdatedCount, // For backward compatibility
+        totalUpdatedCount,
+        filesProcessed: fileResults.length,
+        fileResults
       });
 
     } catch (error) {

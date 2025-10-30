@@ -354,10 +354,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       // Upload payment spreadsheet
       if (excelFiles.length > 0) {
         const excelFormData = new FormData();
-        excelFormData.append('spreadsheet', excelFiles[0]);
-        
+        excelFiles.forEach(file => excelFormData.append('spreadsheet', file));
+
         const response = await axios.post(`${API_URL}/upload-payments`, excelFormData);
-        showMessage('success', `Updated ${response.data.updatedCount} invoice payments`);
+        const message = response.data.filesProcessed > 1
+          ? `Updated ${response.data.updatedCount} invoice payments from ${response.data.filesProcessed} files`
+          : `Updated ${response.data.updatedCount} invoice payments`;
+        showMessage('success', message);
         await loadInvoices();
       }
       
