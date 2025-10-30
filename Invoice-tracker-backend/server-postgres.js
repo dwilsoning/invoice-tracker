@@ -960,25 +960,36 @@ app.post('/api/upload-payments', async (req, res) => {
           // Wait for file to be stable (size stops changing)
           let previousSize = 0;
           let currentSize = 0;
+          let stableCount = 0;
           let attempts = 0;
-          const maxAttempts = 50; // Max 5 seconds
+          const maxAttempts = 100; // Max 10 seconds
+          const requiredStableChecks = 3; // Require 3 consecutive stable checks
 
           while (attempts < maxAttempts) {
             try {
               currentSize = fs.statSync(file.filepath).size;
               if (currentSize > 0 && currentSize === previousSize) {
-                // File size stabilized, ready to read
-                break;
+                stableCount++;
+                if (stableCount >= requiredStableChecks) {
+                  // File size stabilized for multiple checks, ready to read
+                  break;
+                }
+              } else {
+                stableCount = 0; // Reset if size changed
               }
               previousSize = currentSize;
               await new Promise(resolve => setTimeout(resolve, 100));
               attempts++;
             } catch (err) {
               // File might not exist yet, wait
+              stableCount = 0;
               await new Promise(resolve => setTimeout(resolve, 100));
               attempts++;
             }
           }
+
+          // Extra safety delay after stability check
+          await new Promise(resolve => setTimeout(resolve, 200));
 
           // Verify file exists and has size
           const stats = fs.statSync(file.filepath);
