@@ -882,7 +882,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Edit invoice
   const startEditInvoice = (invoice) => {
-    console.log('Starting edit for invoice:', invoice);
     setEditingInvoice(invoice);
     setEditForm({
       invoiceNumber: invoice.invoiceNumber,
@@ -901,9 +900,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   const saveEditInvoice = async () => {
     try {
-      console.log('Saving invoice with data:', editForm);
-      const response = await axios.put(`${API_URL}/invoices/${editingInvoice.id}`, editForm);
-      console.log('Save response:', response.data);
+      await axios.put(`${API_URL}/invoices/${editingInvoice.id}`, editForm);
       await loadInvoices();
       await loadDuplicates(); // Refresh duplicates in case changes affect duplicate status
 
@@ -916,8 +913,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       setSelectedInvoice(null);
       showMessage('success', 'Invoice updated');
     } catch (error) {
-      console.error('Error saving invoice:', error);
-      console.error('Error response:', error.response?.data);
       showMessage('error', `Failed to update invoice: ${error.response?.data?.error || error.message}`);
     }
   };
@@ -981,10 +976,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   const loadDuplicateDetails = async (duplicate) => {
     try {
-      console.log('Loading duplicate details for:', duplicate);
       // Use the new IDs-based endpoint to handle empty invoice numbers
       const response = await axios.post(`${API_URL}/invoices/duplicates/by-ids`, { ids: duplicate.ids });
-      console.log('Loaded duplicate details:', response.data);
       setDuplicateDetails(response.data);
       setSelectedDuplicate(duplicate);
 
@@ -997,8 +990,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       }
       setShowInvoiceTable(true);
     } catch (error) {
-      console.error('Error loading duplicate details:', error);
-      console.error('Error response:', error.response?.data);
       showMessage('error', `Failed to load duplicate details: ${error.response?.data?.error || error.message}`);
     }
   };
