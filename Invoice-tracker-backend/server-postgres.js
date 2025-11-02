@@ -1205,7 +1205,19 @@ app.delete('/api/invoices', async (req, res) => {
 // Get expected invoices
 app.get('/api/expected-invoices', async (req, res) => {
   try {
-    const rows = await db.all('SELECT * FROM expected_invoices ORDER BY expected_date ASC');
+    // Get expected invoices that haven't been dismissed
+    const rows = await db.all(`
+      SELECT e.*
+      FROM expected_invoices e
+      WHERE NOT EXISTS (
+        SELECT 1 FROM dismissed_expected_invoices d
+        WHERE LOWER(TRIM(d.client)) = LOWER(TRIM(e.client))
+          AND LOWER(TRIM(d.customer_contract)) = LOWER(TRIM(e.customer_contract))
+          AND d.invoice_type = e.invoice_type
+          AND d.expected_date = e.expected_date
+      )
+      ORDER BY e.expected_date ASC
+    `);
     res.json(rows);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -1235,6 +1247,20 @@ app.put('/api/expected-invoices/:id', async (req, res) => {
 app.delete('/api/expected-invoices/:id', async (req, res) => {
   try {
     const { id } = req.params;
+
+    // Get the expected invoice details before deleting
+    const expected = await db.get('SELECT * FROM expected_invoices WHERE id = $1', id);
+
+    if (expected) {
+      // Add to dismissal tracking table
+      await db.run(`
+        INSERT INTO dismissed_expected_invoices (client, customer_contract, invoice_type, expected_date, dismissed_date)
+        VALUES ($1, $2, $3, $4, CURRENT_DATE)
+        ON CONFLICT (client, customer_contract, invoice_type, expected_date) DO NOTHING
+      `, expected.client, expected.customerContract || '', expected.invoiceType, expected.expectedDate);
+    }
+
+    // Delete the expected invoice
     await db.run('DELETE FROM expected_invoices WHERE id = $1', id);
     res.json({ success: true });
   } catch (error) {
@@ -1270,7 +1296,6 @@ async function generateExpectedInvoices() {
       // Validate invoice date
       const lastDate = new Date(invoice.invoiceDate);
       if (isNaN(lastDate.getTime())) {
-        console.log(`Invalid date for invoice ${invoice.invoiceNumber}, skipping expected invoice generation`);
         continue;
       }
 
@@ -1296,7 +1321,6 @@ async function generateExpectedInvoices() {
 
       // Validate next date
       if (isNaN(nextDate.getTime())) {
-        console.log(`Invalid next date calculation for ${invoice.invoiceNumber}, skipping`);
         continue;
       }
 
@@ -1347,15 +1371,22 @@ async function generateExpectedInvoices() {
           expectedDatePlus45.toISOString().split('T')[0]
         );
 
-        if (!existing && !recentInvoice) {
-          console.log(`Creating expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date}`);
-        } else if (existing) {
-          console.log(`Skipping duplicate expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date} (already exists)`);
-        } else if (recentInvoice) {
-          console.log(`Skipping expected invoice for ${invoice.client} - ${invoice.customerContract} on ${expected_date} (recently fulfilled)`);
-        }
+        // Check if this expected invoice was previously dismissed
+        const dismissed = await db.get(`
+          SELECT id FROM dismissed_expected_invoices
+          WHERE LOWER(TRIM(client)) = LOWER(TRIM($1))
+            AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2))
+            AND invoice_type = $3
+            AND expected_date BETWEEN $4 AND $5
+        `,
+          invoice.client,
+          invoice.customerContract || '',
+          invoice.invoiceType,
+          dateMinus1.toISOString().split('T')[0],
+          datePlus1.toISOString().split('T')[0]
+        );
 
-        if (!existing && !recentInvoice) {
+        if (!existing && !recentInvoice && !dismissed) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
           const created_date = new Date().toISOString().split('T')[0];
 
@@ -1389,12 +1420,10 @@ async function generateExpectedInvoices() {
 // Schedule expected invoice generation to run daily at midnight
 // This ensures expected invoices are generated even when no invoices are uploaded
 setInterval(() => {
-  console.log('Running scheduled expected invoice generation...');
   generateExpectedInvoices();
 }, 24 * 60 * 60 * 1000); // Run every 24 hours
 
 // Also run on server startup to catch any that were missed
-console.log('Running initial expected invoice generation on server startup...');
 generateExpectedInvoices();
 
 // Check and remove expected invoice when actual invoice received
@@ -1425,22 +1454,15 @@ async function checkAndRemoveExpectedInvoice(invoice) {
         AND invoice_type = $4
     `, clientMatch, contractMatch, contractMatch, typeMatch);
 
-    console.log(`📋 Found ${expectedInvoices.length} matching expected invoices`);
-
     // Remove expected invoices that match and are within reasonable date range
     for (const expected of expectedInvoices) {
       // The db wrapper converts snake_case to camelCase
       const expected_date = new Date(expected.expectedDate);
       const daysDiff = Math.abs((invoice_date - expected_date) / (1000 * 60 * 60 * 24));
 
-      console.log(`📅 Comparing dates: invoice=${invoice.invoiceDate}, expected=${expected.expectedDate}, diff=${daysDiff} days`);
-
       // Match if invoice is within 45 days of expected date
       if (daysDiff <= 45) {
         await db.run('DELETE FROM expected_invoices WHERE id = $1', expected.id);
-        console.log(`✅ Removed expected invoice for ${clientMatch} - ${contractMatch} (${typeMatch}), expected: ${expected.frequency}, uploaded: ${invoice.frequency}`);
-      } else {
-        console.log(`❌ Date diff ${daysDiff} days exceeds 45 day threshold`);
       }
     }
   } catch (error) {
@@ -1459,8 +1481,6 @@ async function cleanupAcknowledgedInvoices() {
       'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledged_date < $1',
       cutoffDate
     );
-
-    console.log('Cleaned up old acknowledged invoices');
   } catch (error) {
     console.error('Cleanup error:', error);
   }
@@ -1480,17 +1500,6 @@ app.post('/api/query', async (req, res) => {
     const { query } = req.body;
 
     const invoices = await db.all('SELECT * FROM invoices');
-    console.log(`\n🔍 Query: "${query}"`);
-    console.log(`📊 Total invoices: ${invoices.length}`);
-    if (invoices.length > 0) {
-      console.log(`📋 Sample invoice fields:`, Object.keys(invoices[0]));
-      console.log(`📋 Sample invoice:`, {
-        status: invoices[0].status,
-        invoiceType: invoices[0].invoiceType,
-        dueDate: invoices[0].dueDate
-      });
-    }
-
     const queryLower = query.toLowerCase();
     let results = [...invoices];
 
@@ -1558,13 +1567,7 @@ app.post('/api/query', async (req, res) => {
 
     for (const [key, value] of Object.entries(typeMap)) {
       if (queryLower.includes(key)) {
-        console.log(`🔎 Filtering for invoice type: "${key}" → "${value}"`);
-        const before = results.length;
         results = results.filter(inv => inv.invoiceType && inv.invoiceType === value);
-        console.log(`✅ Type filter: ${before} → ${results.length} invoices`);
-        if (results.length > 0) {
-          console.log(`   Sample type: "${results[0].invoiceType}"`);
-        }
         break; // Only match first type found
       }
     }
@@ -1627,12 +1630,9 @@ app.post('/api/query', async (req, res) => {
 
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
-      console.log(`🔎 Filtering for client: "${clientName}"`);
-      const before = results.length;
       results = results.filter(inv =>
         inv.client && inv.client.toLowerCase().includes(clientName)
       );
-      console.log(`✅ Client filter: ${before} → ${results.length} invoices`);
     }
 
     // Filter by contract
@@ -1640,47 +1640,29 @@ app.post('/api/query', async (req, res) => {
     let contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|invoices?|\?)|$)/i);
     if (contractMatch) {
       const contract_name = contractMatch[1].trim();
-      console.log(`🔎 Filtering for contract: "${contract_name}"`);
-      const before = results.length;
       results = results.filter(inv =>
         (inv.customerContract && inv.customerContract.toLowerCase() === contract_name) ||
         (inv.oracleContract && inv.oracleContract.toLowerCase() === contract_name)
       );
-      console.log(`✅ Contract filter: ${before} → ${results.length} invoices`);
-      if (results.length > 0) {
-        console.log(`   Sample: contract="${results[0].customerContract}", oracle="${results[0].oracleContract}"`);
-      }
     }
 
     // Filter by status
     // Check for unpaid/pending/overdue BEFORE checking for paid (since "unpaid" contains "paid")
     if (queryLower.includes('overdue')) {
       const today = new Date().toISOString().split('T')[0];
-      console.log(`🔎 Filtering for overdue (before ${today})`);
-      const before = results.length;
       results = results.filter(inv =>
         inv.status === 'Pending' &&
         inv.dueDate &&
         inv.dueDate < today &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
-      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
     } else if (queryLower.includes('unpaid') || queryLower.includes('pending') || queryLower.includes('outstanding')) {
-      console.log(`🔎 Filtering for unpaid/pending/outstanding`);
-      const before = results.length;
       results = results.filter(inv =>
         inv.status === 'Pending' &&
         inv.invoiceType?.toLowerCase() !== 'credit memo'
       );
-      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
-      if (results.length > 0) {
-        console.log(`   Sample: status="${results[0].status}", type="${results[0].invoiceType}"`);
-      }
     } else if (queryLower.includes('paid')) {
-      console.log(`🔎 Filtering for paid`);
-      const before = results.length;
       results = results.filter(inv => inv.status === 'Paid');
-      console.log(`✅ Status filter: ${before} → ${results.length} invoices`);
     }
 
     // Filter by date range

@@ -90,7 +90,13 @@ async function generateExpectedInvoices() {
           [invoice.client, invoice.customerContract, expected_date]
         );
 
-        if (existing.rows.length === 0) {
+        // Check if previously dismissed
+        const dismissed = await pool.query(
+          'SELECT id FROM dismissed_expected_invoices WHERE LOWER(TRIM(client)) = LOWER(TRIM($1)) AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2)) AND invoice_type = $3 AND expected_date = $4',
+          [invoice.client, invoice.customerContract, invoice.invoiceType, expected_date]
+        );
+
+        if (existing.rows.length === 0 && dismissed.rows.length === 0) {
           const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
           const created_date = new Date().toISOString().split('T')[0];
 
@@ -116,7 +122,10 @@ async function generateExpectedInvoices() {
 
           console.log(`✓ Generated: ${invoice.client} - ${invoice.customerContract} - Expected: ${expected_date}`);
           generated++;
-        } else {
+        } else if (existing.rows.length > 0) {
+          skipped++;
+        } else if (dismissed.rows.length > 0) {
+          console.log(`⊘ Skipped (previously dismissed): ${invoice.client} - ${invoice.customerContract} - Expected: ${expected_date}`);
           skipped++;
         }
       }
