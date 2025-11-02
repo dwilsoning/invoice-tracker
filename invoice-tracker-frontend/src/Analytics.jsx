@@ -514,7 +514,8 @@ const Analytics = ({ onNavigateBack }) => {
       const contracts = response.data;
 
       const contractStats = contracts.map(contract => {
-        const contractInvoices = baseFilteredInvoices.filter(inv =>
+        // Use all invoices (not filtered by date) for contract utilization
+        const contractInvoices = invoices.filter(inv =>
           inv.customerContract && inv.customerContract.toLowerCase() === contract.contractName.toLowerCase()
         );
 
