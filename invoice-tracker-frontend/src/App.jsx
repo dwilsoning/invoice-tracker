@@ -429,6 +429,24 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     return () => clearInterval(interval);
   }, []);
 
+  // Escape key handler for closing modals
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') {
+        if (selectedInvoice) {
+          setSelectedInvoice(null);
+        } else if (editingInvoice) {
+          setEditingInvoice(null);
+        } else if (showHelp) {
+          setShowHelp(false);
+        }
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, [selectedInvoice, editingInvoice, showHelp]);
+
   // Helper function to check if invoice matches a status filter option
   const matchesStatusFilter = (inv, statusOption) => {
     const today = new Date().toISOString().split('T')[0];
@@ -2745,13 +2763,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Invoice Detail Modal */}
         {selectedInvoice && !editingInvoice && (
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4"
-            onClick={() => setSelectedInvoice(null)}
           >
-            <div 
+            <div
               className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-2xl font-bold">Invoice Details</h2>
@@ -2895,13 +2911,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Edit Invoice Modal */}
         {editingInvoice && (
-          <div 
+          <div
             className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4"
-            onClick={() => setEditingInvoice(null)}
           >
-            <div 
+            <div
               className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
-              onClick={(e) => e.stopPropagation()}
             >
               <div className="flex justify-between items-start mb-4">
                 <h2 className="text-2xl font-bold">Edit Invoice</h2>
