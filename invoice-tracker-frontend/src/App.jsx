@@ -879,11 +879,14 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  const handleSelectInvoice = (invoiceId, isChecked, currentIndex, groupInvoices, shiftKey) => {
+  const handleSelectInvoice = (invoiceId, isChecked, groupInvoices, shiftKey) => {
     // Filter out Credit Memos from the group
     const selectableInvoices = groupInvoices.filter(inv => inv.invoiceType !== 'Credit Memo');
 
-    if (shiftKey && lastSelectedIndex !== null && currentIndex !== null) {
+    // Find the index of the current invoice in the selectable invoices array
+    const currentIndex = selectableInvoices.findIndex(inv => inv.id === invoiceId);
+
+    if (shiftKey && lastSelectedIndex !== null && currentIndex !== null && currentIndex !== -1) {
       // Shift+click: select range
       const start = Math.min(lastSelectedIndex, currentIndex);
       const end = Math.max(lastSelectedIndex, currentIndex);
@@ -2725,7 +2728,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                             </tr>
                           </thead>
                           <tbody>
-                            {groupInvs.map((inv, index) => (
+                            {groupInvs.map((inv) => (
                               <tr key={inv.id} className={`border-t hover:bg-gray-50 ${selectedInvoiceIds.includes(inv.id) ? 'bg-blue-50' : ''}`}>
                                 <td className="px-4 py-2">
                                   {inv.invoiceType === 'Credit Memo' ? (
@@ -2734,7 +2737,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                     <input
                                       type="checkbox"
                                       checked={selectedInvoiceIds.includes(inv.id)}
-                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked, index, groupInvs, e.shiftKey)}
+                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked, groupInvs, e.shiftKey)}
                                       className="w-4 h-4 cursor-pointer"
                                       onClick={(e) => e.stopPropagation()}
                                     />
