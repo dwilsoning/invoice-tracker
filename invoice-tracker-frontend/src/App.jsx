@@ -1397,8 +1397,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             />
           </label>
 
-          {/* Hide Delete All button after Nov 1, 2025 */}
-          {new Date() < new Date('2025-11-01') && (
+          {/* Delete All button permanently hidden for production */}
+          {false && (
             <button
               onClick={deleteAllInvoices}
               className="px-6 py-3 bg-red-600 text-white rounded-lg hover:bg-red-700 transition border-2 border-red-800"

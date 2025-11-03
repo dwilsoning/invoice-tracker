@@ -57,8 +57,8 @@ const Analytics = ({ onNavigateBack }) => {
   const [dateFilter, setDateFilter] = useState('year');
   const [customFrom, setCustomFrom] = useState('');
   const [customTo, setCustomTo] = useState('');
-  // Automatically enable production mode after Nov 1, 2025
-  const [productionMode, setProductionMode] = useState(new Date() >= new Date('2025-11-01'));
+  // Automatically enable production mode after Jan 1, 2026
+  const [productionMode, setProductionMode] = useState(new Date() >= new Date('2026-01-01'));
 
   // Load invoices and exchange rates from API
   useEffect(() => {
@@ -93,9 +93,9 @@ const Analytics = ({ onNavigateBack }) => {
     // Credit memos are now INCLUDED in analytics as they represent actual financial events
     // Their due dates have been corrected to match invoice dates for accurate forecasting
 
-    // Production mode filter - only show invoices from 1 Nov 2025 onwards
+    // Production mode filter - only show invoices from 1 Jan 2026 onwards
     if (productionMode) {
-      const productionStartDate = '2025-11-01';
+      const productionStartDate = '2026-01-01';
       filtered = filtered.filter(inv => inv.invoiceDate >= productionStartDate);
     }
 
@@ -153,7 +153,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getDSITrend = () => {
     const months = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 5; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -194,7 +194,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getAgingTrend = () => {
     const months = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 5; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -301,7 +301,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getRevenueByType = () => {
     const months = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 5; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -682,7 +682,7 @@ const Analytics = ({ onNavigateBack }) => {
     // Calculate historical monthly revenue for last 12 months
     const monthlyRevenue = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 11; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -801,8 +801,8 @@ const Analytics = ({ onNavigateBack }) => {
       const response = await axios.get(`${API_URL}/expected-invoices`);
       let expectedInvoices = response.data;
 
-      // Filter expected invoices in production mode - only show those based on invoices from Nov 2025 onwards
-      const productionStartDate = productionMode ? '2025-11-01' : null;
+      // Filter expected invoices in production mode - only show those based on invoices from Jan 2026 onwards
+      const productionStartDate = productionMode ? '2026-01-01' : null;
       if (productionStartDate) {
         expectedInvoices = expectedInvoices.filter(exp =>
           exp.lastInvoiceDate && exp.lastInvoiceDate >= productionStartDate
@@ -854,7 +854,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getInvoiceVolumeTrends = () => {
     const volumeData = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 11; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -881,7 +881,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getAvgInvoiceValueTrends = () => {
     const avgData = [];
     const today = new Date();
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     for (let i = 11; i >= 0; i--) {
       const monthDate = new Date(today.getFullYear(), today.getMonth() - i, 1);
@@ -912,7 +912,7 @@ const Analytics = ({ onNavigateBack }) => {
     const today = new Date();
     const currentYear = today.getFullYear();
     const lastYear = currentYear - 1;
-    const productionStartDate = productionMode ? '2025-11-01' : null;
+    const productionStartDate = productionMode ? '2026-01-01' : null;
 
     const monthlyComparison = [];
 
@@ -1103,10 +1103,10 @@ const Analytics = ({ onNavigateBack }) => {
         <div className="flex gap-3 items-center">
           <div className="flex items-center gap-2 bg-white px-4 py-2 rounded-lg shadow border-2 border-purple-200">
             <span className="text-sm font-medium text-gray-700">
-              {productionMode ? '📊 Production Mode (From 1 Nov 2025)' : '🧪 Testing Mode (All Data)'}
+              {productionMode ? '📊 Production Mode (From 1 Jan 2026)' : '🧪 Pre-Production View (Nov 2025 - Dec 2025)'}
             </span>
-            {/* Hide production mode toggle after Nov 1, 2025 */}
-            {new Date() < new Date('2025-11-01') && (
+            {/* Hide production mode toggle after Jan 1, 2026 */}
+            {new Date() < new Date('2026-01-01') && (
               <button
                 onClick={() => setProductionMode(!productionMode)}
                 className={`px-4 py-2 rounded-lg font-medium transition ${
