@@ -100,6 +100,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   // Help Modal
   const [showHelp, setShowHelp] = useState(false);
 
+  // Bulk Selection State
+  const [selectedInvoiceIds, setSelectedInvoiceIds] = useState([]);
+
   // Load contract values from database
   const loadContracts = async () => {
     try {
@@ -820,6 +823,51 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     setActiveStatBox('aging-' + bucket);
     setAgingFilter(bucket);
     setShowInvoiceTable(true);
+  };
+
+  // Bulk selection handlers
+  const handleSelectAll = (groupInvoices) => {
+    const selectableInvoices = groupInvoices.filter(inv => inv.invoiceType !== 'Credit Memo');
+    const allSelected = selectableInvoices.every(inv => selectedInvoiceIds.includes(inv.id));
+
+    if (allSelected) {
+      // Deselect all from this group
+      setSelectedInvoiceIds(selectedInvoiceIds.filter(id =>
+        !selectableInvoices.some(inv => inv.id === id)
+      ));
+    } else {
+      // Select all from this group
+      const newIds = selectableInvoices.map(inv => inv.id);
+      setSelectedInvoiceIds([...new Set([...selectedInvoiceIds, ...newIds])]);
+    }
+  };
+
+  const handleSelectInvoice = (invoiceId, isChecked) => {
+    if (isChecked) {
+      setSelectedInvoiceIds([...selectedInvoiceIds, invoiceId]);
+    } else {
+      setSelectedInvoiceIds(selectedInvoiceIds.filter(id => id !== invoiceId));
+    }
+  };
+
+  const bulkUpdateInvoiceStatus = async (status) => {
+    if (selectedInvoiceIds.length === 0) {
+      showMessage('warning', 'No invoices selected');
+      return;
+    }
+
+    try {
+      await axios.put(`${API_URL}/invoices/bulk-status`, {
+        invoiceIds: selectedInvoiceIds,
+        status,
+        paymentDate: status === 'Paid' ? new Date().toISOString().split('T')[0] : null
+      });
+      await loadInvoices();
+      setSelectedInvoiceIds([]);
+      showMessage('success', `${selectedInvoiceIds.length} invoice(s) marked as ${status}`);
+    } catch (error) {
+      showMessage('error', 'Failed to update invoices');
+    }
   };
 
   // Mark as paid/unpaid
@@ -2493,9 +2541,46 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     
                     {isExpanded && (
                       <div className="overflow-x-auto mt-2">
+                        {/* Bulk Action Buttons */}
+                        {selectedInvoiceIds.length > 0 && (
+                          <div className="mb-3 p-3 bg-blue-50 border border-blue-200 rounded flex items-center justify-between">
+                            <span className="font-semibold text-blue-900">
+                              {selectedInvoiceIds.length} invoice(s) selected
+                            </span>
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => bulkUpdateInvoiceStatus('Paid')}
+                                className="px-4 py-2 bg-green-600 text-white rounded text-sm hover:bg-green-700 font-medium"
+                              >
+                                Mark as Paid
+                              </button>
+                              <button
+                                onClick={() => bulkUpdateInvoiceStatus('Pending')}
+                                className="px-4 py-2 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a] font-medium"
+                              >
+                                Mark as Unpaid
+                              </button>
+                              <button
+                                onClick={() => setSelectedInvoiceIds([])}
+                                className="px-4 py-2 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 font-medium"
+                              >
+                                Clear Selection
+                              </button>
+                            </div>
+                          </div>
+                        )}
                         <table className="w-full">
                           <thead className="bg-gray-50">
                             <tr>
+                              <th className="px-4 py-2 text-left">
+                                <input
+                                  type="checkbox"
+                                  onChange={() => handleSelectAll(groupInvs)}
+                                  checked={groupInvs.filter(inv => inv.invoiceType !== 'Credit Memo').length > 0 && groupInvs.filter(inv => inv.invoiceType !== 'Credit Memo').every(inv => selectedInvoiceIds.includes(inv.id))}
+                                  className="w-4 h-4 cursor-pointer"
+                                  title="Select/Deselect all"
+                                />
+                              </th>
                               <th className="px-4 py-2 text-left cursor-pointer hover:bg-gray-100 select-none" onClick={() => handleSort('invoiceNumber')}>
                                 <div className="flex items-center gap-1">
                                   Invoice #
@@ -2573,7 +2658,20 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                           </thead>
                           <tbody>
                             {groupInvs.map(inv => (
-                              <tr key={inv.id} className="border-t hover:bg-gray-50">
+                              <tr key={inv.id} className={`border-t hover:bg-gray-50 ${selectedInvoiceIds.includes(inv.id) ? 'bg-blue-50' : ''}`}>
+                                <td className="px-4 py-2">
+                                  {inv.invoiceType === 'Credit Memo' ? (
+                                    <span className="text-gray-400 text-sm">-</span>
+                                  ) : (
+                                    <input
+                                      type="checkbox"
+                                      checked={selectedInvoiceIds.includes(inv.id)}
+                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked)}
+                                      className="w-4 h-4 cursor-pointer"
+                                      onClick={(e) => e.stopPropagation()}
+                                    />
+                                  )}
+                                </td>
                                 <td className="px-4 py-2">
                                   <button
                                     onClick={() => setSelectedInvoice(inv)}

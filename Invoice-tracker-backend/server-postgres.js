@@ -7,6 +7,7 @@ const fs = require('fs');
 const pdfParse = require('pdf-parse');
 const ExcelJS = require('exceljs');
 const axios = require('axios');
+const cron = require('node-cron');
 
 // Import authentication middleware and routes
 const { authenticateToken, requireAdmin, optionalAuth } = require('./middleware/auth');
@@ -50,6 +51,9 @@ let exchangeRates = {
 // Fetch exchange rates
 async function fetchExchangeRates() {
   try {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+    console.log(`🔄 Fetching exchange rates at ${now} (AEST/AEDT)...`);
+
     const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
     if (response.data && response.data.rates) {
       exchangeRates.USD = 1;
@@ -57,16 +61,23 @@ async function fetchExchangeRates() {
       exchangeRates.EUR = 1 / response.data.rates.EUR;
       exchangeRates.GBP = 1 / response.data.rates.GBP;
       exchangeRates.SGD = 1 / response.data.rates.SGD;
-      console.log('Exchange rates updated:', exchangeRates);
+      console.log('✅ Exchange rates updated:', exchangeRates);
     }
   } catch (error) {
-    console.error('Error fetching exchange rates, using cached rates:', error.message);
+    console.error('❌ Error fetching exchange rates, using cached rates:', error.message);
   }
 }
 
-// Fetch rates on startup and every 6 hours
+// Fetch rates on startup
 fetchExchangeRates();
-setInterval(fetchExchangeRates, 6 * 60 * 60 * 1000);
+
+// Schedule exchange rate updates
+// Runs at 2 AM, 8 AM, 2 PM, and 8 PM Australian Eastern Time (AEST/AEDT)
+// This captures rates at key times: before/after Australian market hours and during international trading
+cron.schedule('0 2,8,14,20 * * *', fetchExchangeRates, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: Exchange rate updates at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT');
 
 // Convert to USD
 function convertToUSD(amount, currency) {
@@ -1094,6 +1105,43 @@ app.post('/api/upload-payments', async (req, res) => {
   });
 });
 
+// Bulk update invoice status (MUST come before /api/invoices/:id route)
+app.put('/api/invoices/bulk-status', async (req, res) => {
+  try {
+    const { invoiceIds, status, paymentDate } = req.body;
+
+    if (!invoiceIds || !Array.isArray(invoiceIds) || invoiceIds.length === 0) {
+      return res.status(400).json({ error: 'Invalid invoice IDs' });
+    }
+
+    if (!status) {
+      return res.status(400).json({ error: 'Status is required' });
+    }
+
+    // Build the placeholders for the IN clause
+    const placeholders = invoiceIds.map((_, index) => `$${index + 1}`).join(', ');
+    const values = [...invoiceIds, status, paymentDate];
+
+    const query = `
+      UPDATE invoices
+      SET status = $${invoiceIds.length + 1},
+          payment_date = $${invoiceIds.length + 2}
+      WHERE id IN (${placeholders})
+    `;
+
+    const result = await db.run(query, values);
+
+    res.json({
+      success: true,
+      changes: result.changes,
+      updatedCount: invoiceIds.length
+    });
+  } catch (error) {
+    console.error('Error bulk updating invoices:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Update invoice
 app.put('/api/invoices/:id', async (req, res) => {
   try {
@@ -1429,14 +1477,20 @@ async function generateExpectedInvoices() {
   }
 }
 
-// Schedule expected invoice generation to run daily at midnight
-// This ensures expected invoices are generated even when no invoices are uploaded
-setInterval(() => {
-  generateExpectedInvoices();
-}, 24 * 60 * 60 * 1000); // Run every 24 hours
-
-// Also run on server startup to catch any that were missed
+// Run on server startup to catch any that were missed
 generateExpectedInvoices();
+
+// Schedule expected invoice generation to run daily at 1 AM AEST/AEDT
+// This ensures expected invoices are generated even when no invoices are uploaded
+// Running at 1 AM (middle of the night in Australia) minimizes impact on users
+cron.schedule('0 1 * * *', () => {
+  const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+  console.log(`🔄 Running expected invoice generation at ${now} (AEST/AEDT)...`);
+  generateExpectedInvoices();
+}, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: Expected invoice generation at 1 AM AEST/AEDT daily');
 
 // Check and remove expected invoice when actual invoice received
 async function checkAndRemoveExpectedInvoice(invoice) {
@@ -1485,21 +1539,81 @@ async function checkAndRemoveExpectedInvoice(invoice) {
 // Clean up old acknowledged expected invoices (weekly)
 async function cleanupAcknowledgedInvoices() {
   try {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+    console.log(`🧹 Running cleanup of old acknowledged invoices at ${now} (AEST/AEDT)...`);
+
     const oneWeekAgo = new Date();
     oneWeekAgo.setDate(oneWeekAgo.getDate() - 7);
     const cutoffDate = oneWeekAgo.toISOString().split('T')[0];
 
-    await db.run(
+    const result = await db.run(
       'DELETE FROM expected_invoices WHERE acknowledged = 1 AND acknowledged_date < $1',
       cutoffDate
     );
+
+    console.log(`✅ Cleanup complete: Removed ${result.changes || 0} old acknowledged invoices`);
   } catch (error) {
-    console.error('Cleanup error:', error);
+    console.error('❌ Cleanup error:', error);
   }
 }
 
-// Run cleanup weekly
-setInterval(cleanupAcknowledgedInvoices, 7 * 24 * 60 * 60 * 1000);
+// Run cleanup every Sunday at 3 AM AEST/AEDT
+// Using Sunday morning as it's typically the quietest time
+cron.schedule('0 3 * * 0', cleanupAcknowledgedInvoices, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: Cleanup of acknowledged invoices every Sunday at 3 AM AEST/AEDT');
+
+// Check for duplicate invoices and log warnings
+async function checkForDuplicates() {
+  try {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+    console.log(`🔍 Checking for duplicate invoices at ${now} (AEST/AEDT)...`);
+
+    const allInvoices = await db.all('SELECT id, invoice_number, client, invoice_date FROM invoices');
+    const invoiceCount = {};
+
+    // Count occurrences of each invoice number + client + invoice date combination
+    allInvoices.forEach(inv => {
+      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}|||${inv.invoiceDate || ''}`;
+      if (!invoiceCount[key]) {
+        invoiceCount[key] = {
+          count: 0,
+          ids: [],
+          invoiceNumber: inv.invoiceNumber,
+          client: inv.client,
+          invoiceDate: inv.invoiceDate
+        };
+      }
+      invoiceCount[key].count++;
+      invoiceCount[key].ids.push(inv.id);
+    });
+
+    // Find duplicates
+    const duplicates = Object.values(invoiceCount).filter(item => item.count > 1);
+
+    if (duplicates.length > 0) {
+      console.log(`⚠️  Found ${duplicates.length} duplicate invoice groups:`);
+      duplicates.forEach(dup => {
+        console.log(`   • Invoice ${dup.invoiceNumber} for ${dup.client} (${dup.invoiceDate}): ${dup.count} copies`);
+      });
+    } else {
+      console.log('✅ No duplicate invoices found');
+    }
+
+    return duplicates;
+  } catch (error) {
+    console.error('❌ Error checking for duplicates:', error);
+    return [];
+  }
+}
+
+// Check for duplicates daily at midnight AEST/AEDT
+// This provides a daily report of any duplicate invoices in the system
+cron.schedule('0 0 * * *', checkForDuplicates, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: Duplicate invoice check at midnight AEST/AEDT daily');
 
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
@@ -2354,6 +2468,14 @@ async function startServer() {
 
     app.listen(PORT, () => {
       console.log(`Invoice Tracker API running on http://localhost:${PORT}`);
+      console.log('\n📅 Scheduled Tasks Summary (Australia/Sydney timezone):');
+      console.log('  • Duplicate invoice check: Midnight daily');
+      console.log('  • Expected invoice generation: 1 AM daily');
+      console.log('  • Exchange rate updates: 2 AM, 8 AM, 2 PM, 8 PM daily');
+      console.log('  • Cleanup old acknowledged invoices: 3 AM every Sunday');
+      console.log('  • Server timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
+      console.log('  • Current time (AEST/AEDT):', new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
+      console.log('');
     });
   } catch (err) {
     console.error('Failed to start server:', err);
