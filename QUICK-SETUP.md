@@ -114,14 +114,6 @@ FRONTEND_URL=http://localhost:5173
 JWT_SECRET=generated_64_char_hex_string
 ```
 
-**Optional (email):**
-```env
-EMAIL_SERVICE=gmail
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
-EMAIL_FROM=your-email@gmail.com
-```
-
 ---
 
 ## Commands Cheat Sheet

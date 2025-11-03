@@ -384,10 +384,9 @@ npm update                # Update packages
 5. Git for version control
 6. Code editor (VS Code)
 7. Database tool (pgAdmin)
-8. Email service credentials
 
 **Optional**:
-9. Development tools
-10. Additional monitoring/debugging tools
+8. Development tools
+9. Additional monitoring/debugging tools
 
 Once these prerequisites are met, proceed to the installation guide to set up and configure the Invoice Tracker application.

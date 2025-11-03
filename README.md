@@ -104,8 +104,7 @@ Invoice Tracker/
 │   │
 │   ├── 📂 utils/                    # Utility functions
 │   │   ├── auth.js                  # Password hashing
-│   │   ├── jwt.js                   # JWT tokens
-│   │   └── email.js                 # Email service
+│   │   └── jwt.js                   # JWT tokens
 │   │
 │   ├── 📂 scripts/                  # Management scripts
 │   │   ├── run-auth-migration.js    # Database setup
@@ -142,8 +141,7 @@ Invoice Tracker/
 - **Runtime**: Node.js 18.x
 - **Framework**: Express.js
 - **Database**: PostgreSQL 14+
-- **Authentication**: JWT (custom implementation)
-- **Email**: Nodemailer
+- **Authentication**: JWT (session-based, no email required)
 - **File Processing**: pdf-parse, ExcelJS
 - **Testing**: Jest, Supertest
 
@@ -259,12 +257,6 @@ FRONTEND_URL=http://localhost:5173
 
 # Authentication (Required)
 JWT_SECRET=your_64_character_hex_secret
-
-# Email (Optional - for password reset)
-EMAIL_SERVICE=gmail|sendgrid|smtp
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-app-password
-EMAIL_FROM=noreply@yourdomain.com
 ```
 
 ### Generating Secrets
@@ -399,10 +391,11 @@ npm run build
 - pg: 8.11.3 (PostgreSQL client)
 - cors: 2.8.5
 - dotenv: 16.3.1
-- nodemailer: 6.10.1
 - pdf-parse: 1.1.1
 - exceljs: 4.4.0
 - axios: 1.6.5
+- bcrypt: 5.1.1 (password hashing)
+- jsonwebtoken: 9.0.2 (JWT authentication)
 
 ### Frontend Main Dependencies
 - react: 18.2.0
@@ -445,30 +438,6 @@ npm run build
 
 ---
 
-## 📧 Email Configuration
-
-### Gmail Setup (Recommended for Development)
-1. Enable 2-factor authentication
-2. Generate app password: https://myaccount.google.com/apppasswords
-3. Update .env:
-```env
-EMAIL_SERVICE=gmail
-EMAIL_USER=your-email@gmail.com
-EMAIL_PASSWORD=your-16-char-app-password
-```
-
-### SendGrid Setup (Recommended for Production)
-1. Create account: https://sendgrid.com/
-2. Generate API key
-3. Update .env:
-```env
-EMAIL_SERVICE=sendgrid
-SENDGRID_API_KEY=your-api-key
-EMAIL_FROM=noreply@yourdomain.com
-```
-
----
-
 ## 🌐 Deployment
 
 ### Production Checklist
@@ -477,7 +446,6 @@ EMAIL_FROM=noreply@yourdomain.com
 - [ ] Enable HTTPS/SSL
 - [ ] Set up firewall rules
 - [ ] Configure CORS for production domain
-- [ ] Set up email service (SendGrid/similar)
 - [ ] Enable database backups
 - [ ] Set up monitoring/logging
 - [ ] Use process manager (PM2, systemd)
@@ -511,7 +479,7 @@ ISC
 
 - Built with Node.js, Express, React, and PostgreSQL
 - PDF parsing powered by pdf-parse
-- Email functionality via Nodemailer
+- Secure JWT-based session authentication
 - Charts powered by Recharts
 
 ---
