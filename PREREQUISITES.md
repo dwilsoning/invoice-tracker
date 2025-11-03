@@ -195,27 +195,6 @@ sudo ufw allow 5173
 
 ---
 
-## 📧 Email Service (Optional)
-
-**Required For**: Password reset functionality in authentication system
-
-**Options**:
-
-### Option 1: Gmail (Easiest for Testing)
-- Gmail account with 2-factor authentication enabled
-- App-specific password (https://myaccount.google.com/apppasswords)
-
-### Option 2: SendGrid (Recommended for Production)
-- Free account: https://sendgrid.com/
-- API key from SendGrid dashboard
-
-### Option 3: Any SMTP Server
-- SMTP host, port, username, password
-
-### Option 4: Skip Email (Development Only)
-- Can skip email configuration for development
-- Password resets won't send emails but will generate tokens in database
-
 ---
 
 ## 💾 Storage Requirements
@@ -259,7 +238,6 @@ Before starting installation, ensure you have:
 - [ ] PostgreSQL superuser password ready
 - [ ] Firewall allows required ports (3001, 5173, 5432)
 - [ ] Project files downloaded or cloned
-- [ ] Email account credentials (if enabling password reset)
 
 ---
 
@@ -285,17 +263,6 @@ JWT_SECRET=random-64-character-secret
 
 # Frontend URL (OPTIONAL)
 FRONTEND_URL=http://localhost:5173
-
-# Email Configuration (OPTIONAL - for password reset)
-EMAIL_SERVICE=gmail|sendgrid|smtp
-EMAIL_USER=your-email@gmail.com        # if using Gmail
-EMAIL_PASSWORD=your-app-password        # if using Gmail
-SENDGRID_API_KEY=your-key              # if using SendGrid
-SMTP_HOST=smtp.example.com             # if using SMTP
-SMTP_PORT=587                          # if using SMTP
-SMTP_USER=username                     # if using SMTP
-SMTP_PASSWORD=password                 # if using SMTP
-EMAIL_FROM=noreply@yourdomain.com
 ```
 
 ---

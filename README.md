@@ -17,9 +17,10 @@ A full-stack web application for tracking and managing invoices with user authen
 ### User Authentication
 - 🔐 Secure login with JWT tokens
 - 👥 User management (admin/user roles)
-- 🔑 Password reset via email
+- 🔑 Admin-managed password resets
 - 👤 User profile management
 - 🛡️ Role-based access control
+- 🔒 In-app user administration (no email required)
 
 ### Data Management
 - 📊 Contract tracking and management

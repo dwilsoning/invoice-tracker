@@ -201,13 +201,6 @@ FRONTEND_URL=http://localhost:5173
 # JWT Secret (REQUIRED for authentication)
 # Generate a secure secret using the command below
 JWT_SECRET=paste-generated-secret-here
-
-# Email Configuration (OPTIONAL - can skip for now)
-# Uncomment and configure if you want password reset emails
-# EMAIL_SERVICE=gmail
-# EMAIL_USER=your-email@gmail.com
-# EMAIL_PASSWORD=your-app-password
-# EMAIL_FROM=your-email@gmail.com
 ```
 
 **Generate JWT Secret**:
@@ -603,15 +596,15 @@ node -e "console.log(require('crypto').randomBytes(64).toString('hex'))"
 
 ---
 
-### Issue: Email not sending (password reset)
+### Note: Password Management
 
-**This is normal if you haven't configured email.**
+**Password resets are managed by administrators through the user management interface.**
 
-**To enable** (optional):
-1. Edit .env
-2. Uncomment EMAIL_* variables
-3. Configure with Gmail, SendGrid, or SMTP
-4. See `docs/AUTHENTICATION-SETUP.md` for details
+Admins can reset user passwords by:
+1. Logging into the application
+2. Clicking user menu → "Manage Users"
+3. Editing the user and setting a new password
+4. Communicating the new password securely to the user
 
 ---
 
@@ -628,10 +621,7 @@ You should now have:
 
 ## 🚀 Next Steps
 
-### 1. Configure Email (Optional)
-See: `Invoice-tracker-backend/docs/AUTHENTICATION-SETUP.md`
-
-### 2. Import Existing Data (If Migrating)
+### 1. Import Existing Data (If Migrating)
 ```bash
 # Restore from backup
 psql -U invoice_tracker_user -d invoice_tracker < backup.sql

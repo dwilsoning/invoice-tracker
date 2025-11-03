@@ -1,6 +1,17 @@
 # Invoice Tracker - Deployment Quick Reference
 
-One-page reference for deploying to AWS EC2.
+One-page reference for deploying Invoice Tracker to the cloud.
+
+## Choose Your Platform
+
+- **AWS EC2**: See [DEPLOYMENT-GUIDE-AWS.md](DEPLOYMENT-GUIDE-AWS.md)
+- **Microsoft Azure**: See [DEPLOYMENT-GUIDE-AZURE.md](DEPLOYMENT-GUIDE-AZURE.md)
+
+This guide focuses on AWS EC2 deployment. For Azure, refer to the Azure deployment guide.
+
+---
+
+## AWS EC2 Deployment
 
 ## Prerequisites
 
