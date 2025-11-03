@@ -2403,23 +2403,32 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                               <div className="flex gap-2 items-center">
                                 <label className="text-sm font-medium">Contract Value:</label>
                                 <input
-                                  type="number"
+                                  type="text"
                                   placeholder="Enter amount"
-                                  value={contractInfo?.value || ''}
+                                  value={contractInfo?.value ? Math.round(Number(contractInfo.value)).toLocaleString('en-US') : ''}
                                   onChange={(e) => {
-                                    // Update UI immediately
-                                    const newValues = {
-                                      ...contractValues,
-                                      [contractName]: {
-                                        value: e.target.value,
-                                        currency: contractInfo?.currency || 'USD'
-                                      }
-                                    };
-                                    setContractValues(newValues);
+                                    // Remove commas and parse number
+                                    const numericValue = e.target.value.replace(/,/g, '');
+                                    // Only update if it's a valid integer or empty
+                                    if (numericValue === '' || (!isNaN(numericValue) && Number.isInteger(Number(numericValue)))) {
+                                      const newValues = {
+                                        ...contractValues,
+                                        [contractName]: {
+                                          value: numericValue,
+                                          currency: contractInfo?.currency || 'USD'
+                                        }
+                                      };
+                                      setContractValues(newValues);
+                                    }
                                   }}
-                                  onBlur={(e) => saveContractValue(contractName, e.target.value, contractInfo?.currency || 'USD')}
+                                  onBlur={(e) => {
+                                    const numericValue = e.target.value.replace(/,/g, '');
+                                    // Round to nearest integer when saving
+                                    const roundedValue = numericValue ? Math.round(Number(numericValue)) : 0;
+                                    saveContractValue(contractName, roundedValue, contractInfo?.currency || 'USD');
+                                  }}
                                   onClick={(e) => e.stopPropagation()}
-                                  className="border rounded px-3 py-1 w-32"
+                                  className="border rounded px-3 py-1 w-32 text-right"
                                 />
                                 <select
                                   value={contractInfo?.currency || 'USD'}
