@@ -495,7 +495,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
     // Client filter
     if (clientFilter !== 'All') {
-      filtered = filtered.filter(inv => inv.client === clientFilter);
+      filtered = filtered.filter(inv => normalizeClientName(inv.client) === normalizeClientName(clientFilter));
     }
 
     // Contract filter
@@ -1223,7 +1223,16 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   };
 
   // Get unique values for filters
-  const clients = [...new Set(invoices.map(inv => inv.client))].sort();
+  // Normalize client names to remove duplicates with/without trailing periods
+  const clientsMap = new Map();
+  invoices.forEach(inv => {
+    const normalized = normalizeClientName(inv.client);
+    if (!clientsMap.has(normalized)) {
+      // Store the normalized name as key, use version without trailing period as display value
+      clientsMap.set(normalized, inv.client.replace(/\.$/, ''));
+    }
+  });
+  const clients = [...clientsMap.values()].sort();
   const contracts = [...new Set(invoices.map(inv => inv.customerContract).filter(Boolean))].sort();
 
   const stats = calculateStats();
