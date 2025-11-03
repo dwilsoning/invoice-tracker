@@ -1564,6 +1564,12 @@ cron.schedule('0 3 * * 0', cleanupAcknowledgedInvoices, {
 });
 console.log('📅 Scheduled: Cleanup of acknowledged invoices every Sunday at 3 AM AEST/AEDT');
 
+// Helper function to normalize client names (remove trailing period)
+function normalizeClientName(clientName) {
+  if (!clientName) return clientName;
+  return clientName.toLowerCase().trim().replace(/\.$/, '');
+}
+
 // Check for duplicate invoices and log warnings
 async function checkForDuplicates() {
   try {
@@ -1575,7 +1581,8 @@ async function checkForDuplicates() {
 
     // Count occurrences of each invoice number + client + invoice date combination
     allInvoices.forEach(inv => {
-      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}|||${inv.invoiceDate || ''}`;
+      const normalizedClient = normalizeClientName(inv.client);
+      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${normalizedClient}|||${inv.invoiceDate || ''}`;
       if (!invoiceCount[key]) {
         invoiceCount[key] = {
           count: 0,
@@ -2339,7 +2346,8 @@ app.get('/api/duplicates', async (req, res) => {
 
     // Count occurrences of each invoice number + client + invoice date combination
     allInvoices.forEach(inv => {
-      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${inv.client.toLowerCase().trim()}|||${inv.invoiceDate || ''}`;
+      const normalizedClient = normalizeClientName(inv.client);
+      const key = `${inv.invoiceNumber.toLowerCase().trim()}|||${normalizedClient}|||${inv.invoiceDate || ''}`;
       if (!invoiceCount[key]) {
         invoiceCount[key] = {
           count: 0,
@@ -2358,7 +2366,7 @@ app.get('/api/duplicates', async (req, res) => {
         // Get the actual invoice number and client (with original casing)
         const original = allInvoices.find(inv =>
           inv.invoiceNumber.toLowerCase().trim() === invoiceNum &&
-          inv.client.toLowerCase().trim() === clientName &&
+          normalizeClientName(inv.client) === clientName &&
           (inv.invoiceDate || '') === invoiceDate
         );
         return {
