@@ -15,16 +15,36 @@ const pool = new Pool({
   max: 20, // Maximum number of clients in the pool
   idleTimeoutMillis: 30000, // How long a client can remain idle before being closed
   connectionTimeoutMillis: 10000, // How long to wait for a connection (10 seconds)
+  // Add keepalive to prevent idle connection drops
+  keepAlive: true,
+  keepAliveInitialDelayMillis: 10000, // 10 seconds
 });
 
 // Test database connection
-pool.on('connect', () => {
+pool.on('connect', (client) => {
   console.log('✓ Connected to PostgreSQL database');
+  // Set statement timeout to prevent long-running queries
+  client.query('SET statement_timeout = 30000'); // 30 seconds
 });
 
-pool.on('error', (err) => {
+// Handle pool errors without crashing the application
+pool.on('error', (err, client) => {
   console.error('Unexpected error on idle PostgreSQL client', err);
-  process.exit(-1);
+  // Log the error but don't exit - the pool will handle reconnection
+  console.log('Pool will attempt to reconnect automatically');
+});
+
+// Handle graceful shutdown
+process.on('SIGINT', async () => {
+  console.log('Closing database connections...');
+  await pool.end();
+  process.exit(0);
+});
+
+process.on('SIGTERM', async () => {
+  console.log('Closing database connections...');
+  await pool.end();
+  process.exit(0);
 });
 
 // Convert snake_case to camelCase
@@ -89,6 +109,13 @@ const db = {
       const paramsArray = (params.length === 1 && Array.isArray(params[0])) ? params[0] : params;
       const result = await client.query(sql, paramsArray);
       return convertRowsToCamelCase(result.rows);
+    } catch (error) {
+      // Handle connection errors gracefully
+      if (error.code === 'ECONNRESET' || error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+        console.error('Database connection error, will retry on next request:', error.message);
+        throw new Error('Database connection lost. Please try again.');
+      }
+      throw error;
     } finally {
       client.release();
     }
@@ -102,6 +129,13 @@ const db = {
       const paramsArray = (params.length === 1 && Array.isArray(params[0])) ? params[0] : params;
       const result = await client.query(sql, paramsArray);
       return convertRowToCamelCase(result.rows[0] || null);
+    } catch (error) {
+      // Handle connection errors gracefully
+      if (error.code === 'ECONNRESET' || error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+        console.error('Database connection error, will retry on next request:', error.message);
+        throw new Error('Database connection lost. Please try again.');
+      }
+      throw error;
     } finally {
       client.release();
     }
@@ -119,6 +153,13 @@ const db = {
         rowCount: result.rowCount,
         rows: convertRowsToCamelCase(result.rows)
       };
+    } catch (error) {
+      // Handle connection errors gracefully
+      if (error.code === 'ECONNRESET' || error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+        console.error('Database connection error, will retry on next request:', error.message);
+        throw new Error('Database connection lost. Please try again.');
+      }
+      throw error;
     } finally {
       client.release();
     }
@@ -129,6 +170,13 @@ const db = {
     const client = await pool.connect();
     try {
       await client.query(sql);
+    } catch (error) {
+      // Handle connection errors gracefully
+      if (error.code === 'ECONNRESET' || error.code === 'ENOTFOUND' || error.code === 'ETIMEDOUT') {
+        console.error('Database connection error, will retry on next request:', error.message);
+        throw new Error('Database connection lost. Please try again.');
+      }
+      throw error;
     } finally {
       client.release();
     }
