@@ -351,25 +351,22 @@ const Analytics = ({ onNavigateBack }) => {
   // PHASE 2 ANALYTICS
 
   // 6. Cash Flow Projection (30/60/90 days)
-  // NOTE: Cash flow projection filters based on DUE DATE, not invoice date
-  // When production mode is enabled, only includes invoices with due dates on/after Nov 1, 2025
-  // This ensures we only project cash flow for relevant future payment expectations
+  // NOTE: Cash flow projection shows ALL pending invoices regardless of invoice date or due date
+  // This represents the total expected future cash inflow from all outstanding receivables
+  // Overdue invoices are included in "Next 30 Days" as they represent immediate expected cash
+  // Production mode does NOT filter cashflow - it shows all pending amounts regardless of when invoiced
   // Credit memos are INCLUDED as they represent reductions in expected cash inflows
   const getCashFlowProjection = () => {
     const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
     const days30 = new Date(today.getTime() + 30 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const days60 = new Date(today.getTime() + 60 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
     const days90 = new Date(today.getTime() + 90 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
-    const todayStr = today.toISOString().split('T')[0];
 
-    // Filter pending invoices by due date (not invoice date)
-    const productionStartDate = '2025-11-01';
+    // Use ALL invoices, not baseFilteredInvoices - cashflow is about future cash, not historical analysis
+    // We want to see all pending amounts regardless of when they were invoiced
     const pendingInvoices = invoices.filter(inv => {
       if (inv.status !== 'Pending' || !inv.dueDate) return false;
-
-      // In production mode, only include invoices with due dates on/after production start
-      if (productionMode && inv.dueDate < productionStartDate) return false;
-
       return true;
     });
 
@@ -377,6 +374,8 @@ const Analytics = ({ onNavigateBack }) => {
 
     pendingInvoices.forEach(inv => {
       const amount = convertToUSD(inv.amountDue, inv.currency);
+
+      // Overdue invoices and those due in next 30 days = immediate expected cash
       if (inv.dueDate <= days30) {
         next30 += amount;
       } else if (inv.dueDate <= days60) {
@@ -1325,7 +1324,7 @@ const Analytics = ({ onNavigateBack }) => {
             <div className="text-3xl font-bold text-blue-500 my-2">
               ${cashFlowProjection[0].amount.toLocaleString()}
             </div>
-            <div className="text-xs text-gray-500">Invoices due in next 30 days</div>
+            <div className="text-xs text-gray-500">All pending invoices due now or in next 30 days</div>
           </div>
 
           <div className="bg-white p-6 rounded-lg shadow border-l-4 border-red-500">
