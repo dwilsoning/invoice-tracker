@@ -35,15 +35,28 @@ pool.on('error', (err, client) => {
 });
 
 // Handle graceful shutdown
+let isShuttingDown = false;
 process.on('SIGINT', async () => {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
   console.log('Closing database connections...');
-  await pool.end();
+  try {
+    await pool.end();
+  } catch (err) {
+    console.error('Error closing pool:', err.message);
+  }
   process.exit(0);
 });
 
 process.on('SIGTERM', async () => {
+  if (isShuttingDown) return;
+  isShuttingDown = true;
   console.log('Closing database connections...');
-  await pool.end();
+  try {
+    await pool.end();
+  } catch (err) {
+    console.error('Error closing pool:', err.message);
+  }
   process.exit(0);
 });
 

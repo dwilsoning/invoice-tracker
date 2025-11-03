@@ -45,7 +45,8 @@ let exchangeRates = {
   AUD: 0.65,
   EUR: 1.08,
   GBP: 1.27,
-  SGD: 0.74
+  SGD: 0.74,
+  NZD: 0.61
 };
 
 // Fetch exchange rates
@@ -61,6 +62,7 @@ async function fetchExchangeRates() {
       exchangeRates.EUR = 1 / response.data.rates.EUR;
       exchangeRates.GBP = 1 / response.data.rates.GBP;
       exchangeRates.SGD = 1 / response.data.rates.SGD;
+      exchangeRates.NZD = 1 / response.data.rates.NZD;
       console.log('✅ Exchange rates updated:', exchangeRates);
     }
   } catch (error) {
@@ -85,38 +87,19 @@ function convertToUSD(amount, currency) {
   return Math.round(amount * rate);
 }
 
-// Determine date format based on invoice number pattern
-function getDateFormatByInvoiceNumber(invoice_number) {
-  if (!invoice_number) return 'international'; // Default to international
-
-  const invoiceStr = invoice_number.toString();
-
-  // US format invoice series (MM-DD-YYYY)
-  const usFormatPrefixes = ['46', '47', '48', '49'];
-
-  // International format invoice series (DD-MM-YYYY)
-  const intlFormatPrefixes = ['40', '41', '42', '43', '44', '45', '60', '61', '11', '12', '86'];
-
-  // Check if invoice starts with any US format prefix
-  for (const prefix of usFormatPrefixes) {
-    if (invoiceStr.startsWith(prefix)) {
-      return 'us';
-    }
+// Determine date format based on currency
+function getDateFormatByCurrency(currency) {
+  // USD uses MM-DD-YYYY format
+  if (currency === 'USD') {
+    return 'us';
   }
 
-  // Check if invoice starts with any international format prefix
-  for (const prefix of intlFormatPrefixes) {
-    if (invoiceStr.startsWith(prefix)) {
-      return 'international';
-    }
-  }
-
-  // Default to international for unknown patterns
+  // All other currencies (AUD, EUR, GBP, SGD, NZD) use DD-MM-YYYY format
   return 'international';
 }
 
-// Parse date - handles multiple formats based on invoice number
-function parseDate(dateStr, currency, invoice_number) {
+// Parse date - handles multiple formats based on currency
+function parseDate(dateStr, currency) {
   if (!dateStr) return null;
 
   const cleaned = dateStr.trim();
@@ -184,9 +167,9 @@ function parseDate(dateStr, currency, invoice_number) {
     month = first;
     day = second;
   }
-  // Otherwise, use invoice number pattern to determine format
+  // Otherwise, use currency to determine format
   else {
-    const dateFormat = getDateFormatByInvoiceNumber(invoice_number);
+    const dateFormat = getDateFormatByCurrency(currency);
 
     if (dateFormat === 'us') {
       // US format: MM-DD-YYYY
@@ -541,6 +524,8 @@ async function extractInvoiceData(pdf_path, originalName) {
   const invDateMatch = text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
                        text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i) ||
                        text.match(/DATE[:\s]*([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4})/i) ||
+                       text.match(/Credit\s+Processing\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
+                       text.match(/Credit\s+Processing\s+Date[:\s]*([0-9]{1,2}[-\/\s][A-Za-z]+[-\/\s][0-9]{2,4})/i) ||
                        text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
                        text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i);
   if (invDateMatch) {
@@ -559,10 +544,10 @@ async function extractInvoiceData(pdf_path, originalName) {
 
   // Parse the dates if found
   if (invoiceDateStr) {
-    invoice.invoiceDate = parseDate(invoiceDateStr, invoice.currency, invoice.invoiceNumber);
+    invoice.invoiceDate = parseDate(invoiceDateStr, invoice.currency);
   }
   if (dueDateStr) {
-    invoice.dueDate = parseDate(dueDateStr, invoice.currency, invoice.invoiceNumber);
+    invoice.dueDate = parseDate(dueDateStr, invoice.currency);
   }
 
   // WARNING: Fallback to today if dates are invalid
@@ -1478,7 +1463,9 @@ async function generateExpectedInvoices() {
 }
 
 // Run on server startup to catch any that were missed
-generateExpectedInvoices();
+generateExpectedInvoices().catch(err => {
+  console.error('Error generating expected invoices:', err.message);
+});
 
 // Schedule expected invoice generation to run daily at 1 AM AEST/AEDT
 // This ensures expected invoices are generated even when no invoices are uploaded
@@ -1486,7 +1473,9 @@ generateExpectedInvoices();
 cron.schedule('0 1 * * *', () => {
   const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
   console.log(`🔄 Running expected invoice generation at ${now} (AEST/AEDT)...`);
-  generateExpectedInvoices();
+  generateExpectedInvoices().catch(err => {
+    console.error('Error generating expected invoices:', err.message);
+  });
 }, {
   timezone: 'Australia/Sydney'
 });
@@ -1666,10 +1655,12 @@ app.get('/api/exchange-rates', async (req, res) => {
 app.post('/api/query', async (req, res) => {
   try {
     const { query } = req.body;
+    console.log(`📝 Query received: "${query}"`);
 
     const invoices = await db.all('SELECT * FROM invoices');
     const queryLower = query.toLowerCase();
     let results = [...invoices];
+    console.log(`   Starting with ${results.length} invoices`);
 
     // Check for "contracts with no value" query FIRST (before other filters)
     // This needs to be first to avoid the client filter matching "to no" as a client name
@@ -1757,22 +1748,29 @@ app.post('/api/query', async (req, res) => {
     }
 
     // Pattern 3: "invoices/contracts for/from/to X" - must check this BEFORE pattern 4
-    // But exclude temporal phrases (date/time keywords)
+    // But exclude temporal phrases (date/time keywords) AND contract phrases
     if (!clientMatch) {
-      const pattern3Match = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|\?)|$)/i);
+      const pattern3Match = queryLower.match(/(?:invoices?|contracts?)\s+(?:for|from|to|by)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:this|last|next|that|are|is|in|during|between|from\s+(?:this|last|next)|on\s+contract|for\s+contract|\?)|$)/i);
       if (pattern3Match) {
         const captured = pattern3Match[1].trim();
-        // Exclude temporal keywords that should be handled by date filtering
-        const temporalKeywords = ['this month', 'last month', 'next month', 'this year', 'last year', 'next year',
-                                  'current month', 'previous month', 'current year', 'previous year'];
-        const monthNames = ['january', 'february', 'march', 'april', 'may', 'june',
-                           'july', 'august', 'september', 'october', 'november', 'december'];
 
-        // Check if captured text is a temporal keyword OR starts with a month name (e.g., "january 2025")
-        const isTemporal = temporalKeywords.includes(captured) || monthNames.some(month => captured.startsWith(month));
+        // Exclude "contract X" - this is a contract query, not a client query
+        if (captured === 'contract' || captured.startsWith('contract ')) {
+          // Skip this match - it's "invoices for contract X" which is a contract query
+          console.log(`   Skipping client match - detected contract query: "${captured}"`);
+        } else {
+          // Exclude temporal keywords that should be handled by date filtering
+          const temporalKeywords = ['this month', 'last month', 'next month', 'this year', 'last year', 'next year',
+                                    'current month', 'previous month', 'current year', 'previous year'];
+          const monthNames = ['january', 'february', 'march', 'april', 'may', 'june',
+                             'july', 'august', 'september', 'october', 'november', 'december'];
 
-        if (!isTemporal) {
-          clientMatch = pattern3Match;
+          // Check if captured text is a temporal keyword OR starts with a month name (e.g., "january 2025")
+          const isTemporal = temporalKeywords.includes(captured) || monthNames.some(month => captured.startsWith(month));
+
+          if (!isTemporal) {
+            clientMatch = pattern3Match;
+          }
         }
       }
     }
@@ -1788,9 +1786,13 @@ app.post('/api/query', async (req, res) => {
                                'professional', 'professional services', 'maintenance', 'subscription', 'hosting',
                                'managed', 'managed services', 'software', 'hardware', 'ps', 'maint', 'sub',
                                'ms', 'sw', 'hw', '3pp', 'third', 'third party', 'credit', 'credit memo',
-                               'monthly', 'quarterly', 'annual', 'adhoc', 'show', 'show me'];
+                               'monthly', 'quarterly', 'annual', 'adhoc', 'show', 'show me', 'invoices', 'invoice', 'contracts', 'contract'];
 
-        if (!excludedWords.includes(potentialClient)) {
+        // Check if potentialClient is an excluded word OR contains excluded words
+        const isExcluded = excludedWords.includes(potentialClient) ||
+                          excludedWords.some(word => potentialClient.includes(word));
+
+        if (!isExcluded) {
           clientMatch = [potentialMatch[0], potentialMatch[1]];
         }
       }
@@ -1798,9 +1800,12 @@ app.post('/api/query', async (req, res) => {
 
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
+      console.log(`   Client filter: "${clientName}"`);
+      const beforeFilter = results.length;
       results = results.filter(inv =>
         inv.client && inv.client.toLowerCase().includes(clientName)
       );
+      console.log(`   After client filter: ${results.length} invoices (was ${beforeFilter})`);
     }
 
     // Filter by contract
@@ -1808,10 +1813,13 @@ app.post('/api/query', async (req, res) => {
     let contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|invoices?|\?)|$)/i);
     if (contractMatch) {
       const contract_name = contractMatch[1].trim();
+      console.log(`   Contract filter: "${contract_name}"`);
+      const beforeFilter = results.length;
       results = results.filter(inv =>
         (inv.customerContract && inv.customerContract.toLowerCase() === contract_name) ||
         (inv.oracleContract && inv.oracleContract.toLowerCase() === contract_name)
       );
+      console.log(`   After contract filter: ${results.length} invoices (was ${beforeFilter})`);
     }
 
     // Filter by status
@@ -2221,6 +2229,7 @@ app.post('/api/query', async (req, res) => {
         contractSummary
       });
     } else {
+      console.log(`   Returning ${results.length} invoices`);
       res.json({
         type: 'list',
         invoices: results,
@@ -2229,6 +2238,7 @@ app.post('/api/query', async (req, res) => {
       });
     }
   } catch (error) {
+    console.error(`   ❌ Query error: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 });

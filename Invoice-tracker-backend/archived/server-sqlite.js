@@ -188,7 +188,8 @@ let exchangeRates = {
   AUD: 0.65,
   EUR: 1.08,
   GBP: 1.27,
-  SGD: 0.74
+  SGD: 0.74,
+  NZD: 0.61
 };
 
 // Fetch exchange rates
@@ -201,6 +202,7 @@ async function fetchExchangeRates() {
       exchangeRates.EUR = 1 / response.data.rates.EUR;
       exchangeRates.GBP = 1 / response.data.rates.GBP;
       exchangeRates.SGD = 1 / response.data.rates.SGD;
+      exchangeRates.NZD = 1 / response.data.rates.NZD;
       console.log('Exchange rates updated:', exchangeRates);
     }
   } catch (error) {
@@ -1456,24 +1458,28 @@ app.post('/api/query', async (req, res) => {
       }
     });
 
-    // Filter by client name
-    // Match patterns: "for X", "from X", "by X", "to X", "issued to X", "sent to X"
-    const clientMatch = queryLower.match(/(?:for|from|by|to|issued to|sent to)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|\?)|$)/i);
-    if (clientMatch) {
-      const clientName = clientMatch[1].trim();
-      results = results.filter(inv =>
-        inv.client && inv.client.toLowerCase().includes(clientName)
-      );
-    }
-
-    // Filter by contract
-    // Match patterns: "contract X", "on contract X", "for contract X"
-    const contractMatch = queryLower.match(/(?:contract|on contract|for contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|invoices|in|during|\?)|$)/i);
+    // Filter by contract FIRST (before client filter)
+    // Match patterns: "contract X", "on contract X", "for contract X", "show me invoices for contract X"
+    let contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|invoices?|\?)|$)/i);
     if (contractMatch) {
       const contractName = contractMatch[1].trim();
       results = results.filter(inv =>
-        inv.customerContract && inv.customerContract.toLowerCase().includes(contractName)
+        (inv.customerContract && inv.customerContract.toLowerCase().includes(contractName)) ||
+        (inv.oracleContract && inv.oracleContract.toLowerCase().includes(contractName))
       );
+    }
+
+    // Filter by client name
+    // Match patterns: "for X", "from X", "by X", "to X", "issued to X", "sent to X"
+    // But exclude if "for contract" was already matched
+    if (!contractMatch) {
+      const clientMatch = queryLower.match(/(?:for|from|by|to|issued to|sent to)\s+([a-z0-9\s&'.,-]+?)(?:\s+(?:what|total|sum|how|invoices|how many|are|is|in|during|between|\?)|$)/i);
+      if (clientMatch) {
+        const clientName = clientMatch[1].trim();
+        results = results.filter(inv =>
+          inv.client && inv.client.toLowerCase().includes(clientName)
+        );
+      }
     }
 
     // Filter by status
