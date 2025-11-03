@@ -8,7 +8,7 @@ const API_URL = 'http://localhost:3001/api';
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [token, setToken] = useState(localStorage.getItem('token'));
+  const [token, setToken] = useState(sessionStorage.getItem('token'));
 
   // Set axios default headers
   useEffect(() => {
@@ -22,7 +22,7 @@ export const AuthProvider = ({ children }) => {
   // Verify token on mount only
   useEffect(() => {
     const verifyToken = async () => {
-      const storedToken = localStorage.getItem('token');
+      const storedToken = sessionStorage.getItem('token');
       if (storedToken) {
         axios.defaults.headers.common['Authorization'] = `Bearer ${storedToken}`;
         try {
@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
           setToken(storedToken);
         } catch (error) {
           console.error('Token verification failed:', error);
-          localStorage.removeItem('token');
+          sessionStorage.removeItem('token');
           setToken(null);
           setUser(null);
         }
@@ -51,7 +51,7 @@ export const AuthProvider = ({ children }) => {
 
       const { token: newToken, user: userData } = response.data;
 
-      localStorage.setItem('token', newToken);
+      sessionStorage.setItem('token', newToken);
       setToken(newToken);
       setUser(userData);
 
@@ -65,7 +65,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = () => {
-    localStorage.removeItem('token');
+    sessionStorage.removeItem('token');
     setToken(null);
     setUser(null);
   };
