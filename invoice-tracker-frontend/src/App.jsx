@@ -102,6 +102,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Bulk Selection State
   const [selectedInvoiceIds, setSelectedInvoiceIds] = useState([]);
+  const [lastSelectedIndex, setLastSelectedIndex] = useState(null);
 
   // Load contract values from database
   const loadContracts = async () => {
@@ -853,6 +854,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       setSelectedInvoiceIds(selectedInvoiceIds.filter(id =>
         !selectableInvoices.some(inv => inv.id === id)
       ));
+      setLastSelectedIndex(null);
     } else {
       // Select all from this group
       const newIds = selectableInvoices.map(inv => inv.id);
@@ -860,11 +862,29 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  const handleSelectInvoice = (invoiceId, isChecked) => {
-    if (isChecked) {
-      setSelectedInvoiceIds([...selectedInvoiceIds, invoiceId]);
+  const handleSelectInvoice = (invoiceId, isChecked, currentIndex, groupInvoices, shiftKey) => {
+    // Filter out Credit Memos from the group
+    const selectableInvoices = groupInvoices.filter(inv => inv.invoiceType !== 'Credit Memo');
+
+    if (shiftKey && lastSelectedIndex !== null && currentIndex !== null) {
+      // Shift+click: select range
+      const start = Math.min(lastSelectedIndex, currentIndex);
+      const end = Math.max(lastSelectedIndex, currentIndex);
+      const rangeIds = selectableInvoices
+        .slice(start, end + 1)
+        .map(inv => inv.id);
+
+      // Add range to selection
+      setSelectedInvoiceIds([...new Set([...selectedInvoiceIds, ...rangeIds])]);
+      setLastSelectedIndex(currentIndex);
     } else {
-      setSelectedInvoiceIds(selectedInvoiceIds.filter(id => id !== invoiceId));
+      // Normal click: toggle single item
+      if (isChecked) {
+        setSelectedInvoiceIds([...selectedInvoiceIds, invoiceId]);
+      } else {
+        setSelectedInvoiceIds(selectedInvoiceIds.filter(id => id !== invoiceId));
+      }
+      setLastSelectedIndex(currentIndex);
     }
   };
 
@@ -882,6 +902,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       });
       await loadInvoices();
       setSelectedInvoiceIds([]);
+      setLastSelectedIndex(null);
       showMessage('success', `${selectedInvoiceIds.length} invoice(s) marked as ${status}`);
     } catch (error) {
       showMessage('error', 'Failed to update invoices');
@@ -2579,7 +2600,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                 Mark as Unpaid
                               </button>
                               <button
-                                onClick={() => setSelectedInvoiceIds([])}
+                                onClick={() => {
+                                  setSelectedInvoiceIds([]);
+                                  setLastSelectedIndex(null);
+                                }}
                                 className="px-4 py-2 bg-gray-500 text-white rounded text-sm hover:bg-gray-600 font-medium"
                               >
                                 Clear Selection
@@ -2675,7 +2699,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                             </tr>
                           </thead>
                           <tbody>
-                            {groupInvs.map(inv => (
+                            {groupInvs.map((inv, index) => (
                               <tr key={inv.id} className={`border-t hover:bg-gray-50 ${selectedInvoiceIds.includes(inv.id) ? 'bg-blue-50' : ''}`}>
                                 <td className="px-4 py-2">
                                   {inv.invoiceType === 'Credit Memo' ? (
@@ -2684,7 +2708,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                     <input
                                       type="checkbox"
                                       checked={selectedInvoiceIds.includes(inv.id)}
-                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked)}
+                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked, index, groupInvs, e.shiftKey)}
                                       className="w-4 h-4 cursor-pointer"
                                       onClick={(e) => e.stopPropagation()}
                                     />
