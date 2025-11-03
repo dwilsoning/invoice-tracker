@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Analytics from './Analytics';
+import { useAuth } from './contexts/AuthContext';
+import Login from './components/Login';
+import Header from './components/Header';
 
 const API_URL = 'http://localhost:3001/api';
 
@@ -3004,10 +3007,27 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
 // App wrapper component to manage navigation between views
 function App() {
+  const { isAuthenticated, loading } = useAuth();
   const [currentView, setCurrentView] = useState('tracker'); // 'tracker' or 'analytics'
 
+  // Show loading screen while checking authentication
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="text-xl font-bold text-gray-700">Loading...</div>
+      </div>
+    );
+  }
+
+  // Show login if not authenticated
+  if (!isAuthenticated) {
+    return <Login />;
+  }
+
+  // Show authenticated app
   return (
-    <>
+    <div className="min-h-screen bg-gray-50">
+      <Header />
       {currentView === 'tracker' ? (
         <InvoiceTracker
           onNavigateToAnalytics={() => setCurrentView('analytics')}
@@ -3017,7 +3037,7 @@ function App() {
           onNavigateBack={() => setCurrentView('tracker')}
         />
       )}
-    </>
+    </div>
   );
 }
 

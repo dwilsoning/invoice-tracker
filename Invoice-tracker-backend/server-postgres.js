@@ -8,6 +8,11 @@ const pdfParse = require('pdf-parse');
 const ExcelJS = require('exceljs');
 const axios = require('axios');
 
+// Import authentication middleware and routes
+const { authenticateToken, requireAdmin, optionalAuth } = require('./middleware/auth');
+const authRoutes = require('./routes/auth');
+const usersRoutes = require('./routes/users');
+
 const app = express();
 const PORT = 3001;
 
@@ -15,6 +20,13 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 app.use('/pdfs', express.static(path.join(__dirname, 'invoice_pdfs')));
+
+// Authentication routes (public)
+app.use('/api/auth', authRoutes);
+
+// User management routes (admin only for most, some require auth)
+app.use('/api/users/profile', authenticateToken, usersRoutes);
+app.use('/api/users', authenticateToken, requireAdmin, usersRoutes);
 
 // Ensure directories exist
 const uploadsDir = path.join(__dirname, 'uploads');
