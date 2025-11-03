@@ -137,6 +137,58 @@ Unlike `setInterval`, which runs tasks relative to server startup time, `node-cr
 
 ---
 
+### 5. Database Backup
+
+**Schedule:** Every day at 4 AM AEST/AEDT
+**Cron Expression:** `0 4 * * *`
+**Function:** `performDatabaseBackup()`
+**Location:** server-postgres.js:1618-1651
+
+**Purpose:**
+- Creates daily PostgreSQL database backup files
+- Ensures data can be recovered in case of system failure
+- Maintains 30-day rolling backup retention
+- Provides protection beyond AWS RDS automated backups
+
+**Process:**
+1. Executes `scripts/backup/backup-postgres.js`
+2. Creates timestamped SQL dump file: `invoice_tracker_YYYY-MM-DD_HH-MM-SS.sql`
+3. Stores backup in `backups/` directory
+4. Automatically removes backups older than 30 days
+5. Logs backup file size and location
+
+**Backup File Format:**
+```
+backups/invoice_tracker_2025-11-03_04-00-00.sql
+```
+
+**Timing Rationale:**
+- **4 AM:** After all other maintenance tasks complete
+- Ensures backup includes results from:
+  - Midnight: Duplicate checks
+  - 1 AM: Expected invoice generation
+  - 2 AM: First exchange rate update
+  - 3 AM Sunday: Weekly cleanup
+- Still in middle of Australian night, minimal system load
+
+**Storage Requirements:**
+- Typical backup size: ~2-10 MB (depends on invoice count)
+- 30-day retention: ~60-300 MB total
+- Backups compress well (consider gzip for production)
+
+**AWS Deployment Notes:**
+- Store backups on **EBS volume** or **S3 bucket** (not ephemeral storage)
+- Consider adding S3 upload for off-server backup storage
+- Backups complement (not replace) AWS RDS automated backups
+
+**Restoration:**
+To restore from backup:
+```bash
+psql -h localhost -U invoice_tracker_user -d invoice_tracker < backups/invoice_tracker_YYYY-MM-DD_HH-MM-SS.sql
+```
+
+---
+
 ## Monitoring Scheduled Tasks
 
 ### Logs to Watch For
@@ -157,6 +209,12 @@ All scheduled tasks produce logs when they run:
 
 🧹 Running cleanup of old acknowledged invoices at [time] (AEST/AEDT)...
 ✅ Cleanup complete: Removed X old acknowledged invoices
+
+💾 Running database backup at [time] (AEST/AEDT)...
+✓ Backup completed successfully
+  File: backups/invoice_tracker_2025-11-03_04-00-00.sql
+  Size: 5.42 MB
+✅ Database backup completed successfully
 ```
 
 ### Startup Summary
@@ -169,6 +227,7 @@ When the server starts, it displays a summary of all scheduled tasks:
   • Expected invoice generation: 1 AM daily
   • Exchange rate updates: 2 AM, 8 AM, 2 PM, 8 PM daily
   • Cleanup old acknowledged invoices: 3 AM every Sunday
+  • Database backup: 4 AM daily
   • Server timezone: [system timezone]
   • Current time (AEST/AEDT): [current time]
 ```
@@ -215,6 +274,7 @@ tail -f server.log
 - `0 1 * * *` - Run at 1 AM every day
 - `0 2,8,14,20 * * *` - Run at 2 AM, 8 AM, 2 PM, 8 PM every day
 - `0 3 * * 0` - Run at 3 AM every Sunday
+- `0 4 * * *` - Run at 4 AM every day
 
 ### Timezone Configuration
 
@@ -258,6 +318,12 @@ checkForDuplicates();           // Check for duplicates now
 fetchExchangeRates();           // Update exchange rates now
 generateExpectedInvoices();     // Generate expected invoices now
 cleanupAcknowledgedInvoices();  // Run cleanup now
+performDatabaseBackup();        // Run database backup now
+```
+
+Or run the backup script directly:
+```bash
+node scripts/backup/backup-postgres.js
 ```
 
 ---
@@ -322,11 +388,13 @@ pm2 restart invoice-tracker
 
 Potential scheduled tasks to consider:
 
-1. **Database Backups**: Daily backup at 4 AM
+1. ✅ **Database Backups**: Implemented - Daily backup at 4 AM
 2. **Report Generation**: Weekly summary reports every Monday at 6 AM
 3. **Overdue Invoice Notifications**: Daily check at 9 AM for overdue invoices
 4. **Exchange Rate History**: Daily archival of exchange rate changes
 5. **Performance Metrics**: Weekly system health report
+6. **S3 Backup Upload**: Upload daily backups to S3 for off-site storage
+7. **Backup Integrity Check**: Weekly verification that backups are valid
 
 ---
 

@@ -1615,6 +1615,41 @@ cron.schedule('0 0 * * *', checkForDuplicates, {
 });
 console.log('📅 Scheduled: Duplicate invoice check at midnight AEST/AEDT daily');
 
+// Database backup function
+async function performDatabaseBackup() {
+  try {
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+    console.log(`💾 Running database backup at ${now} (AEST/AEDT)...`);
+
+    const { exec } = require('child_process');
+    const backupScript = path.join(__dirname, 'scripts', 'backup', 'backup-postgres.js');
+
+    await new Promise((resolve, reject) => {
+      exec(`node "${backupScript}"`, (error, stdout, stderr) => {
+        if (error) {
+          console.error('❌ Backup failed:', error.message);
+          reject(error);
+          return;
+        }
+        console.log(stdout);
+        if (stderr) console.error(stderr);
+        console.log('✅ Database backup completed successfully');
+        resolve();
+      });
+    });
+  } catch (error) {
+    console.error('❌ Database backup error:', error);
+  }
+}
+
+// Schedule database backup daily at 4 AM AEST/AEDT
+// Runs after all other maintenance tasks (duplicates, expected invoices, exchange rates, cleanup)
+// 4 AM is chosen to avoid conflict with other scheduled tasks and ensure backup captures all daily changes
+cron.schedule('0 4 * * *', performDatabaseBackup, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: Database backup at 4 AM AEST/AEDT daily');
+
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
   res.json(exchangeRates);
@@ -2473,6 +2508,7 @@ async function startServer() {
       console.log('  • Expected invoice generation: 1 AM daily');
       console.log('  • Exchange rate updates: 2 AM, 8 AM, 2 PM, 8 PM daily');
       console.log('  • Cleanup old acknowledged invoices: 3 AM every Sunday');
+      console.log('  • Database backup: 4 AM daily');
       console.log('  • Server timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       console.log('  • Current time (AEST/AEDT):', new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
       console.log('');
