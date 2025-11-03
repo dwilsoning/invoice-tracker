@@ -3039,9 +3039,16 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   <div>
                     <label className="block text-sm font-medium mb-1">Amount</label>
                     <input
-                      type="number"
-                      value={editForm.amountDue}
-                      onChange={(e) => setEditForm({...editForm, amountDue: parseFloat(e.target.value)})}
+                      type="text"
+                      value={editForm.amountDue ? Math.round(Number(editForm.amountDue)).toLocaleString('en-US') : ''}
+                      onChange={(e) => {
+                        // Remove commas and parse number
+                        const numericValue = e.target.value.replace(/,/g, '');
+                        // Only update if it's a valid integer or empty
+                        if (numericValue === '' || (!isNaN(numericValue) && Number.isInteger(Number(numericValue)))) {
+                          setEditForm({...editForm, amountDue: numericValue === '' ? 0 : Number(numericValue)});
+                        }
+                      }}
                       className="w-full border rounded px-3 py-2"
                     />
                   </div>
