@@ -886,19 +886,24 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     // Find the index of the current invoice in the selectable invoices array
     const currentIndex = selectableInvoices.findIndex(inv => inv.id === invoiceId);
 
+    console.log('handleSelectInvoice:', { invoiceId, isChecked, shiftKey, currentIndex, lastSelectedIndex });
+
     if (shiftKey && lastSelectedIndex !== null && currentIndex !== null && currentIndex !== -1) {
       // Shift+click: select range
+      console.log('Shift+click detected, selecting range from', lastSelectedIndex, 'to', currentIndex);
       const start = Math.min(lastSelectedIndex, currentIndex);
       const end = Math.max(lastSelectedIndex, currentIndex);
       const rangeIds = selectableInvoices
         .slice(start, end + 1)
         .map(inv => inv.id);
 
+      console.log('Range IDs:', rangeIds);
       // Add range to selection
       setSelectedInvoiceIds([...new Set([...selectedInvoiceIds, ...rangeIds])]);
       setLastSelectedIndex(currentIndex);
     } else {
       // Normal click: toggle single item
+      console.log('Normal click');
       if (isChecked) {
         setSelectedInvoiceIds([...selectedInvoiceIds, invoiceId]);
       } else {
@@ -2737,7 +2742,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                     <input
                                       type="checkbox"
                                       checked={selectedInvoiceIds.includes(inv.id)}
-                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked, groupInvs, e.shiftKey)}
+                                      onChange={(e) => handleSelectInvoice(inv.id, e.target.checked, groupInvs, e.nativeEvent.shiftKey)}
                                       className="w-4 h-4 cursor-pointer"
                                       onClick={(e) => e.stopPropagation()}
                                     />
