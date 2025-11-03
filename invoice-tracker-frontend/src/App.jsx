@@ -653,6 +653,12 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     };
   };
 
+  // Normalize client name by removing trailing period
+  const normalizeClientName = (clientName) => {
+    if (!clientName || clientName === 'Uncategorized') return clientName;
+    return clientName.replace(/\.$/, '').trim();
+  };
+
   // Group invoices
   const groupInvoices = (invoicesToGroup) => {
     let grouped = {};
@@ -665,10 +671,21 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                              groupBy === 'Contract' ? 'customerContract' :
                              groupBy === 'Status' ? 'status' : 'invoiceType'] || 'Uncategorized';
 
+        // Normalize client names to ignore trailing periods
+        if (groupBy === 'Client') {
+          primaryKey = normalizeClientName(primaryKey);
+        }
+
         if (secondaryGroupBy !== 'None') {
           let secondaryKey = inv[secondaryGroupBy === 'Client' ? 'client' :
                                  secondaryGroupBy === 'Contract' ? 'customerContract' :
                                  secondaryGroupBy === 'Status' ? 'status' : 'invoiceType'] || 'Uncategorized';
+
+          // Normalize client names in secondary grouping too
+          if (secondaryGroupBy === 'Client') {
+            secondaryKey = normalizeClientName(secondaryKey);
+          }
+
           primaryKey = `${primaryKey} > ${secondaryKey}`;
         }
 
