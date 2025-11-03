@@ -533,15 +533,49 @@
                 </ol>
 
                 <h3>Marking Invoice as Paid/Unpaid</h3>
+
+                <h4>Single Invoice</h4>
+                <p>Update one invoice at a time:</p>
                 <ol>
-                    <li>Open invoice details</li>
-                    <li>Toggle <strong>Status</strong> dropdown</li>
-                    <li>Select "Paid" or "Unpaid"</li>
-                    <li>Save changes - updates immediately</li>
+                    <li>Find the invoice in the table</li>
+                    <li>Click the <strong>"Mark Paid"</strong> or <strong>"Mark Unpaid"</strong> button in the Actions column</li>
+                    <li>Status updates immediately with a success message</li>
                 </ol>
 
+                <h4>Bulk Selection (Multiple Invoices)</h4>
+                <p><strong>NEW:</strong> Update multiple invoices at once to save time:</p>
+                <ol>
+                    <li><strong>Select Invoices:</strong>
+                        <ul>
+                            <li>Click checkboxes in the first column to select individual invoices</li>
+                            <li>Click the header checkbox to select/deselect all invoices in the current group</li>
+                            <li>Selected invoices are highlighted in blue</li>
+                        </ul>
+                    </li>
+                    <li><strong>Bulk Actions:</strong> When invoices are selected, a blue action bar appears showing:
+                        <ul>
+                            <li>Number of invoices selected</li>
+                            <li><strong>"Mark as Paid"</strong> button (green) - Updates all selected to Paid</li>
+                            <li><strong>"Mark as Unpaid"</strong> button (blue) - Updates all selected to Pending</li>
+                            <li><strong>"Clear Selection"</strong> button (gray) - Deselects all</li>
+                        </ul>
+                    </li>
+                    <li>Click your desired action button</li>
+                    <li>All selected invoices update immediately with a success message</li>
+                </ol>
+
+                <div class="info-box">
+                    <strong>Note:</strong> Credit Memos cannot be marked as paid/unpaid and are excluded from bulk selection (shown as "-" in the checkbox column).
+                </div>
+
                 <div class="tip-box">
-                    <strong>Quick Tip:</strong> Click the invoice number to quickly view and update status without full edit mode.
+                    <strong>Quick Tips:</strong>
+                    <ul>
+                        <li>Use bulk selection when processing multiple payments at once</li>
+                        <li>The select all checkbox only affects the currently visible group</li>
+                        <li>Selected invoices remain highlighted so you can review before updating</li>
+                        <li>Selection clears automatically after bulk update completes</li>
+                    </ul>
                 </div>
             </section>
 
