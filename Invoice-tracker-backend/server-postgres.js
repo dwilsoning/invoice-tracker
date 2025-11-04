@@ -21,6 +21,7 @@ const PORT = 3001;
 app.use(cors());
 app.use(express.json());
 app.use('/pdfs', express.static(path.join(__dirname, 'invoice_pdfs')));
+app.use('/attachments', express.static(path.join(__dirname, 'attachments')));
 
 // Authentication routes (public)
 app.use('/api/auth', authRoutes);
@@ -33,9 +34,11 @@ app.use('/api/users', authenticateToken, requireAdmin, usersRoutes);
 const uploadsDir = path.join(__dirname, 'uploads');
 const pdfsDir = path.join(__dirname, 'invoice_pdfs');
 const deletedPdfsDir = path.join(__dirname, 'invoice_pdfs', 'deleted');
+const attachmentsDir = path.join(__dirname, 'attachments');
 if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir);
 if (!fs.existsSync(pdfsDir)) fs.mkdirSync(pdfsDir);
 if (!fs.existsSync(deletedPdfsDir)) fs.mkdirSync(deletedPdfsDir);
+if (!fs.existsSync(attachmentsDir)) fs.mkdirSync(attachmentsDir);
 
 // Using PostgreSQL database from db-postgres.js
 
@@ -1243,6 +1246,97 @@ app.delete('/api/invoices', async (req, res) => {
     });
   } catch (error) {
     console.error('Error deleting all invoices:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Get attachments for an invoice
+app.get('/api/invoices/:id/attachments', async (req, res) => {
+  try {
+    const { id } = req.params;
+    const attachments = await db.all(
+      'SELECT id, invoice_id, file_name, original_name, file_path, file_size, mime_type, uploaded_at FROM invoice_attachments WHERE invoice_id = $1 ORDER BY uploaded_at DESC',
+      id
+    );
+    res.json(attachments);
+  } catch (error) {
+    console.error('Error fetching attachments:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Upload attachment for an invoice
+app.post('/api/invoices/:id/attachments', async (req, res) => {
+  const form = formidable({
+    uploadDir: attachmentsDir,
+    keepExtensions: true,
+    maxFileSize: 50 * 1024 * 1024, // 50MB max file size
+  });
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.error('Error parsing form:', err);
+      return res.status(400).json({ error: 'Error uploading file' });
+    }
+
+    try {
+      const { id } = req.params;
+      const file = files.file;
+
+      if (!file) {
+        return res.status(400).json({ error: 'No file uploaded' });
+      }
+
+      // Handle both single file and array of files
+      const uploadedFile = Array.isArray(file) ? file[0] : file;
+
+      const fileName = path.basename(uploadedFile.filepath);
+      const originalName = uploadedFile.originalFilename || fileName;
+      const filePath = `/attachments/${fileName}`;
+      const fileSize = uploadedFile.size;
+      const mimeType = uploadedFile.mimetype || 'application/octet-stream';
+
+      // Generate unique ID for attachment
+      const attachmentId = `att_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+      await db.run(
+        'INSERT INTO invoice_attachments (id, invoice_id, file_name, original_name, file_path, file_size, mime_type) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+        [attachmentId, id, fileName, originalName, filePath, fileSize, mimeType]
+      );
+
+      const attachment = await db.get('SELECT * FROM invoice_attachments WHERE id = $1', attachmentId);
+      res.json(attachment);
+    } catch (error) {
+      console.error('Error saving attachment:', error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+});
+
+// Delete attachment
+app.delete('/api/attachments/:attachmentId', async (req, res) => {
+  try {
+    const { attachmentId } = req.params;
+
+    // Get attachment info
+    const attachment = await db.get('SELECT file_path FROM invoice_attachments WHERE id = $1', attachmentId);
+
+    if (attachment && attachment.filePath) {
+      // Convert web path (/attachments/file.ext) to file system path
+      const relativePath = attachment.filePath.replace(/^\/attachments\//, 'attachments/');
+      const fullPath = path.join(__dirname, relativePath);
+
+      // Delete file if it exists
+      if (fs.existsSync(fullPath)) {
+        fs.unlinkSync(fullPath);
+      }
+    }
+
+    // Delete from database
+    await db.run('DELETE FROM invoice_attachments WHERE id = $1', attachmentId);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting attachment:', error);
     res.status(500).json({ error: error.message });
   }
 });
