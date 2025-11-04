@@ -79,8 +79,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [queryResult, setQueryResult] = useState(null);
   const [queryFilteredIds, setQueryFilteredIds] = useState(null);
   const [isQuerying, setIsQuerying] = useState(false);
-  const [filtersCollapsed, setFiltersCollapsed] = useState(false);
-  const [groupingCollapsed, setGroupingCollapsed] = useState(false);
+  const [filtersCollapsed, setFiltersCollapsed] = useState(true);
+  const [groupingCollapsed, setGroupingCollapsed] = useState(true);
 
   // Sorting State
   const [sortBy, setSortBy] = useState('invoiceDate');
