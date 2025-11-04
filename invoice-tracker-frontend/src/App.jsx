@@ -55,7 +55,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [selectedExpectedInvoiceId, setSelectedExpectedInvoiceId] = useState(null);
 
   // Dashboard date filter
-  const [dashboardDateFilter, setDashboardDateFilter] = useState('allTime');
+  const [dashboardDateFilter, setDashboardDateFilter] = useState('currentYear');
   const [dashboardCustomFrom, setDashboardCustomFrom] = useState('');
   const [dashboardCustomTo, setDashboardCustomTo] = useState('');
   
