@@ -1488,14 +1488,6 @@ async function checkAndRemoveExpectedInvoice(invoice) {
     const contractMatch = invoice.customerContract || '';
     const typeMatch = invoice.invoiceType;
 
-    console.log(`🔍 Checking for expected invoice match:`, {
-      client: clientMatch,
-      contract: contractMatch,
-      type: typeMatch,
-      invoiceDate: invoice.invoiceDate,
-      invoiceNumber: invoice.invoiceNumber
-    });
-
     // Parse invoice date
     const invoice_date = new Date(invoice.invoiceDate);
 
@@ -1655,12 +1647,10 @@ app.get('/api/exchange-rates', async (req, res) => {
 app.post('/api/query', async (req, res) => {
   try {
     const { query } = req.body;
-    console.log(`📝 Query received: "${query}"`);
 
     const invoices = await db.all('SELECT * FROM invoices');
     const queryLower = query.toLowerCase();
     let results = [...invoices];
-    console.log(`   Starting with ${results.length} invoices`);
 
     // Check for "contracts with no value" query FIRST (before other filters)
     // This needs to be first to avoid the client filter matching "to no" as a client name
@@ -1757,7 +1747,6 @@ app.post('/api/query', async (req, res) => {
         // Exclude "contract X" - this is a contract query, not a client query
         if (captured === 'contract' || captured.startsWith('contract ')) {
           // Skip this match - it's "invoices for contract X" which is a contract query
-          console.log(`   Skipping client match - detected contract query: "${captured}"`);
         } else {
           // Exclude temporal keywords that should be handled by date filtering
           const temporalKeywords = ['this month', 'last month', 'next month', 'this year', 'last year', 'next year',
@@ -1800,12 +1789,9 @@ app.post('/api/query', async (req, res) => {
 
     if (clientMatch) {
       const clientName = clientMatch[1].trim();
-      console.log(`   Client filter: "${clientName}"`);
-      const beforeFilter = results.length;
       results = results.filter(inv =>
         inv.client && inv.client.toLowerCase().includes(clientName)
       );
-      console.log(`   After client filter: ${results.length} invoices (was ${beforeFilter})`);
     }
 
     // Filter by contract
@@ -1813,13 +1799,10 @@ app.post('/api/query', async (req, res) => {
     let contractMatch = queryLower.match(/(?:on\s+contract|for\s+contract|contract)\s+([a-z0-9\s\-_'.&,]+?)(?:\s+(?:what|total|sum|how|in|during|are|is|invoices?|\?)|$)/i);
     if (contractMatch) {
       const contract_name = contractMatch[1].trim();
-      console.log(`   Contract filter: "${contract_name}"`);
-      const beforeFilter = results.length;
       results = results.filter(inv =>
         (inv.customerContract && inv.customerContract.toLowerCase() === contract_name) ||
         (inv.oracleContract && inv.oracleContract.toLowerCase() === contract_name)
       );
-      console.log(`   After contract filter: ${results.length} invoices (was ${beforeFilter})`);
     }
 
     // Filter by status
@@ -2229,7 +2212,6 @@ app.post('/api/query', async (req, res) => {
         contractSummary
       });
     } else {
-      console.log(`   Returning ${results.length} invoices`);
       res.json({
         type: 'list',
         invoices: results,
@@ -2238,7 +2220,7 @@ app.post('/api/query', async (req, res) => {
       });
     }
   } catch (error) {
-    console.error(`   ❌ Query error: ${error.message}`);
+    console.error('Query error:', error.message);
     res.status(500).json({ error: error.message });
   }
 });
