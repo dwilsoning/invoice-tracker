@@ -46,6 +46,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [typeFilter, setTypeFilter] = useState([]);
   const [clientFilter, setClientFilter] = useState('All');
   const [contractFilter, setContractFilter] = useState('All');
+  const [contractPercentageFilter, setContractPercentageFilter] = useState(''); // e.g., "=50", ">80", "<30"
+  const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
+  const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
   const [frequencyFilter, setFrequencyFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
@@ -75,10 +78,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [editForm, setEditForm] = useState({});
   const [attachments, setAttachments] = useState([]);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
-  const [queryText, setQueryText] = useState('');
-  const [queryResult, setQueryResult] = useState(null);
-  const [queryFilteredIds, setQueryFilteredIds] = useState(null);
-  const [isQuerying, setIsQuerying] = useState(false);
   const [filtersCollapsed, setFiltersCollapsed] = useState(true);
   const [groupingCollapsed, setGroupingCollapsed] = useState(true);
 
@@ -474,6 +473,18 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const getFilteredInvoices = () => {
     let filtered = [...invoices];
 
+    // Dashboard date range filter - apply when showing invoices from stat box
+    // Filter by invoice date to match the dashboard period
+    if (activeStatBox) {
+      const dateRange = getDashboardDateRange();
+      if (dateRange.from) {
+        filtered = filtered.filter(inv => inv.invoiceDate >= dateRange.from);
+      }
+      if (dateRange.to) {
+        filtered = filtered.filter(inv => inv.invoiceDate <= dateRange.to);
+      }
+    }
+
     // Status filter (multi-select)
     if (statusFilter.length > 0) {
       filtered = filtered.filter(inv =>
@@ -505,6 +516,67 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       filtered = filtered.filter(inv => inv.customerContract === contractFilter);
     }
 
+    // Contract percentage filter (single value with operator)
+    if (contractPercentageFilter) {
+      filtered = filtered.filter(inv => {
+        if (!inv.customerContract) return false;
+        const contractValue = contractValues[inv.customerContract]?.value;
+        if (!contractValue || contractValue === 0) return false;
+
+        // Calculate invoiced percentage
+        const contractInvoices = invoices.filter(i => i.customerContract === inv.customerContract);
+        const totalInvoiced = contractInvoices.reduce((sum, i) =>
+          sum + convertToUSD(i.amountDue, i.currency), 0
+        );
+        const contractValueUSD = convertToUSD(contractValue, contractValues[inv.customerContract].currency);
+        const percentage = (totalInvoiced / contractValueUSD) * 100;
+
+        // Parse operator and value from filter (e.g., "=50", ">80", "<=25")
+        const match = contractPercentageFilter.match(/^([<>=]+)(\d+)$/);
+        if (!match) return true;
+
+        const [, operator, value] = match;
+        const targetPercentage = parseFloat(value);
+
+        switch (operator) {
+          case '=':
+            return Math.abs(percentage - targetPercentage) < 1; // Allow 1% tolerance
+          case '>':
+            return percentage > targetPercentage;
+          case '<':
+            return percentage < targetPercentage;
+          case '>=':
+            return percentage >= targetPercentage;
+          case '<=':
+            return percentage <= targetPercentage;
+          default:
+            return true;
+        }
+      });
+    }
+
+    // Contract percentage range filter
+    if (contractPercentageRangeMin || contractPercentageRangeMax) {
+      filtered = filtered.filter(inv => {
+        if (!inv.customerContract) return false;
+        const contractValue = contractValues[inv.customerContract]?.value;
+        if (!contractValue || contractValue === 0) return false;
+
+        // Calculate invoiced percentage
+        const contractInvoices = invoices.filter(i => i.customerContract === inv.customerContract);
+        const totalInvoiced = contractInvoices.reduce((sum, i) =>
+          sum + convertToUSD(i.amountDue, i.currency), 0
+        );
+        const contractValueUSD = convertToUSD(contractValue, contractValues[inv.customerContract].currency);
+        const percentage = (totalInvoiced / contractValueUSD) * 100;
+
+        const min = contractPercentageRangeMin ? parseFloat(contractPercentageRangeMin) : 0;
+        const max = contractPercentageRangeMax ? parseFloat(contractPercentageRangeMax) : 100;
+
+        return percentage >= min && percentage <= max;
+      });
+    }
+
     // Frequency filter
     if (frequencyFilter.length > 0) {
       filtered = filtered.filter(inv => frequencyFilter.includes(inv.frequency));
@@ -527,11 +599,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         inv.customerContract?.toLowerCase().includes(term) ||
         inv.services?.toLowerCase().includes(term)
       );
-    }
-
-    // Query filter (AI natural language query results)
-    if (queryFilteredIds) {
-      filtered = filtered.filter(inv => queryFilteredIds.includes(inv.id));
     }
 
     return filtered;
@@ -580,7 +647,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Get dashboard date range
   const getDashboardDateRange = () => {
-    if (dashboardDateFilter === 'year') {
+    if (dashboardDateFilter === 'currentYear' || dashboardDateFilter === 'year') {
       const year = new Date().getFullYear();
       return {
         from: `${year}-01-01`,
@@ -591,10 +658,17 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         from: null,
         to: null
       };
-    } else {
+    } else if (dashboardDateFilter === 'custom') {
       return {
         from: dashboardCustomFrom,
         to: dashboardCustomTo
+      };
+    } else {
+      // Default to current year
+      const year = new Date().getFullYear();
+      return {
+        from: `${year}-01-01`,
+        to: `${year}-12-31`
       };
     }
   };
@@ -788,14 +862,15 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     setTypeFilter([]);
     setClientFilter('All');
     setContractFilter('All');
+    setContractPercentageFilter('');
+    setContractPercentageRangeMin('');
+    setContractPercentageRangeMax('');
     setFrequencyFilter([]);
     setSearchTerm('');
     setDateFrom('');
     setDateTo('');
     setAgingFilter('All');
     setActiveStatBox(null);
-    setQueryFilteredIds(null);
-    setQueryResult(null);
   };
 
   // Toggle frequency filter selection
@@ -838,15 +913,19 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         break;
       case 'paid':
         setStatusFilter(['Paid']);
+        setShowInvoiceTable(true);
         break;
       case 'unpaid':
         setStatusFilter(['Pending']);
+        setShowInvoiceTable(true);
         break;
       case 'overdue':
         setStatusFilter(['Overdue']);
+        setShowInvoiceTable(true);
         break;
       case 'currentUnpaid':
         setStatusFilter(['Current Unpaid']);
+        setShowInvoiceTable(true);
         break;
       case 'dueThisMonth':
         setStatusFilter(['Due This Month']);
@@ -1183,106 +1262,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  // Natural language query
-  const handleQuery = async () => {
-    if (!queryText.trim()) return;
-
-    setIsQuerying(true);
-    try {
-      const response = await axios.post(`${API_URL}/query`, { query: queryText });
-      setQueryResult(response.data);
-
-      // If the response includes invoices, filter the invoice table to show only those
-      if (response.data.invoices && response.data.invoices.length > 0) {
-        // Clear all other filters so we only show the AI query results
-        setStatusFilter([]);
-        setTypeFilter([]);
-        setClientFilter('All');
-        setContractFilter('All');
-        setSearchTerm('');
-        setDateFrom('');
-        setDateTo('');
-        setAgingFilter('All');
-        setActiveStatBox(null);
-
-        // Set the query filter and show the table
-        const invoiceIds = response.data.invoices.map(inv => inv.id);
-        setQueryFilteredIds(invoiceIds);
-        setShowInvoiceTable(true);
-
-        // For "contracts with no value" queries, automatically set grouping
-        // Set this AFTER other state updates to ensure it takes effect
-        if (response.data.type === 'contracts_no_value') {
-          // Use setTimeout to ensure state updates happen after table is shown
-          setTimeout(() => {
-            setGroupBy('Contract');
-            setSecondaryGroupBy('Client');
-
-            // Auto-expand all groups after a brief delay
-            setTimeout(() => {
-              const groups = {};
-              response.data.contractsWithNoValue.forEach(contract => {
-                groups[contract] = true;
-              });
-              setExpandedGroups(groups);
-            }, 100);
-          }, 0);
-        }
-      }
-    } catch (error) {
-      showMessage('error', 'Query failed');
-    } finally {
-      setIsQuerying(false);
-    }
-  };
-
-  // Quick filter for contracts with no value
-  const handleContractsWithNoValue = async () => {
-    setIsQuerying(true);
-    try {
-      const response = await axios.post(`${API_URL}/query`, { query: 'Contracts with no value' });
-      setQueryResult(response.data);
-
-      // If the response includes invoices, filter the invoice table to show only those
-      if (response.data.invoices && response.data.invoices.length > 0) {
-        // Clear all other filters so we only show the AI query results
-        setStatusFilter([]);
-        setTypeFilter([]);
-        setClientFilter('All');
-        setContractFilter('All');
-        setSearchTerm('');
-        setDateFrom('');
-        setDateTo('');
-        setAgingFilter('All');
-        setActiveStatBox(null);
-
-        // Set the query filter and show the table
-        const invoiceIds = response.data.invoices.map(inv => inv.id);
-        setQueryFilteredIds(invoiceIds);
-        setShowInvoiceTable(true);
-
-        // For "contracts with no value" queries, automatically set grouping
-        setTimeout(() => {
-          setGroupBy('Contract');
-          setSecondaryGroupBy('Client');
-
-          // Auto-expand all groups after a brief delay
-          setTimeout(() => {
-            const groups = {};
-            response.data.contractsWithNoValue.forEach(contract => {
-              groups[contract] = true;
-            });
-            setExpandedGroups(groups);
-          }, 100);
-        }, 0);
-      }
-    } catch (error) {
-      showMessage('error', 'Failed to load contracts with no value');
-    } finally {
-      setIsQuerying(false);
-    }
-  };
-
   // Get unique values for filters
   // Normalize client names to remove duplicates with/without trailing periods
   const clientsMap = new Map();
@@ -1475,8 +1454,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               onChange={(e) => setDashboardDateFilter(e.target.value)}
               className="border rounded px-3 py-2"
             >
+              <option value="currentYear">This Calendar Year</option>
               <option value="allTime">All Time</option>
-              <option value="year">This Calendar Year</option>
               <option value="custom">Custom Period</option>
             </select>
 
@@ -1641,241 +1620,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           <div className="mt-4 text-xs text-white">
             Click on any aging bucket to filter invoices. Current = not yet due or up to 30 days overdue.
           </div>
-        </div>
-
-        {/* Natural Language Query */}
-        <div className="mb-6 bg-[#707CF1] p-4 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-3 text-white">Ask About Your Invoices</h2>
-          <div className="flex gap-2">
-            <input
-              type="text"
-              value={queryText}
-              onChange={(e) => {
-                setQueryText(e.target.value);
-                // Clear results when query box is emptied
-                if (!e.target.value.trim()) {
-                  setQueryResult(null);
-                  setQueryFilteredIds(null);
-                  setShowInvoiceTable(false);
-                }
-              }}
-              onKeyPress={(e) => e.key === 'Enter' && handleQuery()}
-              placeholder="E.g., 'What's the total for PS invoices from Acme Corp?'"
-              className="flex-1 border rounded px-4 py-2"
-            />
-            <button
-              onClick={handleQuery}
-              disabled={isQuerying || !queryText.trim()}
-              className={`px-6 py-2 rounded transition ${
-                isQuerying || !queryText.trim()
-                  ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
-                  : 'bg-[#151744] text-white hover:bg-[#0d0e2a] active:scale-95'
-              }`}
-            >
-              {isQuerying ? 'Asking...' : 'Ask'}
-            </button>
-            <button
-              onClick={() => {
-                setQueryText('');
-                setQueryResult(null);
-                setQueryFilteredIds(null);
-                setShowInvoiceTable(false);
-              }}
-              className="px-6 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
-            >
-              Clear
-            </button>
-          </div>
-
-          {/* Query Examples Guide */}
-          <details className="mt-3 bg-white bg-opacity-10 rounded p-3">
-            <summary className="cursor-pointer text-white font-semibold hover:text-gray-200">
-              💡 Query Examples & Tips
-            </summary>
-            <div className="mt-3 text-white text-sm space-y-3">
-              <div>
-                <p className="font-semibold mb-1">Filter by Client:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Which Barwon Health contracts are unpaid"</li>
-                  <li>"Invoices for Minister for Health"</li>
-                  <li>"Show me Barwon Health invoices from last month"</li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1">Filter by Status:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Unpaid invoices" or "Outstanding invoices"</li>
-                  <li>"Overdue invoices"</li>
-                  <li>"Paid invoices this year"</li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1">Filter by Invoice Type:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Professional Services invoices" or "PS invoices"</li>
-                  <li>"Maintenance invoices for Barwon Health"</li>
-                  <li>"Subscription invoices in October 2025"</li>
-                </ul>
-              </div>
-
-
-              <div>
-                <p className="font-semibold mb-1">Filter by Date:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Invoices from last month" or "This year"</li>
-                  <li>"Last year" or "This quarter"</li>
-                  <li>"Invoices from January 2025"</li>
-                  <li>"Between 2025-01-01 and 2025-03-31"</li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1">Contract Percentage Queries:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Contracts over 80% invoiced"</li>
-                  <li>"Which contracts are less than 50% paid"</li>
-                  <li>"Contracts between 40% and 60% invoiced"</li>
-                </ul>
-              </div>
-
-              <div>
-                <p className="font-semibold mb-1">Special Queries:</p>
-                <ul className="list-disc list-inside ml-2 space-y-1 text-gray-100">
-                  <li>"Contracts with no value"</li>
-                  <li>"Monthly invoices in USD"</li>
-                </ul>
-              </div>
-
-              <div className="pt-2 border-t border-white border-opacity-20">
-                <p className="italic text-gray-200">
-                  💡 Tip: You can combine multiple filters! Try: "Unpaid Professional Services invoices for Barwon Health this year"
-                </p>
-              </div>
-            </div>
-          </details>
-          
-          {queryResult && (
-            <div className="mt-4 p-4 bg-gray-50 rounded">
-              {/* Contract Summary - shown for percentage queries */}
-              {queryResult.contractSummary && (
-                <div className="mb-4 p-3 bg-blue-50 border border-blue-200 rounded">
-                  <h4 className="font-semibold text-blue-900 mb-2">
-                    {queryResult.contractSummary.isRange ? (
-                      <>
-                        Contracts {queryResult.contractSummary.operator1 === '=' ? 'at' :
-                                  queryResult.contractSummary.operator1 === '<' ? 'less than' :
-                                  queryResult.contractSummary.operator1 === '>' ? 'greater than' :
-                                  queryResult.contractSummary.operator1 === '<=' ? 'at or below' :
-                                  queryResult.contractSummary.operator1 === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage1}% and {queryResult.contractSummary.operator2 === '=' ? 'at' :
-                                  queryResult.contractSummary.operator2 === '<' ? 'less than' :
-                                  queryResult.contractSummary.operator2 === '>' ? 'greater than' :
-                                  queryResult.contractSummary.operator2 === '<=' ? 'at or below' :
-                                  queryResult.contractSummary.operator2 === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage2}% {
-                          queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
-                          queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
-                          'Invoiced'
-                        }
-                      </>
-                    ) : (
-                      <>
-                        Contracts {queryResult.contractSummary.operator === '=' ? 'at' :
-                                  queryResult.contractSummary.operator === '<' ? 'less than' :
-                                  queryResult.contractSummary.operator === '>' ? 'greater than' :
-                                  queryResult.contractSummary.operator === '<=' ? 'at or below' :
-                                  queryResult.contractSummary.operator === '>=' ? 'at or above' : 'at'} {queryResult.contractSummary.targetPercentage}% {
-                          queryResult.contractSummary.queryType === 'paid' ? 'Paid' :
-                          queryResult.contractSummary.queryType === 'unpaid' ? 'Unpaid' :
-                          'Invoiced'
-                        }
-                      </>
-                    )}
-                    <span className="ml-2 text-sm font-normal text-blue-700">
-                      ({queryResult.contractSummary.totalContracts} contract{queryResult.contractSummary.totalContracts !== 1 ? 's' : ''})
-                    </span>
-                  </h4>
-                  <div className="space-y-2">
-                    {queryResult.contractSummary.matchingContracts.map((contract, idx) => (
-                      <div key={idx} className="flex justify-between items-center text-sm bg-white p-2 rounded border border-blue-100">
-                        <div className="font-medium text-gray-900">{contract.contractName}</div>
-                        <div className="flex items-center gap-4">
-                          <div className="text-gray-600">
-                            {queryResult.contractSummary.queryType === 'paid' ? (
-                              <span>${contract.paidTotal.toLocaleString()} paid / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
-                            ) : queryResult.contractSummary.queryType === 'unpaid' ? (
-                              <span>${contract.unpaidTotal.toLocaleString()} unpaid / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
-                            ) : (
-                              <span>${contract.invoicedTotal.toLocaleString()} invoiced / ${contract.contractValue.toLocaleString()} {contract.currency}</span>
-                            )}
-                          </div>
-                          <div className={`font-semibold px-2 py-1 rounded ${
-                            contract.percentage >= 95 ? 'bg-green-100 text-green-800' :
-                            contract.percentage >= 50 ? 'bg-yellow-100 text-yellow-800' :
-                            'bg-blue-100 text-blue-800'
-                          }`}>
-                            {contract.percentage}%
-                          </div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Standard Query Results */}
-              {queryResult.type === 'total' ? (
-                <div>
-                  <div className="text-2xl font-bold text-purple-600">
-                    ${(queryResult.value || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">{queryResult.count} invoices</div>
-                </div>
-              ) : queryResult.type === 'count' ? (
-                <div>
-                  <div className="text-2xl font-bold text-purple-600">
-                    {queryResult.count}
-                  </div>
-                  <div className="text-sm text-gray-600">invoices found</div>
-                </div>
-              ) : queryResult.type === 'average' ? (
-                <div>
-                  <div className="text-2xl font-bold text-purple-600">
-                    ${(queryResult.value || 0).toLocaleString()}
-                  </div>
-                  <div className="text-sm text-gray-600">
-                    Average of {queryResult.count} invoices (Total: ${(queryResult.total || 0).toLocaleString()})
-                  </div>
-                </div>
-              ) : queryResult.type === 'contracts_no_value' ? (
-                <div>
-                  <div className="text-2xl font-bold text-orange-600">
-                    {queryResult.contractsWithNoValue.length}
-                  </div>
-                  <div className="text-sm text-gray-600 mb-2">
-                    contract(s) with no value • {queryResult.count} invoice(s)
-                  </div>
-                  <div className="text-xs text-gray-500 bg-orange-50 p-2 rounded border border-orange-200">
-                    <strong>Contracts:</strong> {queryResult.contractsWithNoValue.join(', ')}
-                  </div>
-                  <div className="text-xs text-blue-600 mt-2">
-                    💡 Invoice table below is grouped by Contract and Client
-                  </div>
-                </div>
-              ) : (
-                <div>
-                  <div className="text-sm text-gray-600 mb-2">Found {queryResult.count} invoices</div>
-                  <div className="max-h-40 overflow-y-auto">
-                    {queryResult.invoices.slice(0, 10).map(inv => (
-                      <div key={inv.id} className="text-sm py-1">
-                        {inv.invoiceNumber} - {inv.client} - ${convertToUSD(inv.amountDue, inv.currency).toLocaleString()}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
         </div>
 
         {/* Expected Invoices */}
@@ -2253,16 +1997,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
             </div>
             <div className="flex gap-2">
               <button
-                onClick={handleContractsWithNoValue}
-                disabled={isQuerying}
-                className={`px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition ${
-                  isQuerying ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-                title="Show contracts with no value"
-              >
-                {isQuerying ? '⏳ Loading...' : '📋 Contracts with No Value'}
-              </button>
-              <button
                 onClick={clearFilters}
                 className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
               >
@@ -2349,6 +2083,41 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   <option key={contract} value={contract}>{contract}</option>
                 ))}
               </select>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1 text-white">Contract % (e.g., =50, &gt;80, &lt;30)</label>
+              <input
+                type="text"
+                value={contractPercentageFilter}
+                onChange={(e) => setContractPercentageFilter(e.target.value)}
+                placeholder="=50 or >80 or <30"
+                className="w-full border rounded px-3 py-2"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-1 text-white">Contract % Range</label>
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  value={contractPercentageRangeMin}
+                  onChange={(e) => setContractPercentageRangeMin(e.target.value)}
+                  placeholder="Min %"
+                  min="0"
+                  max="100"
+                  className="w-1/2 border rounded px-3 py-2"
+                />
+                <input
+                  type="number"
+                  value={contractPercentageRangeMax}
+                  onChange={(e) => setContractPercentageRangeMax(e.target.value)}
+                  placeholder="Max %"
+                  min="0"
+                  max="100"
+                  className="w-1/2 border rounded px-3 py-2"
+                />
+              </div>
             </div>
 
             <div>

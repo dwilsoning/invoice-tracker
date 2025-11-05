@@ -308,7 +308,6 @@
                 <a href="#uploading">Uploading</a>
                 <a href="#managing">Managing</a>
                 <a href="#filtering">Filtering</a>
-                <a href="#ai-query">AI Queries</a>
                 <a href="#contracts">Contracts</a>
                 <a href="#expected">Expected Invoices</a>
                 <a href="#duplicates">Duplicates</a>
@@ -364,12 +363,12 @@
                     <li><strong>Frequency:</strong> Filter by monthly, quarterly, annual, bi-annual, tri-annual, adhoc</li>
                 </ul>
 
-                <h4>AI Query Box</h4>
-                <p>Ask questions in natural language:</p>
+                <h4>Search Box</h4>
+                <p>Search invoices by invoice number, client name, contract, or services:</p>
                 <div class="example-query">
-                    Show me unpaid invoices for Western Australia Department<br>
-                    What's the total for South Australia Health?<br>
-                    Which contracts are 50% invoiced?<br>
+                    Invoice #12345<br>
+                    Western Australia Department<br>
+                    Professional Services<br>
                     Show invoices greater than $10,000
                 </div>
 
@@ -613,111 +612,6 @@
                     <li><strong>Option 2:</strong> Refresh page (<span class="keyboard-shortcut">F5</span>)</li>
                     <li><strong>Option 3:</strong> Click "Clear All" button (if visible)</li>
                 </ul>
-            </section>
-
-            <!-- AI Query System -->
-            <section id="ai-query">
-                <h2>AI Query System</h2>
-
-                <p>The AI Query system allows natural language questions about your invoices. No need to remember filter combinations - just ask!</p>
-
-                <h3>Basic Queries</h3>
-
-                <h4>By Client</h4>
-                <div class="example-query">
-                    Show me invoices for Western Australia Department<br>
-                    Invoices from South Australia Health<br>
-                    List all Gippsland Health invoices
-                </div>
-
-                <h4>By Type</h4>
-                <div class="example-query">
-                    Show all maintenance invoices<br>
-                    List professional services<br>
-                    Display software licenses
-                </div>
-
-                <h4>By Status</h4>
-                <div class="example-query">
-                    Show unpaid invoices<br>
-                    What invoices are paid?<br>
-                    Display outstanding invoices
-                </div>
-
-                <h4>By Amount</h4>
-                <div class="example-query">
-                    Show invoices over $50,000<br>
-                    Invoices greater than $100,000<br>
-                    Display invoices less than $5,000<br>
-                    Invoices between $10,000 and $50,000
-                </div>
-
-                <h3>Advanced Queries</h3>
-
-                <h4>Totals and Summaries</h4>
-                <div class="example-query">
-                    What's the total for South Australia Health?<br>
-                    How much has Gippsland Health invoiced?<br>
-                    Total unpaid for Western Australia<br>
-                    Sum of all maintenance invoices
-                </div>
-
-                <h4>Counts</h4>
-                <div class="example-query">
-                    How many invoices for SA Health?<br>
-                    Count unpaid invoices<br>
-                    Number of maintenance invoices over $10,000
-                </div>
-
-                <h4>Combined Criteria</h4>
-                <div class="example-query">
-                    Show unpaid maintenance invoices over $10,000<br>
-                    List all paid professional services for SA Health<br>
-                    Unpaid invoices for Western Australia over $50,000
-                </div>
-
-                <h3>Contract Percentage Queries</h3>
-
-                <h4>Exact Percentage</h4>
-                <div class="example-query">
-                    Which contracts are 50% invoiced?<br>
-                    Show contracts that are 75% complete<br>
-                    Contracts at 80% invoiced
-                </div>
-
-                <h4>Comparison Operators</h4>
-                <div class="example-query">
-                    Which contracts are &gt;50% invoiced?<br>
-                    Show contracts &lt;70% complete<br>
-                    Contracts &gt;=80% invoiced<br>
-                    Contracts &lt;=25% complete
-                </div>
-
-                <h4>Paid/Unpaid Status</h4>
-                <div class="example-query">
-                    Which contracts are &gt;50% paid?<br>
-                    Show contracts &lt;30% unpaid<br>
-                    Contracts at 60% paid<br>
-                    Contracts with &gt;75% unpaid
-                </div>
-
-                <div class="tip-box">
-                    <h4>Query Tips</h4>
-                    <strong>DO:</strong>
-                    <ul>
-                        <li>Use natural language</li>
-                        <li>Be specific about criteria</li>
-                        <li>Combine multiple filters</li>
-                        <li>Use common abbreviations (SA Health, etc.)</li>
-                    </ul>
-                    <strong>DON'T:</strong>
-                    <ul>
-                        <li>Need exact syntax</li>
-                        <li>Worry about spelling (fuzzy match works)</li>
-                        <li>Use complex logic operators</li>
-                        <li>Quote strings (system handles it)</li>
-                    </ul>
-                </div>
             </section>
 
             <!-- Contract Management -->
@@ -1281,30 +1175,6 @@
                     <li>View summary: Monthly revenue, invoice count, paid vs unpaid</li>
                 </ol>
 
-                <h3>Quick Analytics with AI Query</h3>
-
-                <h4>Revenue Analysis</h4>
-                <div class="example-query">
-                    What's the total for all invoices?<br>
-                    Total revenue this year<br>
-                    How much in Q1 2025?<br>
-                    Total by client
-                </div>
-
-                <h4>Outstanding Invoices</h4>
-                <div class="example-query">
-                    Total unpaid invoices<br>
-                    How much is outstanding?<br>
-                    Sum of unpaid for each client
-                </div>
-
-                <h4>Invoice Counts</h4>
-                <div class="example-query">
-                    How many invoices per client?<br>
-                    Count of maintenance invoices<br>
-                    Number of invoices over $50,000
-                </div>
-
                 <h3>Tips for Using Analytics</h3>
 
                 <div class="tip-box">
@@ -1419,12 +1289,12 @@
 
                 <h3>Filter & Search Issues</h3>
 
-                <h4>Query Returns No Results</h4>
+                <h4>Search Returns No Results</h4>
                 <p><strong>Check:</strong></p>
                 <ol>
                     <li>Clear all other filters first</li>
-                    <li>Try simpler query</li>
-                    <li>Check spelling (but fuzzy match should work)</li>
+                    <li>Try simpler search term</li>
+                    <li>Check spelling</li>
                     <li>Verify data exists (browse all invoices)</li>
                 </ol>
 
@@ -1578,9 +1448,6 @@
 
                     <dt><strong>Q: Can I restore individual invoices from backup?</strong></dt>
                     <dd>A: No, backup restores entire database. Keep original PDFs as backup.</dd>
-
-                    <dt><strong>Q: How accurate is the AI query system?</strong></dt>
-                    <dd>A: Very accurate for standard queries. Complex queries may need refinement.</dd>
                 </dl>
             </section>
         </main>

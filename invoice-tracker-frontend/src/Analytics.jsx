@@ -33,11 +33,19 @@ const CustomTooltip = ({ active, payload, label }) => {
     return (
       <div className="bg-white p-3 border border-gray-300 rounded shadow-lg">
         <p className="font-semibold text-gray-800 mb-2">{label}</p>
-        {payload.map((entry, index) => (
-          <p key={index} style={{ color: entry.color }} className="text-sm">
-            {entry.name}: {formatNumber(entry.value)}
-          </p>
-        ))}
+        {payload.map((entry, index) => {
+          // Check if this is a count field (no $ sign needed)
+          const isCount = entry.name?.toLowerCase().includes('count') ||
+                         entry.name?.toLowerCase().includes('expected') ||
+                         entry.name?.toLowerCase().includes('actual');
+          const formattedValue = isCount ? entry.value.toLocaleString() : formatNumber(entry.value);
+
+          return (
+            <p key={index} style={{ color: entry.color }} className="text-sm">
+              {entry.name}: {formattedValue}
+            </p>
+          );
+        })}
       </div>
     );
   }
