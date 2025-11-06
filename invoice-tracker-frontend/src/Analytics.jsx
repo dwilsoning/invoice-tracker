@@ -373,8 +373,10 @@ const Analytics = ({ onNavigateBack }) => {
 
     // Use ALL invoices, not baseFilteredInvoices - cashflow is about future cash, not historical analysis
     // We want to see all pending amounts regardless of when they were invoiced
+    // Exclude credit memos as they represent money owed, not money expected
     const pendingInvoices = invoices.filter(inv => {
       if (inv.status !== 'Pending' || !inv.dueDate) return false;
+      if (inv.invoiceType === 'Credit Memo') return false; // Exclude credit memos from cash flow projection
       return true;
     });
 
