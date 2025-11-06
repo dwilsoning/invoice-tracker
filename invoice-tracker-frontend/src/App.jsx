@@ -109,6 +109,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   // Uploaded invoices filter
   const [showOnlyUploadedInvoices, setShowOnlyUploadedInvoices] = useState(false);
   const [uploadedInvoiceIds, setUploadedInvoiceIds] = useState([]);
+  const [isUploadingInvoices, setIsUploadingInvoices] = useState(false);
 
   // Load contract values from database
   const loadContracts = async () => {
@@ -206,9 +207,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     loadDuplicates();
   }, []);
 
-  // Clear uploaded invoices filter when any other filter changes
+  // Clear uploaded invoices filter when any other filter changes (but not during upload)
   useEffect(() => {
-    if (showOnlyUploadedInvoices) {
+    if (showOnlyUploadedInvoices && !isUploadingInvoices) {
       setShowOnlyUploadedInvoices(false);
       setUploadedInvoiceIds([]);
     }
@@ -372,6 +373,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         await loadExpectedInvoices();
         await loadDuplicates();
 
+        // Set flag to prevent useEffect from clearing the uploaded filter during reset
+        setIsUploadingInvoices(true);
+
         // Set filters to show only the newly uploaded invoices
         setStatusFilter([]);
         setTypeFilter([]);
@@ -393,6 +397,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         setUploadedInvoiceIds(uploadedIds);
         setShowOnlyUploadedInvoices(true);
         setShowInvoiceTable(true); // Show invoice table with uploaded invoices
+
+        // Clear the upload flag after a brief delay to allow state updates to complete
+        setTimeout(() => setIsUploadingInvoices(false), 100);
       }
       
       // Upload payment spreadsheet
