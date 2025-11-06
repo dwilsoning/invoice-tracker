@@ -350,13 +350,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         showMessage('success', `Uploaded ${response.data.invoices.length} invoices`);
 
-        // Clear query filter so newly uploaded invoices are visible
-        setQueryFilteredIds(null);
-        setQueryResult(null);
-
         await loadInvoices();
         await loadExpectedInvoices();
         await loadDuplicates();
+        setExpandedGroups({}); // Collapse all groups after upload
+        setShowInvoiceTable(false); // Hide invoice table after upload
       }
       
       // Upload payment spreadsheet
@@ -871,6 +869,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     setDateTo('');
     setAgingFilter('All');
     setActiveStatBox(null);
+    setExpandedGroups({}); // Collapse all groups when clearing filters
   };
 
   // Toggle frequency filter selection
@@ -904,32 +903,29 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const handleStatClick = (statType) => {
     clearFilters();
     setActiveStatBox(statType);
+    setExpandedGroups({}); // Collapse all groups
+    setShowInvoiceTable(false); // Hide table initially to prevent freeze
     const today = new Date().toISOString().split('T')[0];
     const thisMonth = today.substring(0, 7);
 
     switch (statType) {
       case 'totalInvoiced':
-        setShowInvoiceTable(true);
+        // Table is hidden, user can expand when ready
         break;
       case 'paid':
         setStatusFilter(['Paid']);
-        setShowInvoiceTable(true);
         break;
       case 'unpaid':
         setStatusFilter(['Pending']);
-        setShowInvoiceTable(true);
         break;
       case 'overdue':
         setStatusFilter(['Overdue']);
-        setShowInvoiceTable(true);
         break;
       case 'currentUnpaid':
         setStatusFilter(['Current Unpaid']);
-        setShowInvoiceTable(true);
         break;
       case 'dueThisMonth':
         setStatusFilter(['Due This Month']);
-        setShowInvoiceTable(true);
         break;
     }
   };
@@ -939,7 +935,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     clearFilters();
     setActiveStatBox('aging-' + bucket);
     setAgingFilter(bucket);
-    setShowInvoiceTable(true);
+    setExpandedGroups({}); // Collapse all groups
+    setShowInvoiceTable(false); // Hide table initially to prevent freeze
   };
 
   // Bulk selection handlers
@@ -1200,9 +1197,12 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         return;
       }
 
+      // Clear all other filters first
+      clearFilters();
       setContractFilter(contract);
       setSelectedExpectedInvoiceId(expectedInvoiceId);
-      setShowInvoiceTable(true);
+      setExpandedGroups({}); // Collapse all groups to prevent freeze
+      setShowInvoiceTable(false); // Hide table initially to prevent freeze
       // Scroll to invoice table after a short delay to allow state to update
       setTimeout(() => {
         const invoiceTable = document.querySelector('[class*="Invoices"]');
@@ -1256,6 +1256,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       setSelectedDuplicate(null);
       setDuplicateDetails([]);
       setSearchTerm(''); // Clear search filter after deleting duplicates
+      setExpandedGroups({}); // Collapse all groups after deleting duplicates
+      setShowInvoiceTable(false); // Hide invoice table after deleting duplicates
       showMessage('success', 'Duplicate invoices deleted');
     } catch (error) {
       showMessage('error', 'Failed to delete duplicates');
@@ -1563,7 +1565,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 setSearchTerm('');
                 setDateFrom('');
                 setDateTo('');
-                setShowInvoiceTable(true);
+                setExpandedGroups({}); // Collapse all groups
+                setShowInvoiceTable(false); // Hide table initially to prevent freeze
               }}
             >
               <div className="text-gray-600 text-sm font-medium flex items-center gap-1">

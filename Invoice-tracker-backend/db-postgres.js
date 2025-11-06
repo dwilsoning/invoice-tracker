@@ -13,7 +13,7 @@ const pool = new Pool({
   user: process.env.DB_USER || 'invoice_tracker_user',
   password: process.env.DB_PASSWORD,
   max: 20, // Maximum number of clients in the pool
-  idleTimeoutMillis: 30000, // How long a client can remain idle before being closed
+  idleTimeoutMillis: 10000, // Close idle clients after 10 seconds (reduce pool size faster)
   connectionTimeoutMillis: 10000, // How long to wait for a connection (10 seconds)
   // Add keepalive to prevent idle connection drops
   keepAlive: true,

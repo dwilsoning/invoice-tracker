@@ -2595,7 +2595,7 @@ app.delete('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) =
 async function startServer() {
   try {
 
-    app.listen(PORT, () => {
+    app.listen(PORT, '0.0.0.0', () => {
       console.log(`Invoice Tracker API running on http://localhost:${PORT}`);
       console.log('\n📅 Scheduled Tasks Summary (Australia/Sydney timezone):');
       console.log('  • Duplicate invoice check: Midnight daily');
