@@ -74,6 +74,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [showExpectedAck, setShowExpectedAck] = useState(false);
   const [showDuplicates, setShowDuplicates] = useState(false);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
+  const [highlightedInvoiceId, setHighlightedInvoiceId] = useState(null); // For row highlighting (separate from modal)
   const [editingInvoice, setEditingInvoice] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [attachments, setAttachments] = useState([]);
@@ -2553,7 +2554,23 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                           </thead>
                           <tbody>
                             {groupInvs.map((inv) => (
-                              <tr key={inv.id} className={`border-t hover:bg-gray-50 ${selectedInvoiceIds.includes(inv.id) ? 'bg-blue-50' : ''}`}>
+                              <tr
+                                key={inv.id}
+                                className={`border-t hover:bg-gray-50 cursor-pointer ${
+                                  highlightedInvoiceId === inv.id ? 'bg-yellow-100 ring-2 ring-yellow-400' :
+                                  selectedInvoiceIds.includes(inv.id) ? 'bg-blue-50' : ''
+                                }`}
+                                onClick={(e) => {
+                                  // Don't toggle highlight if clicking checkbox or invoice number button
+                                  if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && !e.target.closest('button')) {
+                                    if (highlightedInvoiceId === inv.id) {
+                                      setHighlightedInvoiceId(null); // Remove highlight if clicking already highlighted row
+                                    } else {
+                                      setHighlightedInvoiceId(inv.id); // Highlight this invoice
+                                    }
+                                  }
+                                }}
+                              >
                                 <td className="px-4 py-2">
                                   {inv.invoiceType === 'Credit Memo' ? (
                                     <span className="text-gray-400 text-sm">-</span>
