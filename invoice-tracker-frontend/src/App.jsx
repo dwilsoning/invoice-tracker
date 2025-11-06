@@ -634,7 +634,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
     // Search filter
     if (searchTerm && typeof searchTerm === 'string') {
-      const term = searchTerm.toLowerCase();
+      const term = searchTerm.trim().toLowerCase();
       filtered = filtered.filter(inv =>
         inv.invoiceNumber?.toLowerCase().includes(term) ||
         inv.client?.toLowerCase().includes(term) ||
