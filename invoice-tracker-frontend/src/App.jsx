@@ -106,6 +106,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [selectedInvoiceIds, setSelectedInvoiceIds] = useState([]);
   const [lastSelectedIndex, setLastSelectedIndex] = useState(null);
 
+  // Uploaded invoices filter
+  const [showOnlyUploadedInvoices, setShowOnlyUploadedInvoices] = useState(false);
+  const [uploadedInvoiceIds, setUploadedInvoiceIds] = useState([]);
+
   // Load contract values from database
   const loadContracts = async () => {
     try {
@@ -201,6 +205,16 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     loadContracts();
     loadDuplicates();
   }, []);
+
+  // Clear uploaded invoices filter when any other filter changes
+  useEffect(() => {
+    if (showOnlyUploadedInvoices) {
+      setShowOnlyUploadedInvoices(false);
+      setUploadedInvoiceIds([]);
+    }
+  }, [statusFilter, typeFilter, clientFilter, contractFilter, contractPercentageFilter,
+      contractPercentageRangeMin, contractPercentageRangeMax, frequencyFilter, searchTerm,
+      dateFrom, dateTo, agingFilter, activeStatBox, selectedExpectedInvoiceId, groupBy, secondaryGroupBy]);
 
   const loadInvoices = async () => {
     try {
@@ -351,11 +365,34 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         showMessage('success', `Uploaded ${response.data.invoices.length} invoices`);
 
+        // Get the IDs of newly uploaded invoices
+        const uploadedIds = response.data.invoices.map(inv => inv.id);
+
         await loadInvoices();
         await loadExpectedInvoices();
         await loadDuplicates();
-        setExpandedGroups({}); // Collapse all groups after upload
-        setShowInvoiceTable(false); // Hide invoice table after upload
+
+        // Set filters to show only the newly uploaded invoices
+        setStatusFilter([]);
+        setTypeFilter([]);
+        setClientFilter('All');
+        setContractFilter('All');
+        setContractPercentageFilter('');
+        setContractPercentageRangeMin('');
+        setContractPercentageRangeMax('');
+        setFrequencyFilter([]);
+        setSearchTerm('');
+        setDateFrom('');
+        setDateTo('');
+        setAgingFilter('All');
+        setActiveStatBox(null);
+        setSelectedExpectedInvoiceId(null);
+        setGroupBy('None');
+        setSecondaryGroupBy('None');
+        setExpandedGroups({});
+        setUploadedInvoiceIds(uploadedIds);
+        setShowOnlyUploadedInvoices(true);
+        setShowInvoiceTable(true); // Show invoice table with uploaded invoices
       }
       
       // Upload payment spreadsheet
@@ -598,6 +635,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         inv.customerContract?.toLowerCase().includes(term) ||
         inv.services?.toLowerCase().includes(term)
       );
+    }
+
+    // Show only uploaded invoices filter
+    if (showOnlyUploadedInvoices && uploadedInvoiceIds.length > 0) {
+      filtered = filtered.filter(inv => uploadedInvoiceIds.includes(inv.id));
     }
 
     return filtered;
