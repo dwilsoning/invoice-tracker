@@ -80,7 +80,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [attachments, setAttachments] = useState([]);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [filtersCollapsed, setFiltersCollapsed] = useState(true);
-  const [groupingCollapsed, setGroupingCollapsed] = useState(true);
 
   // Sorting State
   const [sortBy, setSortBy] = useState('invoiceDate');
@@ -2027,8 +2026,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Filters */}
         <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
-          <div className="flex justify-between items-center mb-4 gap-4">
-            <div className="flex items-center gap-3">
+          <div className="mb-4">
+            <div className="flex items-center gap-3 mb-3">
               <h2 className="text-xl font-bold text-white">Filters</h2>
               <button
                 onClick={() => setFiltersCollapsed(!filtersCollapsed)}
@@ -2048,13 +2047,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
-            <div className="flex gap-2 items-center flex-1 max-w-2xl">
+            <div className="flex gap-2 items-center">
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search invoice #, client, contract, description..."
-                className="flex-1 border rounded px-3 py-2"
+                className="flex-1 max-w-md border rounded px-3 py-2"
               />
               <button
                 onClick={clearFilters}
@@ -2226,32 +2225,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Grouping */}
         <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
-          <div className="flex items-center gap-3 mb-4">
-            <h2 className="text-xl font-bold text-white">Grouping</h2>
-            <button
-              onClick={() => setGroupingCollapsed(!groupingCollapsed)}
-              className="px-3 py-1 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition text-sm flex items-center gap-1"
-              title={groupingCollapsed ? "Expand Grouping" : "Collapse Grouping"}
-            >
-              {groupingCollapsed ? (
-                <>
-                  <span>▼</span>
-                  <span>Show</span>
-                </>
-              ) : (
-                <>
-                  <span>▲</span>
-                  <span>Hide</span>
-                </>
-              )}
-            </button>
-          </div>
-
-          {!groupingCollapsed && (
-            <div className="flex gap-4 items-center flex-wrap">
+          <div className="flex gap-4 items-end flex-wrap">
             <div>
               <label className="block text-sm font-medium mb-1 text-white">Group By</label>
-              <select 
+              <select
                 value={groupBy}
                 onChange={(e) => setGroupBy(e.target.value)}
                 className="border rounded px-3 py-2"
@@ -2263,11 +2240,11 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 <option value="Type">Type</option>
               </select>
             </div>
-            
+
             {groupBy !== 'None' && (
               <div>
                 <label className="block text-sm font-medium mb-1 text-white">Then By</label>
-                <select 
+                <select
                   value={secondaryGroupBy}
                   onChange={(e) => setSecondaryGroupBy(e.target.value)}
                   className="border rounded px-3 py-2"
@@ -2280,7 +2257,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 </select>
               </div>
             )}
-            
+
             {groupBy !== 'None' && (
               <>
                 <button
@@ -2291,21 +2268,20 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     });
                     setExpandedGroups(newExpanded);
                   }}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
+                  className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
                 >
                   Expand All
                 </button>
-                
+
                 <button
                   onClick={() => setExpandedGroups({})}
-                  className="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition"
+                  className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
                 >
                   Collapse All
                 </button>
               </>
             )}
           </div>
-          )}
         </div>
 
         {/* Invoice Table */}
