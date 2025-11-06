@@ -2027,7 +2027,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
         {/* Filters */}
         <div className="bg-[#707CF1] p-6 rounded-lg shadow mb-6">
-          <div className="flex justify-between items-center mb-4">
+          <div className="flex justify-between items-center mb-4 gap-4">
             <div className="flex items-center gap-3">
               <h2 className="text-xl font-bold text-white">Filters</h2>
               <button
@@ -2048,10 +2048,17 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
-            <div className="flex gap-2">
+            <div className="flex gap-2 items-center flex-1 max-w-2xl">
+              <input
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                placeholder="Search invoice #, client, contract, description..."
+                className="flex-1 border rounded px-3 py-2"
+              />
               <button
                 onClick={clearFilters}
-                className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
+                className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition whitespace-nowrap"
               >
                 Clear All Filters
               </button>
@@ -2210,17 +2217,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 type="date"
                 value={dateTo}
                 onChange={(e) => setDateTo(e.target.value)}
-                className="w-full border rounded px-3 py-2"
-              />
-            </div>
-
-            <div className="md:col-span-3">
-              <label className="block text-sm font-medium mb-1 text-white">Search</label>
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search invoice #, client, contract, description..."
                 className="w-full border rounded px-3 py-2"
               />
             </div>
