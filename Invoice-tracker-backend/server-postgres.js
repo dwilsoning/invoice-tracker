@@ -1480,7 +1480,6 @@ async function generateExpectedInvoices() {
             AND LOWER(TRIM(customer_contract)) = LOWER(TRIM($2))
             AND invoice_type = $3
             AND expected_date BETWEEN $4 AND $5
-            AND acknowledged = false
         `,
           invoice.client,
           invoice.customerContract || '',
