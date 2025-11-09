@@ -27,7 +27,9 @@ function classifyInvoiceType(services, invoice_number, amount) {
   if (lower.includes('credit') || lower.includes('negative')) return 'Credit Memo';
 
   // Check for Managed Services - handle various formats (check this FIRST before subscription)
+  // Also catches concatenated versions like "ManagedServices" or "AllscriptsManagedServices"
   if (lower.includes('managed services') ||
+      lower.includes('managedservices') ||  // catches concatenated versions
       lower.includes('managed/outsourcing services') ||
       (lower.includes('managed') && lower.includes('outsourcing')) ||
       (lower.includes('subscription') && lower.includes('managed'))) {

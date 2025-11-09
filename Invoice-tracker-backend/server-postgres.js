@@ -245,7 +245,9 @@ function classifyInvoiceType(services, invoice_number, amount) {
 
   // Check for Managed Services - handle various formats (check AFTER professional services)
   // Pattern: "subscription" + "managed" = MS, not Sub
+  // Also catches concatenated versions like "ManagedServices" or "AllscriptsManagedServices"
   if (lower.includes('managed services') ||
+      lower.includes('managedservices') ||  // catches concatenated versions
       lower.includes('managed/outsourcing services') ||
       (lower.includes('managed') && lower.includes('outsourcing')) ||
       (lower.includes('subscription') && lower.includes('managed'))) {

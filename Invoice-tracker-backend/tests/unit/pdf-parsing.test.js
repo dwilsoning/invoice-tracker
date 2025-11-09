@@ -204,6 +204,7 @@ describe('PDF Parsing Unit Tests', () => {
       if (lower.includes('credit') || lower.includes('negative')) return 'Credit Memo';
 
       if (lower.includes('managed services') ||
+          lower.includes('managedservices') ||  // catches concatenated versions
           lower.includes('managed/outsourcing services') ||
           (lower.includes('managed') && lower.includes('outsourcing')) ||
           (lower.includes('subscription') && lower.includes('managed'))) {
@@ -248,6 +249,7 @@ describe('PDF Parsing Unit Tests', () => {
     test('Should classify managed services', () => {
       expect(classifyInvoiceType('Managed services', 'INV-001', 1000)).toBe('MS');
       expect(classifyInvoiceType('Managed/outsourcing services', 'INV-001', 1000)).toBe('MS');
+      expect(classifyInvoiceType('MonthlyFeeAllscriptsManagedServicesBusiness', 'INV-001', 1000)).toBe('MS');
     });
 
     test('Should classify hardware', () => {
@@ -400,7 +402,8 @@ describe('PDF Parsing Unit Tests', () => {
       AUD: 0.65,
       EUR: 1.08,
       GBP: 1.27,
-      SGD: 0.74
+      SGD: 0.74,
+      NZD: 0.61
     };
 
     const convertToUSD = (amount, currency) => {
