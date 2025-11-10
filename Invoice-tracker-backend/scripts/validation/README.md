@@ -6,8 +6,8 @@ This script provides **independent third-party validation** of PDF parsing by us
 
 Unlike tests that replicate the server's logic (which would just confirm what the server already does), this validation script uses **alternative parsing strategies** to provide an independent "second opinion":
 
-- **Different date parsing logic** - Uses currency-based format detection instead of invoice number prefixes
-- **Different pattern matching** - Uses alternative regex patterns and different search order
+- **Same date format rules** - Uses currency-based format (USD=MM/DD/YYYY, others=DD/MM/YYYY) to match server, but with different extraction patterns
+- **Different pattern matching** - Uses alternative regex patterns and different search order for extraction
 - **Different classification priority** - Checks invoice type keywords in a different order than the server
 
 This approach means:

@@ -97,28 +97,24 @@ function parseDate(dateStr, currency, invoiceNumber) {
 
     let day, month;
 
-    // Different logic from server: Check currency to determine format
-    // AUD/NZD typically use DD/MM/YYYY
-    // USD typically uses MM/DD/YYYY
-    if (currency && (currency === 'AUD' || currency === 'NZD' || currency === 'GBP' || currency === 'EUR')) {
-      // Assume DD/MM/YYYY for these currencies
-      day = first;
-      month = second;
-    } else if (first > 12) {
-      // Must be DD/MM/YYYY
+    // Match server logic exactly: Check for unambiguous cases first
+    if (first > 12) {
+      // Must be DD/MM/YYYY (day is greater than 12)
       day = first;
       month = second;
     } else if (second > 12) {
-      // Must be MM/DD/YYYY
+      // Must be MM/DD/YYYY (day is greater than 12)
       month = first;
       day = second;
     } else {
-      // Ambiguous - default to MM/DD/YYYY for USD
+      // Ambiguous - use currency to determine format (same as server)
+      // USD uses MM/DD/YYYY
+      // All other currencies use DD/MM/YYYY
       if (currency === 'USD') {
         month = first;
         day = second;
       } else {
-        // Default to DD/MM/YYYY for others
+        // AUD, EUR, GBP, SGD, NZD use DD/MM/YYYY
         day = first;
         month = second;
       }
