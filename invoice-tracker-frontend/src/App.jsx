@@ -2324,9 +2324,24 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 Invoices ({filteredInvoices.length})
               </span>
               <button
-                onClick={() => setShowInvoiceTable(!showInvoiceTable)}
-                className="px-3 py-1 bg-[#707CF1] text-white rounded hover:bg-[#5a6ad9] transition text-sm flex items-center gap-1"
-                title={showInvoiceTable ? "Collapse Invoices" : "Expand Invoices"}
+                onClick={() => {
+                  if (hasActiveFilters() || showInvoiceTable) {
+                    setShowInvoiceTable(!showInvoiceTable);
+                  }
+                }}
+                disabled={!hasActiveFilters() && !showInvoiceTable}
+                className={`px-3 py-1 rounded transition text-sm flex items-center gap-1 ${
+                  hasActiveFilters() || showInvoiceTable
+                    ? 'bg-[#707CF1] text-white hover:bg-[#5a6ad9] cursor-pointer'
+                    : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+                title={
+                  showInvoiceTable
+                    ? "Collapse Invoices"
+                    : hasActiveFilters()
+                    ? "Expand Invoices"
+                    : "To view invoices, please apply a filter or search. This prevents performance issues with large datasets."
+                }
               >
                 {showInvoiceTable ? (
                   <>
@@ -2341,8 +2356,13 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 )}
               </button>
             </div>
+            {!hasActiveFilters() && !showInvoiceTable && (
+              <div className="text-sm text-gray-600 italic">
+                Apply a filter or search to view invoices
+              </div>
+            )}
           </div>
-          
+
           {showInvoiceTable && (
             <div className="px-6 pb-6">
               {getSortedGroupNames(groupedInvoices).map(groupName => {
