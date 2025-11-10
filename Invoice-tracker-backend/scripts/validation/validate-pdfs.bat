@@ -1,4 +1,5 @@
 @echo off
+setlocal EnableDelayedExpansion
 echo ============================================================
 echo PDF PARSING VALIDATION
 echo ============================================================
@@ -24,44 +25,66 @@ echo.
 set /p choice="Enter your choice (1-6): "
 echo.
 
-if "%choice%"=="1" (
-    echo Running quick check on first 20 PDFs...
+if "%choice%"=="1" goto option1
+if "%choice%"=="2" goto option2
+if "%choice%"=="3" goto option3
+if "%choice%"=="4" goto option4
+if "%choice%"=="5" goto option5
+if "%choice%"=="6" goto option6
+goto invalid
+
+:option1
+echo Running quick check on first 20 PDFs...
+echo.
+node validate-pdf-parsing.js
+goto end
+
+:option2
+echo Running validation on random 20 PDFs...
+echo.
+node validate-pdf-parsing.js --random
+goto end
+
+:option3
+echo Running validation on random 50 PDFs...
+echo.
+node validate-pdf-parsing.js --random=50
+goto end
+
+:option4
+echo Running validation on random 100 PDFs...
+echo.
+node validate-pdf-parsing.js --random=100
+goto end
+
+:option5
+set /p sample_size="Enter sample size: "
+echo Running validation on first !sample_size! PDFs...
+echo.
+node validate-pdf-parsing.js --sample=!sample_size!
+goto end
+
+:option6
+echo.
+echo WARNING: This will validate ALL PDFs and may take several minutes!
+set /p confirm="Are you sure? (Y/N): "
+if /i "!confirm!"=="Y" (
     echo.
-    node validate-pdf-parsing.js
-) else if "%choice%"=="2" (
-    echo Running validation on random 20 PDFs...
+    echo Running validation on ALL PDFs...
     echo.
-    node validate-pdf-parsing.js --random
-) else if "%choice%"=="3" (
-    echo Running validation on random 50 PDFs...
-    echo.
-    node validate-pdf-parsing.js --random=50
-) else if "%choice%"=="4" (
-    echo Running validation on random 100 PDFs...
-    echo.
-    node validate-pdf-parsing.js --random=100
-) else if "%choice%"=="5" (
-    set /p sample_size="Enter sample size: "
-    echo Running validation on first !sample_size! PDFs...
-    echo.
-    node validate-pdf-parsing.js --sample=!sample_size!
-) else if "%choice%"=="6" (
-    echo.
-    echo WARNING: This will validate ALL PDFs and may take several minutes!
-    set /p confirm="Are you sure? (Y/N): "
-    if /i "!confirm!"=="Y" (
-        echo.
-        echo Running validation on ALL PDFs...
-        echo.
-        node validate-pdf-parsing.js --all
-    ) else (
-        echo Validation cancelled.
-    )
+    node validate-pdf-parsing.js --all
 ) else (
-    echo Invalid choice. Running default validation (first 20 PDFs)...
-    echo.
-    node validate-pdf-parsing.js
+    echo Validation cancelled.
 )
+goto end
+
+:invalid
+echo Invalid choice. Running default validation (first 20 PDFs)...
+echo.
+node validate-pdf-parsing.js
+goto end
+
+:end
 
 echo.
 echo ============================================================
