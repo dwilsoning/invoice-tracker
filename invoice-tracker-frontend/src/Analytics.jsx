@@ -139,7 +139,9 @@ const Analytics = ({ onNavigateBack }) => {
 
   // 1. DSI (Days Invoices Outstanding) Calculation
   const calculateDSI = () => {
-    const pendingInvoices = baseFilteredInvoices.filter(inv => inv.status === 'Pending');
+    const pendingInvoices = baseFilteredInvoices.filter(inv =>
+      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+    );
     const totalReceivables = pendingInvoices.reduce((sum, inv) =>
       sum + convertToUSD(inv.amountDue, inv.currency), 0);
 
@@ -175,8 +177,10 @@ const Analytics = ({ onNavigateBack }) => {
 
       // Get invoices up to this month
       const invoicesUpToMonth = baseFilteredInvoices.filter(inv => inv.invoiceDate <= monthEnd);
-      const pendingAtMonth = invoicesUpToMonth.filter(inv => inv.status === 'Pending' ||
-        (inv.status === 'Paid' && inv.paymentDate > monthEnd));
+      const pendingAtMonth = invoicesUpToMonth.filter(inv =>
+        (inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)) &&
+        inv.invoiceType !== 'Credit Memo'
+      );
 
       const receivables = pendingAtMonth.reduce((sum, inv) =>
         sum + convertToUSD(inv.amountDue, inv.currency), 0);
@@ -215,7 +219,8 @@ const Analytics = ({ onNavigateBack }) => {
       }
 
       const pendingAtMonth = baseFilteredInvoices.filter(inv =>
-        inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)
+        (inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)) &&
+        inv.invoiceType !== 'Credit Memo'
       );
 
       let current = 0, days30 = 0, days60 = 0, days90 = 0, days90Plus = 0;
@@ -361,9 +366,9 @@ const Analytics = ({ onNavigateBack }) => {
   // 6. Cash Flow Projection (30/60/90 days)
   // NOTE: Cash flow projection shows ALL pending invoices regardless of invoice date or due date
   // This represents the total expected future cash inflow from all outstanding receivables
-  // Overdue invoices are included in "Next 30 Days" as they represent immediate expected cash
+  // Overdue invoices are shown separately as high-risk items requiring immediate attention
   // Production mode does NOT filter cashflow - it shows all pending amounts regardless of when invoiced
-  // Credit memos are INCLUDED as they represent reductions in expected cash inflows
+  // Credit memos are EXCLUDED as they represent amounts owed, not money expected to be received
   const getCashFlowProjection = () => {
     const today = new Date();
     const todayStr = today.toISOString().split('T')[0];
@@ -380,13 +385,15 @@ const Analytics = ({ onNavigateBack }) => {
       return true;
     });
 
-    let next30 = 0, next31to60 = 0, next61to90 = 0, beyond90 = 0;
+    let overdue = 0, next30 = 0, next31to60 = 0, next61to90 = 0, beyond90 = 0;
 
     pendingInvoices.forEach(inv => {
       const amount = convertToUSD(inv.amountDue, inv.currency);
 
-      // Overdue invoices and those due in next 30 days = immediate expected cash
-      if (inv.dueDate <= days30) {
+      // Separate overdue from future cash flow for better visibility
+      if (inv.dueDate < todayStr) {
+        overdue += amount;
+      } else if (inv.dueDate <= days30) {
         next30 += amount;
       } else if (inv.dueDate <= days60) {
         next31to60 += amount;
@@ -398,6 +405,7 @@ const Analytics = ({ onNavigateBack }) => {
     });
 
     return [
+      { period: 'Overdue (High Risk)', amount: Math.round(overdue), color: '#dc2626' },
       { period: 'Next 30 Days', amount: Math.round(next30), color: '#10b981' },
       { period: '31-60 Days', amount: Math.round(next31to60), color: '#3b82f6' },
       { period: '61-90 Days', amount: Math.round(next61to90), color: '#f59e0b' },
@@ -409,8 +417,10 @@ const Analytics = ({ onNavigateBack }) => {
   const getClientScorecard = () => {
     const clientStats = {};
 
-    // Analyze each client's payment history
-    baseFilteredInvoices.forEach(inv => {
+    // Analyze each client's payment history (exclude credit memos)
+    baseFilteredInvoices
+      .filter(inv => inv.invoiceType !== 'Credit Memo')
+      .forEach(inv => {
       if (!clientStats[inv.client]) {
         clientStats[inv.client] = {
           totalInvoices: 0,
@@ -485,7 +495,9 @@ const Analytics = ({ onNavigateBack }) => {
 
   // 8. Collection Efficiency Metrics
   const getCollectionEfficiency = () => {
-    const paidInvoices = baseFilteredInvoices.filter(inv => inv.status === 'Paid' && inv.paymentDate && inv.dueDate);
+    const paidInvoices = baseFilteredInvoices.filter(inv =>
+      inv.status === 'Paid' && inv.paymentDate && inv.dueDate && inv.invoiceType !== 'Credit Memo'
+    );
 
     let paidOnTime = 0, paidWithin30 = 0, paidWithin60 = 0, paidWithin90 = 0, paidBeyond90 = 0;
 
@@ -559,7 +571,9 @@ const Analytics = ({ onNavigateBack }) => {
   // 10. Risk Dashboard
   const getRiskMetrics = () => {
     const today = new Date().toISOString().split('T')[0];
-    const pendingInvoices = baseFilteredInvoices.filter(inv => inv.status === 'Pending');
+    const pendingInvoices = baseFilteredInvoices.filter(inv =>
+      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+    );
 
     // High overdue balances (>$50k overdue)
     const clientOverdue = {};
@@ -606,7 +620,9 @@ const Analytics = ({ onNavigateBack }) => {
   // 11. Payment Probability Predictions (ML-based heuristics)
   const getPaymentProbability = () => {
     const today = new Date().toISOString().split('T')[0];
-    const pendingInvoices = baseFilteredInvoices.filter(inv => inv.status === 'Pending' && inv.dueDate);
+    const pendingInvoices = baseFilteredInvoices.filter(inv =>
+      inv.status === 'Pending' && inv.dueDate && inv.invoiceType !== 'Credit Memo'
+    );
 
     const predictions = pendingInvoices.map(inv => {
       // Calculate client's historical payment behavior
@@ -775,7 +791,9 @@ const Analytics = ({ onNavigateBack }) => {
 
   // 14. Currency Exposure Analysis
   const getCurrencyExposure = () => {
-    const pendingInvoices = baseFilteredInvoices.filter(inv => inv.status === 'Pending');
+    const pendingInvoices = baseFilteredInvoices.filter(inv =>
+      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+    );
     const currencyTotals = {};
 
     pendingInvoices.forEach(inv => {
@@ -1206,12 +1224,12 @@ const Analytics = ({ onNavigateBack }) => {
           <div className="text-gray-600 text-sm font-medium">Outstanding</div>
           <div className="text-3xl font-bold text-orange-500 my-2">
             ${Math.round(filteredInvoices
-              .filter(inv => inv.status === 'Pending')
+              .filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo')
               .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0)
             ).toLocaleString()}
           </div>
           <div className="text-xs text-gray-500">
-            {filteredInvoices.filter(inv => inv.status === 'Pending').length} unpaid invoices
+            {filteredInvoices.filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo').length} unpaid invoices
           </div>
         </div>
       </div>
