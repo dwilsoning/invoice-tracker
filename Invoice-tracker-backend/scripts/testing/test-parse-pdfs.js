@@ -173,6 +173,7 @@ function classifyInvoiceType(services, invoiceNumber, amount) {
   if (lower.includes('credit') || lower.includes('negative')) return 'Credit Memo';
 
   if (lower.includes('managed services') ||
+      lower.includes('managedservices') ||  // catches concatenated versions
       lower.includes('managed/outsourcing services') ||
       (lower.includes('managed') && lower.includes('outsourcing')) ||
       (lower.includes('subscription') && lower.includes('managed'))) {
@@ -422,7 +423,8 @@ async function extractInvoiceData(pdfPath, originalName) {
 
 // Main function to test all PDFs
 async function testAllPDFs() {
-  const pdfDirectory = '/mnt/c/Users/dwils/Altera Digital Health/APAC Leadership Team - Confidential - Documents/Downloads/DLD/2';
+  // Use the actual invoice_pdfs directory in the project
+  const pdfDirectory = path.join(__dirname, '../../invoice_pdfs');
 
   console.log('==================================================');
   console.log('PDF PARSING TEST');
