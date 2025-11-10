@@ -511,6 +511,26 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
+  // Check if any filters are active
+  const hasActiveFilters = () => {
+    return (
+      activeStatBox ||
+      statusFilter.length > 0 ||
+      agingFilter !== 'All' ||
+      typeFilter.length > 0 ||
+      clientFilter !== 'All' ||
+      contractFilter !== 'All' ||
+      contractPercentageFilter ||
+      contractPercentageRangeMin ||
+      contractPercentageRangeMax ||
+      frequencyFilter.length > 0 ||
+      dateFrom ||
+      dateTo ||
+      (searchTerm && searchTerm.trim()) ||
+      (showOnlyUploadedInvoices && uploadedInvoiceIds.length > 0)
+    );
+  };
+
   // Filter invoices
   const getFilteredInvoices = () => {
     let filtered = [...invoices];
@@ -2262,13 +2282,25 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               <>
                 <button
                   onClick={() => {
-                    const newExpanded = {};
-                    Object.keys(groupedInvoices).forEach(key => {
-                      newExpanded[key] = true;
-                    });
-                    setExpandedGroups(newExpanded);
+                    if (hasActiveFilters()) {
+                      const newExpanded = {};
+                      Object.keys(groupedInvoices).forEach(key => {
+                        newExpanded[key] = true;
+                      });
+                      setExpandedGroups(newExpanded);
+                    }
                   }}
-                  className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition"
+                  disabled={!hasActiveFilters()}
+                  className={`px-4 py-2 rounded transition ${
+                    hasActiveFilters()
+                      ? 'bg-[#151744] text-white hover:bg-[#0d0e2a] cursor-pointer'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  }`}
+                  title={
+                    hasActiveFilters()
+                      ? 'Expand all groups'
+                      : 'Expand All is disabled when viewing all invoices. Please apply a filter or search to use this feature.'
+                  }
                 >
                   Expand All
                 </button>
