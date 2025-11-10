@@ -254,10 +254,31 @@ async function validatePDFParsing() {
   }
 
   const pdfFiles = fs.readdirSync(invoicePdfsDir)
-    .filter(file => file.endsWith('.pdf'))
+    .filter(file => {
+      // Only include PDFs, exclude attachments
+      if (!file.endsWith('.pdf')) return false;
+
+      // Exclude files that are clearly attachments (remittance, statement, etc.)
+      const lower = file.toLowerCase();
+      if (lower.includes('remittance') ||
+          lower.includes('statement') ||
+          lower.includes('receipt') ||
+          lower.includes('attachment')) {
+        return false;
+      }
+
+      // Only include files that start with timestamp or contain "invoice" or "credit"
+      // Format: timestamp-Invoice or timestamp-Credit Memo
+      const isInvoiceFile = lower.includes('invoice') ||
+                           lower.includes('credit') ||
+                           lower.match(/^\d+-.*\.pdf$/);
+
+      return isInvoiceFile;
+    })
     .map(file => ({ filename: file, path: path.join(invoicePdfsDir, file) }));
 
-  console.log(`Found ${pdfFiles.length} PDF files\n`);
+  console.log(`Found ${pdfFiles.length} invoice/credit memo PDF files`);
+  console.log(`(Excluding attachments like remittance notes, statements, etc.)\n`);
 
   // Sample validation - test first 20 PDFs
   const sampleSize = Math.min(20, pdfFiles.length);
