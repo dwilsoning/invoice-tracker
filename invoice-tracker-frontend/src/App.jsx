@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import axios from 'axios';
 import Analytics from './Analytics';
 import { useAuth } from './contexts/AuthContext';
@@ -421,17 +421,26 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  // Drag and drop handlers
+  // Drag and drop handlers with improved state management
+  const dragCounter = useRef(0);
+
   const handleDragEnter = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setDragOver(true);
+
+    // Only show drag overlay if files are being dragged
+    if (e.dataTransfer && e.dataTransfer.types && e.dataTransfer.types.includes('Files')) {
+      dragCounter.current++;
+      setDragOver(true);
+    }
   };
 
   const handleDragLeave = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.target === e.currentTarget) {
+
+    dragCounter.current--;
+    if (dragCounter.current === 0) {
       setDragOver(false);
     }
   };
@@ -444,17 +453,34 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const handleDrop = (e) => {
     e.preventDefault();
     e.stopPropagation();
+
+    dragCounter.current = 0;
     setDragOver(false);
-    
+
     const files = e.dataTransfer.files;
     if (files.length > 0) {
       handleFileUpload(files);
     }
   };
 
+  // Add global drag end handler to ensure state is cleared
   useEffect(() => {
+    const handleDragEnd = () => {
+      dragCounter.current = 0;
+      setDragOver(false);
+    };
+
     window.addEventListener('dragenter', handleDragEnter);
-    return () => window.removeEventListener('dragenter', handleDragEnter);
+    window.addEventListener('dragleave', handleDragLeave);
+    window.addEventListener('dragend', handleDragEnd);
+    window.addEventListener('drop', handleDragEnd);
+
+    return () => {
+      window.removeEventListener('dragenter', handleDragEnter);
+      window.removeEventListener('dragleave', handleDragLeave);
+      window.removeEventListener('dragend', handleDragEnd);
+      window.removeEventListener('drop', handleDragEnd);
+    };
   }, []);
 
   // Server health check
