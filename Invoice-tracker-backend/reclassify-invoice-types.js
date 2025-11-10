@@ -69,12 +69,17 @@ function classifyInvoiceType(services, invoice_number, amount) {
       lower.includes('saas')) return 'Sub';
 
   // Maintenance and Support - but NOT if it's managed services or professional services
+  // Also check for Support Agreement and Maintenance Agreement patterns
   if ((lower.includes('maintenance') ||
        lower.includes('annual maintenance') ||
        lower.includes('software support services') ||
-       lower.includes('support services')) &&
+       lower.includes('support services') ||
+       lower.includes('support agreement') ||
+       lower.includes('maintenance agreement') ||
+       lower.includes('license maintenance')) &&
       !lower.includes('managed') &&
-      !lower.includes('professional')) {
+      !lower.includes('professional') &&
+      !lower.includes('subscription')) {
     return 'Maint';
   }
 

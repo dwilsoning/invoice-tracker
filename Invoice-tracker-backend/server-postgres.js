@@ -256,11 +256,14 @@ function classifyInvoiceType(services, invoice_number, amount) {
 
   // Maintenance and Support - exclude if it's actually a subscription
   // More specific checks to avoid catching "support" in other contexts
+  // Also check Additional Information section for "Support Agreement" indicators
   if ((lower.includes('maintenance') ||
        lower.includes('annual maintenance') ||
        lower.includes('software support') ||
        lower.includes('support services') ||
        lower.includes('support fee') ||
+       lower.includes('support agreement') ||
+       lower.includes('maintenance agreement') ||
        lower.includes('license maintenance')) &&
       !lower.includes('managed') &&
       !lower.includes('professional') &&
@@ -716,8 +719,18 @@ async function extractInvoiceData(pdf_path, originalName) {
     invoice.services = 'No service description found';
   }
 
+  // Extract Additional Information section for enhanced classification
+  // This section often contains contract details and service type information
+  let additionalInfo = '';
+  const additionalMatch = text.match(/Additional Information:([^\n]{0,300})/i);
+  if (additionalMatch) {
+    additionalInfo = additionalMatch[1].trim();
+  }
+
   // Classify and detect frequency
-  invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber, invoice.amountDue);
+  // Pass both services and additional info for better classification
+  const combinedText = invoice.services + ' ' + additionalInfo;
+  invoice.invoiceType = classifyInvoiceType(combinedText, invoice.invoiceNumber, invoice.amountDue);
   invoice.frequency = detectFrequency(invoice.services, invoice.amountDue);
 
   return invoice;
