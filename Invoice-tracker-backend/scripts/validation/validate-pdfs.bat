@@ -8,11 +8,60 @@ echo from actual PDFs against what's stored in the database.
 echo.
 echo NOTE: PostgreSQL database must be running!
 echo.
-echo Press any key to start validation...
-pause > nul
+echo ============================================================
+echo VALIDATION OPTIONS:
+echo ============================================================
+echo.
+echo 1. Quick Check (first 20 PDFs)
+echo 2. Random Sample (20 PDFs)
+echo 3. Random Sample (50 PDFs)
+echo 4. Random Sample (100 PDFs)
+echo 5. Custom Sample Size
+echo 6. Validate ALL PDFs (WARNING: Takes several minutes!)
+echo.
+echo ============================================================
+echo.
+set /p choice="Enter your choice (1-6): "
 echo.
 
-node validate-pdf-parsing.js
+if "%choice%"=="1" (
+    echo Running quick check on first 20 PDFs...
+    echo.
+    node validate-pdf-parsing.js
+) else if "%choice%"=="2" (
+    echo Running validation on random 20 PDFs...
+    echo.
+    node validate-pdf-parsing.js --random
+) else if "%choice%"=="3" (
+    echo Running validation on random 50 PDFs...
+    echo.
+    node validate-pdf-parsing.js --random=50
+) else if "%choice%"=="4" (
+    echo Running validation on random 100 PDFs...
+    echo.
+    node validate-pdf-parsing.js --random=100
+) else if "%choice%"=="5" (
+    set /p sample_size="Enter sample size: "
+    echo Running validation on first !sample_size! PDFs...
+    echo.
+    node validate-pdf-parsing.js --sample=!sample_size!
+) else if "%choice%"=="6" (
+    echo.
+    echo WARNING: This will validate ALL PDFs and may take several minutes!
+    set /p confirm="Are you sure? (Y/N): "
+    if /i "!confirm!"=="Y" (
+        echo.
+        echo Running validation on ALL PDFs...
+        echo.
+        node validate-pdf-parsing.js --all
+    ) else (
+        echo Validation cancelled.
+    )
+) else (
+    echo Invalid choice. Running default validation (first 20 PDFs)...
+    echo.
+    node validate-pdf-parsing.js
+)
 
 echo.
 echo ============================================================
