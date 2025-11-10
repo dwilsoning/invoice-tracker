@@ -939,6 +939,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     setAgingFilter('All');
     setActiveStatBox(null);
     setExpandedGroups({}); // Collapse all groups when clearing filters
+    setShowInvoiceTable(false); // Hide invoice table when clearing all filters to prevent showing all invoices
   };
 
   // Toggle frequency filter selection
