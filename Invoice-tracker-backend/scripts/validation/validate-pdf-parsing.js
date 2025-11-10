@@ -15,13 +15,34 @@ const pool = new Pool({
   port: process.env.DB_PORT || 5432,
 });
 
-// PDF parsing functions (replicated from server-postgres.js)
+// INDEPENDENT PDF parsing functions
+// These use DIFFERENT logic than the server to provide third-party validation
+
+/**
+ * Independent date parsing - uses different strategy than server
+ * Looks for dates in multiple formats but with different fallback logic
+ */
 function parseDate(dateStr, currency, invoiceNumber) {
   if (!dateStr) return null;
 
   const cleaned = dateStr.trim();
 
-  const monthMap = {
+  // Try ISO format first (YYYY-MM-DD)
+  const isoMatch = cleaned.match(/(\d{4})[-\/](\d{1,2})[-\/](\d{1,2})/);
+  if (isoMatch) {
+    const year = parseInt(isoMatch[1]);
+    const month = parseInt(isoMatch[2]);
+    const day = parseInt(isoMatch[3]);
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+      const date = new Date(Date.UTC(year, month - 1, day));
+      if (!isNaN(date.getTime())) {
+        return date.toISOString().split('T')[0];
+      }
+    }
+  }
+
+  // Try named month format (e.g., "28 Dec 2020" or "Dec 28, 2020")
+  const monthNames = {
     'jan': 1, 'january': 1,
     'feb': 2, 'february': 2,
     'mar': 3, 'march': 3,
@@ -36,16 +57,74 @@ function parseDate(dateStr, currency, invoiceNumber) {
     'dec': 12, 'december': 12
   };
 
-  const namedMonthMatch = cleaned.match(/(\d{1,2})[-\/\s]([a-z]+)[-\/\s](\d{2,4})/i);
-  if (namedMonthMatch) {
-    const day = parseInt(namedMonthMatch[1]);
-    const monthStr = namedMonthMatch[2].toLowerCase();
-    let year = parseInt(namedMonthMatch[3]);
+  // Pattern: DD Month YYYY or Month DD YYYY
+  const namedMatch = cleaned.match(/(\d{1,2})\s+([a-z]+)\s+(\d{2,4})|([a-z]+)\s+(\d{1,2})[,\s]+(\d{2,4})/i);
+  if (namedMatch) {
+    let day, month, year;
+    if (namedMatch[1]) {
+      // DD Month YYYY
+      day = parseInt(namedMatch[1]);
+      const monthStr = namedMatch[2].toLowerCase();
+      year = parseInt(namedMatch[3]);
+      month = monthNames[monthStr] || monthNames[monthStr.substring(0, 3)];
+    } else {
+      // Month DD YYYY
+      const monthStr = namedMatch[4].toLowerCase();
+      day = parseInt(namedMatch[5]);
+      year = parseInt(namedMatch[6]);
+      month = monthNames[monthStr] || monthNames[monthStr.substring(0, 3)];
+    }
 
-    const month = monthMap[monthStr];
-
-    if (month) {
+    if (month && year) {
       if (year < 100) year += 2000;
+      if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
+        const date = new Date(Date.UTC(year, month - 1, day));
+        if (!isNaN(date.getTime())) {
+          return date.toISOString().split('T')[0];
+        }
+      }
+    }
+  }
+
+  // Try DD/MM/YYYY or MM/DD/YYYY format
+  const numericMatch = cleaned.match(/(\d{1,2})[-\/](\d{1,2})[-\/](\d{2,4})/);
+  if (numericMatch) {
+    const first = parseInt(numericMatch[1]);
+    const second = parseInt(numericMatch[2]);
+    let year = parseInt(numericMatch[3]);
+
+    if (year < 100) year += 2000;
+
+    let day, month;
+
+    // Different logic from server: Check currency to determine format
+    // AUD/NZD typically use DD/MM/YYYY
+    // USD typically uses MM/DD/YYYY
+    if (currency && (currency === 'AUD' || currency === 'NZD' || currency === 'GBP' || currency === 'EUR')) {
+      // Assume DD/MM/YYYY for these currencies
+      day = first;
+      month = second;
+    } else if (first > 12) {
+      // Must be DD/MM/YYYY
+      day = first;
+      month = second;
+    } else if (second > 12) {
+      // Must be MM/DD/YYYY
+      month = first;
+      day = second;
+    } else {
+      // Ambiguous - default to MM/DD/YYYY for USD
+      if (currency === 'USD') {
+        month = first;
+        day = second;
+      } else {
+        // Default to DD/MM/YYYY for others
+        day = first;
+        month = second;
+      }
+    }
+
+    if (month >= 1 && month <= 12 && day >= 1 && day <= 31) {
       const date = new Date(Date.UTC(year, month - 1, day));
       if (!isNaN(date.getTime())) {
         return date.toISOString().split('T')[0];
@@ -53,56 +132,15 @@ function parseDate(dateStr, currency, invoiceNumber) {
     }
   }
 
-  const parts = cleaned.split(/[-\/]/);
-  if (parts.length !== 3) return null;
-
-  let day, month, year;
-  const first = parseInt(parts[0]);
-  const second = parseInt(parts[1]);
-  const third = parseInt(parts[2]);
-
-  if (isNaN(first) || isNaN(second) || isNaN(third)) return null;
-
-  year = third;
-  if (year < 100) year += 2000;
-
-  if (first > 12) {
-    day = first;
-    month = second;
-  } else if (second > 12) {
-    month = first;
-    day = second;
-  } else {
-    const invoiceStr = invoiceNumber ? invoiceNumber.toString() : '';
-    const usFormatPrefixes = ['46', '47', '48', '49'];
-
-    let isUSFormat = false;
-    for (const prefix of usFormatPrefixes) {
-      if (invoiceStr.startsWith(prefix)) {
-        isUSFormat = true;
-        break;
-      }
-    }
-
-    if (isUSFormat) {
-      month = first;
-      day = second;
-    } else {
-      day = first;
-      month = second;
-    }
-  }
-
-  if (month < 1 || month > 12) return null;
-  if (day < 1 || day > 31) return null;
-
-  const date = new Date(Date.UTC(year, month - 1, day));
-  if (isNaN(date.getTime())) return null;
-
-  return date.toISOString().split('T')[0];
+  return null;
 }
 
+/**
+ * Independent invoice type classification - uses different priority order than server
+ * This provides a second opinion on invoice type classification
+ */
 function classifyInvoiceType(services, invoice_number, amount) {
+  // Credit memos - check amount first
   if (amount && amount < 0) {
     return 'Credit Memo';
   }
@@ -111,62 +149,91 @@ function classifyInvoiceType(services, invoice_number, amount) {
 
   const lower = services.toLowerCase();
 
-  if (lower.includes('credit') || lower.includes('negative')) return 'Credit Memo';
-
-  if (lower.includes('consulting') ||
-      lower.includes('professional services') ||
-      lower.includes('professionalservice') ||
-      lower.includes('professional service fee') ||
-      lower.includes('professionalservicesfee') ||
-      lower.includes('penetration testing')) return 'PS';
-
-  if (lower.includes('managed services') ||
-      lower.includes('managedservices') ||
-      lower.includes('managed/outsourcing services') ||
-      (lower.includes('managed') && lower.includes('outsourcing')) ||
-      (lower.includes('subscription') && lower.includes('managed'))) {
-    return 'MS';
+  // Check for explicit credit memo keywords
+  if (lower.includes('credit memo') || lower.includes('credit note')) {
+    return 'Credit Memo';
   }
 
-  if ((lower.includes('maintenance') ||
-       lower.includes('annual maintenance') ||
-       lower.includes('software support') ||
-       lower.includes('support services') ||
-       lower.includes('support fee') ||
-       lower.includes('license maintenance')) &&
-      !lower.includes('managed') &&
-      !lower.includes('professional') &&
-      !lower.includes('subscription')) {
-    return 'Maint';
-  }
-
-  if ((lower.includes('license') || lower.includes('licence')) &&
-      !lower.includes('subscription') &&
-      !lower.includes('annual') &&
-      !lower.includes('yearly') &&
-      !lower.includes('recurring')) {
-    if (lower.includes('software') ||
-        lower.includes('connectivity') ||
-        lower.includes('single') ||
+  // Software licenses - check for single/perpetual/one-time keywords FIRST
+  // Different priority order than server
+  if (lower.includes('license') || lower.includes('licence')) {
+    if (lower.includes('single') ||
         lower.includes('perpetual') ||
-        lower.includes('one-time')) {
+        lower.includes('one-time') ||
+        lower.includes('connection license') ||
+        lower.includes('application') && !lower.includes('subscription')) {
       return 'SW';
     }
+  }
+
+  // Managed Services - check various patterns
+  if (lower.includes('managed') || lower.includes('outsourcing')) {
+    if (lower.includes('service') ||
+        lower.includes('outsourcing') ||
+        lower.includes('managedservices')) {
+      return 'MS';
+    }
+  }
+
+  // Professional Services - consulting, implementation
+  if (lower.includes('professional') ||
+      lower.includes('consulting') ||
+      lower.includes('implementation') ||
+      lower.includes('training') ||
+      lower.includes('penetration testing')) {
+    return 'PS';
+  }
+
+  // Maintenance & Support
+  if (lower.includes('maintenance') ||
+      lower.includes('support') ||
+      lower.includes('annual maintenance')) {
+    // Make sure it's not managed services
+    if (!lower.includes('managed') && !lower.includes('outsourcing')) {
+      return 'Maint';
+    }
+  }
+
+  // Subscriptions
+  if (lower.includes('subscription') ||
+      lower.includes('saas') ||
+      (lower.includes('annual') && lower.includes('license'))) {
+    return 'Sub';
+  }
+
+  // Hardware
+  if (lower.includes('hardware') ||
+      lower.includes('equipment') ||
+      lower.includes('device') ||
+      lower.includes('appliance')) {
+    return 'HW';
+  }
+
+  // Hosting/Cloud
+  if (lower.includes('hosting') ||
+      lower.includes('cloud') ||
+      lower.includes('infrastructure')) {
+    return 'Hosting';
+  }
+
+  // Third party
+  if (lower.includes('third party') || lower.includes('3rd party')) {
+    return '3PP';
+  }
+
+  // Software - broader check
+  if (lower.includes('software') || lower.includes('application')) {
     return 'SW';
   }
 
-  if (lower.includes('subscription') ||
-      (lower.includes('license') && (lower.includes('annual') || lower.includes('yearly'))) ||
-      lower.includes('saas')) return 'Sub';
-
-  if (lower.includes('hosting') || lower.includes('cloud services') || lower.includes('infrastructure')) return 'Hosting';
-  if (lower.includes('software') || lower.includes('application') || lower.includes('program')) return 'SW';
-  if (lower.includes('hardware') || lower.includes('equipment') || lower.includes('devices')) return 'HW';
-  if (lower.includes('third party')) return '3PP';
-
+  // Default to Professional Services
   return 'PS';
 }
 
+/**
+ * Independent PDF extraction - uses ALTERNATIVE patterns from the server
+ * This creates a true third-party validation
+ */
 async function extractInvoiceDataFromPDF(pdfPath) {
   const dataBuffer = fs.readFileSync(pdfPath);
   const pdfData = await pdfParse(dataBuffer);
@@ -182,11 +249,14 @@ async function extractInvoiceDataFromPDF(pdfPath) {
     invoiceType: 'PS'
   };
 
-  // Extract invoice number
-  const invNumMatch =
-    text.match(/Invoice\s*(?:#|No\.?|Number)?\s*[:\s]*([0-9][A-Z0-9-]+)/i) ||
-    text.match(/Tax\s*Invoice\s*[:\s]*([0-9][A-Z0-9-]+)/i) ||
-    text.match(/Credit\s*Memo\s*[:\s#]*([0-9][A-Z0-9-]+)/i);
+  // ALTERNATIVE invoice number extraction - different patterns
+  // Try multiple strategies in different order than server
+  let invNumMatch =
+    text.match(/Invoice\s+(?:Number|No\.?|#)?\s*:?\s*([0-9][A-Z0-9-]+)/i) ||
+    text.match(/Tax\s+Invoice\s*:?\s*([0-9][A-Z0-9-]+)/i) ||
+    text.match(/Credit\s+Memo\s*(?:Number|No\.?|#)?\s*:?\s*([0-9][A-Z0-9-]+)/i) ||
+    text.match(/^([0-9]{8,})\s/m); // Invoice number at start of line
+
   if (invNumMatch) {
     const invoiceNum = invNumMatch[1].trim();
     if (invoiceNum !== 'Total' && invoiceNum.match(/\d/)) {
@@ -194,48 +264,90 @@ async function extractInvoiceDataFromPDF(pdfPath) {
     }
   }
 
-  // Extract currency
-  const currencyMatch = text.match(/\b(USD|AUD|EUR|GBP|SGD|NZD)\b/i);
+  // ALTERNATIVE currency extraction - look in different locations
+  const currencyMatch =
+    text.match(/Currency\s*:?\s*(USD|AUD|EUR|GBP|SGD|NZD)/i) ||
+    text.match(/\b(USD|AUD|EUR|GBP|SGD|NZD)\b/i) ||
+    text.match(/\$\s*(USD|AUD|EUR|GBP|SGD|NZD)/i);
+
   if (currencyMatch) {
     invoice.currency = currencyMatch[1].toUpperCase();
   }
 
-  // Extract invoice date
-  const invDateMatch = text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
-                       text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i);
+  // ALTERNATIVE invoice date extraction - try different patterns
+  const invDateMatch =
+    text.match(/Invoice\s+Date\s*:?\s*([0-9]{1,2}[-\/]\s*[A-Za-z]+[-\/\s]*[0-9]{2,4})/i) ||
+    text.match(/Invoice\s+Date\s*:?\s*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
+    text.match(/Date\s*:?\s*([0-9]{1,2}[-\/]\s*[A-Za-z]+[-\/\s]*[0-9]{2,4})/i) ||
+    text.match(/\b([0-9]{1,2}\s+[A-Za-z]+\s+[0-9]{4})\b/i);
+
   if (invDateMatch) {
     invoice.invoiceDate = parseDate(invDateMatch[1].trim(), invoice.currency, invoice.invoiceNumber);
   }
 
-  // Extract amount
+  // ALTERNATIVE amount extraction - different pattern order
   let amountMatch =
-    text.match(/Invoice\s*Total[\s:]*\$?\s*-?\s*([\d,]+\.?\d*)/i) ||
-    text.match(/(?:Amount\s*Due|Balance\s*Due)[:\s]*[-\(]?\$?\s*([\d,]+\.?\d*)[\)]?/i) ||
-    text.match(/Item\s*Subtotal[\s\n]*\$[\s\n]*(-?[\d,]+\.?\d*)/i);
+    text.match(/Balance\s+Due\s*:?\s*\$?\s*(-?[\d,]+\.?\d*)/i) ||
+    text.match(/Amount\s+Due\s*:?\s*\$?\s*(-?[\d,]+\.?\d*)/i) ||
+    text.match(/Invoice\s+Total\s*:?\s*\$?\s*(-?[\d,]+\.?\d*)/i) ||
+    text.match(/Total\s+Amount\s*:?\s*\$?\s*(-?[\d,]+\.?\d*)/i) ||
+    text.match(/Item\s+Subtotal\s*\$?\s*(-?[\d,]+\.?\d*)/i);
 
   if (amountMatch) {
     const fullMatch = amountMatch[0];
     let amountStr = amountMatch[1];
-    let amount = parseFloat(amountStr.replace(/[,\$]/g, ''));
+    let amount = parseFloat(amountStr.replace(/[,$]/g, ''));
 
-    if (fullMatch.includes('-') || fullMatch.includes('(')) {
+    // Check for negative indicators
+    if (fullMatch.includes('-') || fullMatch.toLowerCase().includes('credit')) {
       amount = -Math.abs(amount);
     }
 
     invoice.amountDue = amount;
   }
 
-  // Extract services
+  // ALTERNATIVE services extraction - look in different sections
   let services = '';
-  const descMatch = text.match(/Description[\s\S]{0,150}?Week\s+Ending\s+Date[\s\S]{0,150}?Qty[\s\S]{0,150}?UOM[\s\S]{0,150}?Unit\s+Price[\s\S]{0,150}?Taxable[\s\S]{0,150}?Extended\s+Price([\s\S]{0,1500}?)(?:Item\s+Subtotal|Special\s+Instructions|Page\s+\d+)/i);
+
+  // Strategy 1: Look for Description section with table data
+  let descMatch = text.match(/Description[\s\S]{0,200}?(?:Taxable|Extended|Price)[\s\S]{0,100}?([\s\S]{0,1000}?)(?:Item\s+Subtotal|Subtotal|Total|Page\s+\d+)/i);
   if (descMatch) {
-    services = descMatch[1].trim();
-    services = services.replace(/\s+Yes\s+\$[\d,]+\.?\d*/g, '');
-    services = services.replace(/\s+No\s+\$[\d,]+\.?\d*/g, '');
-    services = services.replace(/\s+/g, ' ').trim();
-    invoice.services = services.substring(0, 500);
+    services = descMatch[1];
   }
 
+  // Strategy 2: Look between specific markers
+  if (!services) {
+    descMatch = text.match(/Transaction\s+Type[\s\S]{0,300}?([\s\S]{0,800}?)(?:Item\s+Subtotal|Special\s+Instructions)/i);
+    if (descMatch) {
+      services = descMatch[1];
+    }
+  }
+
+  // Strategy 3: Look for line items with descriptions
+  if (!services) {
+    descMatch = text.match(/(?:Services|Items|Description)[:\s]+([\s\S]{0,600}?)(?:Subtotal|Total|Amount)/i);
+    if (descMatch) {
+      services = descMatch[1];
+    }
+  }
+
+  // Clean up services text
+  if (services) {
+    // Remove pricing information
+    services = services.replace(/\$\s*[\d,]+\.?\d*/g, '');
+    // Remove Yes/No columns
+    services = services.replace(/\b(Yes|No)\b/gi, '');
+    // Remove numbers at line starts (quantities)
+    services = services.replace(/^\s*\d+\s+/gm, '');
+    // Remove extra whitespace
+    services = services.replace(/\s+/g, ' ').trim();
+    // Take first 500 chars
+    invoice.services = services.substring(0, 500);
+  } else {
+    invoice.services = 'No service description found';
+  }
+
+  // Classify invoice type using independent logic
   invoice.invoiceType = classifyInvoiceType(invoice.services, invoice.invoiceNumber, invoice.amountDue);
 
   return invoice;
@@ -280,11 +392,40 @@ async function validatePDFParsing() {
   console.log(`Found ${pdfFiles.length} invoice/credit memo PDF files`);
   console.log(`(Excluding attachments like remittance notes, statements, etc.)\n`);
 
-  // Sample validation - test first 20 PDFs
-  const sampleSize = Math.min(20, pdfFiles.length);
-  const sample = pdfFiles.slice(0, sampleSize);
+  // Check for command line arguments
+  const args = process.argv.slice(2);
+  let validationType = 'sample'; // default: sample
+  let sampleSize = 20; // default sample size
 
-  console.log(`Validating ${sampleSize} PDFs...\n`);
+  if (args.includes('--all')) {
+    validationType = 'all';
+  } else if (args.some(arg => arg.startsWith('--random'))) {
+    validationType = 'random';
+    const randomArg = args.find(arg => arg.startsWith('--random'));
+    if (randomArg && randomArg.includes('=')) {
+      sampleSize = parseInt(randomArg.split('=')[1]) || 20;
+    }
+  } else if (args.some(arg => arg.startsWith('--sample'))) {
+    const sampleArg = args.find(arg => arg.startsWith('--sample'));
+    if (sampleArg && sampleArg.includes('=')) {
+      sampleSize = parseInt(sampleArg.split('=')[1]) || 20;
+    }
+  }
+
+  let sample;
+  if (validationType === 'all') {
+    sample = pdfFiles;
+    console.log(`Validating ALL ${pdfFiles.length} PDFs...\n`);
+  } else if (validationType === 'random') {
+    // Randomly select PDFs
+    const shuffled = [...pdfFiles].sort(() => 0.5 - Math.random());
+    sample = shuffled.slice(0, Math.min(sampleSize, pdfFiles.length));
+    console.log(`Validating RANDOM sample of ${sample.length} PDFs...\n`);
+  } else {
+    // Default: first N PDFs (sequential sample)
+    sample = pdfFiles.slice(0, Math.min(sampleSize, pdfFiles.length));
+    console.log(`Validating first ${sample.length} PDFs...\n`);
+  }
 
   const results = {
     total: 0,

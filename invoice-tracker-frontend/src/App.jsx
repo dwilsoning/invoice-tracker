@@ -491,6 +491,36 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [selectedInvoice, editingInvoice, showHelp]);
 
+  // Hide invoice table when search is cleared and no other filters are active
+  useEffect(() => {
+    // If search term is empty or just whitespace
+    if (!searchTerm || !searchTerm.trim()) {
+      // Check if there are any other active filters
+      const hasOtherFilters =
+        activeStatBox ||
+        statusFilter.length > 0 ||
+        agingFilter !== 'All' ||
+        typeFilter.length > 0 ||
+        clientFilter !== 'All' ||
+        contractFilter !== 'All' ||
+        contractPercentageFilter ||
+        contractPercentageRangeMin ||
+        contractPercentageRangeMax ||
+        frequencyFilter.length > 0 ||
+        dateFrom ||
+        dateTo ||
+        (showOnlyUploadedInvoices && uploadedInvoiceIds.length > 0);
+
+      // If no other filters and search was just cleared, hide the table
+      if (!hasOtherFilters && showInvoiceTable) {
+        setShowInvoiceTable(false);
+      }
+    }
+  }, [searchTerm, activeStatBox, statusFilter, agingFilter, typeFilter, clientFilter,
+      contractFilter, contractPercentageFilter, contractPercentageRangeMin,
+      contractPercentageRangeMax, frequencyFilter, dateFrom, dateTo,
+      showOnlyUploadedInvoices, uploadedInvoiceIds, showInvoiceTable]);
+
   // Helper function to check if invoice matches a status filter option
   const matchesStatusFilter = (inv, statusOption) => {
     const today = new Date().toISOString().split('T')[0];
