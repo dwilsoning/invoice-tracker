@@ -75,9 +75,12 @@ PDF parsing extracted data that perfectly matches the database. This is good!
 
 ### ⚠️ Mismatched
 There's a difference between the PDF and database. Possible reasons:
-- Parsing logic needs improvement
-- Manual corrections were made in the database
+- **Validation script's simplified parsing** - The validation uses a simplified extraction that may not capture all edge cases
+- **Database is correct** - Manual corrections or better parsing in the main app
+- **Database needs fixing** - PDF data is more accurate
 - Edge case in PDF format
+
+**Important:** The validation script uses simplified extraction logic compared to the full server. When there's a mismatch, **check the actual PDF** to determine which is correct.
 
 The script will show exactly which fields don't match.
 
