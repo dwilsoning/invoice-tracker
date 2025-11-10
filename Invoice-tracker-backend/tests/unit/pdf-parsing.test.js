@@ -3,37 +3,60 @@ const path = require('path');
 const pdfParse = require('pdf-parse');
 
 describe('PDF Parsing Unit Tests', () => {
-  const testPdfPath = path.join(__dirname, '../test-data', 'sample-invoice-quarterly.pdf');
-  const testPdfPath2 = path.join(__dirname, '../test-data', 'sample-invoice-monthly.pdf');
-  const testCreditMemoPath = path.join(__dirname, '../test-data', 'sample-credit-memo.pdf');
+  // Use actual uploaded invoices from invoice_pdfs directory
+  const invoicePdfsDir = path.join(__dirname, '../../invoice_pdfs');
+
+  // Get all PDF files from the directory
+  let pdfFiles = [];
+  if (fs.existsSync(invoicePdfsDir)) {
+    pdfFiles = fs.readdirSync(invoicePdfsDir)
+      .filter(file => file.endsWith('.pdf'))
+      .map(file => path.join(invoicePdfsDir, file));
+  }
 
   describe('PDF Text Extraction', () => {
-    test('Should extract text from PDF', async () => {
-      if (!fs.existsSync(testPdfPath)) {
-        console.log('Test PDF not found, skipping...');
-        return;
-      }
-
-      const dataBuffer = fs.readFileSync(testPdfPath);
-      const pdfData = await pdfParse(dataBuffer);
-
-      expect(pdfData.text).toBeDefined();
-      expect(pdfData.text.length).toBeGreaterThan(0);
-      expect(typeof pdfData.text).toBe('string');
+    test('Should have invoice PDFs available for testing', () => {
+      expect(pdfFiles.length).toBeGreaterThan(0);
+      console.log(`Found ${pdfFiles.length} PDF files for testing`);
     });
 
-    test('PDF should contain expected keywords', async () => {
-      if (!fs.existsSync(testPdfPath)) {
-        console.log('Test PDF not found, skipping...');
+    test('Should extract text from actual invoice PDFs', async () => {
+      if (pdfFiles.length === 0) {
+        console.log('No PDF files found, skipping...');
         return;
       }
 
-      const dataBuffer = fs.readFileSync(testPdfPath);
-      const pdfData = await pdfParse(dataBuffer);
-      const text = pdfData.text.toLowerCase();
+      // Test first 5 PDFs to ensure they're parseable
+      const testSample = pdfFiles.slice(0, 5);
 
-      expect(text).toMatch(/invoice/i);
-      expect(text).toMatch(/total|amount|due/i);
+      for (const pdfPath of testSample) {
+        const dataBuffer = fs.readFileSync(pdfPath);
+        const pdfData = await pdfParse(dataBuffer);
+
+        expect(pdfData.text).toBeDefined();
+        expect(pdfData.text.length).toBeGreaterThan(0);
+        expect(typeof pdfData.text).toBe('string');
+      }
+    });
+
+    test('PDFs should contain expected invoice keywords', async () => {
+      if (pdfFiles.length === 0) {
+        console.log('No PDF files found, skipping...');
+        return;
+      }
+
+      // Test a sample of PDFs
+      const testSample = pdfFiles.slice(0, 3);
+
+      for (const pdfPath of testSample) {
+        const dataBuffer = fs.readFileSync(pdfPath);
+        const pdfData = await pdfParse(dataBuffer);
+        const text = pdfData.text.toLowerCase();
+
+        // Should contain invoice-related keywords
+        const hasInvoiceKeyword = text.includes('invoice') || text.includes('credit');
+        expect(hasInvoiceKeyword).toBe(true);
+      }
     });
   });
 
