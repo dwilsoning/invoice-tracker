@@ -550,7 +550,7 @@ describe('Invoice Tracker API Tests', () => {
   describe('Data Integrity Tests', () => {
     test('Currency values should be valid', async () => {
       const response = await request(API_URL).get('/api/invoices');
-      const validCurrencies = ['USD', 'AUD', 'EUR', 'GBP', 'SGD'];
+      const validCurrencies = ['USD', 'AUD', 'EUR', 'GBP', 'SGD', 'NZD'];
 
       response.body.forEach((invoice) => {
         expect(validCurrencies).toContain(invoice.currency);
