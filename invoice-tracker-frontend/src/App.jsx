@@ -5,7 +5,8 @@ import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login';
 import Header from './components/Header';
 
-const API_URL = 'http://localhost:3001/api';
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
 // Type colors
 const TYPE_COLORS = {
@@ -2826,7 +2827,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               <div className="mt-6 flex gap-2 flex-wrap">
                 {selectedInvoice.pdfPath && (
                   <a
-                    href={`http://localhost:3001${encodeURI(selectedInvoice.pdfPath)}`}
+                    href={`${BASE_URL}${encodeURI(selectedInvoice.pdfPath)}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
@@ -3073,7 +3074,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                           </div>
                           <div className="flex gap-2 ml-4">
                             <button
-                              onClick={() => window.open(`http://localhost:3001${attachment.filePath}`, '_blank')}
+                              onClick={() => window.open(`${BASE_URL}${attachment.filePath}`, '_blank')}
                               className="text-blue-600 hover:text-blue-800 text-sm"
                             >
                               View
@@ -3115,7 +3116,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 <div className="flex gap-2">
                   {editingInvoice.pdfPath && (
                     <button
-                      onClick={() => window.open(`http://localhost:3001${encodeURI(editingInvoice.pdfPath)}`, '_blank')}
+                      onClick={() => window.open(`${BASE_URL}${encodeURI(editingInvoice.pdfPath)}`, '_blank')}
                       className="px-4 py-2 bg-[#0076A2] text-white rounded hover:bg-[#005a7a] transition"
                     >
                       View PDF
