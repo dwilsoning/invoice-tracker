@@ -8,17 +8,22 @@
 
 **First-time visitor?** Read in this order:
 
-1. **[00-START-HERE.md](./00-START-HERE.md)** ⭐ 
-   - 2-min quick orientation
+1. **[Deployment/README.md](./Deployment/README.md)** ⭐ **EC2 DEPLOYMENT**
+   - How to deploy to EC2
+   - All deployment files in one place
+   - Quick start (5 minutes)
+
+2. **[00-START-HERE.md](./00-START-HERE.md)** ⭐ 
+   - Quick orientation
    - Links to all important docs
    - What's been done
 
-2. **[GIT-COMMIT-INSTRUCTIONS.md](./GIT-COMMIT-INSTRUCTIONS.md)**
+3. **[GIT-COMMIT-INSTRUCTIONS.md](./GIT-COMMIT-INSTRUCTIONS.md)**
    - How to commit these changes
    - Step-by-step instructions
    - Troubleshooting
 
-3. **[DASHBOARD.md](./DASHBOARD.md)**
+4. **[DASHBOARD.md](./DASHBOARD.md)**
    - Visual summary
    - Status overview
    - Quick reference
@@ -27,9 +32,36 @@
 
 ## 📚 COMPLETE DOCUMENTATION MAP
 
-### 🚀 DEPLOYMENT GUIDES
+### 🚀 DEPLOYMENT (All Files in One Place)
 
-#### For Deploying to EC2
+#### Deployment Folder
+- **[Deployment/README.md](./Deployment/README.md)** ⭐ **START HERE FOR DEPLOYMENT**
+  - Overview of all deployment files
+  - Quick start guide (5 minutes)
+  - All 3 deployment methods explained
+  - Verification checklist
+  - Troubleshooting section
+  - **Read time: 5 minutes | Action time: 5 minutes to deploy**
+
+- **[Deployment/deploy-complete-schema-ec2.sql](./Deployment/deploy-complete-schema-ec2.sql)** (2.8 KB)
+  - Raw PostgreSQL schema file
+  - All 7 tables with constraints
+
+- **[Deployment/deploy-schema-to-ec2.js](./Deployment/deploy-schema-to-ec2.js)** (6.5 KB)
+  - Node.js automation script (recommended method)
+  - Automatic error handling and progress reporting
+
+- **[Deployment/migrate-data-to-ec2.js](./Deployment/migrate-data-to-ec2.js)** (5.2 KB)
+  - Data migration from local to EC2
+  - Preserve all existing invoices
+
+- **[Deployment/DEPLOYMENT-COMPLETE-SCHEMA.md](./Deployment/DEPLOYMENT-COMPLETE-SCHEMA.md)** (8.5 KB)
+  - Complete step-by-step deployment guide (copy in Deployment folder)
+
+- **[Deployment/DEPLOYMENT-QUICK-REFERENCE.md](./Deployment/DEPLOYMENT-QUICK-REFERENCE.md)** (6.2 KB)
+  - Quick lookup card (copy in Deployment folder)
+
+#### Root-level Deployment Guides
 - **[DEPLOYMENT-COMPLETE-SCHEMA.md](./DEPLOYMENT-COMPLETE-SCHEMA.md)** (8.5 KB)
   - Complete step-by-step deployment guide
   - All 7 tables explained
@@ -151,9 +183,10 @@
 3. View: [DASHBOARD.md](./DASHBOARD.md)
 
 #### ...Deploy to EC2
-1. Read: [DEPLOYMENT-COMPLETE-SCHEMA.md](./DEPLOYMENT-COMPLETE-SCHEMA.md)
-2. Reference: [DEPLOYMENT-QUICK-REFERENCE.md](./DEPLOYMENT-QUICK-REFERENCE.md)
-3. Copy files from: Archive/
+1. Read: [Deployment/README.md](./Deployment/README.md)
+2. Run: `cd Deployment && node deploy-schema-to-ec2.js`
+3. Verify: `psql -h your-ec2-ip -U invoice_tracker_user -d invoice_tracker -c "\dt"`
+4. Optional: `node migrate-data-to-ec2.js`
 
 #### ...Commit these changes
 1. Read: [GIT-COMMIT-INSTRUCTIONS.md](./GIT-COMMIT-INSTRUCTIONS.md)
@@ -165,7 +198,7 @@
 2. Read: [DASHBOARD.md](./DASHBOARD.md)
 
 #### ...Find deployment scripts
-1. Check: Archive/ folder
+1. Check: [Deployment/](./Deployment/) folder ⭐ (Everything is here!)
 2. Copy: deploy-*.js, deploy-*.sql, migrate-*.js
 3. Reference: [DEPLOYMENT-COMPLETE-SCHEMA.md](./DEPLOYMENT-COMPLETE-SCHEMA.md)
 
@@ -206,8 +239,11 @@
 
 ## 🔍 QUICK FIND
 
+### Looking for deployment scripts?
+→ **[Deployment/](./Deployment/)** folder ⭐ (Everything in one place!)
+
 ### Looking for deployment information?
-→ **DEPLOYMENT-COMPLETE-SCHEMA.md**
+→ **[Deployment/README.md](./Deployment/README.md)** or **DEPLOYMENT-COMPLETE-SCHEMA.md**
 
 ### Looking for git instructions?
 → **GIT-COMMIT-INSTRUCTIONS.md**
@@ -217,9 +253,6 @@
 
 ### Looking for why files were moved?
 → **REORGANIZATION-GUIDE.md**
-
-### Looking for deployment scripts?
-→ **Archive/** folder
 
 ### Looking for debug tools?
 → **Archive/** folder
@@ -233,8 +266,9 @@
 
 | Metric | Count |
 |--------|-------|
-| Total documentation files | 9 |
-| Total documentation size | ~75 KB |
+| Total documentation files | 10+ |
+| Deployment folder files | 6 (all together!) |
+| Total documentation size | ~90 KB |
 | Pages (estimated) | ~30 |
 | Code examples | 20+ |
 | Troubleshooting tips | 15+ |

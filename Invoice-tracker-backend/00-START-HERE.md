@@ -8,18 +8,39 @@
 
 ## 📋 Quick Links (Start Here!)
 
+- **[Deployment/README.md](./Deployment/README.md)** ⭐ **EC2 DEPLOYMENT - START HERE**
 - **[DOCUMENTATION-INDEX.md](./DOCUMENTATION-INDEX.md)** ⭐ Complete guide to all docs
 - **[GIT-COMMIT-INSTRUCTIONS.md](./GIT-COMMIT-INSTRUCTIONS.md)** ⭐ How to commit changes
 - **[DASHBOARD.md](./DASHBOARD.md)** - Visual status dashboard
 - **[REORGANIZATION-GUIDE.md](./REORGANIZATION-GUIDE.md)** - Backend folder cleanup & file organization
-- **[DEPLOYMENT-COMPLETE-SCHEMA.md](./DEPLOYMENT-COMPLETE-SCHEMA.md)** - Full deployment guide
-- **[DEPLOYMENT-QUICK-REFERENCE.md](./DEPLOYMENT-QUICK-REFERENCE.md)** - Quick reference card
 - **[PROJECT-COMPLETION-SUMMARY.md](./PROJECT-COMPLETION-SUMMARY.md)** - What's been done
 - **[README.md](./README.md)** - Project overview
 
 ---
 
-## 📦 Files Created (5 Deployment Files + Reorganization + Docs)
+## � DEPLOYMENT FOLDER (All EC2 Files in One Place)
+
+**Location:** `Deployment/`
+
+**What's Inside:**
+- ✅ **deploy-complete-schema-ec2.sql** - PostgreSQL schema (all 7 tables)
+- ✅ **deploy-schema-to-ec2.js** - Automated deployment script (recommended)
+- ✅ **migrate-data-to-ec2.js** - Data migration script
+- ✅ **DEPLOYMENT-COMPLETE-SCHEMA.md** - Full deployment guide
+- ✅ **DEPLOYMENT-QUICK-REFERENCE.md** - Quick reference
+- ✅ **README.md** - Deployment folder documentation
+
+**Quick Start:**
+```bash
+cd Deployment
+node deploy-schema-to-ec2.js
+```
+
+**Read First:** [Deployment/README.md](./Deployment/README.md)
+
+---
+
+## �📦 Files Created (5 Deployment Files + Reorganization + Docs)
 
 ### 1. ✅ **deploy-complete-schema-ec2.sql**
 - Pure SQL schema file for PostgreSQL
@@ -110,7 +131,7 @@ See [REORGANIZATION-GUIDE.md](./REORGANIZATION-GUIDE.md) for details.
 
 ### 1. Deploy Schema
 ```bash
-cd Invoice-tracker-backend
+cd Invoice-tracker-backend/Deployment
 node deploy-schema-to-ec2.js
 ```
 
@@ -126,6 +147,7 @@ node migrate-data-to-ec2.js
 
 ### 4. Start Application
 ```bash
+cd ..
 npm run start:postgres
 ```
 
