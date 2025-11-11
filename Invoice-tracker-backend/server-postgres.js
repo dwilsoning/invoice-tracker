@@ -2104,15 +2104,23 @@ app.post('/api/query', async (req, res) => {
       // Get all contracts
       const contracts = await db.all('SELECT contract_name, contract_value, currency FROM contracts');
 
-      // Group invoices by contract and calculate totals (both total and paid)
+      // Get ALL invoices from database to calculate accurate contract percentages
+      // We need all invoices, not just the filtered results, to get correct percentages
+      const allInvoices = await db.all(`
+        SELECT customer_contract, amount_due, currency, status
+        FROM invoices
+        WHERE customer_contract IS NOT NULL
+          AND customer_contract != ''
+          AND invoice_type != 'Credit Memo'
+      `);
+
+      // Group ALL invoices by contract and calculate totals (both total and paid)
       const contractTotals = {};
       const contractPaidTotals = {};
-      const contractsInResults = new Set();
 
-      results.forEach(inv => {
-        const contractName = inv.customerContract;
+      allInvoices.forEach(inv => {
+        const contractName = inv.customerContract; // db-postgres converts snake_case to camelCase
         if (contractName) {
-          contractsInResults.add(contractName);
           if (!contractTotals[contractName]) {
             contractTotals[contractName] = 0;
             contractPaidTotals[contractName] = 0;
@@ -2134,11 +2142,6 @@ app.post('/api/query', async (req, res) => {
 
       contracts.forEach(contract => {
         const contractName = contract.contractName || contract.contract_name;
-
-        // Only process contracts that have invoices in the filtered results
-        if (!contractsInResults.has(contractName)) {
-          return;
-        }
 
         const contractValue = parseFloat(contract.contractValue || contract.contract_value);
         const contractCurrency = contract.currency || 'USD';
