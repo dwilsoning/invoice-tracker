@@ -46,7 +46,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [typeFilter, setTypeFilter] = useState([]);
   const [clientFilter, setClientFilter] = useState('All');
   const [contractFilter, setContractFilter] = useState('All');
-  const [contractPercentageFilter, setContractPercentageFilter] = useState(''); // e.g., "=50", ">80", "<30"
   const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
   const [frequencyFilter, setFrequencyFilter] = useState([]);
@@ -212,7 +211,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       setShowOnlyUploadedInvoices(false);
       setUploadedInvoiceIds([]);
     }
-  }, [statusFilter, typeFilter, clientFilter, contractFilter, contractPercentageFilter,
+  }, [statusFilter, typeFilter, clientFilter, contractFilter,
       contractPercentageRangeMin, contractPercentageRangeMax, frequencyFilter, searchTerm,
       dateFrom, dateTo, agingFilter, activeStatBox, selectedExpectedInvoiceId, groupBy, secondaryGroupBy]);
 
@@ -380,7 +379,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         setTypeFilter([]);
         setClientFilter('All');
         setContractFilter('All');
-        setContractPercentageFilter('');
         setContractPercentageRangeMin('');
         setContractPercentageRangeMax('');
         setFrequencyFilter([]);
@@ -529,7 +527,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         typeFilter.length > 0 ||
         clientFilter !== 'All' ||
         contractFilter !== 'All' ||
-        contractPercentageFilter ||
         contractPercentageRangeMin ||
         contractPercentageRangeMax ||
         frequencyFilter.length > 0 ||
@@ -543,9 +540,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       }
     }
   }, [searchTerm, activeStatBox, statusFilter, agingFilter, typeFilter, clientFilter,
-      contractFilter, contractPercentageFilter, contractPercentageRangeMin,
-      contractPercentageRangeMax, frequencyFilter, dateFrom, dateTo,
-      showOnlyUploadedInvoices, uploadedInvoiceIds, showInvoiceTable]);
+      contractFilter, contractPercentageRangeMin, contractPercentageRangeMax,
+      frequencyFilter, dateFrom, dateTo, showOnlyUploadedInvoices, uploadedInvoiceIds, showInvoiceTable]);
 
   // Helper function to check if invoice matches a status filter option
   const matchesStatusFilter = (inv, statusOption) => {
@@ -576,7 +572,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       typeFilter.length > 0 ||
       clientFilter !== 'All' ||
       contractFilter !== 'All' ||
-      contractPercentageFilter ||
       contractPercentageRangeMin ||
       contractPercentageRangeMax ||
       frequencyFilter.length > 0 ||
@@ -632,45 +627,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     // Contract filter
     if (contractFilter !== 'All') {
       filtered = filtered.filter(inv => inv.customerContract === contractFilter);
-    }
-
-    // Contract percentage filter (single value with operator)
-    if (contractPercentageFilter) {
-      filtered = filtered.filter(inv => {
-        if (!inv.customerContract) return false;
-        const contractValue = contractValues[inv.customerContract]?.value;
-        if (!contractValue || contractValue === 0) return false;
-
-        // Calculate invoiced percentage
-        const contractInvoices = invoices.filter(i => i.customerContract === inv.customerContract);
-        const totalInvoiced = contractInvoices.reduce((sum, i) =>
-          sum + convertToUSD(i.amountDue, i.currency), 0
-        );
-        const contractValueUSD = convertToUSD(contractValue, contractValues[inv.customerContract].currency);
-        const percentage = (totalInvoiced / contractValueUSD) * 100;
-
-        // Parse operator and value from filter (e.g., "=50", ">80", "<=25")
-        const match = contractPercentageFilter.match(/^([<>=]+)(\d+)$/);
-        if (!match) return true;
-
-        const [, operator, value] = match;
-        const targetPercentage = parseFloat(value);
-
-        switch (operator) {
-          case '=':
-            return Math.abs(percentage - targetPercentage) < 1; // Allow 1% tolerance
-          case '>':
-            return percentage > targetPercentage;
-          case '<':
-            return percentage < targetPercentage;
-          case '>=':
-            return percentage >= targetPercentage;
-          case '<=':
-            return percentage <= targetPercentage;
-          default:
-            return true;
-        }
-      });
     }
 
     // Contract percentage range filter
@@ -985,7 +941,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     setTypeFilter([]);
     setClientFilter('All');
     setContractFilter('All');
-    setContractPercentageFilter('');
     setContractPercentageRangeMin('');
     setContractPercentageRangeMax('');
     setFrequencyFilter([]);
@@ -2219,17 +2174,6 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                   <option key={contract} value={contract}>{contract}</option>
                 ))}
               </select>
-            </div>
-
-            <div>
-              <label className="block text-sm font-medium mb-1 text-white">Contract % (e.g., =50, &gt;80, &lt;30)</label>
-              <input
-                type="text"
-                value={contractPercentageFilter}
-                onChange={(e) => setContractPercentageFilter(e.target.value)}
-                placeholder="=50 or >80 or <30"
-                className="w-full border rounded px-3 py-2"
-              />
             </div>
 
             <div>
