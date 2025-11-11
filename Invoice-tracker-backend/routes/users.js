@@ -2,7 +2,6 @@ const express = require('express');
 const { db } = require('../db-postgres');
 const {
   hashPassword,
-  generateUserId,
   isValidEmail,
   validatePasswordStrength
 } = require('../utils/auth');
@@ -102,14 +101,26 @@ router.post('/', async (req, res) => {
     // Hash password
     const passwordHash = hashPassword(password);
 
-    // Generate user ID
-    const userId = generateUserId();
+    // Generate username from email
+    const username = email.split('@')[0];
 
-    // Create user
-    await db.run(
-      `INSERT INTO users (id, email, password_hash, first_name, last_name, role, is_active)
-       VALUES ($1, $2, $3, $4, $5, $6, TRUE)`,
-      userId,
+    // Check if username already exists
+    const existingUsername = await db.get(
+      'SELECT id FROM users WHERE username = $1',
+      username
+    );
+
+    // If username exists, append a random number
+    const finalUsername = existingUsername
+      ? `${username}_${Date.now().toString().slice(-4)}`
+      : username;
+
+    // Create user (let database auto-generate id)
+    const result = await db.get(
+      `INSERT INTO users (username, email, password_hash, first_name, last_name, role, is_active)
+       VALUES ($1, $2, $3, $4, $5, $6, TRUE)
+       RETURNING id, username, email, first_name, last_name, role, is_active, created_at`,
+      finalUsername,
       email.toLowerCase(),
       passwordHash,
       firstName || null,
@@ -117,17 +128,9 @@ router.post('/', async (req, res) => {
       userRole
     );
 
-    // Fetch created user
-    const newUser = await db.get(
-      `SELECT id, email, first_name, last_name, role, is_active, created_at
-       FROM users
-       WHERE id = $1`,
-      userId
-    );
-
     res.status(201).json({
       message: 'User created successfully',
-      user: newUser
+      user: result
     });
   } catch (error) {
     console.error('Create user error:', error);
