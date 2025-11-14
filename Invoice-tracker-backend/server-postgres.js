@@ -528,14 +528,15 @@ async function extractInvoiceData(pdf_path, originalName) {
   // This is more accurate than just taking first/last dates which can pick up service period dates
 
   // Try to find Invoice Date with label - multiple patterns
+  // For credit memos, prioritize Credit Date over Invoice Date
   let invoiceDateStr = null;
-  const invDateMatch = text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
-                       text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i) ||
-                       text.match(/DATE[:\s]*([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4})/i) ||
+  const invDateMatch = text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
+                       text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i) ||
                        text.match(/Credit\s+Processing\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
                        text.match(/Credit\s+Processing\s+Date[:\s]*([0-9]{1,2}[-\/\s][A-Za-z]+[-\/\s][0-9]{2,4})/i) ||
-                       text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
-                       text.match(/Credit\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i);
+                       text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/][0-9]{1,2}[-\/][0-9]{2,4})/i) ||
+                       text.match(/Invoice\s+Date[:\s]*([0-9]{1,2}[-\/\s][a-z]+[-\/\s][0-9]{2,4})/i) ||
+                       text.match(/DATE[:\s]*([0-9]{1,2}\/[0-9]{1,2}\/[0-9]{2,4})/i);
   if (invDateMatch) {
     invoiceDateStr = invDateMatch[1].trim();
   }
@@ -556,6 +557,13 @@ async function extractInvoiceData(pdf_path, originalName) {
   }
   if (dueDateStr) {
     invoice.dueDate = parseDate(dueDateStr, invoice.currency);
+  }
+
+  // For credit memos, both dates should be the same (the credit date)
+  // Check if this is a credit memo by looking for "Credit Memo" or "Credit Date" in the text
+  const isCreditMemo = text.match(/Credit\s+Memo/i) || text.match(/Credit\s+Date:/i);
+  if (isCreditMemo && invoice.invoiceDate) {
+    invoice.dueDate = invoice.invoiceDate;
   }
 
   // WARNING: Fallback to today if dates are invalid
@@ -666,6 +674,14 @@ async function extractInvoiceData(pdf_path, originalName) {
     }
   }
 
+  // For credit memos, check for "Credit Memo Confirmation for Invoice Number(s)" section
+  let creditMemoConfirmation = '';
+  const creditMemoConfMatch = text.match(/Credit\s+Memo\s+Confirmation\s+for\s+Invoice\s+Number\(s\)[:\s]*([0-9,\s]+)/i);
+  if (creditMemoConfMatch) {
+    const invoiceNumbers = creditMemoConfMatch[1].trim().replace(/\s+/g, ', ');
+    creditMemoConfirmation = `Credit Memo Confirmation for Invoice Number(s): ${invoiceNumbers}`;
+  }
+
   // Clean up and filter
   if (services) {
     // Stop at "Invoice Number:" if it appears (repeated header)
@@ -717,6 +733,29 @@ async function extractInvoiceData(pdf_path, originalName) {
   // If still no services found, set a default message
   if (!services || services.length === 0) {
     invoice.services = 'No service description found';
+  }
+
+  // Append credit memo confirmation if found
+  if (creditMemoConfirmation) {
+    // If services is already at the limit, we'll prepend the confirmation and truncate
+    const maxLength = 500;
+    const separator = ' | ';
+    const confirmationWithSeparator = creditMemoConfirmation + separator;
+
+    if (invoice.services) {
+      // Calculate remaining space after adding confirmation
+      const remainingSpace = maxLength - confirmationWithSeparator.length;
+      if (remainingSpace > 0) {
+        // Append to existing services, truncating if needed
+        const truncatedServices = invoice.services.substring(0, remainingSpace);
+        invoice.services = confirmationWithSeparator + truncatedServices;
+      } else {
+        // Confirmation alone is too long, just use it
+        invoice.services = creditMemoConfirmation.substring(0, maxLength);
+      }
+    } else {
+      invoice.services = creditMemoConfirmation;
+    }
   }
 
   // Extract Additional Information section for enhanced classification
