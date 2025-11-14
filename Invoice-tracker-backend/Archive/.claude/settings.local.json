@@ -1,0 +1,32 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm uninstall:*)",
+      "Read(//mnt/wsl/**)",
+      "Bash(cmd.exe /c \"where node\")",
+      "Bash(fuser:*)",
+      "Bash(ip -4 addr:*)",
+      "Bash(cmd.exe /c \"cd C:\\Users\\dwils\\Claude-Projects\\APAC-Services-Margin-Analysis\\backend && npm install\")",
+      "Bash(cmd.exe /c \"cd C:\\Users\\dwils\\Claude-Projects\\APAC-Services-Margin-Analysis\\frontend && npm install\")",
+      "Read(//dev/pts/**)",
+      "Bash(psql:*)",
+      "Bash(node -e:*)",
+      "Bash(npm test:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(git push)",
+      "Read(//mnt/c/Users/dwils/Claude-Projects/Invoice Tracker/**)",
+      "Bash(npm run build:*)",
+      "Bash(node scripts/validation/validate-pdf-parsing.js)",
+      "Bash(cd:*)",
+      "Bash(node scripts/validation/validate-pdf-parsing.js --random=20)",
+      "Bash(node check-cashflow-buckets.js:*)",
+      "Read(//mnt/c/Users/dwils/Claude-Projects/APAC-Services-Margin-Analysis/**)",
+      "Bash(npx tsc:*)",
+      "Bash(git log:*)",
+      "Bash(node test-contract-percent-filter.js:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

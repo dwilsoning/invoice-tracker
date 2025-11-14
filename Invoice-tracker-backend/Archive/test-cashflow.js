@@ -13,7 +13,8 @@ const exchangeRates = {
   AUD: 0.65,
   SGD: 0.74,
   EUR: 1.08,
-  GBP: 1.27
+  GBP: 1.27,
+  NZD: 0.61
 };
 
 function convertToUSD(amount, currency) {
