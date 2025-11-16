@@ -796,6 +796,15 @@ app.get('/api/health', async (req, res) => {
   }
 });
 
+// Get version information
+app.get('/api/version', (req, res) => {
+  const packageJson = require('./Archive/package.json');
+  res.json({
+    version: packageJson.version,
+    name: packageJson.name
+  });
+});
+
 // Get all invoices
 app.get('/api/invoices', async (req, res) => {
   try {
