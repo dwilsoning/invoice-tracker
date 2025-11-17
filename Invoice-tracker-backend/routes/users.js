@@ -1,4 +1,5 @@
 const express = require('express');
+const crypto = require('crypto');
 const { db } = require('../db-postgres');
 const {
   hashPassword,
@@ -101,26 +102,15 @@ router.post('/', async (req, res) => {
     // Hash password
     const passwordHash = hashPassword(password);
 
-    // Generate username from email
-    const username = email.split('@')[0];
+    // Generate unique user ID
+    const userId = `user_${Date.now()}_${crypto.randomBytes(8).toString('hex')}`;
 
-    // Check if username already exists
-    const existingUsername = await db.get(
-      'SELECT id FROM users WHERE username = $1',
-      username
-    );
-
-    // If username exists, append a random number
-    const finalUsername = existingUsername
-      ? `${username}_${Date.now().toString().slice(-4)}`
-      : username;
-
-    // Create user (let database auto-generate id)
+    // Create user with explicit ID
     const result = await db.get(
-      `INSERT INTO users (username, email, password_hash, first_name, last_name, role, is_active)
+      `INSERT INTO users (id, email, password_hash, first_name, last_name, role, is_active)
        VALUES ($1, $2, $3, $4, $5, $6, TRUE)
-       RETURNING id, username, email, first_name, last_name, role, is_active, created_at`,
-      finalUsername,
+       RETURNING id, email, first_name, last_name, role, is_active, created_at`,
+      userId,
       email.toLowerCase(),
       passwordHash,
       firstName || null,
