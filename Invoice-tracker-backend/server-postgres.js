@@ -625,10 +625,40 @@ async function extractInvoiceData(pdf_path, originalName) {
     invoice.customerContract = contractMatch[1].trim();
   }
 
-  const poMatch = text.match(/PO\s*Number[:\s]*([A-Z0-9-]+)/i) ||
-                  text.match(/(?:^|\s)PO[:\s#]*([A-Z0-9-]+)/im);
-  if (poMatch) {
-    invoice.poNumber = poMatch[1].trim();
+  // Extract PO Number - handle two formats:
+  // Format 1: "Customer Number:10071865\nPO Number:1460322" (values on same line as labels)
+  // Format 2: Labels and values separated (values appear later in aligned columns)
+
+  // Try Format 1 first: Look for Customer Number with value, then PO Number on next line
+  const customerPOPattern = /Customer\s+Number:\s*(\d+)[\s\n]+PO\s+Number:\s*([A-Z0-9\s]+?)(?:\n|$)/im;
+  const customerPOMatch = text.match(customerPOPattern);
+
+  if (customerPOMatch) {
+    const poValue = customerPOMatch[2].trim();
+    // Check if it's a real PO number (not "NO PO")
+    if (poValue && !poValue.match(/^NO\s+PO/i)) {
+      invoice.poNumber = poValue;
+    }
+  }
+
+  // If no match yet, try Format 2: Find Customer Number label, then look for numeric values that follow
+  if (!invoice.poNumber) {
+    // Look for "Customer Number:\nPO Number:" pattern, then find the numbers that appear later
+    const labelPattern = /Customer\s+Number:\s*\n\s*PO\s+Number:/im;
+    const labelMatch = text.match(labelPattern);
+
+    if (labelMatch) {
+      // Find the position after the labels
+      const afterLabels = text.substring(labelMatch.index + labelMatch[0].length);
+
+      // Look for two consecutive numbers (Customer Number, then PO Number)
+      const numbersPattern = /(\d{6,})\s+(\d{6,})/;
+      const numbersMatch = afterLabels.match(numbersPattern);
+
+      if (numbersMatch) {
+        invoice.poNumber = numbersMatch[2].trim(); // Second number is PO Number
+      }
+    }
   }
 
   // Extract services - try multiple strategies
