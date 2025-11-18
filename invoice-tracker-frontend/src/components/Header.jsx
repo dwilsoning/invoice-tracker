@@ -1,19 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import UserManagement from './UserManagement';
 import ChangePassword from './ChangePassword';
+import axios from 'axios';
+
+const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
 
 function Header() {
   const { user, logout, isAdmin } = useAuth();
   const [showUserMenu, setShowUserMenu] = useState(false);
   const [showUserManagement, setShowUserManagement] = useState(false);
   const [showChangePassword, setShowChangePassword] = useState(false);
+  const [version, setVersion] = useState(null);
+
+  useEffect(() => {
+    const fetchVersion = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/version`);
+        setVersion(response.data.version);
+      } catch (error) {
+        console.error('Failed to fetch version:', error);
+      }
+    };
+    fetchVersion();
+  }, []);
 
   return (
     <>
       <div className="bg-white shadow-sm border-b border-gray-200">
         <div className="max-w-full mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-end items-center h-14">
+          <div className="flex justify-between items-center h-14">
+            <div className="flex items-center">
+              {version && (
+                <span className="text-xs text-gray-500 font-medium">
+                  v{version}
+                </span>
+              )}
+            </div>
             <div className="relative">
               <button
                 onClick={() => setShowUserMenu(!showUserMenu)}
