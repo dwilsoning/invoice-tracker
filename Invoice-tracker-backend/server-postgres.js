@@ -814,7 +814,8 @@ app.get('/api/health', async (req, res) => {
     res.json({
       status: 'ok',
       database: 'postgresql',
-      version: '1.0',
+      version: '1.1.0',
+      releaseDate: '2025-11-26',
       timestamp: new Date().toISOString()
     });
   } catch (error) {
