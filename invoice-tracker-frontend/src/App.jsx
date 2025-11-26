@@ -18,12 +18,19 @@ const TYPE_COLORS = {
   'SW': '#10B981',  // Green color for software
   'HW': '#6366F1',
   '3PP': '#EC4899',
-  'Credit Memo': '#DC2626'  // Red color for credit memos
+  'Credit Memo': '#DC2626',  // Red color for credit memos
+  'Vendor Invoice': '#8B5CF6',  // Purple for vendor invoices
+  'Purchase Order': '#14B8A6'  // Teal for purchase orders
 };
 
 // Helper function to display invoice type
 const displayInvoiceType = (type) => {
   return type === 'Credit Memo' ? 'CM' : type;
+};
+
+// Helper function to check if invoice type should be excluded from calculations
+const isExcludedFromCalculations = (invoiceType) => {
+  return ['Credit Memo', 'Vendor Invoice', 'Purchase Order'].includes(invoiceType);
 };
 
 // Status colors
@@ -77,6 +84,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [highlightedInvoiceId, setHighlightedInvoiceId] = useState(null); // For row highlighting (separate from modal)
   const [editingInvoice, setEditingInvoice] = useState(null);
   const [editForm, setEditForm] = useState({});
+  const [creatingInvoice, setCreatingInvoice] = useState(false);
+  const [createForm, setCreateForm] = useState({});
   const [attachments, setAttachments] = useState([]);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
   const [filtersCollapsed, setFiltersCollapsed] = useState(true);
@@ -603,7 +612,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     if (statusFilter.length > 0) {
       filtered = filtered.filter(inv =>
         statusFilter.some(status => matchesStatusFilter(inv, status)) &&
-        inv.invoiceType !== 'Credit Memo' // Exclude credit memos from status filters
+        !isExcludedFromCalculations(inv.invoiceType) // Exclude credit memos, vendor invoices, and POs from status filters
       );
     }
 
@@ -611,7 +620,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     if (agingFilter !== 'All') {
       filtered = filtered.filter(inv => {
         const bucket = getAgingBucket(inv);
-        return bucket === agingFilter && inv.invoiceType !== 'Credit Memo';
+        return bucket === agingFilter && !isExcludedFromCalculations(inv.invoiceType);
       });
     }
 
@@ -659,10 +668,10 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
     // Date range filter (by due date)
     if (dateFrom) {
-      filtered = filtered.filter(inv => inv.dueDate >= dateFrom && inv.invoiceType !== 'Credit Memo');
+      filtered = filtered.filter(inv => inv.dueDate >= dateFrom && !isExcludedFromCalculations(inv.invoiceType));
     }
     if (dateTo) {
-      filtered = filtered.filter(inv => inv.dueDate <= dateTo && inv.invoiceType !== 'Credit Memo');
+      filtered = filtered.filter(inv => inv.dueDate <= dateTo && !isExcludedFromCalculations(inv.invoiceType));
     }
 
     // Search filter
@@ -768,9 +777,9 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     const today = new Date().toISOString().split('T')[0];
     const thisMonth = today.substring(0, 7);
 
-    // Separate credit memos from regular invoices
+    // Separate credit memos from regular invoices, and exclude vendor invoices & POs from calculations
     const creditMemos = filtered.filter(inv => inv.invoiceType === 'Credit Memo');
-    const regularInvoices = filtered.filter(inv => inv.invoiceType !== 'Credit Memo');
+    const regularInvoices = filtered.filter(inv => !isExcludedFromCalculations(inv.invoiceType));
 
     // Credit memo totals (negative amounts)
     const totalCreditMemos = creditMemos.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
@@ -902,8 +911,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Calculate aging statistics
   const calculateAgingStats = () => {
-    // Exclude credit memos from aging report (only regular unpaid invoices)
-    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo');
+    // Exclude credit memos, vendor invoices, and POs from aging report (only regular unpaid invoices)
+    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType));
 
     const buckets = {
       'Current': { count: 0, total: 0, invoices: [] },
@@ -918,8 +927,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
     unpaidInvoices.forEach(inv => {
       const bucket = getAgingBucket(inv);
-      // Double-check to exclude credit memos (defensive coding)
-      if (bucket && buckets[bucket] && inv.invoiceType !== 'Credit Memo') {
+      // Double-check to exclude credit memos, vendor invoices, and POs (defensive coding)
+      if (bucket && buckets[bucket] && !isExcludedFromCalculations(inv.invoiceType)) {
         const amount = convertToUSD(inv.amountDue, inv.currency);
         // Only add positive amounts (credit memos should already be filtered but this is extra safety)
         if (amount > 0) {
@@ -1023,7 +1032,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
   // Bulk selection handlers
   const handleSelectAll = (groupInvoices) => {
-    const selectableInvoices = groupInvoices.filter(inv => inv.invoiceType !== 'Credit Memo');
+    const selectableInvoices = groupInvoices.filter(inv => !isExcludedFromCalculations(inv.invoiceType));
     const allSelected = selectableInvoices.every(inv => selectedInvoiceIds.includes(inv.id));
 
     if (allSelected) {
@@ -1040,8 +1049,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   };
 
   const handleSelectInvoice = (invoiceId, isChecked, groupInvoices, shiftKey) => {
-    // Filter out Credit Memos from the group
-    const selectableInvoices = groupInvoices.filter(inv => inv.invoiceType !== 'Credit Memo');
+    // Filter out Credit Memos, Vendor Invoices, and POs from the group
+    const selectableInvoices = groupInvoices.filter(inv => !isExcludedFromCalculations(inv.invoiceType));
 
     // Find the index of the current invoice in the selectable invoices array
     const currentIndex = selectableInvoices.findIndex(inv => inv.id === invoiceId);
@@ -1243,6 +1252,37 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       showMessage('success', 'Invoice updated');
     } catch (error) {
       showMessage('error', `Failed to update invoice: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
+  const createManualInvoice = async () => {
+    try {
+      // Validate required fields
+      if (!createForm.invoiceNumber || !createForm.client || !createForm.invoiceDate) {
+        showMessage('error', 'Invoice number, client, and invoice date are required');
+        return;
+      }
+
+      const response = await axios.post(`${API_URL}/invoices/create-manual`, createForm);
+      await loadInvoices();
+      await loadDuplicates();
+
+      // Show the newly created invoice in the table (similar to upload behavior)
+      if (response.data.invoice && response.data.invoice.id) {
+        setUploadedInvoiceIds([response.data.invoice.id]);
+        setShowOnlyUploadedInvoices(true);
+      }
+
+      setCreatingInvoice(false);
+      setCreateForm({});
+      setShowInvoiceTable(true); // Show invoice table with the newly created invoice
+      showMessage('success', 'Invoice created successfully');
+    } catch (error) {
+      if (error.response?.status === 409) {
+        showMessage('error', 'Duplicate invoice: This invoice already exists');
+      } else {
+        showMessage('error', `Failed to create invoice: ${error.response?.data?.error || error.message}`);
+      }
     }
   };
 
@@ -1507,6 +1547,30 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
               onChange={(e) => handleFileUpload(e.target.files)}
             />
           </label>
+
+          <button
+            onClick={() => {
+              setCreatingInvoice(true);
+              setCreateForm({
+                invoiceNumber: '',
+                client: '',
+                invoiceDate: new Date().toISOString().split('T')[0],
+                dueDate: '',
+                amountDue: '',
+                currency: 'USD',
+                customerContract: '',
+                poNumber: '',
+                invoiceType: 'PS',
+                frequency: 'adhoc',
+                services: '',
+                notes: '',
+                status: 'Pending'
+              });
+            }}
+            className="px-6 py-3 bg-[#707CF1] text-white rounded-lg hover:bg-[#5a66d9] cursor-pointer transition"
+          >
+            Create Invoice
+          </button>
 
           <label className="px-6 py-3 bg-[#00BBBA] text-black rounded-lg hover:bg-[#009a99] cursor-pointer transition">
             Upload Payment Sheet
@@ -2132,7 +2196,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 Type {typeFilter.length > 0 && `(${typeFilter.length} selected)`}
               </label>
               <div className="bg-white border rounded px-3 py-2 space-y-1 max-h-60 overflow-y-auto">
-                {['PS', 'Maint', 'Sub', 'Hosting', 'MS', 'SW', 'HW', '3PP', 'Credit Memo'].map(type => (
+                {['PS', 'Maint', 'Sub', 'Hosting', 'MS', 'SW', 'HW', '3PP', 'Credit Memo', 'Vendor Invoice', 'Purchase Order'].map(type => (
                   <label key={type} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
                     <input
                       type="checkbox"
@@ -2547,7 +2611,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                 <input
                                   type="checkbox"
                                   onChange={() => handleSelectAll(groupInvs)}
-                                  checked={groupInvs.filter(inv => inv.invoiceType !== 'Credit Memo').length > 0 && groupInvs.filter(inv => inv.invoiceType !== 'Credit Memo').every(inv => selectedInvoiceIds.includes(inv.id))}
+                                  checked={groupInvs.filter(inv => !isExcludedFromCalculations(inv.invoiceType)).length > 0 && groupInvs.filter(inv => !isExcludedFromCalculations(inv.invoiceType)).every(inv => selectedInvoiceIds.includes(inv.id))}
                                   className="w-4 h-4 cursor-pointer"
                                   title="Select/Deselect all"
                                 />
@@ -2647,7 +2711,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                 }}
                               >
                                 <td className="px-4 py-2">
-                                  {inv.invoiceType === 'Credit Memo' ? (
+                                  {isExcludedFromCalculations(inv.invoiceType) ? (
                                     <span className="text-gray-400 text-sm">-</span>
                                   ) : (
                                     <input
@@ -2687,7 +2751,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                   </div>
                                 </td>
                                 <td className="px-4 py-2">
-                                  {inv.invoiceType === 'Credit Memo' ? (
+                                  {isExcludedFromCalculations(inv.invoiceType) ? (
                                     <span className="text-gray-400 text-sm">N/A</span>
                                   ) : (
                                     <span
@@ -2699,7 +2763,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                   )}
                                 </td>
                                 <td className="px-4 py-2">
-                                  {inv.invoiceType === 'Credit Memo' ? (
+                                  {isExcludedFromCalculations(inv.invoiceType) ? (
                                     <span className="text-gray-400 text-sm">N/A</span>
                                   ) : inv.status === 'Paid' ? (
                                     <button
@@ -2878,6 +2942,214 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
           </div>
         )}
 
+        {/* Create Invoice Modal */}
+        {creatingInvoice && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-40 p-4"
+          >
+            <div
+              className="bg-white rounded-lg p-6 max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+            >
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold">Create Invoice</h2>
+                <button
+                  onClick={() => {
+                    setCreatingInvoice(false);
+                    setCreateForm({});
+                  }}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Invoice Number <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={createForm.invoiceNumber || ''}
+                      onChange={(e) => setCreateForm({...createForm, invoiceNumber: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                      placeholder="Required"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Client <span className="text-red-500">*</span></label>
+                    <input
+                      type="text"
+                      value={createForm.client || ''}
+                      onChange={(e) => setCreateForm({...createForm, client: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                      placeholder="Required"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Contract Number</label>
+                    <input
+                      type="text"
+                      value={createForm.customerContract || ''}
+                      onChange={(e) => setCreateForm({...createForm, customerContract: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">PO Number</label>
+                    <input
+                      type="text"
+                      value={createForm.poNumber || ''}
+                      onChange={(e) => setCreateForm({...createForm, poNumber: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Type</label>
+                    <select
+                      value={createForm.invoiceType || 'PS'}
+                      onChange={(e) => setCreateForm({...createForm, invoiceType: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    >
+                      <option value="PS">PS</option>
+                      <option value="Maint">Maint</option>
+                      <option value="Sub">Sub</option>
+                      <option value="Hosting">Hosting</option>
+                      <option value="MS">MS</option>
+                      <option value="SW">SW</option>
+                      <option value="HW">HW</option>
+                      <option value="3PP">3PP</option>
+                      <option value="Credit Memo">Credit Memo</option>
+                      <option value="Vendor Invoice">Vendor Invoice</option>
+                      <option value="Purchase Order">Purchase Order</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Currency</label>
+                    <select
+                      value={createForm.currency || 'USD'}
+                      onChange={(e) => setCreateForm({...createForm, currency: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    >
+                      <option value="USD">USD</option>
+                      <option value="AUD">AUD</option>
+                      <option value="EUR">EUR</option>
+                      <option value="GBP">GBP</option>
+                      <option value="SGD">SGD</option>
+                      <option value="NZD">NZD</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Frequency</label>
+                    <select
+                      value={createForm.frequency || 'adhoc'}
+                      onChange={(e) => setCreateForm({...createForm, frequency: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    >
+                      <option value="adhoc">Ad Hoc</option>
+                      <option value="monthly">Monthly</option>
+                      <option value="quarterly">Quarterly</option>
+                      <option value="tri-annual">Tri-Annual</option>
+                      <option value="bi-annual">Bi-Annual</option>
+                      <option value="annual">Annual</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Amount</label>
+                    <input
+                      type="text"
+                      value={createForm.amountDue ? Math.round(Number(createForm.amountDue)).toLocaleString('en-US') : ''}
+                      onChange={(e) => {
+                        const numericValue = e.target.value.replace(/,/g, '');
+                        if (numericValue === '' || (!isNaN(numericValue) && Number.isInteger(Number(numericValue)))) {
+                          setCreateForm({...createForm, amountDue: numericValue === '' ? 0 : Number(numericValue)});
+                        }
+                      }}
+                      className="w-full border rounded px-3 py-2"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Invoice Date <span className="text-red-500">*</span></label>
+                    <input
+                      type="date"
+                      value={createForm.invoiceDate || ''}
+                      onChange={(e) => setCreateForm({...createForm, invoiceDate: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Due Date</label>
+                    <input
+                      type="date"
+                      value={createForm.dueDate || ''}
+                      onChange={(e) => setCreateForm({...createForm, dueDate: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium mb-1">Status</label>
+                    <select
+                      value={createForm.status || 'Pending'}
+                      onChange={(e) => setCreateForm({...createForm, status: e.target.value})}
+                      className="w-full border rounded px-3 py-2"
+                    >
+                      <option value="Pending">Pending</option>
+                      <option value="Paid">Paid</option>
+                      <option value="Overdue">Overdue</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Services</label>
+                  <textarea
+                    value={createForm.services || ''}
+                    onChange={(e) => setCreateForm({...createForm, services: e.target.value})}
+                    className="w-full border rounded px-3 py-2"
+                    rows="4"
+                    placeholder="Enter service description..."
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium mb-1">Notes</label>
+                  <textarea
+                    value={createForm.notes || ''}
+                    onChange={(e) => setCreateForm({...createForm, notes: e.target.value})}
+                    className="w-full border rounded px-3 py-2"
+                    rows="3"
+                    placeholder="Add any additional notes..."
+                  />
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded px-4 py-3">
+                  <p className="text-sm text-blue-800">
+                    <strong>Note:</strong> Attachments can be added after creating the invoice by editing it.
+                  </p>
+                </div>
+              </div>
+
+              <div className="mt-6 flex gap-2 justify-end">
+                <button
+                  onClick={() => {
+                    setCreatingInvoice(false);
+                    setCreateForm({});
+                  }}
+                  className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={createManualInvoice}
+                  className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                >
+                  Create Invoice
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Edit Invoice Modal */}
         {editingInvoice && (
           <div
@@ -2953,6 +3225,8 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                       <option value="HW">HW</option>
                       <option value="3PP">3PP</option>
                       <option value="Credit Memo">Credit Memo</option>
+                      <option value="Vendor Invoice">Vendor Invoice</option>
+                      <option value="Purchase Order">Purchase Order</option>
                     </select>
                   </div>
                   <div>

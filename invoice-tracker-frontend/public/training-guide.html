@@ -355,7 +355,7 @@
 
                 <h4>Filter Controls</h4>
                 <ul>
-                    <li><strong>Invoice Type:</strong> Filter by PS, Maint, Sub, SW, HW, Hosting, MS, 3PP, Credit Memo</li>
+                    <li><strong>Invoice Type:</strong> Filter by PS, Maint, Sub, SW, HW, Hosting, MS, 3PP, Credit Memo, Vendor Invoice, Purchase Order</li>
                     <li><strong>Status:</strong> Filter by Paid, Unpaid, All</li>
                     <li><strong>Date Range:</strong> Filter by invoice date or due date</li>
                     <li><strong>Contract:</strong> Filter by specific contract number</li>
@@ -401,14 +401,26 @@
             <section id="uploading">
                 <h2>Uploading Invoices</h2>
 
-                <h3>Supported Format</h3>
+                <h3>Two Ways to Add Invoices</h3>
+                <p>You can add invoices to the system using two methods:</p>
+
+                <h4>Method 1: Upload PDF (Automatic)</h4>
                 <ul>
                     <li><strong>File Type:</strong> PDF only</li>
                     <li><strong>Size Limit:</strong> Recommend &lt; 10MB per file</li>
                     <li><strong>Multiple Files:</strong> Yes, can upload multiple at once</li>
+                    <li><strong>Best For:</strong> Client invoices that you receive as PDFs</li>
                 </ul>
 
-                <h3>Upload Process</h3>
+                <h4>Method 2: Manual Creation</h4>
+                <ul>
+                    <li><strong>Click:</strong> "Create Invoice" button (next to Browse button)</li>
+                    <li><strong>Fill In:</strong> All invoice fields manually</li>
+                    <li><strong>Attachments:</strong> Can attach files later by editing the invoice</li>
+                    <li><strong>Best For:</strong> Vendor invoices, purchase orders, or when you don't have a PDF to upload</li>
+                </ul>
+
+                <h3>Upload Process (PDF Method)</h3>
                 <ol>
                     <li><strong>Select or Drop Files</strong> - Drag PDFs to drop zone OR click "Browse"</li>
                     <li><strong>Automatic Processing</strong> - System extracts all data from PDF</li>
@@ -470,7 +482,21 @@
                         <td>Credit Memo</td>
                         <td>Credits, refunds (negative amounts)</td>
                     </tr>
+                    <tr>
+                        <td><strong>Vendor Invoice</strong></td>
+                        <td>Vendor Invoice</td>
+                        <td>Invoices from vendors/suppliers (excluded from calculations)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Purchase Order</strong></td>
+                        <td>Purchase Order</td>
+                        <td>Purchase orders sent to vendors (excluded from calculations)</td>
+                    </tr>
                 </table>
+
+                <div class="note">
+                    <strong>Note:</strong> Vendor Invoice and Purchase Order types are excluded from all financial calculations, analytics, and aging reports. They are tracked separately for record-keeping purposes only. These types can only be created manually (not auto-detected from PDFs).
+                </div>
 
                 <h4>Frequency Detection</h4>
                 <table>
@@ -515,6 +541,36 @@
             <!-- Invoice Management -->
             <section id="managing">
                 <h2>Invoice Management</h2>
+
+                <h3>Creating an Invoice Manually</h3>
+                <p>Use manual creation when you don't have a PDF to upload, such as for vendor invoices or purchase orders:</p>
+                <ol>
+                    <li>Click <strong>"Create Invoice"</strong> button (next to Browse button in top section)</li>
+                    <li>Fill in the required fields:
+                        <ul>
+                            <li><strong>Invoice Number:</strong> Required - unique identifier</li>
+                            <li><strong>Client:</strong> Required - client or vendor name</li>
+                            <li><strong>Invoice Date:</strong> Required - defaults to today</li>
+                            <li><strong>Due Date:</strong> Optional - when payment is due</li>
+                            <li><strong>Amount:</strong> Optional - invoice amount</li>
+                            <li><strong>Currency:</strong> Defaults to USD (can select AUD, EUR, GBP, SGD)</li>
+                            <li><strong>Type:</strong> Select from dropdown (PS, Maint, Sub, Vendor Invoice, Purchase Order, etc.)</li>
+                            <li><strong>Frequency:</strong> How often this invoice recurs (monthly, quarterly, annual, adhoc, etc.)</li>
+                            <li><strong>Contract Number:</strong> Optional - associated contract</li>
+                            <li><strong>PO Number:</strong> Optional - purchase order reference</li>
+                            <li><strong>Services:</strong> Optional - description of services/products</li>
+                            <li><strong>Notes:</strong> Optional - additional information</li>
+                            <li><strong>Status:</strong> Pending or Paid</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>Create</strong> button</li>
+                    <li>Invoice appears in the table immediately</li>
+                    <li>You can edit it later to attach PDF files if needed</li>
+                </ol>
+
+                <div class="note">
+                    <strong>Tip:</strong> After creating an invoice, you can attach PDF files by editing the invoice and using the file attachment option in the edit modal.
+                </div>
 
                 <h3>Viewing Invoice Details</h3>
                 <ol>
@@ -587,7 +643,7 @@
                 <h3>Basic Filtering</h3>
                 <p>All filters work independently and can be combined:</p>
                 <ul>
-                    <li><strong>By Invoice Type:</strong> Select one or more types (PS, Maint, Sub, etc.)</li>
+                    <li><strong>By Invoice Type:</strong> Select one or more types (PS, Maint, Sub, Vendor Invoice, Purchase Order, etc.)</li>
                     <li><strong>By Status:</strong> Choose All, Paid, or Unpaid</li>
                     <li><strong>By Date Range:</strong> Last 30 Days, Last 90 Days, This Year, or Custom Range</li>
                     <li><strong>By Client:</strong> Select from list of clients</li>

@@ -7,6 +7,11 @@ import {
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
 
+// Helper function to check if invoice type should be excluded from calculations
+const isExcludedFromCalculations = (invoiceType) => {
+  return ['Credit Memo', 'Vendor Invoice', 'Purchase Order'].includes(invoiceType);
+};
+
 // Format large numbers with k/m suffix
 const formatNumber = (num) => {
   if (num >= 1000000) {
@@ -140,7 +145,7 @@ const Analytics = ({ onNavigateBack }) => {
   // 1. DSI (Days Invoices Outstanding) Calculation
   const calculateDSI = () => {
     const pendingInvoices = baseFilteredInvoices.filter(inv =>
-      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+      inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType)
     );
     const totalReceivables = pendingInvoices.reduce((sum, inv) =>
       sum + convertToUSD(inv.amountDue, inv.currency), 0);
@@ -179,7 +184,7 @@ const Analytics = ({ onNavigateBack }) => {
       const invoicesUpToMonth = baseFilteredInvoices.filter(inv => inv.invoiceDate <= monthEnd);
       const pendingAtMonth = invoicesUpToMonth.filter(inv =>
         (inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)) &&
-        inv.invoiceType !== 'Credit Memo'
+        !isExcludedFromCalculations(inv.invoiceType)
       );
 
       const receivables = pendingAtMonth.reduce((sum, inv) =>
@@ -220,7 +225,7 @@ const Analytics = ({ onNavigateBack }) => {
 
       const pendingAtMonth = baseFilteredInvoices.filter(inv =>
         (inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)) &&
-        inv.invoiceType !== 'Credit Memo'
+        !isExcludedFromCalculations(inv.invoiceType)
       );
 
       let current = 0, days30 = 0, days60 = 0, days90 = 0, days90Plus = 0;
@@ -419,7 +424,7 @@ const Analytics = ({ onNavigateBack }) => {
 
     // Analyze each client's payment history (exclude credit memos)
     baseFilteredInvoices
-      .filter(inv => inv.invoiceType !== 'Credit Memo')
+      .filter(inv => !isExcludedFromCalculations(inv.invoiceType))
       .forEach(inv => {
       if (!clientStats[inv.client]) {
         clientStats[inv.client] = {
@@ -496,7 +501,7 @@ const Analytics = ({ onNavigateBack }) => {
   // 8. Collection Efficiency Metrics
   const getCollectionEfficiency = () => {
     const paidInvoices = baseFilteredInvoices.filter(inv =>
-      inv.status === 'Paid' && inv.paymentDate && inv.dueDate && inv.invoiceType !== 'Credit Memo'
+      inv.status === 'Paid' && inv.paymentDate && inv.dueDate && !isExcludedFromCalculations(inv.invoiceType)
     );
 
     let paidOnTime = 0, paidWithin30 = 0, paidWithin60 = 0, paidWithin90 = 0, paidBeyond90 = 0;
@@ -572,7 +577,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getRiskMetrics = () => {
     const today = new Date().toISOString().split('T')[0];
     const pendingInvoices = baseFilteredInvoices.filter(inv =>
-      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+      inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType)
     );
 
     // High overdue balances (>$50k overdue)
@@ -621,7 +626,7 @@ const Analytics = ({ onNavigateBack }) => {
   const getPaymentProbability = () => {
     const today = new Date().toISOString().split('T')[0];
     const pendingInvoices = baseFilteredInvoices.filter(inv =>
-      inv.status === 'Pending' && inv.dueDate && inv.invoiceType !== 'Credit Memo'
+      inv.status === 'Pending' && inv.dueDate && !isExcludedFromCalculations(inv.invoiceType)
     );
 
     const predictions = pendingInvoices.map(inv => {
@@ -792,7 +797,7 @@ const Analytics = ({ onNavigateBack }) => {
   // 14. Currency Exposure Analysis
   const getCurrencyExposure = () => {
     const pendingInvoices = baseFilteredInvoices.filter(inv =>
-      inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo'
+      inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType)
     );
     const currencyTotals = {};
 
@@ -1106,6 +1111,8 @@ const Analytics = ({ onNavigateBack }) => {
     'HW': '#8b5cf6',
     '3PP': '#06b6d4',
     'Credit Memo': '#ef4444',
+    'Vendor Invoice': '#8B5CF6',  // Purple for vendor invoices
+    'Purchase Order': '#14B8A6',  // Teal for purchase orders
     'Other': '#6b7280'
   };
 
@@ -1224,12 +1231,12 @@ const Analytics = ({ onNavigateBack }) => {
           <div className="text-gray-600 text-sm font-medium">Outstanding</div>
           <div className="text-3xl font-bold text-orange-500 my-2">
             ${Math.round(filteredInvoices
-              .filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo')
+              .filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType))
               .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0)
             ).toLocaleString()}
           </div>
           <div className="text-xs text-gray-500">
-            {filteredInvoices.filter(inv => inv.status === 'Pending' && inv.invoiceType !== 'Credit Memo').length} unpaid invoices
+            {filteredInvoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType)).length} unpaid invoices
           </div>
         </div>
       </div>

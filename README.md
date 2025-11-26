@@ -8,11 +8,13 @@ A full-stack web application for tracking and managing invoices with user authen
 
 ### Invoice Management
 - 📄 Upload and parse PDF invoices automatically
+- ✍️ Create invoices manually without PDF upload
 - 📊 Track invoice status (Pending, Paid, Overdue)
 - 💰 Multi-currency support (USD, AUD, EUR, GBP, SGD)
 - 📅 Due date tracking and payment management
 - 🔍 Advanced filtering and search
 - 📈 Financial analytics and dashboards
+- 🏷️ Multiple invoice types: PS, Maint, Sub, SW, HW, Hosting, MS, 3PP, Credit Memo, Vendor Invoice, Purchase Order
 
 ### User Authentication
 - 🔐 Secure login with JWT tokens
@@ -216,7 +218,8 @@ GET    /api/users/profile/me              # Get my profile
 PUT    /api/users/profile/me              # Update my profile
 
 GET    /api/invoices                      # List invoices
-POST   /api/upload-invoice                # Upload invoice
+POST   /api/upload-invoice                # Upload invoice (PDF)
+POST   /api/invoices/create-manual        # Create invoice manually
 PUT    /api/invoices/:id                  # Update invoice
 DELETE /api/invoices/:id                  # Delete invoice
 
@@ -233,6 +236,42 @@ DELETE /api/users/:id                     # Delete user
 ```
 
 Complete API reference: [AUTHENTICATION-API.md](Invoice-tracker-backend/docs/AUTHENTICATION-API.md)
+
+---
+
+## 📋 Invoice Types
+
+The system supports multiple invoice types for proper categorization and tracking:
+
+### Operational Invoice Types
+- **PS** (Professional Services) - Consulting, implementation, training
+- **Maint** (Maintenance) - Support fees, maintenance contracts
+- **Sub** (Subscription) - SaaS, recurring licenses
+- **SW** (Software) - Software licenses, applications
+- **HW** (Hardware) - Equipment purchases, devices
+- **Hosting** - Cloud hosting, infrastructure
+- **MS** (Managed Services) - Outsourcing, managed IT
+- **3PP** (Third Party) - Third-party software/services
+- **Credit Memo** - Credits, refunds (negative amounts)
+
+### Administrative Types (Excluded from Calculations)
+- **Vendor Invoice** - Invoices from vendors/suppliers
+- **Purchase Order** - Purchase orders sent to vendors
+
+**Note:** Vendor Invoice and Purchase Order types are excluded from all financial calculations, analytics, and aging reports. They are tracked separately for record-keeping purposes only. These types can only be created manually (not auto-detected from PDFs).
+
+### Creating Invoices
+
+**Method 1: Upload PDF (Automatic)**
+- Drag and drop PDF files or click Browse
+- System automatically extracts all data
+- Detects invoice type, frequency, client, amounts, etc.
+
+**Method 2: Manual Creation**
+- Click "Create Invoice" button
+- Fill in all fields manually
+- Best for Vendor Invoices, Purchase Orders, or when PDF is unavailable
+- Can attach files later by editing the invoice
 
 ---
 
