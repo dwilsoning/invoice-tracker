@@ -54,6 +54,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
   const [typeFilter, setTypeFilter] = useState([]);
   const [clientFilter, setClientFilter] = useState('All');
   const [contractFilter, setContractFilter] = useState('All');
+  const [showContractsWithNoValue, setShowContractsWithNoValue] = useState(false);
   const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
   const [frequencyFilter, setFrequencyFilter] = useState([]);
@@ -537,6 +538,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
         typeFilter.length > 0 ||
         clientFilter !== 'All' ||
         contractFilter !== 'All' ||
+        showContractsWithNoValue ||
         contractPercentageRangeMin ||
         contractPercentageRangeMax ||
         frequencyFilter.length > 0 ||
@@ -550,7 +552,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       }
     }
   }, [searchTerm, activeStatBox, statusFilter, agingFilter, typeFilter, clientFilter,
-      contractFilter, contractPercentageRangeMin, contractPercentageRangeMax,
+      contractFilter, showContractsWithNoValue, contractPercentageRangeMin, contractPercentageRangeMax,
       frequencyFilter, dateFrom, dateTo, showOnlyUploadedInvoices, uploadedInvoiceIds, showInvoiceTable]);
 
   // Helper function to check if invoice matches a status filter option
@@ -582,6 +584,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       typeFilter.length > 0 ||
       clientFilter !== 'All' ||
       contractFilter !== 'All' ||
+      showContractsWithNoValue ||
       contractPercentageRangeMin ||
       contractPercentageRangeMax ||
       frequencyFilter.length > 0 ||
@@ -637,6 +640,16 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     // Contract filter
     if (contractFilter !== 'All') {
       filtered = filtered.filter(inv => inv.customerContract === contractFilter);
+    }
+
+    // Show only contracts with no value
+    if (showContractsWithNoValue) {
+      filtered = filtered.filter(inv => {
+        if (!inv.customerContract) return false;
+        const contractValue = contractValues[inv.customerContract]?.value;
+        // Include if contract has no value entry OR value is null/0
+        return !contractValue || contractValue === 0;
+      });
     }
 
     // Contract percentage range filter
@@ -2152,6 +2165,23 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                 placeholder="Search invoice #, client, contract, description..."
                 className="flex-1 max-w-md border rounded px-3 py-2"
               />
+              <div className="bg-white border rounded px-3 py-2">
+                <label className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 px-1 rounded whitespace-nowrap">
+                  <input
+                    type="checkbox"
+                    checked={showContractsWithNoValue}
+                    onChange={(e) => {
+                      setShowContractsWithNoValue(e.target.checked);
+                      if (e.target.checked) {
+                        setGroupBy('Contract');
+                        setSecondaryGroupBy('Client');
+                      }
+                    }}
+                    className="w-4 h-4 text-purple-600 cursor-pointer"
+                  />
+                  <span className="text-sm">Contracts with no value</span>
+                </label>
+              </div>
               <button
                 onClick={clearFilters}
                 className="px-4 py-2 bg-[#151744] text-white rounded hover:bg-[#0d0e2a] transition whitespace-nowrap"
