@@ -2809,15 +2809,21 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                                   </div>
                                 </td>
                                 <td className="px-4 py-2">
-                                  <span
-                                    className="px-2 py-1 rounded text-white text-xs"
-                                    style={{ backgroundColor: STATUS_COLORS[inv.status] || '#6B7280' }}
-                                  >
-                                    {inv.status}
-                                  </span>
+                                  {inv.invoiceType === 'Purchase Order' ? (
+                                    <span className="text-gray-400 text-sm">N/A</span>
+                                  ) : (
+                                    <span
+                                      className="px-2 py-1 rounded text-white text-xs"
+                                      style={{ backgroundColor: STATUS_COLORS[inv.status] || '#6B7280' }}
+                                    >
+                                      {inv.status}
+                                    </span>
+                                  )}
                                 </td>
                                 <td className="px-4 py-2">
-                                  {inv.status === 'Paid' ? (
+                                  {inv.invoiceType === 'Purchase Order' ? (
+                                    <span className="text-gray-400 text-sm">N/A</span>
+                                  ) : inv.status === 'Paid' ? (
                                     <button
                                       onClick={() => updateInvoiceStatus(inv.id, 'Pending')}
                                       className="px-3 py-1 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a]"
