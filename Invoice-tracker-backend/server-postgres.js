@@ -1040,7 +1040,8 @@ app.post('/api/invoices/create-manual', async (req, res) => {
       invoiceType,
       currency,
       frequency,
-      services
+      services,
+      status
     } = req.body;
 
     // Validate required fields
@@ -1077,7 +1078,7 @@ app.post('/api/invoices/create-manual', async (req, res) => {
       amountDue: amountDue ? Number(amountDue) : 0,
       currency: currency || 'USD',
       dueDate: dueDate || null,
-      status: 'Pending',
+      status: status || 'Pending',
       uploadDate: new Date().toISOString().split('T')[0],
       services: services || null,
       pdfPath: null,
