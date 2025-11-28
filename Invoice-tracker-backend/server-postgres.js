@@ -1263,7 +1263,7 @@ app.put('/api/invoices/:id', async (req, res) => {
 });
 
 // Delete invoice
-app.delete('/api/invoices/:id', async (req, res) => {
+app.delete('/api/invoices/:id', authenticateToken, requireAdmin, async (req, res) => {
   try {
     const { id } = req.params;
     const row = await db.get('SELECT pdf_path FROM invoices WHERE id = $1', id);
@@ -1300,7 +1300,7 @@ app.delete('/api/invoices/:id', async (req, res) => {
 });
 
 // Delete ALL invoices (DEVELOPMENT ONLY)
-app.delete('/api/invoices', async (req, res) => {
+app.delete('/api/invoices', authenticateToken, requireAdmin, async (req, res) => {
   try {
     // Get all invoice PDFs
     const invoices = await db.all('SELECT pdf_path FROM invoices');
@@ -2601,7 +2601,7 @@ app.get('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
 });
 
 // Delete duplicates by IDs (keep only the latest)
-app.post('/api/invoices/duplicates/delete-by-ids', async (req, res) => {
+app.post('/api/invoices/duplicates/delete-by-ids', authenticateToken, async (req, res) => {
   try {
     const { ids } = req.body;
     if (!ids || !Array.isArray(ids) || ids.length === 0) {
@@ -2646,7 +2646,7 @@ app.post('/api/invoices/duplicates/delete-by-ids', async (req, res) => {
 });
 
 // Delete invoices by invoice number and client (keep only the latest)
-app.delete('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) => {
+app.delete('/api/invoices/duplicates/:invoiceNumber/:client', authenticateToken, async (req, res) => {
   try {
     const { invoiceNumber, client } = req.params;
 
@@ -2683,6 +2683,43 @@ app.delete('/api/invoices/duplicates/:invoiceNumber/:client', async (req, res) =
     res.json({ success: true, message: `Deleted ${deletedCount} duplicate(s), kept the most recent`, deleted: deletedCount });
   } catch (error) {
     console.error('❌ Error deleting duplicates:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete a single duplicate invoice (available to all authenticated users)
+app.delete('/api/invoices/duplicate/:id', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const row = await db.get('SELECT pdf_path FROM invoices WHERE id = $1', id);
+
+    if (row && row.pdfPath) {
+      // Convert web path (/pdfs/file.pdf) to file system path (invoice_pdfs/file.pdf)
+      const relativePath = row.pdfPath.replace(/^\/pdfs\//, 'invoice_pdfs/');
+      const pdfFullPath = path.join(__dirname, relativePath);
+
+      if (fs.existsSync(pdfFullPath)) {
+        // Move PDF to deleted folder instead of deleting it
+        const pdfFilename = path.basename(pdfFullPath);
+        const deletedPath = path.join(deletedPdfsDir, pdfFilename);
+
+        // If a file with the same name exists in deleted folder, add timestamp
+        let finalDeletedPath = deletedPath;
+        if (fs.existsSync(deletedPath)) {
+          const timestamp = Date.now();
+          const ext = path.extname(pdfFilename);
+          const nameWithoutExt = path.basename(pdfFilename, ext);
+          finalDeletedPath = path.join(deletedPdfsDir, `${nameWithoutExt}_${timestamp}${ext}`);
+        }
+
+        fs.renameSync(pdfFullPath, finalDeletedPath);
+      }
+    }
+
+    await db.run('DELETE FROM invoices WHERE id = $1', id);
+    res.json({ success: true });
+  } catch (error) {
+    console.error('Error deleting duplicate invoice:', error);
     res.status(500).json({ error: error.message });
   }
 });

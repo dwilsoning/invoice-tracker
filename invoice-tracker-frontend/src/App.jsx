@@ -40,7 +40,7 @@ const STATUS_COLORS = {
   'Overdue': '#EF4444'
 };
 
-function InvoiceTracker({ onNavigateToAnalytics }) {
+function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [invoices, setInvoices] = useState([]);
   const [expectedInvoices, setExpectedInvoices] = useState([]);
   const [exchangeRates, setExchangeRates] = useState({});
@@ -1138,7 +1138,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
     }
   };
 
-  // Delete invoice
+  // Delete invoice (admin only)
   const deleteInvoice = async (id) => {
     if (!window.confirm('Are you sure you want to delete this invoice?')) return;
 
@@ -1157,6 +1157,26 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
       showMessage('success', 'Invoice deleted');
     } catch (error) {
       showMessage('error', 'Failed to delete invoice');
+    }
+  };
+
+  // Delete individual duplicate invoice (all authenticated users)
+  const deleteSingleDuplicate = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this duplicate invoice?')) return;
+
+    try {
+      await axios.delete(`${API_URL}/invoices/duplicate/${id}`);
+      await loadInvoices();
+      await loadDuplicates();
+
+      // Reload duplicate details if viewing them
+      if (selectedDuplicate) {
+        await loadDuplicateDetails(selectedDuplicate);
+      }
+
+      showMessage('success', 'Duplicate invoice deleted');
+    } catch (error) {
+      showMessage('error', 'Failed to delete duplicate invoice');
     }
   };
 
@@ -2114,12 +2134,20 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                                   </span>
                                 </td>
                                 <td className="px-4 py-2">
-                                  <button
-                                    onClick={() => startEditInvoice(inv)}
-                                    className="px-3 py-1 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a]"
-                                  >
-                                    View/Edit
-                                  </button>
+                                  <div className="flex gap-2">
+                                    <button
+                                      onClick={() => startEditInvoice(inv)}
+                                      className="px-3 py-1 bg-[#0076A2] text-white rounded text-sm hover:bg-[#005a7a]"
+                                    >
+                                      View/Edit
+                                    </button>
+                                    <button
+                                      onClick={() => deleteSingleDuplicate(inv.id)}
+                                      className="px-3 py-1 bg-red-600 text-white rounded text-sm hover:bg-red-700"
+                                    >
+                                      Delete
+                                    </button>
+                                  </div>
                                 </td>
                               </tr>
                             ))}
@@ -2958,15 +2986,17 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                     Mark as Paid
                   </button>
                 )}
-                
-                <button
-                  onClick={() => {
-                    deleteInvoice(selectedInvoice.id);
-                  }}
-                  className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                >
-                  Delete Invoice
-                </button>
+
+                {isAdmin && (
+                  <button
+                    onClick={() => {
+                      deleteInvoice(selectedInvoice.id);
+                    }}
+                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                  >
+                    Delete Invoice
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -3426,12 +3456,14 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
                       View PDF
                     </button>
                   )}
-                  <button
-                    onClick={() => deleteInvoice(editingInvoice.id)}
-                    className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                  >
-                    Delete Invoice
-                  </button>
+                  {isAdmin && (
+                    <button
+                      onClick={() => deleteInvoice(editingInvoice.id)}
+                      className="px-4 py-2 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                    >
+                      Delete Invoice
+                    </button>
+                  )}
                 </div>
               </div>
             </div>
@@ -3478,7 +3510,7 @@ function InvoiceTracker({ onNavigateToAnalytics }) {
 
 // App wrapper component to manage navigation between views
 function App() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, isAdmin, loading } = useAuth();
   const [currentView, setCurrentView] = useState('tracker'); // 'tracker' or 'analytics'
 
   // Show loading screen while checking authentication
@@ -3502,6 +3534,7 @@ function App() {
       {currentView === 'tracker' ? (
         <InvoiceTracker
           onNavigateToAnalytics={() => setCurrentView('analytics')}
+          isAdmin={isAdmin}
         />
       ) : (
         <Analytics
