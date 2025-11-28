@@ -2809,7 +2809,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                                   </div>
                                 </td>
                                 <td className="px-4 py-2">
-                                  {inv.invoiceType === 'Purchase Order' ? (
+                                  {['Purchase Order', 'Credit Memo'].includes(inv.invoiceType) ? (
                                     <span className="text-gray-400 text-sm">N/A</span>
                                   ) : (
                                     <span
@@ -2821,7 +2821,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                                   )}
                                 </td>
                                 <td className="px-4 py-2">
-                                  {inv.invoiceType === 'Purchase Order' ? (
+                                  {['Purchase Order', 'Credit Memo'].includes(inv.invoiceType) ? (
                                     <span className="text-gray-400 text-sm">N/A</span>
                                   ) : inv.status === 'Paid' ? (
                                     <button
