@@ -1025,6 +1025,98 @@ app.post('/api/replace-invoice/:id', async (req, res) => {
   });
 });
 
+// Create manual invoice
+app.post('/api/invoices/create-manual', async (req, res) => {
+  try {
+    const {
+      invoiceNumber,
+      client,
+      invoiceDate,
+      dueDate,
+      amountDue,
+      customerContract,
+      oracleContract,
+      poNumber,
+      invoiceType,
+      currency,
+      frequency,
+      services,
+      status
+    } = req.body;
+
+    // Validate required fields
+    if (!invoiceNumber || !client || !invoiceDate) {
+      return res.status(400).json({ error: 'Invoice number, client, and invoice date are required' });
+    }
+
+    // Check for duplicates (same invoice number AND client name)
+    const existing = await db.get(
+      'SELECT id, invoice_number, client FROM invoices WHERE LOWER(TRIM(invoice_number)) = LOWER(TRIM($1)) AND LOWER(TRIM(client)) = LOWER(TRIM($2))',
+      invoiceNumber,
+      client
+    );
+
+    if (existing) {
+      return res.status(409).json({
+        error: 'Duplicate invoice',
+        message: 'This invoice already exists'
+      });
+    }
+
+    // Generate unique ID for invoice
+    const id = Date.now().toString() + Math.random().toString(36).substring(2, 11);
+
+    const invoice = {
+      id,
+      invoiceNumber,
+      invoiceDate,
+      client,
+      customerContract: customerContract || null,
+      oracleContract: oracleContract || null,
+      poNumber: poNumber || null,
+      invoiceType: invoiceType || 'PS',
+      amountDue: amountDue ? Number(amountDue) : 0,
+      currency: currency || 'USD',
+      dueDate: dueDate || null,
+      status: status || 'Pending',
+      uploadDate: new Date().toISOString().split('T')[0],
+      services: services || null,
+      pdfPath: null,
+      pdfOriginalName: null,
+      frequency: frequency || 'adhoc'
+    };
+
+    await db.run(`
+      INSERT INTO invoices (
+        id, invoice_number, invoice_date, client, customer_contract,
+        oracle_contract, po_number, invoice_type, amount_due, currency,
+        due_date, status, upload_date, services, pdf_path, pdf_original_name, frequency
+      ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
+    `,
+      invoice.id, invoice.invoiceNumber, invoice.invoiceDate, invoice.client,
+      invoice.customerContract, invoice.oracleContract, invoice.poNumber,
+      invoice.invoiceType, invoice.amountDue, invoice.currency, invoice.dueDate,
+      invoice.status, invoice.uploadDate, invoice.services, invoice.pdfPath,
+      invoice.pdfOriginalName, invoice.frequency
+    );
+
+    // Check if this matches an expected invoice
+    await checkAndRemoveExpectedInvoice(invoice);
+
+    // Generate expected invoices for new manual invoice
+    await generateExpectedInvoices();
+
+    res.json({
+      success: true,
+      invoice: invoice
+    });
+
+  } catch (error) {
+    console.error('Manual invoice creation error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Upload payment spreadsheet
 app.post('/api/upload-payments', async (req, res) => {
   const form = formidable({
