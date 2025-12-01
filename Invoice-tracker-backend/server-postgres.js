@@ -2283,6 +2283,8 @@ app.post('/api/query', async (req, res) => {
         WHERE customer_contract IS NOT NULL
           AND customer_contract != ''
           AND invoice_type != 'Credit Memo'
+          AND invoice_type != 'Purchase Order'
+          AND invoice_type != 'Vendor Invoice'
       `);
 
       // Group ALL invoices by contract and calculate totals (both total and paid)

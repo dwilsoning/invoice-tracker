@@ -694,6 +694,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         inv.invoiceNumber?.toLowerCase().includes(term) ||
         inv.client?.toLowerCase().includes(term) ||
         inv.customerContract?.toLowerCase().includes(term) ||
+        inv.poNumber?.toLowerCase().includes(term) ||
         inv.services?.toLowerCase().includes(term)
       );
     }
@@ -2090,6 +2091,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                           onClick={() => {
                             setSelectedDuplicate(null);
                             setDuplicateDetails([]);
+                            setSearchTerm(''); // Clear search term when closing duplicate details
                           }}
                           className="text-gray-500 hover:text-gray-700"
                         >
@@ -2190,7 +2192,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search invoice #, client, contract, description..."
+                placeholder="Search invoice #, PO #, client, contract, description..."
                 className="flex-1 max-w-md border rounded px-3 py-2"
               />
               <div className="bg-white border rounded px-3 py-2">
@@ -2491,16 +2493,21 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             <div className="px-6 pb-6">
               {getSortedGroupNames(groupedInvoices).map(groupName => {
                 const groupInvs = sortInvoices(groupedInvoices[groupName]);
-                const groupTotal = groupInvs.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+                // Exclude Purchase Orders, Vendor Invoices, and Credit Memos from contract totals
+                const groupTotal = groupInvs
+                  .filter(inv => !isExcludedFromCalculations(inv.invoiceType))
+                  .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 // Always show invoices when no grouping, otherwise use collapsed by default
                 const isExpanded = groupBy === 'None' ? true : expandedGroups[groupName] === true;
-                
+
                 // Extract contract from group name if grouping by contract
                 const isContractGroup = groupBy === 'Contract' && groupName !== 'Uncategorized';
                 const contractName = isContractGroup ? groupName.split(' > ')[0] : null;
                 const contractInfo = contractName ? contractValues[contractName] : null;
                 const contractValueUSD = contractInfo ? convertToUSD(contractInfo.value, contractInfo.currency) : 0;
-                const totalPaid = groupInvs.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+                const totalPaid = groupInvs
+                  .filter(inv => inv.status === 'Paid' && !isExcludedFromCalculations(inv.invoiceType))
+                  .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 const remaining = contractValueUSD - groupTotal;
                 // Cap percentage at 100% (exchange rate fluctuations can cause values over 100%)
                 const percentage = contractValueUSD > 0 ? Math.min(Math.round((groupTotal / contractValueUSD) * 100), 100) : 0;
