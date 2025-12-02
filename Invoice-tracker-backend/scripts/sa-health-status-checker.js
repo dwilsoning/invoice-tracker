@@ -6,7 +6,7 @@
  * ABN: 75142863410 (SA Health)
  */
 
-const axios = require('axios');
+const puppeteer = require('puppeteer');
 const { db, pool } = require('../db-postgres');
 require('dotenv').config();
 
@@ -27,59 +27,161 @@ function isSAHealthClient(clientName) {
 }
 
 /**
- * Fetch invoice status from SA Health tracking system
- * Note: This is a simplified version. The actual implementation may require
- * more sophisticated scraping or API integration depending on the website's structure.
+ * Fetch invoice status from SA Health tracking system using Puppeteer
+ * This uses a headless browser to wait for JavaScript-loaded content
  */
 async function fetchSAHealthInvoiceStatus(invoiceNumber) {
+  let browser = null;
+
   try {
-    // Construct the query URL
-    const params = new URLSearchParams({
-      invoice_number: invoiceNumber,
-      payment_id: '',
-      sort_by: 'invoice_number',
-      sort_order: 'ASC',
-      abn: SA_HEALTH_CONFIG.abn,
-      op: 'Search'
-    });
-
-    const url = `${SA_HEALTH_CONFIG.baseUrl}?${params.toString()}`;
-
     console.log(`Checking status for invoice ${invoiceNumber}...`);
 
-    // Attempt to fetch the page
-    const response = await axios.get(url, {
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
-      },
-      timeout: 10000
+    // Launch headless browser
+    browser = await puppeteer.launch({
+      headless: true,
+      args: [
+        '--no-sandbox',
+        '--disable-setuid-sandbox',
+        '--disable-dev-shm-usage',
+        '--disable-gpu'
+      ]
     });
 
-    // Parse the response (this will need to be adjusted based on actual HTML structure)
-    // For now, return a placeholder that indicates we need to parse the HTML
-    const html = response.data;
+    const page = await browser.newPage();
 
-    // This is a simplified parser - you may need to use cheerio or puppeteer for proper parsing
-    let status = 'Unable to determine';
+    // Set a reasonable viewport
+    await page.setViewport({ width: 1280, height: 800 });
+
+    // Navigate to the SA Health MyInvoice page with search parameters
+    const baseUrl = 'https://www.sharedservices.sa.gov.au/iframe';
+    await page.goto(baseUrl, { waitUntil: 'networkidle0', timeout: 30000 });
+
+    // Fill in the search form
+    console.log('Filling search form...');
+
+    // Wait for ABN field and fill it
+    await page.waitForSelector('#edit-abn', { timeout: 10000 });
+    await page.type('#edit-abn', SA_HEALTH_CONFIG.abn);
+
+    // Fill in invoice number
+    await page.waitForSelector('#edit-invoice-number', { timeout: 10000 });
+    await page.type('#edit-invoice-number', invoiceNumber);
+
+    // Click search button
+    console.log('Submitting search...');
+    await Promise.all([
+      page.waitForNavigation({ waitUntil: 'networkidle0', timeout: 30000 }),
+      page.click('#edit-submit')
+    ]);
+
+    // Wait a bit for any dynamic content to load
+    await page.waitForTimeout(2000);
+
+    // Check if there are any results
+    const pageContent = await page.content();
+    const bodyText = await page.evaluate(() => document.body.textContent.toLowerCase());
+
+    if (bodyText.includes('no results') || bodyText.includes('0 results')) {
+      console.log(`No results found for invoice ${invoiceNumber}`);
+      await browser.close();
+      return {
+        invoiceNumber,
+        status: 'Not found in SA Health system',
+        paymentInfo: '',
+        lastChecked: new Date().toISOString(),
+        source: 'SA Health MyInvoice'
+      };
+    }
+
+    // Look for the invoice in the results table
+    console.log('Searching for invoice in results table...');
+
+    // Try to find table rows with invoice data
+    const invoiceData = await page.evaluate((invNum) => {
+      // Find all table rows
+      const rows = Array.from(document.querySelectorAll('tr'));
+
+      for (const row of rows) {
+        const cells = Array.from(row.querySelectorAll('td'));
+        const rowText = row.textContent;
+
+        // Check if this row contains our invoice number
+        if (rowText.includes(invNum)) {
+          // Extract data from cells
+          const cellTexts = cells.map(cell => cell.textContent.trim());
+
+          // Try to find status (usually in a specific cell)
+          let status = 'Unable to determine';
+          const statusCell = cells.find(cell => {
+            const text = cell.textContent.toLowerCase();
+            return text.includes('awaiting') ||
+                   text.includes('paid') ||
+                   text.includes('approved') ||
+                   text.includes('progress') ||
+                   text.includes('rejected');
+          });
+
+          if (statusCell) {
+            status = statusCell.textContent.trim();
+          }
+
+          return {
+            found: true,
+            status: status,
+            allCells: cellTexts
+          };
+        }
+      }
+
+      return { found: false };
+    }, invoiceNumber);
+
+    await browser.close();
+
+    if (!invoiceData.found) {
+      console.log(`Invoice ${invoiceNumber} not found in results table`);
+      return {
+        invoiceNumber,
+        status: 'Not found in results table',
+        paymentInfo: '',
+        lastChecked: new Date().toISOString(),
+        source: 'SA Health MyInvoice'
+      };
+    }
+
+    // Parse and normalize the status
+    let normalizedStatus = 'Unable to determine';
     let paymentInfo = '';
+    const statusLower = invoiceData.status.toLowerCase();
 
-    // Look for common status indicators in the HTML
-    if (html.includes('paid') || html.includes('Paid')) {
-      status = 'Paid';
-      // Try to extract payment date if available
-      const dateMatch = html.match(/(\d{4}-\d{2}-\d{2})/);
+    if (statusLower.includes('awaiting approval')) {
+      normalizedStatus = 'Awaiting approval';
+    } else if (statusLower.includes('in progress')) {
+      normalizedStatus = 'In progress';
+    } else if (statusLower.includes('approved') && !statusLower.includes('awaiting')) {
+      normalizedStatus = 'Approved';
+    } else if (statusLower.includes('paid')) {
+      normalizedStatus = 'Paid';
+      // Try to extract payment date
+      const dateMatch = invoiceData.status.match(/(\d{4}-\d{2}-\d{2})/);
       if (dateMatch) {
         paymentInfo = ` on ${dateMatch[1]}`;
       }
-    } else if (html.includes('awaiting approval') || html.includes('Awaiting approval')) {
-      status = 'Awaiting approval';
-    } else if (html.includes('in progress') || html.includes('In progress')) {
-      status = 'In progress';
+    } else if (statusLower.includes('rejected')) {
+      normalizedStatus = 'Rejected';
+    } else if (statusLower.includes('cancelled')) {
+      normalizedStatus = 'Cancelled';
+    } else {
+      // Use the raw status if we can't normalize it
+      normalizedStatus = invoiceData.status;
     }
+
+    console.log(`Status detected: ${normalizedStatus}`);
+    console.log(`All cells: ${invoiceData.allCells.join(' | ')}`);
 
     return {
       invoiceNumber,
-      status,
+      status: normalizedStatus,
       paymentInfo,
       lastChecked: new Date().toISOString(),
       source: 'SA Health MyInvoice'
@@ -87,6 +189,11 @@ async function fetchSAHealthInvoiceStatus(invoiceNumber) {
 
   } catch (error) {
     console.error(`Error fetching status for invoice ${invoiceNumber}:`, error.message);
+
+    if (browser) {
+      await browser.close();
+    }
+
     return {
       invoiceNumber,
       status: 'Error checking status',
@@ -135,14 +242,17 @@ async function updateInvoiceWithSAHealthStatus(invoiceId, statusInfo) {
       invoiceId
     );
 
-    // If status is "Paid", also update the invoice status
+    // Only update invoice status to "Paid" if SA Health shows it as paid
+    // Do NOT change status for other states (awaiting approval, not found, etc.)
     if (statusInfo.status === 'Paid') {
       await db.run(
-        'UPDATE invoices SET status = $1 WHERE id = $2 AND status != $1',
+        'UPDATE invoices SET status = $1, payment_date = CURRENT_DATE WHERE id = $2 AND status != $1',
         'Paid',
         invoiceId
       );
       console.log(`✓ Invoice ${invoiceId} marked as Paid`);
+    } else {
+      console.log(`Note: Invoice status is "${statusInfo.status}" - not changing invoice status in tracker`);
     }
 
     console.log(`✓ Updated notes for invoice ${invoiceId}`);
