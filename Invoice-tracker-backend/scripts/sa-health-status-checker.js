@@ -6,9 +6,39 @@
  * ABN: 75142863410 (SA Health)
  */
 
-const puppeteer = require('puppeteer');
+const fs = require('fs');
 const { db, pool } = require('../db-postgres');
 require('dotenv').config();
+
+// Detect environment and choose appropriate Puppeteer
+const isWSL = fs.existsSync('/mnt/c/Windows');
+const isWindows = process.platform === 'win32';
+
+let puppeteer;
+let browserConfig = {
+  headless: true,
+  args: [
+    '--no-sandbox',
+    '--disable-setuid-sandbox',
+    '--disable-dev-shm-usage',
+    '--disable-gpu'
+  ]
+};
+
+if (isWSL) {
+  // WSL environment - Puppeteer doesn't work well with Windows Chrome from WSL
+  // Recommend using regular puppeteer or installing Chrome in WSL
+  console.log('⚠️  WSL detected. For best results:');
+  console.log('   Option 1: Install Chrome dependencies in WSL (see PUPPETEER_SETUP.md)');
+  console.log('   Option 2: Test on EC2 where it will work natively');
+  console.log('   Attempting to use bundled Puppeteer Chrome...');
+
+  puppeteer = require('puppeteer');
+} else {
+  // EC2 or other Linux environment - use regular puppeteer
+  puppeteer = require('puppeteer');
+  console.log('🐧 Linux environment detected - using Puppeteer bundled Chrome');
+}
 
 // SA Health configuration
 const SA_HEALTH_CONFIG = {
@@ -36,16 +66,8 @@ async function fetchSAHealthInvoiceStatus(invoiceNumber) {
   try {
     console.log(`Checking status for invoice ${invoiceNumber}...`);
 
-    // Launch headless browser
-    browser = await puppeteer.launch({
-      headless: true,
-      args: [
-        '--no-sandbox',
-        '--disable-setuid-sandbox',
-        '--disable-dev-shm-usage',
-        '--disable-gpu'
-      ]
-    });
+    // Launch headless browser with environment-specific config
+    browser = await puppeteer.launch(browserConfig);
 
     const page = await browser.newPage();
 
