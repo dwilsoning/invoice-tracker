@@ -33,11 +33,7 @@ function Header() {
             <div className="flex items-center">
               {version && (
                 <span className="text-xs text-gray-500 font-medium">
-                  Version {version} - {new Date().toLocaleDateString('en-AU', {
-                    day: '2-digit',
-                    month: 'short',
-                    year: 'numeric'
-                  })}
+                  Version {version} - 02 Dec 2024
                 </span>
               )}
             </div>
