@@ -814,8 +814,8 @@ app.get('/api/health', async (req, res) => {
     res.json({
       status: 'ok',
       database: 'postgresql',
-      version: '1.1.0',
-      releaseDate: '2025-11-26',
+      version: '2.0.0',
+      releaseDate: '2024-12-02',
       timestamp: new Date().toISOString()
     });
   } catch (error) {
@@ -829,7 +829,7 @@ app.get('/api/health', async (req, res) => {
 
 // Get version information
 app.get('/api/version', (req, res) => {
-  const packageJson = require('./Archive/package.json');
+  const packageJson = require('./package.json');
   res.json({
     version: packageJson.version,
     name: packageJson.name
