@@ -1917,6 +1917,21 @@ cron.schedule('0 4 * * *', performDatabaseBackup, {
 });
 console.log('📅 Scheduled: Database backup at 4 AM AEST/AEDT daily');
 
+// SA Health invoice status check - runs daily at 9 AM AEST/AEDT
+cron.schedule('0 9 * * *', async () => {
+  try {
+    console.log('\n🏥 Starting scheduled SA Health invoice status check...');
+    const { checkAllSAHealthInvoices } = require('./scripts/sa-health-status-checker');
+    await checkAllSAHealthInvoices();
+    console.log('✓ SA Health invoice status check completed\n');
+  } catch (error) {
+    console.error('❌ Error in scheduled SA Health status check:', error);
+  }
+}, {
+  timezone: 'Australia/Sydney'
+});
+console.log('📅 Scheduled: SA Health invoice status check at 9 AM AEST/AEDT daily');
+
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
   res.json(exchangeRates);
@@ -2818,6 +2833,93 @@ app.delete('/api/invoices/duplicate/:id', authenticateToken, async (req, res) =>
   }
 });
 
+// SA Health invoice status checking
+app.post('/api/invoices/:id/check-sa-health-status', authenticateToken, async (req, res) => {
+  try {
+    const { id } = req.params;
+    console.log('SA Health status check requested for invoice ID:', id);
+
+    // Get invoice details
+    const invoice = await db.get(
+      'SELECT id, invoice_number, client FROM invoices WHERE id = $1',
+      id
+    );
+
+    if (!invoice) {
+      console.log('Invoice not found:', id);
+      return res.status(404).json({ error: 'Invoice not found' });
+    }
+
+    console.log('Found invoice:', invoice);
+    console.log('Invoice number:', invoice.invoiceNumber);
+    console.log('Invoice client:', invoice.client);
+
+    // Import the SA Health status checker
+    const { checkSingleInvoice } = require('./scripts/sa-health-status-checker');
+
+    // Check the status
+    console.log('Calling checkSingleInvoice with:', invoice.invoiceNumber);
+    console.log('Type of invoice.invoiceNumber:', typeof invoice.invoiceNumber);
+
+    if (!invoice.invoiceNumber) {
+      console.error('ERROR: invoice.invoiceNumber is undefined!');
+      console.error('Invoice object keys:', Object.keys(invoice));
+      return res.status(500).json({ error: 'Invoice number is missing from database record' });
+    }
+
+    const statusInfo = await checkSingleInvoice(invoice.invoiceNumber);
+    console.log('Status info received:', statusInfo);
+
+    if (!statusInfo) {
+      console.log('No status info returned');
+      return res.status(500).json({ error: 'Failed to check SA Health status - no status information returned' });
+    }
+
+    // Return the updated invoice
+    const updatedInvoice = await db.get(
+      'SELECT * FROM invoices WHERE id = $1',
+      id
+    );
+
+    console.log('Returning success response');
+    res.json({
+      success: true,
+      statusInfo,
+      invoice: updatedInvoice
+    });
+
+  } catch (error) {
+    console.error('Error checking SA Health status:', error);
+    console.error('Error stack:', error.stack);
+    res.status(500).json({ error: error.message, details: error.stack });
+  }
+});
+
+// Check all SA Health invoices (admin only)
+app.post('/api/invoices/check-all-sa-health-status', authenticateToken, requireAdmin, async (req, res) => {
+  try {
+    const { checkAllSAHealthInvoices } = require('./scripts/sa-health-status-checker');
+
+    // Run the check (this will be async but we'll respond immediately)
+    checkAllSAHealthInvoices()
+      .then(() => {
+        console.log('SA Health status check completed');
+      })
+      .catch(err => {
+        console.error('SA Health status check failed:', err);
+      });
+
+    res.json({
+      success: true,
+      message: 'SA Health status check started. This may take a few minutes.'
+    });
+
+  } catch (error) {
+    console.error('Error starting SA Health status check:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Initialize database and start server
 async function startServer() {
   try {
@@ -2830,6 +2932,7 @@ async function startServer() {
       console.log('  • Exchange rate updates: 2 AM, 8 AM, 2 PM, 8 PM daily');
       console.log('  • Cleanup old acknowledged invoices: 3 AM every Sunday');
       console.log('  • Database backup: 4 AM daily');
+      console.log('  • SA Health invoice status check: 9 AM daily');
       console.log('  • Server timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       console.log('  • Current time (AEST/AEDT):', new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
       console.log('');

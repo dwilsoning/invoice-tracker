@@ -1289,6 +1289,47 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
     }
   };
 
+  const checkSAHealthStatus = async (invoiceId) => {
+    try {
+      console.log('Checking SA Health status for invoice:', invoiceId);
+      console.log('API URL:', `${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
+      showMessage('info', 'Checking SA Health status...');
+
+      const response = await axios.post(`${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
+      console.log('SA Health status response:', response.data);
+
+      if (response.data.success) {
+        // Update the edit form with the new notes
+        setEditForm({
+          ...editForm,
+          notes: response.data.invoice.notes
+        });
+
+        // Update the editing invoice to reflect changes
+        setEditingInvoice(response.data.invoice);
+
+        showMessage('success', `SA Health status: ${response.data.statusInfo.status}`);
+
+        // Reload invoices to reflect any status changes
+        await loadInvoices();
+      }
+    } catch (error) {
+      console.error('SA Health status check error:', error);
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error.response?.data);
+
+      let errorMessage = 'Failed to check SA Health status';
+      if (error.response?.data?.error) {
+        errorMessage += ': ' + error.response.data.error;
+      } else if (error.message) {
+        errorMessage += ': ' + error.message;
+      }
+
+      showMessage('error', errorMessage);
+    }
+  };
+
   const createManualInvoice = async () => {
     try {
       // Validate required fields
@@ -3373,7 +3414,18 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Notes</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-sm font-medium">Notes</label>
+                    {editingInvoice.client?.toLowerCase() === 'south australia health' && (
+                      <button
+                        onClick={() => checkSAHealthStatus(editingInvoice.id)}
+                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                        type="button"
+                      >
+                        Check SA Health Status
+                      </button>
+                    )}
+                  </div>
                   <textarea
                     value={editForm.notes}
                     onChange={(e) => setEditForm({...editForm, notes: e.target.value})}
