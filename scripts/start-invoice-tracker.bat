@@ -87,7 +87,7 @@ echo.
 
 REM Step 3: Start Backend Server
 echo [3/4] Starting Backend Server...
-start /min "Invoice Tracker - Backend" cmd /k "cd /d "C:\Users\dwils\Claude-Projects\Invoice Tracker\Invoice-tracker-backend" && npm start"
+start /min "Invoice Tracker - Backend" cmd /k "cd /d \"C:\Users\dwils\Claude-Projects\Invoice Tracker\Invoice-tracker-backend\" && npm run dev"
 
 REM Wait 3 seconds for backend to initialize
 timeout /t 3 /nobreak >nul

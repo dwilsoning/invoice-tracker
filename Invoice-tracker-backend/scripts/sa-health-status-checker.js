@@ -25,14 +25,37 @@ let browserConfig = {
   ]
 };
 
-if (isWSL) {
-  // WSL environment - Puppeteer doesn't work well with Windows Chrome from WSL
-  // Recommend using regular puppeteer or installing Chrome in WSL
-  console.log('⚠️  WSL detected. For best results:');
-  console.log('   Option 1: Install Chrome dependencies in WSL (see PUPPETEER_SETUP.md)');
-  console.log('   Option 2: Test on EC2 where it will work natively');
-  console.log('   Attempting to use bundled Puppeteer Chrome...');
+if (isWindows) {
+  // Windows environment - use puppeteer-core with Windows Chrome
+  console.log('🪟 Windows detected - using Windows Chrome installation');
+  puppeteer = require('puppeteer-core');
 
+  // Try common Chrome installation paths on Windows
+  const chromePaths = [
+    'C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe',
+    'C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe',
+    process.env.LOCALAPPDATA + '\\Google\\Chrome\\Application\\chrome.exe'
+  ];
+
+  let chromePath = null;
+  for (const path of chromePaths) {
+    if (fs.existsSync(path)) {
+      chromePath = path;
+      break;
+    }
+  }
+
+  if (!chromePath) {
+    console.error('❌ Chrome not found in standard locations!');
+    console.error('Please install Chrome or set CHROME_PATH environment variable');
+    throw new Error('Chrome executable not found');
+  }
+
+  browserConfig.executablePath = chromePath;
+  console.log(`   Using Chrome at: ${chromePath}`);
+} else if (isWSL) {
+  // WSL environment - use bundled Puppeteer Chrome
+  console.log('🐧 WSL detected - using Puppeteer bundled Chrome');
   puppeteer = require('puppeteer');
 } else {
   // EC2 or other Linux environment - use regular puppeteer
