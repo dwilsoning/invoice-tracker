@@ -253,6 +253,7 @@ async function fetchSAHealthInvoiceStatus(invoiceNumber) {
  */
 async function updateInvoiceWithSAHealthStatus(invoiceId, statusInfo) {
   const statusText = `SA Health Status (checked ${new Date().toLocaleDateString()}): ${statusInfo.status}${statusInfo.paymentInfo || ''}`;
+  const separator = '────────────────────────────────────────────────────────';
 
   try {
     // Get existing notes
@@ -267,18 +268,38 @@ async function updateInvoiceWithSAHealthStatus(invoiceId, statusInfo) {
     }
 
     let existingNotes = invoice.notes || '';
+    let internalNotes = '';
 
-    // Remove any previous SA Health status lines
-    existingNotes = existingNotes
-      .split('\n')
-      .filter(line => !line.includes('SA Health Status'))
-      .join('\n')
-      .trim();
+    // Check if there's already a separator (meaning we have SA Health status + internal notes)
+    if (existingNotes.includes(separator)) {
+      // Extract internal notes (everything after the separator)
+      const parts = existingNotes.split(separator);
+      if (parts.length > 1) {
+        internalNotes = parts.slice(1).join(separator).trim();
+      }
+    } else {
+      // No separator yet - check if there's any existing SA Health status
+      const lines = existingNotes.split('\n');
+      const statusLineIndex = lines.findIndex(line => line.includes('SA Health Status'));
 
-    // Add new status
-    const updatedNotes = existingNotes
-      ? `${existingNotes}\n\n${statusText}`
-      : statusText;
+      if (statusLineIndex !== -1) {
+        // Remove old SA Health status line(s) and keep the rest as internal notes
+        internalNotes = lines
+          .filter(line => !line.includes('SA Health Status'))
+          .join('\n')
+          .trim();
+      } else {
+        // No SA Health status yet - everything is internal notes
+        internalNotes = existingNotes.trim();
+      }
+    }
+
+    // Build updated notes with SA Health status at top, separator, then internal notes
+    let updatedNotes = statusText;
+
+    if (internalNotes) {
+      updatedNotes = `${statusText}\n${separator}\n${internalNotes}`;
+    }
 
     // Update the database
     await db.run(
