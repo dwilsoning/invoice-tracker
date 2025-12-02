@@ -97,7 +97,7 @@ async function fetchSAHealthInvoiceStatus(invoiceNumber) {
     ]);
 
     // Wait a bit for any dynamic content to load
-    await page.waitForTimeout(2000);
+    await new Promise(resolve => setTimeout(resolve, 2000));
 
     // Check if there are any results
     const pageContent = await page.content();
