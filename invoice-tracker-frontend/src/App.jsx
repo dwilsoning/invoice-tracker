@@ -694,6 +694,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         inv.invoiceNumber?.toLowerCase().includes(term) ||
         inv.client?.toLowerCase().includes(term) ||
         inv.customerContract?.toLowerCase().includes(term) ||
+        inv.poNumber?.toLowerCase().includes(term) ||
         inv.services?.toLowerCase().includes(term)
       );
     }
@@ -1285,6 +1286,47 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       showMessage('success', 'Invoice updated');
     } catch (error) {
       showMessage('error', `Failed to update invoice: ${error.response?.data?.error || error.message}`);
+    }
+  };
+
+  const checkSAHealthStatus = async (invoiceId) => {
+    try {
+      console.log('Checking SA Health status for invoice:', invoiceId);
+      console.log('API URL:', `${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
+      showMessage('info', 'Checking SA Health status...');
+
+      const response = await axios.post(`${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
+      console.log('SA Health status response:', response.data);
+
+      if (response.data.success) {
+        // Update the edit form with the new notes
+        setEditForm({
+          ...editForm,
+          notes: response.data.invoice.notes
+        });
+
+        // Update the editing invoice to reflect changes
+        setEditingInvoice(response.data.invoice);
+
+        showMessage('success', `SA Health status: ${response.data.statusInfo.status}`);
+
+        // Reload invoices to reflect any status changes
+        await loadInvoices();
+      }
+    } catch (error) {
+      console.error('SA Health status check error:', error);
+      console.error('Error response:', error.response);
+      console.error('Error message:', error.message);
+      console.error('Error details:', error.response?.data);
+
+      let errorMessage = 'Failed to check SA Health status';
+      if (error.response?.data?.error) {
+        errorMessage += ': ' + error.response.data.error;
+      } else if (error.message) {
+        errorMessage += ': ' + error.message;
+      }
+
+      showMessage('error', errorMessage);
     }
   };
 
@@ -2090,6 +2132,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                           onClick={() => {
                             setSelectedDuplicate(null);
                             setDuplicateDetails([]);
+                            setSearchTerm(''); // Clear search term when closing duplicate details
                           }}
                           className="text-gray-500 hover:text-gray-700"
                         >
@@ -2190,7 +2233,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search invoice #, client, contract, description..."
+                placeholder="Search invoice #, PO #, client, contract, description..."
                 className="flex-1 max-w-md border rounded px-3 py-2"
               />
               <div className="bg-white border rounded px-3 py-2">
@@ -2491,16 +2534,21 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             <div className="px-6 pb-6">
               {getSortedGroupNames(groupedInvoices).map(groupName => {
                 const groupInvs = sortInvoices(groupedInvoices[groupName]);
-                const groupTotal = groupInvs.reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+                // Exclude Purchase Orders, Vendor Invoices, and Credit Memos from contract totals
+                const groupTotal = groupInvs
+                  .filter(inv => !isExcludedFromCalculations(inv.invoiceType))
+                  .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 // Always show invoices when no grouping, otherwise use collapsed by default
                 const isExpanded = groupBy === 'None' ? true : expandedGroups[groupName] === true;
-                
+
                 // Extract contract from group name if grouping by contract
                 const isContractGroup = groupBy === 'Contract' && groupName !== 'Uncategorized';
                 const contractName = isContractGroup ? groupName.split(' > ')[0] : null;
                 const contractInfo = contractName ? contractValues[contractName] : null;
                 const contractValueUSD = contractInfo ? convertToUSD(contractInfo.value, contractInfo.currency) : 0;
-                const totalPaid = groupInvs.filter(inv => inv.status === 'Paid').reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
+                const totalPaid = groupInvs
+                  .filter(inv => inv.status === 'Paid' && !isExcludedFromCalculations(inv.invoiceType))
+                  .reduce((sum, inv) => sum + convertToUSD(inv.amountDue, inv.currency), 0);
                 const remaining = contractValueUSD - groupTotal;
                 // Cap percentage at 100% (exchange rate fluctuations can cause values over 100%)
                 const percentage = contractValueUSD > 0 ? Math.min(Math.round((groupTotal / contractValueUSD) * 100), 100) : 0;
@@ -3366,7 +3414,18 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-1">Notes</label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-sm font-medium">Notes</label>
+                    {editingInvoice.client?.toLowerCase() === 'south australia health' && (
+                      <button
+                        onClick={() => checkSAHealthStatus(editingInvoice.id)}
+                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                        type="button"
+                      >
+                        Check SA Health Status
+                      </button>
+                    )}
+                  </div>
                   <textarea
                     value={editForm.notes}
                     onChange={(e) => setEditForm({...editForm, notes: e.target.value})}
