@@ -4,7 +4,34 @@ Complete guide for deploying the Invoice Tracker backend on Ubuntu EC2 with full
 
 ## Quick Start
 
-### Automated Deployment (Recommended)
+### Option 1: Puppeteer Dependencies Only (Minimal - Recommended if you have everything else working)
+
+If you already have Node.js, npm packages, and your app running, and **only need the Puppeteer Chrome dependencies**:
+
+```bash
+ssh -i your-key.pem ubuntu@your-ec2-ip
+cd Invoice-tracker-backend
+chmod +x scripts/install-puppeteer-deps-only.sh
+sudo ./scripts/install-puppeteer-deps-only.sh
+```
+
+This script:
+- ✅ Installs ONLY Chrome/Chromium system libraries (30+ packages)
+- ❌ Does NOT install Node.js
+- ❌ Does NOT run npm install
+- ❌ Does NOT create systemd service
+- ❌ Does NOT modify your existing setup
+
+Test after installation:
+```bash
+node scripts/sa-health-status-checker.js 3000001140
+```
+
+---
+
+### Option 2: Full Automated Deployment (Fresh Install)
+
+For a complete fresh deployment from scratch:
 
 1. **SSH into your Ubuntu EC2 instance:**
    ```bash
@@ -18,7 +45,7 @@ Complete guide for deploying the Invoice Tracker backend on Ubuntu EC2 with full
    cd Invoice-tracker-backend
    ```
 
-3. **Run the deployment script:**
+3. **Run the full deployment script:**
    ```bash
    chmod +x scripts/deploy-ubuntu-ec2.sh
    sudo ./scripts/deploy-ubuntu-ec2.sh
@@ -36,7 +63,13 @@ Complete guide for deploying the Invoice Tracker backend on Ubuntu EC2 with full
    sudo systemctl status invoice-tracker
    ```
 
-That's it! The script handles all dependencies, Puppeteer setup, and systemd service configuration.
+This script handles:
+- ✅ System dependencies for Puppeteer
+- ✅ Node.js 18.x installation
+- ✅ npm install (all packages)
+- ✅ Systemd service creation
+- ✅ Swap space configuration
+- ✅ Puppeteer testing
 
 ---
 
