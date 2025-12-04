@@ -140,6 +140,35 @@ install_nodejs() {
     print_success "npm v$(npm -v) installed"
 }
 
+install_chrome() {
+    print_header "Installing Google Chrome"
+
+    # Check if Chrome is already installed
+    if command -v google-chrome &> /dev/null; then
+        print_success "Google Chrome already installed"
+        return
+    fi
+
+    print_info "Downloading and installing Google Chrome..."
+
+    # Download Chrome
+    wget -q https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb -O /tmp/google-chrome.deb
+
+    # Install Chrome
+    apt-get install -y -qq /tmp/google-chrome.deb 2>&1 | grep -v "^N: " || true
+
+    # Clean up
+    rm /tmp/google-chrome.deb
+
+    # Verify installation
+    if command -v google-chrome &> /dev/null; then
+        print_success "Google Chrome installed successfully"
+    else
+        print_error "Failed to install Google Chrome"
+        exit 1
+    fi
+}
+
 setup_swap_space() {
     print_header "Configuring Swap Space"
 
@@ -183,9 +212,41 @@ install_application() {
 
     cd "$APP_DIR"
 
+    # Clean any existing node_modules
+    print_info "Cleaning existing node_modules..."
+    sudo -u $SERVICE_USER rm -rf node_modules package-lock.json
+    print_success "Cleaned existing installation"
+
     print_info "Installing npm dependencies (this may take a few minutes)..."
-    sudo -u $SERVICE_USER npm install
-    print_success "npm dependencies installed"
+
+    # Set Puppeteer environment variables for installation
+    export PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+    export PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+    # Install with verbose output to catch any errors
+    if sudo -u $SERVICE_USER npm install --verbose 2>&1 | tee /tmp/npm-install.log; then
+        print_success "npm dependencies installed"
+    else
+        print_error "npm install failed. Check /tmp/npm-install.log for details"
+        exit 1
+    fi
+
+    # Verify Puppeteer was installed
+    print_info "Verifying Puppeteer installation..."
+    if [ -d "$APP_DIR/node_modules/puppeteer" ]; then
+        print_success "Puppeteer module found in node_modules"
+    else
+        print_error "Puppeteer not found in node_modules!"
+        print_info "Attempting to install Puppeteer explicitly..."
+        sudo -u $SERVICE_USER npm install puppeteer@^24.31.0 --save
+
+        if [ -d "$APP_DIR/node_modules/puppeteer" ]; then
+            print_success "Puppeteer installed successfully"
+        else
+            print_error "Failed to install Puppeteer. Manual intervention required."
+            exit 1
+        fi
+    fi
 
     # Check if .env file exists
     if [ ! -f "$APP_DIR/.env" ]; then
@@ -208,6 +269,10 @@ JWT_SECRET=your_jwt_secret_here_change_this
 
 # SA Health Configuration
 SA_HEALTH_ABN=75142863410
+
+# Puppeteer Configuration
+PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=false
+PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
 EOF
         print_warning "Please edit $APP_DIR/.env with your actual configuration"
     else
@@ -360,6 +425,7 @@ main() {
     # Run installation steps
     install_system_dependencies
     install_nodejs
+    install_chrome
     setup_swap_space
     install_application
     create_systemd_service
