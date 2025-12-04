@@ -1073,6 +1073,10 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
     clearFilters();
     setActiveStatBox('aging-' + bucket);
     setAgingFilter(bucket);
+    // Apply aging client filter to main client filter to show filtered results
+    if (agingClientFilter.length > 0) {
+      setClientFilter([...agingClientFilter]);
+    }
     setExpandedGroups({}); // Collapse all groups
     setShowInvoiceTable(false); // Hide table initially to prevent freeze
   };
