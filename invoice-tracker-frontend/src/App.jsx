@@ -60,6 +60,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
   const [frequencyFilter, setFrequencyFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [clientSearchTerm, setClientSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [agingFilter, setAgingFilter] = useState('All');
@@ -2424,21 +2425,43 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               <label className="block text-sm font-medium mb-2 text-white">
                 Client {clientFilter.length > 0 && `(${clientFilter.length} selected)`}
               </label>
-              <div className="bg-white border rounded px-3 py-2 max-h-48 overflow-y-auto space-y-1">
-                {clients.map(client => (
-                  <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                    <input
-                      type="checkbox"
-                      checked={clientFilter.includes(client)}
-                      onChange={() => {
-                        toggleClient(client);
-                        setActiveStatBox(null);
-                      }}
-                      className="w-4 h-4 text-purple-600 cursor-pointer"
-                    />
-                    <span className="text-sm">{client}</span>
-                  </label>
-                ))}
+              <div className="bg-white border rounded overflow-hidden">
+                <div className="p-2 border-b bg-gray-50">
+                  <input
+                    type="text"
+                    value={clientSearchTerm}
+                    onChange={(e) => setClientSearchTerm(e.target.value)}
+                    placeholder="Search clients..."
+                    className="w-full px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  />
+                </div>
+                <div className="px-3 py-2 max-h-48 overflow-y-auto space-y-1">
+                  {clients
+                    .filter(client =>
+                      client.toLowerCase().includes(clientSearchTerm.toLowerCase())
+                    )
+                    .map(client => (
+                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input
+                          type="checkbox"
+                          checked={clientFilter.includes(client)}
+                          onChange={() => {
+                            toggleClient(client);
+                            setActiveStatBox(null);
+                          }}
+                          className="w-4 h-4 text-purple-600 cursor-pointer"
+                        />
+                        <span className="text-sm">{client}</span>
+                      </label>
+                    ))}
+                  {clients.filter(client =>
+                    client.toLowerCase().includes(clientSearchTerm.toLowerCase())
+                  ).length === 0 && (
+                    <div className="text-sm text-gray-500 italic py-2 text-center">
+                      No clients found
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
