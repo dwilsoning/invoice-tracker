@@ -3052,22 +3052,34 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               {/* Services Section */}
               <div className="mb-6">
                 <h3 className="text-lg font-bold mb-3 text-gray-800 border-b pb-2">Services (from uploaded file)</h3>
-                {quickEditInvoice.services && quickEditInvoice.services.length > 0 ? (
-                  <div className="bg-gray-50 rounded p-4">
-                    <ul className="space-y-2">
-                      {quickEditInvoice.services.map((service, idx) => (
-                        <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
-                          <span className="text-blue-600 mt-1">•</span>
-                          <span>{service}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ) : (
-                  <div className="text-gray-500 italic text-sm bg-gray-50 rounded p-4">
-                    No services information available (upload invoice file to extract services)
-                  </div>
-                )}
+                {(() => {
+                  // Parse services if it's a string, otherwise use as-is
+                  let services = quickEditInvoice.services;
+                  if (typeof services === 'string') {
+                    try {
+                      services = JSON.parse(services);
+                    } catch (e) {
+                      services = null;
+                    }
+                  }
+
+                  return services && Array.isArray(services) && services.length > 0 ? (
+                    <div className="bg-gray-50 rounded p-4">
+                      <ul className="space-y-2">
+                        {services.map((service, idx) => (
+                          <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                            <span className="text-blue-600 mt-1">•</span>
+                            <span>{service}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 italic text-sm bg-gray-50 rounded p-4">
+                      No services information available (upload invoice file to extract services)
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* Notes Section */}
