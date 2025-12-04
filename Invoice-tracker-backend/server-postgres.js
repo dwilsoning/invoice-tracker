@@ -851,13 +851,26 @@ app.post('/api/upload-pdfs', async (req, res) => {
   const form = formidable({
     uploadDir: uploadsDir,
     keepExtensions: true,
-    maxFileSize: 10 * 1024 * 1024,
+    maxFileSize: 10 * 1024 * 1024, // 10MB per individual file
+    maxTotalFileSize: 400 * 1024 * 1024, // 400MB total for all files (supports up to 40 x 10MB files)
     multiples: true
   });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
       console.error('Upload error:', err);
+
+      // Handle file size exceeded errors with user-friendly messages
+      if (err.code === 1009 || err.message.includes('maxTotalFileSize')) {
+        return res.status(413).json({
+          error: 'Total file size exceeded. The combined size of all uploaded files must be less than 400MB. Please upload fewer files or compress your PDFs.'
+        });
+      } else if (err.code === 1016 || err.message.includes('maxFileSize')) {
+        return res.status(413).json({
+          error: 'Individual file too large. Each PDF must be less than 10MB. Please compress the file and try again.'
+        });
+      }
+
       return res.status(500).json({ error: err.message });
     }
 
@@ -875,6 +888,13 @@ app.post('/api/upload-pdfs', async (req, res) => {
       }
 
       const fileArray = Array.isArray(pdfFiles) ? pdfFiles : [pdfFiles].filter(Boolean);
+
+      // Check for maximum upload limit
+      if (fileArray.length > 40) {
+        return res.status(400).json({
+          error: `Too many files. Maximum 40 invoices per upload. You tried to upload ${fileArray.length} files. Please split into smaller batches.`
+        });
+      }
 
       for (const file of fileArray) {
         try {
@@ -952,7 +972,19 @@ app.post('/api/upload-pdfs', async (req, res) => {
 
     } catch (error) {
       console.error('Upload error:', error);
-      res.status(500).json({ error: error.message });
+      console.error('Error stack:', error.stack);
+
+      // Provide more specific error messages
+      let errorMessage = error.message;
+      if (error.message.includes('ENOENT')) {
+        errorMessage = 'File not found during processing. Please try again.';
+      } else if (error.message.includes('pdf-parse')) {
+        errorMessage = 'Failed to parse PDF file. Please ensure the file is a valid PDF.';
+      } else if (error.message.includes('Maximum')) {
+        errorMessage = error.message; // Already has good message
+      }
+
+      res.status(500).json({ error: errorMessage });
     }
   });
 });

@@ -114,8 +114,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Help Modal
-  const [showHelp, setShowHelp] = useState(false);
 
   // Bulk Selection State
   const [selectedInvoiceIds, setSelectedInvoiceIds] = useState([]);
@@ -125,6 +123,9 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [showOnlyUploadedInvoices, setShowOnlyUploadedInvoices] = useState(false);
   const [uploadedInvoiceIds, setUploadedInvoiceIds] = useState([]);
   const [isUploadingInvoices, setIsUploadingInvoices] = useState(false);
+
+  // Flash notification state
+  const [flashNotification, setFlashNotification] = useState({ show: false, type: '' }); // 'success' or 'error'
 
   // Load contract values from database
   const loadContracts = async () => {
@@ -347,7 +348,27 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Show message
   const showMessage = (type, text) => {
     setMessage({ type, text });
-    setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+
+    // Trigger flash notification for success and error types
+    if (type === 'success' || type === 'error') {
+      setFlashNotification({ show: true, type });
+
+      // Flash disappears after 2 seconds
+      setTimeout(() => {
+        setFlashNotification({ show: false, type: '' });
+      }, 2000);
+    }
+
+    // For errors, message stays until user clicks it
+    // For success/warning, auto-hide after 5 seconds
+    if (type !== 'error') {
+      setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+    }
+  };
+
+  // Dismiss message (for clicking on error messages)
+  const dismissMessage = () => {
+    setMessage({ type: '', text: '' });
   };
 
   // Handle file upload
@@ -394,7 +415,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         // Set filters to show only the newly uploaded invoices
         setStatusFilter([]);
         setTypeFilter([]);
-        setClientFilter('All');
+        setClientFilter([]);
         setContractFilter('All');
         setContractPercentageRangeMin('');
         setContractPercentageRangeMax('');
@@ -522,15 +543,13 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           setSelectedInvoice(null);
         } else if (editingInvoice) {
           setEditingInvoice(null);
-        } else if (showHelp) {
-          setShowHelp(false);
         }
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [selectedInvoice, editingInvoice, showHelp]);
+  }, [selectedInvoice, editingInvoice]);
 
   // Hide invoice table when search is cleared and no other filters are active
   useEffect(() => {
@@ -1646,9 +1665,9 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               </span>
             </div>
             <button
-              onClick={() => setShowHelp(true)}
+              onClick={() => window.open('/training-guide.html', 'InvoiceTrackerHelp', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
               className="px-6 py-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-white hover:bg-opacity-30 transition font-semibold border-2 border-white"
-              title="Open Training Guide"
+              title="Open Training Guide in new window"
             >
               Help
             </button>
@@ -1661,14 +1680,29 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           </div>
         </div>
 
+        {/* Flash Notification Overlay */}
+        {flashNotification.show && (
+          <div
+            className={`fixed inset-0 pointer-events-none z-40 transition-opacity duration-300 ${
+              flashNotification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } opacity-30`}
+          />
+        )}
+
         {/* Message */}
         {message.text && (
-          <div className={`mb-4 p-4 rounded-lg ${
-            message.type === 'success' ? 'bg-green-100 text-green-800' :
-            message.type === 'error' ? 'bg-red-100 text-red-800' :
-            'bg-yellow-100 text-yellow-800'
-          }`}>
+          <div
+            onClick={message.type === 'error' ? dismissMessage : undefined}
+            className={`mb-4 p-4 rounded-lg ${
+              message.type === 'success' ? 'bg-green-100 text-green-800' :
+              message.type === 'error' ? 'bg-red-100 text-red-800 cursor-pointer hover:bg-red-200' :
+              'bg-yellow-100 text-yellow-800'
+            } ${message.type === 'error' ? 'relative' : ''}`}
+          >
             {message.text}
+            {message.type === 'error' && (
+              <span className="ml-2 text-xs">(Click to dismiss)</span>
+            )}
           </div>
         )}
 
@@ -1842,7 +1876,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 setActiveStatBox('creditMemo');
                 setStatusFilter([]);
                 setTypeFilter(['Credit Memo']);
-                setClientFilter('All');
+                setClientFilter([]);
                 setContractFilter('All');
                 setAgingFilter('All');
                 setSearchTerm('');
@@ -3814,32 +3848,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           </div>
         )}
       </div>
-
-      {/* Help Modal */}
-      {showHelp && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg w-full max-w-6xl h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-              <h2 className="text-2xl font-bold text-white">Invoice Tracker - Training Guide</h2>
-              <button
-                onClick={() => setShowHelp(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex-1 overflow-auto">
-              <iframe
-                src="/training-guide.html"
-                className="w-full h-full border-0"
-                title="Training Guide"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
