@@ -60,6 +60,8 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
   const [frequencyFilter, setFrequencyFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
+  const [clientSearchTerm, setClientSearchTerm] = useState('');
+  const [agingClientSearchTerm, setAgingClientSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [agingFilter, setAgingFilter] = useState('All');
@@ -92,6 +94,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [createForm, setCreateForm] = useState({});
   const [attachments, setAttachments] = useState([]);
   const [uploadingAttachment, setUploadingAttachment] = useState(false);
+  const [checkingSAHealth, setCheckingSAHealth] = useState(false);
   const [filtersCollapsed, setFiltersCollapsed] = useState(true);
 
   // Sorting State
@@ -111,8 +114,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [lastRefresh, setLastRefresh] = useState(new Date());
   const [isRefreshing, setIsRefreshing] = useState(false);
 
-  // Help Modal
-  const [showHelp, setShowHelp] = useState(false);
 
   // Bulk Selection State
   const [selectedInvoiceIds, setSelectedInvoiceIds] = useState([]);
@@ -122,6 +123,9 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [showOnlyUploadedInvoices, setShowOnlyUploadedInvoices] = useState(false);
   const [uploadedInvoiceIds, setUploadedInvoiceIds] = useState([]);
   const [isUploadingInvoices, setIsUploadingInvoices] = useState(false);
+
+  // Flash notification state
+  const [flashNotification, setFlashNotification] = useState({ show: false, type: '' }); // 'success' or 'error'
 
   // Load contract values from database
   const loadContracts = async () => {
@@ -344,7 +348,27 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Show message
   const showMessage = (type, text) => {
     setMessage({ type, text });
-    setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+
+    // Trigger flash notification for success and error types
+    if (type === 'success' || type === 'error') {
+      setFlashNotification({ show: true, type });
+
+      // Flash disappears after 2 seconds
+      setTimeout(() => {
+        setFlashNotification({ show: false, type: '' });
+      }, 2000);
+    }
+
+    // For errors, message stays until user clicks it
+    // For success/warning, auto-hide after 5 seconds
+    if (type !== 'error') {
+      setTimeout(() => setMessage({ type: '', text: '' }), 5000);
+    }
+  };
+
+  // Dismiss message (for clicking on error messages)
+  const dismissMessage = () => {
+    setMessage({ type: '', text: '' });
   };
 
   // Handle file upload
@@ -391,7 +415,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         // Set filters to show only the newly uploaded invoices
         setStatusFilter([]);
         setTypeFilter([]);
-        setClientFilter('All');
+        setClientFilter([]);
         setContractFilter('All');
         setContractPercentageRangeMin('');
         setContractPercentageRangeMax('');
@@ -519,15 +543,13 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           setSelectedInvoice(null);
         } else if (editingInvoice) {
           setEditingInvoice(null);
-        } else if (showHelp) {
-          setShowHelp(false);
         }
       }
     };
 
     document.addEventListener('keydown', handleEscape);
     return () => document.removeEventListener('keydown', handleEscape);
-  }, [selectedInvoice, editingInvoice, showHelp]);
+  }, [selectedInvoice, editingInvoice]);
 
   // Hide invoice table when search is cleared and no other filters are active
   useEffect(() => {
@@ -1344,10 +1366,13 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   };
 
   const checkSAHealthStatus = async (invoiceId) => {
+    if (checkingSAHealth) return; // Prevent multiple clicks
+
     try {
+      setCheckingSAHealth(true);
       console.log('Checking SA Health status for invoice:', invoiceId);
       console.log('API URL:', `${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
-      showMessage('info', 'Checking SA Health status...');
+      showMessage('info', 'Checking SA Health status... This may take up to 10 seconds.');
 
       const response = await axios.post(`${API_URL}/invoices/${invoiceId}/check-sa-health-status`);
       console.log('SA Health status response:', response.data);
@@ -1381,6 +1406,8 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       }
 
       showMessage('error', errorMessage);
+    } finally {
+      setCheckingSAHealth(false);
     }
   };
 
@@ -1638,9 +1665,9 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               </span>
             </div>
             <button
-              onClick={() => setShowHelp(true)}
+              onClick={() => window.open('/training-guide.html', 'InvoiceTrackerHelp', 'width=1200,height=800,scrollbars=yes,resizable=yes')}
               className="px-6 py-3 bg-white bg-opacity-20 text-white rounded-lg hover:bg-white hover:bg-opacity-30 transition font-semibold border-2 border-white"
-              title="Open Training Guide"
+              title="Open Training Guide in new window"
             >
               Help
             </button>
@@ -1653,14 +1680,29 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           </div>
         </div>
 
+        {/* Flash Notification Overlay */}
+        {flashNotification.show && (
+          <div
+            className={`fixed inset-0 pointer-events-none z-40 transition-opacity duration-300 ${
+              flashNotification.type === 'success' ? 'bg-green-500' : 'bg-red-500'
+            } opacity-30`}
+          />
+        )}
+
         {/* Message */}
         {message.text && (
-          <div className={`mb-4 p-4 rounded-lg ${
-            message.type === 'success' ? 'bg-green-100 text-green-800' :
-            message.type === 'error' ? 'bg-red-100 text-red-800' :
-            'bg-yellow-100 text-yellow-800'
-          }`}>
+          <div
+            onClick={message.type === 'error' ? dismissMessage : undefined}
+            className={`mb-4 p-4 rounded-lg ${
+              message.type === 'success' ? 'bg-green-100 text-green-800' :
+              message.type === 'error' ? 'bg-red-100 text-red-800 cursor-pointer hover:bg-red-200' :
+              'bg-yellow-100 text-yellow-800'
+            } ${message.type === 'error' ? 'relative' : ''}`}
+          >
             {message.text}
+            {message.type === 'error' && (
+              <span className="ml-2 text-xs">(Click to dismiss)</span>
+            )}
           </div>
         )}
 
@@ -1834,7 +1876,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                 setActiveStatBox('creditMemo');
                 setStatusFilter([]);
                 setTypeFilter(['Credit Memo']);
-                setClientFilter('All');
+                setClientFilter([]);
                 setContractFilter('All');
                 setAgingFilter('All');
                 setSearchTerm('');
@@ -1861,24 +1903,49 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             <div className="flex gap-2">
               <div className="relative">
                 <button
-                  onClick={() => document.getElementById('aging-report-client-filter').classList.toggle('hidden')}
+                  onClick={() => {
+                    document.getElementById('aging-report-client-filter').classList.toggle('hidden');
+                    setAgingClientSearchTerm('');
+                  }}
                   className="px-4 py-2 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
                 >
                   Filter by Client {agingClientFilter.length > 0 && `(${agingClientFilter.length})`}
                 </button>
-                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-3 max-h-80 overflow-y-auto z-10">
-                  <div className="space-y-1">
-                    {clients.map(client => (
-                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                        <input
-                          type="checkbox"
-                          checked={agingClientFilter.includes(client)}
-                          onChange={() => toggleAgingClient(client)}
-                          className="w-4 h-4 text-purple-600 cursor-pointer"
-                        />
-                        <span className="text-sm">{client}</span>
-                      </label>
-                    ))}
+                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-72 bg-white border rounded-lg shadow-lg z-10">
+                  <div className="p-3 border-b">
+                    <input
+                      type="text"
+                      value={agingClientSearchTerm}
+                      onChange={(e) => setAgingClientSearchTerm(e.target.value)}
+                      placeholder="Search clients..."
+                      className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    />
+                  </div>
+                  <div className="max-h-64 overflow-y-auto p-3">
+                    <div className="space-y-1">
+                      {clients
+                        .filter(client =>
+                          client.toLowerCase().includes(agingClientSearchTerm.toLowerCase())
+                        )
+                        .map(client => (
+                          <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input
+                              type="checkbox"
+                              checked={agingClientFilter.includes(client)}
+                              onChange={() => toggleAgingClient(client)}
+                              className="w-4 h-4 text-purple-600 cursor-pointer"
+                            />
+                            <span className="text-sm">{client}</span>
+                          </label>
+                        ))}
+                      {clients.filter(client =>
+                        client.toLowerCase().includes(agingClientSearchTerm.toLowerCase())
+                      ).length === 0 && (
+                        <div className="text-sm text-gray-500 italic py-2 text-center">
+                          No clients found
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -2418,21 +2485,43 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               <label className="block text-sm font-medium mb-2 text-white">
                 Client {clientFilter.length > 0 && `(${clientFilter.length} selected)`}
               </label>
-              <div className="bg-white border rounded px-3 py-2 max-h-48 overflow-y-auto space-y-1">
-                {clients.map(client => (
-                  <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                    <input
-                      type="checkbox"
-                      checked={clientFilter.includes(client)}
-                      onChange={() => {
-                        toggleClient(client);
-                        setActiveStatBox(null);
-                      }}
-                      className="w-4 h-4 text-purple-600 cursor-pointer"
-                    />
-                    <span className="text-sm">{client}</span>
-                  </label>
-                ))}
+              <div className="bg-white border rounded overflow-hidden">
+                <div className="p-2 border-b bg-gray-50">
+                  <input
+                    type="text"
+                    value={clientSearchTerm}
+                    onChange={(e) => setClientSearchTerm(e.target.value)}
+                    placeholder="Search clients..."
+                    className="w-full px-2 py-1 border rounded text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                  />
+                </div>
+                <div className="px-3 py-2 max-h-48 overflow-y-auto space-y-1">
+                  {clients
+                    .filter(client =>
+                      client.toLowerCase().includes(clientSearchTerm.toLowerCase())
+                    )
+                    .map(client => (
+                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input
+                          type="checkbox"
+                          checked={clientFilter.includes(client)}
+                          onChange={() => {
+                            toggleClient(client);
+                            setActiveStatBox(null);
+                          }}
+                          className="w-4 h-4 text-purple-600 cursor-pointer"
+                        />
+                        <span className="text-sm">{client}</span>
+                      </label>
+                    ))}
+                  {clients.filter(client =>
+                    client.toLowerCase().includes(clientSearchTerm.toLowerCase())
+                  ).length === 0 && (
+                    <div className="text-sm text-gray-500 italic py-2 text-center">
+                      No clients found
+                    </div>
+                  )}
+                </div>
               </div>
             </div>
 
@@ -3617,10 +3706,25 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                     {editingInvoice.client?.toLowerCase() === 'south australia health' && (
                       <button
                         onClick={() => checkSAHealthStatus(editingInvoice.id)}
-                        className="px-3 py-1 bg-blue-600 text-white text-sm rounded hover:bg-blue-700 transition"
+                        disabled={checkingSAHealth}
+                        className={`px-3 py-1 text-white text-sm rounded transition flex items-center gap-2 ${
+                          checkingSAHealth
+                            ? 'bg-gray-400 cursor-not-allowed'
+                            : 'bg-blue-600 hover:bg-blue-700'
+                        }`}
                         type="button"
                       >
-                        Check SA Health Status
+                        {checkingSAHealth ? (
+                          <>
+                            <svg className="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                            Checking...
+                          </>
+                        ) : (
+                          'Check SA Health Status'
+                        )}
                       </button>
                     )}
                   </div>
@@ -3727,32 +3831,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           </div>
         )}
       </div>
-
-      {/* Help Modal */}
-      {showHelp && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg w-full max-w-6xl h-[90vh] flex flex-col">
-            <div className="flex items-center justify-between p-4 border-b bg-gradient-to-r from-[#667eea] to-[#764ba2]">
-              <h2 className="text-2xl font-bold text-white">Invoice Tracker - Training Guide</h2>
-              <button
-                onClick={() => setShowHelp(false)}
-                className="text-white hover:bg-white hover:bg-opacity-20 rounded-full p-2 transition"
-              >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            <div className="flex-1 overflow-auto">
-              <iframe
-                src="/training-guide.html"
-                className="w-full h-full border-0"
-                title="Training Guide"
-              />
-            </div>
-          </div>
-        </div>
-      )}
 
       {loading && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">

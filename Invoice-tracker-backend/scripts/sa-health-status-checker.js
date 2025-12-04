@@ -252,7 +252,14 @@ async function fetchSAHealthInvoiceStatus(invoiceNumber) {
  * Update invoice notes with SA Health status
  */
 async function updateInvoiceWithSAHealthStatus(invoiceId, statusInfo) {
-  const statusText = `SA Health Status (checked ${new Date().toLocaleDateString()}): ${statusInfo.status}${statusInfo.paymentInfo || ''}`;
+  // Format date as dd-mmm-yyyy (e.g., 04-Dec-2024)
+  const now = new Date();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = now.toLocaleDateString('en-US', { month: 'short' });
+  const year = now.getFullYear();
+  const formattedDate = `${day}-${month}-${year}`;
+
+  const statusText = `SA Health Status (checked ${formattedDate}): ${statusInfo.status}${statusInfo.paymentInfo || ''}`;
   const separator = '────────────────────────────────────────────────────────';
 
   try {
