@@ -61,6 +61,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [frequencyFilter, setFrequencyFilter] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [clientSearchTerm, setClientSearchTerm] = useState('');
+  const [agingClientSearchTerm, setAgingClientSearchTerm] = useState('');
   const [dateFrom, setDateFrom] = useState('');
   const [dateTo, setDateTo] = useState('');
   const [agingFilter, setAgingFilter] = useState('All');
@@ -1868,24 +1869,49 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             <div className="flex gap-2">
               <div className="relative">
                 <button
-                  onClick={() => document.getElementById('aging-report-client-filter').classList.toggle('hidden')}
+                  onClick={() => {
+                    document.getElementById('aging-report-client-filter').classList.toggle('hidden');
+                    setAgingClientSearchTerm('');
+                  }}
                   className="px-4 py-2 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
                 >
                   Filter by Client {agingClientFilter.length > 0 && `(${agingClientFilter.length})`}
                 </button>
-                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-3 max-h-80 overflow-y-auto z-10">
-                  <div className="space-y-1">
-                    {clients.map(client => (
-                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
-                        <input
-                          type="checkbox"
-                          checked={agingClientFilter.includes(client)}
-                          onChange={() => toggleAgingClient(client)}
-                          className="w-4 h-4 text-purple-600 cursor-pointer"
-                        />
-                        <span className="text-sm">{client}</span>
-                      </label>
-                    ))}
+                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-72 bg-white border rounded-lg shadow-lg z-10">
+                  <div className="p-3 border-b">
+                    <input
+                      type="text"
+                      value={agingClientSearchTerm}
+                      onChange={(e) => setAgingClientSearchTerm(e.target.value)}
+                      placeholder="Search clients..."
+                      className="w-full px-3 py-2 border rounded-lg text-sm focus:ring-2 focus:ring-purple-500 focus:border-purple-500"
+                    />
+                  </div>
+                  <div className="max-h-64 overflow-y-auto p-3">
+                    <div className="space-y-1">
+                      {clients
+                        .filter(client =>
+                          client.toLowerCase().includes(agingClientSearchTerm.toLowerCase())
+                        )
+                        .map(client => (
+                          <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                            <input
+                              type="checkbox"
+                              checked={agingClientFilter.includes(client)}
+                              onChange={() => toggleAgingClient(client)}
+                              className="w-4 h-4 text-purple-600 cursor-pointer"
+                            />
+                            <span className="text-sm">{client}</span>
+                          </label>
+                        ))}
+                      {clients.filter(client =>
+                        client.toLowerCase().includes(agingClientSearchTerm.toLowerCase())
+                      ).length === 0 && (
+                        <div className="text-sm text-gray-500 italic py-2 text-center">
+                          No clients found
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
