@@ -1,6 +1,6 @@
 {
   "name": "invoice-tracker-backend",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Invoice tracking backend with SA Health status checking",
   "main": "server-postgres.js",
   "scripts": {
