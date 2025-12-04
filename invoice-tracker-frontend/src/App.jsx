@@ -52,8 +52,9 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Filters
   const [statusFilter, setStatusFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
-  const [clientFilter, setClientFilter] = useState('All');
+  const [clientFilter, setClientFilter] = useState([]);
   const [contractFilter, setContractFilter] = useState('All');
+  const [agingClientFilter, setAgingClientFilter] = useState([]); // Separate filter for Aged Invoice Report
   const [showContractsWithNoValue, setShowContractsWithNoValue] = useState(false);
   const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
@@ -84,6 +85,8 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [highlightedInvoiceId, setHighlightedInvoiceId] = useState(null); // For row highlighting (separate from modal)
   const [editingInvoice, setEditingInvoice] = useState(null);
+  const [quickEditInvoice, setQuickEditInvoice] = useState(null); // For quick notes/services modal
+  const [quickEditNotes, setQuickEditNotes] = useState(''); // Temporary state for editing notes
   const [editForm, setEditForm] = useState({});
   const [creatingInvoice, setCreatingInvoice] = useState(false);
   const [createForm, setCreateForm] = useState({});
@@ -536,7 +539,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         statusFilter.length > 0 ||
         agingFilter !== 'All' ||
         typeFilter.length > 0 ||
-        clientFilter !== 'All' ||
+        clientFilter.length > 0 ||
         contractFilter !== 'All' ||
         showContractsWithNoValue ||
         contractPercentageRangeMin ||
@@ -582,7 +585,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       statusFilter.length > 0 ||
       agingFilter !== 'All' ||
       typeFilter.length > 0 ||
-      clientFilter !== 'All' ||
+      clientFilter.length > 0 ||
       contractFilter !== 'All' ||
       showContractsWithNoValue ||
       contractPercentageRangeMin ||
@@ -632,9 +635,11 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       filtered = filtered.filter(inv => typeFilter.includes(inv.invoiceType));
     }
 
-    // Client filter
-    if (clientFilter !== 'All') {
-      filtered = filtered.filter(inv => normalizeClientName(inv.client) === normalizeClientName(clientFilter));
+    // Client filter (multi-select)
+    if (clientFilter.length > 0) {
+      filtered = filtered.filter(inv =>
+        clientFilter.some(client => normalizeClientName(inv.client) === normalizeClientName(client))
+      );
     }
 
     // Contract filter
@@ -926,7 +931,14 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Calculate aging statistics
   const calculateAgingStats = () => {
     // Exclude credit memos, vendor invoices, and POs from aging report (only regular unpaid invoices)
-    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType));
+    let unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType));
+
+    // Apply aging client filter if any clients are selected
+    if (agingClientFilter.length > 0) {
+      unpaidInvoices = unpaidInvoices.filter(inv =>
+        agingClientFilter.some(client => normalizeClientName(inv.client) === normalizeClientName(client))
+      );
+    }
 
     const buckets = {
       'Current': { count: 0, total: 0, invoices: [] },
@@ -963,7 +975,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const clearFilters = () => {
     setStatusFilter([]);
     setTypeFilter([]);
-    setClientFilter('All');
+    setClientFilter([]);
     setContractFilter('All');
     setContractPercentageRangeMin('');
     setContractPercentageRangeMax('');
@@ -993,6 +1005,29 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
     } else {
       setTypeFilter([...typeFilter, type]);
     }
+  };
+
+  // Toggle client filter selection
+  const toggleClient = (client) => {
+    if (clientFilter.includes(client)) {
+      setClientFilter(clientFilter.filter(c => c !== client));
+    } else {
+      setClientFilter([...clientFilter, client]);
+    }
+  };
+
+  // Toggle aging client filter selection (for Aged Invoice Report)
+  const toggleAgingClient = (client) => {
+    if (agingClientFilter.includes(client)) {
+      setAgingClientFilter(agingClientFilter.filter(c => c !== client));
+    } else {
+      setAgingClientFilter([...agingClientFilter, client]);
+    }
+  };
+
+  // Reset aging client filter
+  const resetAgingClientFilter = () => {
+    setAgingClientFilter([]);
   };
 
   // Toggle status filter selection
@@ -1040,6 +1075,10 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
     clearFilters();
     setActiveStatBox('aging-' + bucket);
     setAgingFilter(bucket);
+    // Apply aging client filter to main client filter to show filtered results
+    if (agingClientFilter.length > 0) {
+      setClientFilter([...agingClientFilter]);
+    }
     setExpandedGroups({}); // Collapse all groups
     setShowInvoiceTable(false); // Hide table initially to prevent freeze
   };
@@ -1136,6 +1175,21 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       }
     } catch (error) {
       showMessage('error', 'Failed to update invoice');
+    }
+  };
+
+  // Save notes from quick edit modal
+  const saveQuickEditNotes = async () => {
+    try {
+      await axios.put(`${API_URL}/invoices/${quickEditInvoice.id}`, {
+        notes: quickEditNotes
+      });
+      await loadInvoices();
+      setQuickEditInvoice(null);
+      setQuickEditNotes('');
+      showMessage('success', 'Notes updated successfully');
+    } catch (error) {
+      showMessage('error', 'Failed to update notes');
     }
   };
 
@@ -1802,7 +1856,53 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
 
         {/* Aged Invoice Report */}
         <div className="mb-6 bg-[#707CF1] p-6 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-4 text-white">Aged Invoice Report (Unpaid Only)</h2>
+          <div className="flex justify-between items-start mb-4">
+            <h2 className="text-xl font-bold text-white">Aged Invoice Report (Unpaid Only)</h2>
+            <div className="flex gap-2">
+              <div className="relative">
+                <button
+                  onClick={() => document.getElementById('aging-report-client-filter').classList.toggle('hidden')}
+                  className="px-4 py-2 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
+                >
+                  Filter by Client {agingClientFilter.length > 0 && `(${agingClientFilter.length})`}
+                </button>
+                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-3 max-h-80 overflow-y-auto z-10">
+                  <div className="space-y-1">
+                    {clients.map(client => (
+                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input
+                          type="checkbox"
+                          checked={agingClientFilter.includes(client)}
+                          onChange={() => toggleAgingClient(client)}
+                          className="w-4 h-4 text-purple-600 cursor-pointer"
+                        />
+                        <span className="text-sm">{client}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {agingClientFilter.length > 0 && (
+                <button
+                  onClick={resetAgingClientFilter}
+                  className="px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
+                >
+                  Reset Filter
+                </button>
+              )}
+              <button
+                onClick={() => {
+                  resetAgingClientFilter();
+                  clearFilters();
+                  setActiveStatBox(null);
+                  setAgingFilter('All');
+                }}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm font-medium border-2 border-red-500"
+              >
+                Clear All Filters
+              </button>
+            </div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
             {Object.keys(agingStats).map(bucket => {
               const data = agingStats[bucket];
@@ -2315,17 +2415,25 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1 text-white">Client</label>
-              <select
-                value={clientFilter}
-                onChange={(e) => setClientFilter(e.target.value)}
-                className="w-full border rounded px-3 py-2"
-              >
-                <option value="All">All</option>
+              <label className="block text-sm font-medium mb-2 text-white">
+                Client {clientFilter.length > 0 && `(${clientFilter.length} selected)`}
+              </label>
+              <div className="bg-white border rounded px-3 py-2 max-h-48 overflow-y-auto space-y-1">
                 {clients.map(client => (
-                  <option key={client} value={client}>{client}</option>
+                  <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                    <input
+                      type="checkbox"
+                      checked={clientFilter.includes(client)}
+                      onChange={() => {
+                        toggleClient(client);
+                        setActiveStatBox(null);
+                      }}
+                      className="w-4 h-4 text-purple-600 cursor-pointer"
+                    />
+                    <span className="text-sm">{client}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
             </div>
 
             <div>
@@ -2830,12 +2938,27 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                                   )}
                                 </td>
                                 <td className="px-4 py-2">
-                                  <button
-                                    onClick={() => setSelectedInvoice(inv)}
-                                    className="text-blue-600 hover:underline font-semibold"
-                                  >
-                                    {inv.invoiceNumber || '(no invoice number)'}
-                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      onClick={() => setSelectedInvoice(inv)}
+                                      className="text-blue-600 hover:underline font-semibold"
+                                    >
+                                      {inv.invoiceNumber || '(no invoice number)'}
+                                    </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setQuickEditInvoice(inv);
+                                        setQuickEditNotes(inv.notes || '');
+                                      }}
+                                      className="text-gray-500 hover:text-blue-600 transition"
+                                      title="Quick view services and edit notes"
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                      </svg>
+                                    </button>
+                                  </div>
                                 </td>
                                 <td className="px-4 py-2 text-gray-900">{inv.client}</td>
                                 <td className="px-4 py-2 text-gray-900">{inv.customerContract || '-'}</td>
@@ -2899,6 +3022,98 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             </div>
           )}
         </div>
+
+        {/* Quick Edit Modal - Services and Notes */}
+        {quickEditInvoice && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => {
+              setQuickEditInvoice(null);
+              setQuickEditNotes('');
+            }}
+          >
+            <div
+              className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold">Quick View - Invoice {quickEditInvoice.invoiceNumber}</h2>
+                <button
+                  onClick={() => {
+                    setQuickEditInvoice(null);
+                    setQuickEditNotes('');
+                  }}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Services Section */}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold mb-3 text-gray-800 border-b pb-2">Services (from uploaded file)</h3>
+                {(() => {
+                  // Parse services if it's a string, otherwise use as-is
+                  let services = quickEditInvoice.services;
+                  if (typeof services === 'string') {
+                    try {
+                      services = JSON.parse(services);
+                    } catch (e) {
+                      services = null;
+                    }
+                  }
+
+                  return services && Array.isArray(services) && services.length > 0 ? (
+                    <div className="bg-gray-50 rounded p-4">
+                      <ul className="space-y-2">
+                        {services.map((service, idx) => (
+                          <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                            <span className="text-blue-600 mt-1">•</span>
+                            <span>{service}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : (
+                    <div className="text-gray-500 italic text-sm bg-gray-50 rounded p-4">
+                      No services information available (upload invoice file to extract services)
+                    </div>
+                  );
+                })()}
+              </div>
+
+              {/* Notes Section */}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold mb-3 text-gray-800 border-b pb-2">Notes</h3>
+                <textarea
+                  value={quickEditNotes}
+                  onChange={(e) => setQuickEditNotes(e.target.value)}
+                  className="w-full border rounded p-3 min-h-[150px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Add notes about this invoice..."
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => {
+                    setQuickEditInvoice(null);
+                    setQuickEditNotes('');
+                  }}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveQuickEditNotes}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium"
+                >
+                  Save Notes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Invoice Detail Modal */}
         {selectedInvoice && !editingInvoice && (

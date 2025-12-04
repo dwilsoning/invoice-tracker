@@ -72,6 +72,8 @@ const Analytics = ({ onNavigateBack }) => {
   const [customTo, setCustomTo] = useState('');
   // Automatically enable production mode after Jan 1, 2026
   const [productionMode, setProductionMode] = useState(new Date() >= new Date('2026-01-01'));
+  // Client filter for Aged Invoice Report
+  const [clientFilter, setClientFilter] = useState([]);
 
   // Load invoices and exchange rates from API
   useEffect(() => {
@@ -97,6 +99,26 @@ const Analytics = ({ onNavigateBack }) => {
   // Convert currency to USD
   const convertToUSD = (amount, currency) => {
     return amount * (exchangeRates[currency] || 1);
+  };
+
+  // Normalize client name (remove trailing period for comparison)
+  const normalizeClientName = (name) => {
+    if (!name) return '';
+    return name.trim().replace(/\.$/, '');
+  };
+
+  // Toggle client filter
+  const toggleClient = (client) => {
+    if (clientFilter.includes(client)) {
+      setClientFilter(clientFilter.filter(c => c !== client));
+    } else {
+      setClientFilter([...clientFilter, client]);
+    }
+  };
+
+  // Reset filters
+  const resetFilters = () => {
+    setClientFilter([]);
   };
 
   // Base filter - applies production mode filter only
@@ -223,10 +245,17 @@ const Analytics = ({ onNavigateBack }) => {
         continue;
       }
 
-      const pendingAtMonth = baseFilteredInvoices.filter(inv =>
+      let pendingAtMonth = baseFilteredInvoices.filter(inv =>
         (inv.status === 'Pending' || (inv.status === 'Paid' && inv.paymentDate > monthEnd)) &&
         !isExcludedFromCalculations(inv.invoiceType)
       );
+
+      // Apply client filter if any clients are selected
+      if (clientFilter.length > 0) {
+        pendingAtMonth = pendingAtMonth.filter(inv =>
+          clientFilter.some(client => normalizeClientName(inv.client) === normalizeClientName(client))
+        );
+      }
 
       let current = 0, days30 = 0, days60 = 0, days90 = 0, days90Plus = 0;
 
@@ -1073,6 +1102,16 @@ const Analytics = ({ onNavigateBack }) => {
   const revenueByType = getRevenueByType();
   const invoiceTypes = getInvoiceTypes();
 
+  // Get unique clients for filter
+  const clientsMap = new Map();
+  invoices.forEach(inv => {
+    const normalized = normalizeClientName(inv.client);
+    if (!clientsMap.has(normalized)) {
+      clientsMap.set(normalized, inv.client.replace(/\.$/, ''));
+    }
+  });
+  const clients = [...clientsMap.values()].sort();
+
   // Phase 2 metrics
   const cashFlowProjection = getCashFlowProjection();
   const clientScorecard = getClientScorecard();
@@ -1275,7 +1314,42 @@ const Analytics = ({ onNavigateBack }) => {
 
         {/* Aging Trend */}
         <div className="bg-white p-6 rounded-lg shadow lg:col-span-2">
-          <h3 className="text-lg font-bold text-gray-800 mb-4">Aging Trend (Last 6 Months)</h3>
+          <div className="flex justify-between items-start mb-4">
+            <h3 className="text-lg font-bold text-gray-800">Aging Trend (Last 6 Months)</h3>
+            <div className="flex gap-2">
+              <div className="relative">
+                <button
+                  onClick={() => document.getElementById('aging-client-filter').classList.toggle('hidden')}
+                  className="px-4 py-2 bg-purple-100 text-purple-700 rounded-lg hover:bg-purple-200 transition text-sm font-medium border border-purple-300"
+                >
+                  Filter by Client {clientFilter.length > 0 && `(${clientFilter.length})`}
+                </button>
+                <div id="aging-client-filter" className="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-3 max-h-80 overflow-y-auto z-10">
+                  <div className="space-y-1">
+                    {clients.map(client => (
+                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input
+                          type="checkbox"
+                          checked={clientFilter.includes(client)}
+                          onChange={() => toggleClient(client)}
+                          className="w-4 h-4 text-purple-600 cursor-pointer"
+                        />
+                        <span className="text-sm">{client}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {clientFilter.length > 0 && (
+                <button
+                  onClick={resetFilters}
+                  className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition text-sm font-medium border border-gray-300"
+                >
+                  Reset Filter
+                </button>
+              )}
+            </div>
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <BarChart data={agingTrend}>
               <CartesianGrid strokeDasharray="3 3" />
