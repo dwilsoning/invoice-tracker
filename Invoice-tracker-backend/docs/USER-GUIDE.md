@@ -210,22 +210,27 @@ Filter the Aged Invoice Report by specific clients to focus on problem accounts.
 #### How to Use
 
 1. Navigate to **Analytics** → Scroll to **Aged Invoice Report (Unpaid Only)**
-2. Click **"Select Clients"** button
-3. Client selection modal opens showing all clients with unpaid invoices
-4. **Select clients**:
-   - Click individual client names to select/deselect
-   - Click **"Select All"** to choose all clients
-   - Click **"Deselect All"** to clear all selections
-5. Click **"Apply Filter"** to update the chart
-6. Click **"Clear All Filters"** button (next to date filter) to reset
+2. Click **"Filter by Client"** button
+3. Client selection dropdown opens
+4. **Use the search box**:
+   - Type in the search box at the top to filter clients
+   - Client list updates in real-time as you type
+   - Case-insensitive search
+5. **Select clients**:
+   - Click checkboxes next to client names to select/deselect
+   - Search helps you quickly find specific clients in long lists
+6. Click outside or on another section to close the dropdown
+7. Click **"Reset Filter"** button to clear all client selections
+8. Click **"Clear All Filters"** button to reset all filters
 
 #### Features
 
+- **Search box**: Type to quickly find clients in the list
 - **Multi-select**: Choose multiple clients at once
 - **Real-time filtering**: Chart updates immediately when you apply filters
-- **Persistent selection**: Selected clients stay highlighted in the modal
-- **Visual feedback**: Active filters shown with count (e.g., "Select Clients (3)")
+- **Visual feedback**: Active filters shown with count (e.g., "Filter by Client (3)")
 - **Aging bucket clicks**: When you click an aging bucket (31-60 days, etc.), the client filter is respected
+- **No results message**: Shows "No clients found" when search has no matches
 
 #### Use Cases
 
@@ -233,6 +238,7 @@ Filter the Aged Invoice Report by specific clients to focus on problem accounts.
 - Compare aging patterns between clients
 - Track collection efforts for priority accounts
 - Present aging data filtered by region or account manager
+- Quickly find clients in long lists using search
 
 ---
 
@@ -259,9 +265,25 @@ Filter the Aged Invoice Report by specific clients to focus on problem accounts.
 
 ### Client Filter
 
+**New Feature in v2.1.0: Client Search**
+
 1. Click **"Show Filters"**
-2. Use client dropdown to filter by specific client
-3. Clear selection to show all clients
+2. In the Client section, you'll see a search box at the top
+3. **Type to search**:
+   - Start typing a client name
+   - List filters in real-time as you type
+   - Case-insensitive search
+4. **Select clients**:
+   - Check boxes next to client names to filter by multiple clients
+   - Selected count shows in the label (e.g., "Client (3 selected)")
+5. **Clear filters**: Uncheck boxes to remove client filters
+
+#### Client Search Available In:
+
+The search box is available in **all three** client filter locations:
+- **Main Filters** (Show Filters section)
+- **Aged Invoice Report** (main tracker page)
+- **Analytics Aged Invoice Report** (Analytics page)
 
 ### Search
 
@@ -494,6 +516,7 @@ The system automatically detects duplicate invoices based on:
 - ✅ SA Health invoice status check with real-time scraping
 - ✅ Quick Edit modal for viewing services and editing notes
 - ✅ Multi-client selection filter for Aged Invoice Report
+- ✅ **Client search box in all filter dropdowns**
 - ✅ Individual duplicate deletion (choose which duplicate to delete)
 - ✅ Improved loading feedback for SA Health checks
 - ✅ Date format standardization (dd-mmm-yyyy)
@@ -501,6 +524,7 @@ The system automatically detects duplicate invoices based on:
 **Improvements**:
 - ✅ Better visual feedback during long operations
 - ✅ Enhanced client filtering with select all/deselect all
+- ✅ **Real-time client search** in main filters, Aged Invoice Report, and Analytics
 - ✅ Aging bucket clicks respect client filter selection
 - ✅ Services display fixed in Quick Edit modal
 
