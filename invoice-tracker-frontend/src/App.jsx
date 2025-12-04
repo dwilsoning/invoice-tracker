@@ -85,6 +85,8 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [highlightedInvoiceId, setHighlightedInvoiceId] = useState(null); // For row highlighting (separate from modal)
   const [editingInvoice, setEditingInvoice] = useState(null);
+  const [quickEditInvoice, setQuickEditInvoice] = useState(null); // For quick notes/services modal
+  const [quickEditNotes, setQuickEditNotes] = useState(''); // Temporary state for editing notes
   const [editForm, setEditForm] = useState({});
   const [creatingInvoice, setCreatingInvoice] = useState(false);
   const [createForm, setCreateForm] = useState({});
@@ -1173,6 +1175,21 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       }
     } catch (error) {
       showMessage('error', 'Failed to update invoice');
+    }
+  };
+
+  // Save notes from quick edit modal
+  const saveQuickEditNotes = async () => {
+    try {
+      await axios.put(`${API_URL}/invoices/${quickEditInvoice.id}`, {
+        notes: quickEditNotes
+      });
+      await loadInvoices();
+      setQuickEditInvoice(null);
+      setQuickEditNotes('');
+      showMessage('success', 'Notes updated successfully');
+    } catch (error) {
+      showMessage('error', 'Failed to update notes');
     }
   };
 
@@ -2921,12 +2938,27 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                                   )}
                                 </td>
                                 <td className="px-4 py-2">
-                                  <button
-                                    onClick={() => setSelectedInvoice(inv)}
-                                    className="text-blue-600 hover:underline font-semibold"
-                                  >
-                                    {inv.invoiceNumber || '(no invoice number)'}
-                                  </button>
+                                  <div className="flex items-center gap-2">
+                                    <button
+                                      onClick={() => setSelectedInvoice(inv)}
+                                      className="text-blue-600 hover:underline font-semibold"
+                                    >
+                                      {inv.invoiceNumber || '(no invoice number)'}
+                                    </button>
+                                    <button
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setQuickEditInvoice(inv);
+                                        setQuickEditNotes(inv.notes || '');
+                                      }}
+                                      className="text-gray-500 hover:text-blue-600 transition"
+                                      title="Quick view services and edit notes"
+                                    >
+                                      <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                        <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z" />
+                                      </svg>
+                                    </button>
+                                  </div>
                                 </td>
                                 <td className="px-4 py-2 text-gray-900">{inv.client}</td>
                                 <td className="px-4 py-2 text-gray-900">{inv.customerContract || '-'}</td>
@@ -2990,6 +3022,86 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             </div>
           )}
         </div>
+
+        {/* Quick Edit Modal - Services and Notes */}
+        {quickEditInvoice && (
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
+            onClick={() => {
+              setQuickEditInvoice(null);
+              setQuickEditNotes('');
+            }}
+          >
+            <div
+              className="bg-white rounded-lg p-6 max-w-3xl w-full max-h-[90vh] overflow-y-auto"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-start mb-4">
+                <h2 className="text-2xl font-bold">Quick View - Invoice {quickEditInvoice.invoiceNumber}</h2>
+                <button
+                  onClick={() => {
+                    setQuickEditInvoice(null);
+                    setQuickEditNotes('');
+                  }}
+                  className="text-gray-500 hover:text-gray-700 text-2xl"
+                >
+                  ×
+                </button>
+              </div>
+
+              {/* Services Section */}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold mb-3 text-gray-800 border-b pb-2">Services (from uploaded file)</h3>
+                {quickEditInvoice.services && quickEditInvoice.services.length > 0 ? (
+                  <div className="bg-gray-50 rounded p-4">
+                    <ul className="space-y-2">
+                      {quickEditInvoice.services.map((service, idx) => (
+                        <li key={idx} className="text-sm text-gray-700 flex items-start gap-2">
+                          <span className="text-blue-600 mt-1">•</span>
+                          <span>{service}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ) : (
+                  <div className="text-gray-500 italic text-sm bg-gray-50 rounded p-4">
+                    No services information available (upload invoice file to extract services)
+                  </div>
+                )}
+              </div>
+
+              {/* Notes Section */}
+              <div className="mb-6">
+                <h3 className="text-lg font-bold mb-3 text-gray-800 border-b pb-2">Notes</h3>
+                <textarea
+                  value={quickEditNotes}
+                  onChange={(e) => setQuickEditNotes(e.target.value)}
+                  className="w-full border rounded p-3 min-h-[150px] focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  placeholder="Add notes about this invoice..."
+                />
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3 justify-end">
+                <button
+                  onClick={() => {
+                    setQuickEditInvoice(null);
+                    setQuickEditNotes('');
+                  }}
+                  className="px-4 py-2 bg-gray-300 text-gray-700 rounded hover:bg-gray-400 transition"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={saveQuickEditNotes}
+                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition font-medium"
+                >
+                  Save Notes
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Invoice Detail Modal */}
         {selectedInvoice && !editingInvoice && (
