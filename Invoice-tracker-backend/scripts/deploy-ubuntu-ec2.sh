@@ -74,47 +74,24 @@ install_system_dependencies() {
     print_success "Package lists updated"
 
     print_info "Installing Puppeteer Chrome dependencies..."
-    apt-get install -y -qq \
-        ca-certificates \
-        fonts-liberation \
-        libasound2 \
-        libatk-bridge2.0-0 \
-        libatk1.0-0 \
-        libc6 \
-        libcairo2 \
-        libcups2 \
-        libdbus-1-3 \
-        libexpat1 \
-        libfontconfig1 \
-        libgbm1 \
-        libgcc1 \
-        libglib2.0-0 \
-        libgtk-3-0 \
-        libnspr4 \
-        libnss3 \
-        libpango-1.0-0 \
-        libpangocairo-1.0-0 \
-        libstdc++6 \
-        libx11-6 \
-        libx11-xcb1 \
-        libxcb1 \
-        libxcomposite1 \
-        libxcursor1 \
-        libxdamage1 \
-        libxext6 \
-        libxfixes3 \
-        libxi6 \
-        libxrandr2 \
-        libxrender1 \
-        libxss1 \
-        libxtst6 \
-        lsb-release \
-        wget \
-        xdg-utils \
-        libdrm2 \
-        libxkbcommon0 \
-        curl \
-        git > /dev/null
+
+    # Detect Ubuntu version for package compatibility
+    UBUNTU_VERSION=$(lsb_release -rs | cut -d. -f1)
+
+    # Base packages that work on all versions
+    PACKAGES="ca-certificates fonts-liberation libatk-bridge2.0-0 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgbm1 libglib2.0-0 libgtk-3-0 libnspr4 libnss3 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxss1 libxtst6 lsb-release wget xdg-utils libdrm2 libxkbcommon0 curl git"
+
+    # Add version-specific packages
+    if [ "$UBUNTU_VERSION" -ge 24 ]; then
+        # Ubuntu 24.04+ uses libasound2t64 instead of libasound2
+        PACKAGES="$PACKAGES libasound2t64 libgcc-s1"
+        print_info "Detected Ubuntu 24.04+, using libasound2t64"
+    else
+        # Ubuntu 22.04 and earlier use libasound2
+        PACKAGES="$PACKAGES libasound2 libgcc1"
+    fi
+
+    apt-get install -y -qq $PACKAGES > /dev/null
 
     print_success "All system dependencies installed"
 }
