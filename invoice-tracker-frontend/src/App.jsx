@@ -54,6 +54,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const [typeFilter, setTypeFilter] = useState([]);
   const [clientFilter, setClientFilter] = useState([]);
   const [contractFilter, setContractFilter] = useState('All');
+  const [agingClientFilter, setAgingClientFilter] = useState([]); // Separate filter for Aged Invoice Report
   const [showContractsWithNoValue, setShowContractsWithNoValue] = useState(false);
   const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
   const [contractPercentageRangeMax, setContractPercentageRangeMax] = useState('');
@@ -928,7 +929,14 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Calculate aging statistics
   const calculateAgingStats = () => {
     // Exclude credit memos, vendor invoices, and POs from aging report (only regular unpaid invoices)
-    const unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType));
+    let unpaidInvoices = invoices.filter(inv => inv.status === 'Pending' && !isExcludedFromCalculations(inv.invoiceType));
+
+    // Apply aging client filter if any clients are selected
+    if (agingClientFilter.length > 0) {
+      unpaidInvoices = unpaidInvoices.filter(inv =>
+        agingClientFilter.some(client => normalizeClientName(inv.client) === normalizeClientName(client))
+      );
+    }
 
     const buckets = {
       'Current': { count: 0, total: 0, invoices: [] },
@@ -1004,6 +1012,20 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
     } else {
       setClientFilter([...clientFilter, client]);
     }
+  };
+
+  // Toggle aging client filter selection (for Aged Invoice Report)
+  const toggleAgingClient = (client) => {
+    if (agingClientFilter.includes(client)) {
+      setAgingClientFilter(agingClientFilter.filter(c => c !== client));
+    } else {
+      setAgingClientFilter([...agingClientFilter, client]);
+    }
+  };
+
+  // Reset aging client filter
+  const resetAgingClientFilter = () => {
+    setAgingClientFilter([]);
   };
 
   // Toggle status filter selection
@@ -1813,7 +1835,42 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
 
         {/* Aged Invoice Report */}
         <div className="mb-6 bg-[#707CF1] p-6 rounded-lg shadow">
-          <h2 className="text-xl font-bold mb-4 text-white">Aged Invoice Report (Unpaid Only)</h2>
+          <div className="flex justify-between items-start mb-4">
+            <h2 className="text-xl font-bold text-white">Aged Invoice Report (Unpaid Only)</h2>
+            <div className="flex gap-2">
+              <div className="relative">
+                <button
+                  onClick={() => document.getElementById('aging-report-client-filter').classList.toggle('hidden')}
+                  className="px-4 py-2 bg-white text-[#707CF1] rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
+                >
+                  Filter by Client {agingClientFilter.length > 0 && `(${agingClientFilter.length})`}
+                </button>
+                <div id="aging-report-client-filter" className="hidden absolute right-0 mt-2 w-64 bg-white border rounded-lg shadow-lg p-3 max-h-80 overflow-y-auto z-10">
+                  <div className="space-y-1">
+                    {clients.map(client => (
+                      <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                        <input
+                          type="checkbox"
+                          checked={agingClientFilter.includes(client)}
+                          onChange={() => toggleAgingClient(client)}
+                          className="w-4 h-4 text-purple-600 cursor-pointer"
+                        />
+                        <span className="text-sm">{client}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              </div>
+              {agingClientFilter.length > 0 && (
+                <button
+                  onClick={resetAgingClientFilter}
+                  className="px-4 py-2 bg-white text-gray-700 rounded-lg hover:bg-gray-100 transition text-sm font-medium border-2 border-white"
+                >
+                  Reset Filter
+                </button>
+              )}
+            </div>
+          </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
             {Object.keys(agingStats).map(bucket => {
               const data = agingStats[bucket];
