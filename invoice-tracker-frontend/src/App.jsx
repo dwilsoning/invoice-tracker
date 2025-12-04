@@ -1873,6 +1873,17 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                   Reset Filter
                 </button>
               )}
+              <button
+                onClick={() => {
+                  resetAgingClientFilter();
+                  clearFilters();
+                  setActiveStatBox(null);
+                  setAgingFilter('All');
+                }}
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition text-sm font-medium border-2 border-red-500"
+              >
+                Clear All Filters
+              </button>
             </div>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
