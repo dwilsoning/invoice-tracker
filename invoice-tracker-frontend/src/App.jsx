@@ -52,7 +52,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   // Filters
   const [statusFilter, setStatusFilter] = useState([]);
   const [typeFilter, setTypeFilter] = useState([]);
-  const [clientFilter, setClientFilter] = useState('All');
+  const [clientFilter, setClientFilter] = useState([]);
   const [contractFilter, setContractFilter] = useState('All');
   const [showContractsWithNoValue, setShowContractsWithNoValue] = useState(false);
   const [contractPercentageRangeMin, setContractPercentageRangeMin] = useState('');
@@ -536,7 +536,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         statusFilter.length > 0 ||
         agingFilter !== 'All' ||
         typeFilter.length > 0 ||
-        clientFilter !== 'All' ||
+        clientFilter.length > 0 ||
         contractFilter !== 'All' ||
         showContractsWithNoValue ||
         contractPercentageRangeMin ||
@@ -582,7 +582,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       statusFilter.length > 0 ||
       agingFilter !== 'All' ||
       typeFilter.length > 0 ||
-      clientFilter !== 'All' ||
+      clientFilter.length > 0 ||
       contractFilter !== 'All' ||
       showContractsWithNoValue ||
       contractPercentageRangeMin ||
@@ -632,9 +632,11 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       filtered = filtered.filter(inv => typeFilter.includes(inv.invoiceType));
     }
 
-    // Client filter
-    if (clientFilter !== 'All') {
-      filtered = filtered.filter(inv => normalizeClientName(inv.client) === normalizeClientName(clientFilter));
+    // Client filter (multi-select)
+    if (clientFilter.length > 0) {
+      filtered = filtered.filter(inv =>
+        clientFilter.some(client => normalizeClientName(inv.client) === normalizeClientName(client))
+      );
     }
 
     // Contract filter
@@ -963,7 +965,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
   const clearFilters = () => {
     setStatusFilter([]);
     setTypeFilter([]);
-    setClientFilter('All');
+    setClientFilter([]);
     setContractFilter('All');
     setContractPercentageRangeMin('');
     setContractPercentageRangeMax('');
@@ -992,6 +994,15 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       setTypeFilter(typeFilter.filter(t => t !== type));
     } else {
       setTypeFilter([...typeFilter, type]);
+    }
+  };
+
+  // Toggle client filter selection
+  const toggleClient = (client) => {
+    if (clientFilter.includes(client)) {
+      setClientFilter(clientFilter.filter(c => c !== client));
+    } else {
+      setClientFilter([...clientFilter, client]);
     }
   };
 
@@ -2315,17 +2326,25 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
             </div>
             
             <div>
-              <label className="block text-sm font-medium mb-1 text-white">Client</label>
-              <select
-                value={clientFilter}
-                onChange={(e) => setClientFilter(e.target.value)}
-                className="w-full border rounded px-3 py-2"
-              >
-                <option value="All">All</option>
+              <label className="block text-sm font-medium mb-2 text-white">
+                Client {clientFilter.length > 0 && `(${clientFilter.length} selected)`}
+              </label>
+              <div className="bg-white border rounded px-3 py-2 max-h-48 overflow-y-auto space-y-1">
                 {clients.map(client => (
-                  <option key={client} value={client}>{client}</option>
+                  <label key={client} className="flex items-center space-x-2 cursor-pointer hover:bg-gray-50 p-1 rounded">
+                    <input
+                      type="checkbox"
+                      checked={clientFilter.includes(client)}
+                      onChange={() => {
+                        toggleClient(client);
+                        setActiveStatBox(null);
+                      }}
+                      className="w-4 h-4 text-purple-600 cursor-pointer"
+                    />
+                    <span className="text-sm">{client}</span>
+                  </label>
                 ))}
-              </select>
+              </div>
             </div>
 
             <div>
