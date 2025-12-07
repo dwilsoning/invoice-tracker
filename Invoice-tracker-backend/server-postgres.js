@@ -2952,6 +2952,135 @@ app.post('/api/invoices/check-all-sa-health-status', authenticateToken, requireA
   }
 });
 
+// API endpoint for aging invoice data (real-time)
+// Returns client names and amounts in each aging bucket
+app.get('/api/aging-report', authenticateToken, async (req, res) => {
+  try {
+    // Get all pending invoices (unpaid)
+    const invoices = await db.all(
+      `SELECT id, invoice_number, invoice_date, client, amount_due, currency,
+              due_date, status, invoice_type
+       FROM invoices
+       WHERE status = $1
+       ORDER BY client, due_date`,
+      'Pending'
+    );
+
+    // Helper function to check if invoice type should be excluded from aging calculations
+    const isExcludedFromCalculations = (invoiceType) => {
+      if (!invoiceType) return false;
+      const type = invoiceType.toLowerCase();
+      return type === 'credit memo' || type === 'vendor invoice' || type === 'po';
+    };
+
+    // Helper function to get days overdue
+    const getDaysOverdue = (dueDate) => {
+      if (!dueDate) return 0;
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const dueDateObj = new Date(dueDate);
+      dueDateObj.setHours(0, 0, 0, 0);
+      const diffTime = today - dueDateObj;
+      const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      return diffDays;
+    };
+
+    // Helper function to get aging bucket
+    const getAgingBucket = (dueDate) => {
+      const daysOverdue = getDaysOverdue(dueDate);
+
+      if (daysOverdue <= 0) return 'Current';
+      if (daysOverdue <= 30) return 'Current';
+      if (daysOverdue <= 60) return '31-60';
+      if (daysOverdue <= 90) return '61-90';
+      if (daysOverdue <= 120) return '91-120';
+      if (daysOverdue <= 180) return '121-180';
+      if (daysOverdue <= 270) return '181-270';
+      if (daysOverdue <= 365) return '271-365';
+      return '>365';
+    };
+
+    // Initialize aging buckets
+    const agingData = {
+      'Current': { totalUSD: 0, clients: {} },
+      '31-60': { totalUSD: 0, clients: {} },
+      '61-90': { totalUSD: 0, clients: {} },
+      '91-120': { totalUSD: 0, clients: {} },
+      '121-180': { totalUSD: 0, clients: {} },
+      '181-270': { totalUSD: 0, clients: {} },
+      '271-365': { totalUSD: 0, clients: {} },
+      '>365': { totalUSD: 0, clients: {} }
+    };
+
+    // Process each invoice
+    invoices.forEach(inv => {
+      // Skip excluded invoice types
+      if (isExcludedFromCalculations(inv.invoiceType)) {
+        return;
+      }
+
+      const bucket = getAgingBucket(inv.dueDate);
+      if (!bucket) return;
+
+      // Convert amount to USD
+      const amountUSD = convertToUSD(inv.amountDue, inv.currency);
+
+      // Skip negative amounts (shouldn't happen but just in case)
+      if (amountUSD < 0) return;
+
+      // Add to bucket total
+      agingData[bucket].totalUSD += amountUSD;
+
+      // Add to client total within bucket
+      if (!agingData[bucket].clients[inv.client]) {
+        agingData[bucket].clients[inv.client] = {
+          totalUSD: 0,
+          invoiceCount: 0,
+          invoices: []
+        };
+      }
+
+      agingData[bucket].clients[inv.client].totalUSD += amountUSD;
+      agingData[bucket].clients[inv.client].invoiceCount += 1;
+      agingData[bucket].clients[inv.client].invoices.push({
+        invoiceNumber: inv.invoiceNumber,
+        invoiceDate: inv.invoiceDate,
+        dueDate: inv.dueDate,
+        amountDue: inv.amountDue,
+        currency: inv.currency,
+        amountUSD: amountUSD,
+        daysOverdue: getDaysOverdue(inv.dueDate)
+      });
+    });
+
+    // Calculate grand total and round all amounts
+    let grandTotal = 0;
+    Object.keys(agingData).forEach(bucket => {
+      agingData[bucket].totalUSD = Math.round(agingData[bucket].totalUSD);
+      grandTotal += agingData[bucket].totalUSD;
+
+      // Round client totals
+      Object.keys(agingData[bucket].clients).forEach(client => {
+        agingData[bucket].clients[client].totalUSD = Math.round(agingData[bucket].clients[client].totalUSD);
+      });
+    });
+
+    // Prepare summary response
+    const summary = {
+      generatedAt: new Date().toISOString(),
+      currency: 'USD',
+      grandTotal: Math.round(grandTotal),
+      buckets: agingData,
+      exchangeRates: exchangeRates
+    };
+
+    res.json(summary);
+  } catch (error) {
+    console.error('Error generating aging report:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 // Initialize database and start server
 async function startServer() {
   try {
