@@ -1949,20 +1949,10 @@ cron.schedule('0 4 * * *', performDatabaseBackup, {
 });
 console.log('📅 Scheduled: Database backup at 4 AM AEST/AEDT daily');
 
-// SA Health invoice status check - runs daily at 9 AM AEST/AEDT
-cron.schedule('0 9 * * *', async () => {
-  try {
-    console.log('\n🏥 Starting scheduled SA Health invoice status check...');
-    const { checkAllSAHealthInvoices } = require('./scripts/sa-health-status-checker');
-    await checkAllSAHealthInvoices();
-    console.log('✓ SA Health invoice status check completed\n');
-  } catch (error) {
-    console.error('❌ Error in scheduled SA Health status check:', error);
-  }
-}, {
-  timezone: 'Australia/Sydney'
-});
-console.log('📅 Scheduled: SA Health invoice status check at 9 AM AEST/AEDT daily');
+// SA Health invoice status check - MANUAL ONLY
+// Automatic scheduling disabled due to EC2 environment issues with Puppeteer
+// Use the "Check All SA Health Status" button or individual invoice checks instead
+console.log('ℹ️  SA Health status checks: Manual only (automatic scheduling disabled)');
 
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
@@ -3093,7 +3083,7 @@ async function startServer() {
       console.log('  • Exchange rate updates: 2 AM, 8 AM, 2 PM, 8 PM daily');
       console.log('  • Cleanup old acknowledged invoices: 3 AM every Sunday');
       console.log('  • Database backup: 4 AM daily');
-      console.log('  • SA Health invoice status check: 9 AM daily');
+      console.log('  • SA Health status check: Manual only (automatic disabled)');
       console.log('  • Server timezone:', Intl.DateTimeFormat().resolvedOptions().timeZone);
       console.log('  • Current time (AEST/AEDT):', new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' }));
       console.log('');
