@@ -335,8 +335,13 @@
                 </div>
 
                 <h3>Logging In</h3>
-                <p>Currently the application does not require login. Simply navigate to the URL to access the tracker.</p>
-                <p><strong>Note:</strong> Multi-user authentication with login credentials is planned for future releases.</p>
+                <p>The application requires authentication to access:</p>
+                <ol>
+                    <li>Enter your email address</li>
+                    <li>Enter your password</li>
+                    <li>Click "Sign In" button</li>
+                </ol>
+                <p><strong>Note:</strong> If you don't have login credentials, contact your administrator to create an account for you.</p>
             </section>
 
             <!-- Main Interface -->
@@ -364,13 +369,14 @@
                 </ul>
 
                 <h4>Search Box</h4>
-                <p>Search invoices by invoice number, client name, contract, or services:</p>
-                <div class="example-query">
-                    Invoice #12345<br>
-                    Western Australia Department<br>
-                    Professional Services<br>
-                    Show invoices greater than $10,000
-                </div>
+                <p>Search invoices by typing keywords from:</p>
+                <ul>
+                    <li><strong>Invoice Number:</strong> e.g., "12345"</li>
+                    <li><strong>Client Name:</strong> e.g., "Western Australia"</li>
+                    <li><strong>Contract Number:</strong> e.g., "541577"</li>
+                    <li><strong>Services:</strong> Text from services field</li>
+                </ul>
+                <p><strong>Note:</strong> The search box performs basic text matching only. Use filters for advanced criteria like invoice type, status, or date range.</p>
 
                 <h3>Middle Section - Invoice Table</h3>
 
@@ -407,10 +413,20 @@
                 <h4>Method 1: Upload PDF (Automatic)</h4>
                 <ul>
                     <li><strong>File Type:</strong> PDF only</li>
-                    <li><strong>Size Limit:</strong> Recommend &lt; 10MB per file</li>
-                    <li><strong>Multiple Files:</strong> Yes, can upload multiple at once</li>
+                    <li><strong>Individual File Size:</strong> Maximum 10MB per file</li>
+                    <li><strong>Total Upload Size:</strong> Maximum 400MB for all files combined in one upload</li>
+                    <li><strong>Multiple Files:</strong> Yes, can upload multiple at once (maximum 40 invoices per upload)</li>
                     <li><strong>Best For:</strong> Client invoices that you receive as PDFs</li>
                 </ul>
+                <div class="warning-box">
+                    <strong>Upload Limits:</strong>
+                    <ul>
+                        <li><strong>File Count:</strong> Maximum 40 invoices per upload</li>
+                        <li><strong>Individual File:</strong> Maximum 10MB per PDF</li>
+                        <li><strong>Total Size:</strong> Maximum 400MB for all files combined</li>
+                        <li><strong>Solution:</strong> If you exceed these limits, split your uploads into smaller batches or compress large PDF files</li>
+                    </ul>
+                </div>
 
                 <h4>Method 2: Manual Creation</h4>
                 <ul>
@@ -427,6 +443,40 @@
                     <li><strong>Duplicate Detection</strong> - System checks for existing invoice numbers</li>
                     <li><strong>Success Confirmation</strong> - Green message and invoice appears in table</li>
                 </ol>
+
+                <h3>Visual Upload Feedback</h3>
+                <p><strong>NEW FEATURE:</strong> Full-screen flash notifications provide highly visible feedback regardless of your scroll position.</p>
+
+                <h4>Success Flash (Green)</h4>
+                <ul>
+                    <li><strong>What it looks like:</strong> Entire screen flashes green (semi-transparent) for 2 seconds</li>
+                    <li><strong>When it appears:</strong> When invoices are uploaded successfully</li>
+                    <li><strong>Why it's helpful:</strong> Very visible even if you're scrolled down on the page</li>
+                    <li><strong>Also shows:</strong> Green success message at the top with upload count</li>
+                </ul>
+
+                <h4>Error Flash (Red)</h4>
+                <ul>
+                    <li><strong>What it looks like:</strong> Entire screen flashes red (semi-transparent) for 2 seconds</li>
+                    <li><strong>When it appears:</strong> When an upload error occurs</li>
+                    <li><strong>Why it's helpful:</strong> Immediately alerts you to problems, visible from anywhere on the page</li>
+                    <li><strong>Error message:</strong> Red error message appears at the top with details</li>
+                </ul>
+
+                <h4>Error Message Behavior</h4>
+                <div class="info-box">
+                    <strong>Important:</strong> Error messages require acknowledgment
+                    <ul>
+                        <li>Error messages stay visible until you click them</li>
+                        <li>Look for "(Click to dismiss)" hint in the error message</li>
+                        <li>This ensures you see and acknowledge any upload problems</li>
+                        <li>Success messages auto-dismiss after 5 seconds</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <strong>Pro Tip:</strong> If you see a red flash but can't find the error message, scroll to the top of the page. Error messages appear just below the header and will remain visible until you click them.
+                </div>
 
                 <h3>What Gets Auto-Detected</h3>
 
@@ -580,6 +630,74 @@
                     <li>Available actions: View PDF, Download, Edit, Delete</li>
                 </ol>
 
+                <h3>Quick Edit - Services and Notes (Pencil Icon)</h3>
+                <p><strong>NEW FEATURE:</strong> Quickly view extracted services and edit notes without opening the full invoice editor.</p>
+
+                <h4>How to Use</h4>
+                <ol>
+                    <li>Look for the <strong>pencil icon (✏️)</strong> next to any invoice number in the table</li>
+                    <li>Click the pencil icon to open the Quick Edit modal</li>
+                    <li>The modal displays:
+                        <ul>
+                            <li><strong>Services:</strong> Automatically extracted from the invoice PDF (read-only)</li>
+                            <li><strong>Notes:</strong> Editable text area for adding comments or information</li>
+                        </ul>
+                    </li>
+                    <li>Edit notes as needed</li>
+                    <li>Click <strong>"Save Notes"</strong> to save your changes</li>
+                    <li>Click <strong>"Cancel"</strong> or click outside the modal to close without saving</li>
+                </ol>
+
+                <h4>When to Use Quick Edit</h4>
+                <ul>
+                    <li><strong>Quick reference:</strong> View what services are included in the invoice</li>
+                    <li><strong>Add quick notes:</strong> Add comments without opening full edit mode</li>
+                    <li><strong>SA Health invoices:</strong> Notes include SA Health status check results (see below)</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>Quick Edit vs Full Edit:</strong>
+                    <ul>
+                        <li>Use Quick Edit (pencil icon) for viewing services and adding notes</li>
+                        <li>Use Full Edit (Edit Invoice button) for changing amounts, dates, status, or other invoice fields</li>
+                    </ul>
+                </div>
+
+                <h3>SA Health Invoice Status Check</h3>
+                <p><strong>NEW FEATURE:</strong> For South Australia Health invoices, check real-time payment status directly from the SA Health website.</p>
+
+                <h4>How to Use</h4>
+                <ol>
+                    <li>Open an SA Health invoice for editing (click invoice number, then "Edit Invoice")</li>
+                    <li>Scroll to the <strong>Notes</strong> section</li>
+                    <li>Click <strong>"Check SA Health Status"</strong> button</li>
+                    <li>Wait 5-10 seconds (button shows spinning icon and "Checking..." text)</li>
+                    <li>Status is automatically added to invoice notes with:
+                        <ul>
+                            <li>Check date (dd-mmm-yyyy format, e.g., 04-Dec-2024)</li>
+                            <li>Payment status (Paid/Unpaid)</li>
+                            <li>Payment date (if paid)</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>"Save Changes"</strong> to save the updated notes</li>
+                </ol>
+
+                <h4>Example Note Format</h4>
+                <div class="example-query">
+SA Health Status (checked 04-Dec-2024): Paid on 15-Nov-2024
+────────────────────────────────────────────────────────
+Your internal notes here...
+                </div>
+
+                <h4>Important Notes</h4>
+                <ul>
+                    <li>The button is disabled while checking to prevent duplicate requests</li>
+                    <li>Status checks can take up to 10 seconds - be patient!</li>
+                    <li>Previous SA Health status checks are preserved in notes</li>
+                    <li>Your internal notes below the separator line are never overwritten</li>
+                    <li>This feature only works for SA Health invoices</li>
+                </ul>
+
                 <h3>Editing an Invoice</h3>
                 <ol>
                     <li>Open invoice details</li>
@@ -646,10 +764,53 @@
                     <li><strong>By Invoice Type:</strong> Select one or more types (PS, Maint, Sub, Vendor Invoice, Purchase Order, etc.)</li>
                     <li><strong>By Status:</strong> Choose All, Paid, or Unpaid</li>
                     <li><strong>By Date Range:</strong> Last 30 Days, Last 90 Days, This Year, or Custom Range</li>
-                    <li><strong>By Client:</strong> Select from list of clients</li>
+                    <li><strong>By Client:</strong> Select from list of clients (with search - see below)</li>
                     <li><strong>By Contract:</strong> Select contract number</li>
                     <li><strong>By Frequency:</strong> Select monthly, quarterly, annual, etc.</li>
                 </ul>
+
+                <h3>Client Filtering with Search</h3>
+                <p><strong>NEW FEATURE:</strong> The client filter now includes a search box for quickly finding clients in long lists.</p>
+
+                <h4>How to Use Client Search</h4>
+                <ol>
+                    <li>Click <strong>"Show Filters"</strong> button at the top of the page</li>
+                    <li>In the <strong>Client</strong> section, you'll see a search box at the top</li>
+                    <li><strong>Type to search:</strong>
+                        <ul>
+                            <li>Start typing a client name (e.g., "Health", "Western", "Department")</li>
+                            <li>List filters in real-time as you type</li>
+                            <li>Search is case-insensitive</li>
+                        </ul>
+                    </li>
+                    <li><strong>Select clients:</strong>
+                        <ul>
+                            <li>Check boxes next to client names to filter by multiple clients</li>
+                            <li>You can select as many clients as needed</li>
+                            <li>Selected count shows in the label (e.g., "Client (3 selected)")</li>
+                        </ul>
+                    </li>
+                    <li>Click <strong>"Apply Filters"</strong> to see results</li>
+                    <li><strong>Clear filters:</strong> Uncheck boxes or use "Clear All Filters" button</li>
+                </ol>
+
+                <h4>Where Client Search is Available</h4>
+                <p>The client search box appears in three locations:</p>
+                <ul>
+                    <li><strong>Main Filters:</strong> Show Filters section on main tracker page</li>
+                    <li><strong>Aged Invoice Report:</strong> Filter by Client button in the aging report (main tracker page bottom)</li>
+                    <li><strong>Analytics Aged Invoice Report:</strong> Filter by Client in Analytics dashboard</li>
+                </ul>
+
+                <div class="tip-box">
+                    <strong>Use Cases for Client Search:</strong>
+                    <ul>
+                        <li>Quickly find specific clients without scrolling through long lists</li>
+                        <li>Filter by multiple related clients (e.g., all "Health" departments)</li>
+                        <li>Focus aging reports on specific problem accounts</li>
+                        <li>Compare data across selected clients only</li>
+                    </ul>
+                </div>
 
                 <h3>Combining Filters</h3>
                 <div class="info-box">
@@ -754,13 +915,13 @@
                 </ul>
 
                 <h3>Contract Analytics</h3>
-                <div class="example-query">
-                    Which contracts are &gt;80% invoiced?<br>
-                    Show contracts less than 50% complete<br>
-                    Contracts at exactly 75% invoiced<br>
-                    Which contracts are &gt;50% paid?<br>
-                    Show contracts with &gt;30% unpaid
-                </div>
+                <p>To analyze contracts by completion percentage:</p>
+                <ol>
+                    <li>Group by Contract from the dropdown</li>
+                    <li>Review the progress bars and percentages displayed for each contract</li>
+                    <li>Expand contracts to view detailed metrics (Total Invoiced, Amount Paid, Remaining Balance)</li>
+                    <li>Use the percentage values to identify contracts that need attention (e.g., over 80% complete, under 50% complete, etc.)</li>
+                </ol>
             </section>
 
             <!-- Expected Invoices -->
@@ -883,30 +1044,50 @@
 
                 <h3>Dealing with Duplicates</h3>
 
-                <h4>Option 1: Replace All with New Upload</h4>
+                <div class="info-box">
+                    <strong>Permissions Note:</strong> All authenticated users can delete duplicate invoices. Regular invoice deletion (from the invoice detail modal) is restricted to administrators only.
+                </div>
+
+                <h4>Option 1: Delete Individual Duplicate</h4>
+                <p><strong>Available to all users</strong></p>
                 <ol>
-                    <li>Click "Browse to Replace All" button</li>
+                    <li>In the duplicate details view, find the specific duplicate version you want to remove</li>
+                    <li>Click the <strong>"Delete"</strong> button on that row</li>
+                    <li>Confirm deletion</li>
+                    <li><strong>Result:</strong> Only that specific duplicate is deleted, others remain</li>
+                    <li><strong>Use when:</strong> You need granular control over which version to keep/remove</li>
+                </ol>
+
+                <h4>Option 2: Delete All Duplicates (Keep Latest)</h4>
+                <p><strong>Available to all users</strong></p>
+                <ol>
+                    <li>Click <strong>"Delete Duplicates"</strong> button</li>
+                    <li>Confirm action</li>
+                    <li><strong>Result:</strong> Keeps most recent version, deletes all older versions</li>
+                    <li><strong>Use when:</strong> You want to quickly clean up and keep only the latest</li>
+                </ol>
+
+                <h4>Option 3: Replace All with New Upload</h4>
+                <p><strong>Available to all users</strong></p>
+                <ol>
+                    <li>Click <strong>"Browse to Replace All"</strong> button</li>
                     <li>Select correct PDF file</li>
                     <li>Confirm replacement</li>
                     <li><strong>Result:</strong> All old versions deleted, new one kept</li>
+                    <li><strong>Use when:</strong> You have a corrected/updated PDF to replace all versions</li>
                 </ol>
 
-                <h4>Option 2: Keep Specific Version</h4>
+                <h4>Option 4: Keep Specific Version</h4>
+                <p><strong>Available to all users</strong></p>
                 <ol>
                     <li>Find the correct version in list</li>
-                    <li>Click "Keep This Version" button</li>
+                    <li>Click <strong>"Keep This Version"</strong> button</li>
                     <li>Confirm deletion of others</li>
                     <li><strong>Result:</strong> Selected version kept, others deleted</li>
+                    <li><strong>Use when:</strong> You know exactly which version is correct</li>
                 </ol>
 
-                <h4>Option 3: Delete All Duplicates (Keep Latest)</h4>
-                <ol>
-                    <li>Click "Delete Duplicates" button</li>
-                    <li>Confirm action</li>
-                    <li><strong>Result:</strong> Keeps most recent, deletes older versions</li>
-                </ol>
-
-                <h4>Option 4: Do Nothing</h4>
+                <h4>Option 5: Do Nothing</h4>
                 <p>Keep multiple versions for audit trail - useful if need to compare versions</p>
 
                 <div class="warning-box">
@@ -1194,14 +1375,14 @@
                 <p>All analytics can be filtered by date range:</p>
                 <ul>
                     <li><strong>This Year:</strong> January 1 to December 31 of current year - best for annual tracking</li>
-                    <li><strong>All Time:</strong> All production invoices (from Nov 1, 2025 onwards) - best for historical analysis</li>
+                    <li><strong>All Time:</strong> All production invoices (from Jan 1, 2026 onwards when production mode is enabled) - best for historical analysis</li>
                     <li><strong>Custom Range:</strong> Pick your own start and end dates - best for quarterly reports or specific periods</li>
                 </ul>
 
                 <div class="warning-box">
                     <h4>Production Mode</h4>
-                    <p><strong>Automatically Enabled:</strong> November 1, 2025</p>
-                    <p>Production mode hides all test/dummy data before Nov 1, 2025 to ensure clean production reports. This cannot be disabled to prevent test data pollution.</p>
+                    <p><strong>Automatically Enabled:</strong> January 1, 2026</p>
+                    <p>Production mode hides all pre-production test data (before Jan 1, 2026) to ensure clean production reports. Only production data from January 1, 2026 onwards will be included in analytics.</p>
                 </div>
 
                 <h3>Built-In Analytics (Main Tracker)</h3>
@@ -1330,10 +1511,21 @@
                 <h4>PDF Won't Upload</h4>
                 <p><strong>Possible Causes & Solutions:</strong></p>
                 <ul>
-                    <li><strong>File Too Large:</strong> Compress PDF first using online PDF compressor</li>
+                    <li><strong>Too Many Files:</strong> Maximum 40 invoices per upload - split into smaller batches</li>
+                    <li><strong>Individual File Too Large:</strong> Maximum 10MB per file - compress PDF using online PDF compressor</li>
+                    <li><strong>Total Size Too Large:</strong> Maximum 400MB total for all files - upload fewer files at once or compress PDFs</li>
                     <li><strong>File Corrupted:</strong> Re-download or re-export PDF, test by opening in Adobe Reader</li>
-                    <li><strong>Server Offline:</strong> Check both server windows are running, restart if necessary</li>
+                    <li><strong>Server Offline:</strong> Check server is running, restart if necessary</li>
                 </ul>
+
+                <div class="tip-box">
+                    <strong>Error Messages:</strong>
+                    <ul>
+                        <li>"Too many files" → You tried to upload more than 40 invoices</li>
+                        <li>"Total file size exceeded" → Combined size of all files exceeds 400MB</li>
+                        <li>"Individual file too large" → One or more files exceed 10MB</li>
+                    </ul>
+                </div>
 
                 <h4>Data Extracted Incorrectly</h4>
                 <p><strong>Solutions:</strong></p>
@@ -1342,6 +1534,17 @@
                     <li><strong>Replace PDF:</strong> Use duplicate management to upload better quality PDF</li>
                     <li><strong>Report Issue:</strong> Note invoice number for IT review</li>
                 </ol>
+
+                <h4>Didn't See Upload Confirmation</h4>
+                <p><strong>Problem:</strong> Uploaded files but didn't notice if it succeeded or failed</p>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li><strong>Look for the flash:</strong> Success = green flash, Error = red flash (covers entire screen for 2 seconds)</li>
+                    <li><strong>Scroll to top:</strong> Success/error messages appear at the top of the page</li>
+                    <li><strong>Check for red error:</strong> Error messages stay visible until you click them</li>
+                    <li><strong>Look for success message:</strong> Green message shows upload count (auto-dismisses after 5 seconds)</li>
+                    <li><strong>Verify in table:</strong> Newly uploaded invoices appear in the table automatically</li>
+                </ul>
 
                 <h3>Filter & Search Issues</h3>
 
@@ -1497,7 +1700,7 @@
                     <dd>A: Indefinitely unless manually deleted. Backups kept 30 days.</dd>
 
                     <dt><strong>Q: Can multiple users access simultaneously?</strong></dt>
-                    <dd>A: Currently single-user application. Multi-user access planned.</dd>
+                    <dd>A: Yes, the application supports multiple users with individual login credentials and role-based access control (Admin and User roles).</dd>
 
                     <dt><strong>Q: What happens if power fails during backup?</strong></dt>
                     <dd>A: Partial backup deleted automatically. Next backup will be complete.</dd>
@@ -1510,8 +1713,8 @@
 
         <footer>
             <p><strong>Invoice Tracker Training Guide</strong></p>
-            <p>Version 1.0 - October 2025</p>
-            <p>For technical support, contact IT department</p>
+            <p>Version 3.0.0 - 4 December 2024</p>
+            <p>For technical support, contact your administrator</p>
         </footer>
     </div>
 </body>
