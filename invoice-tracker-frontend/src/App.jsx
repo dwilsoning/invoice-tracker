@@ -4,6 +4,7 @@ import Analytics from './Analytics';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login';
 import Header from './components/Header';
+import Chatbot from './components/Chatbot';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -3847,6 +3848,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
 function App() {
   const { isAuthenticated, isAdmin, loading } = useAuth();
   const [currentView, setCurrentView] = useState('tracker'); // 'tracker' or 'analytics'
+  const [showChatbot, setShowChatbot] = useState(false);
 
   // Show loading screen while checking authentication
   if (loading) {
@@ -3876,6 +3878,46 @@ function App() {
           onNavigateBack={() => setCurrentView('tracker')}
         />
       )}
+
+      {/* Floating AI Chatbot Button */}
+      {!showChatbot && (
+        <button
+          onClick={() => setShowChatbot(true)}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            width: '60px',
+            height: '60px',
+            borderRadius: '50%',
+            backgroundColor: '#0076A2',
+            color: 'white',
+            border: 'none',
+            cursor: 'pointer',
+            boxShadow: '0 4px 12px rgba(0, 118, 162, 0.4)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: '28px',
+            transition: 'all 0.3s',
+            zIndex: 9999
+          }}
+          onMouseOver={(e) => {
+            e.target.style.backgroundColor = '#005A7D';
+            e.target.style.transform = 'scale(1.1)';
+          }}
+          onMouseOut={(e) => {
+            e.target.style.backgroundColor = '#0076A2';
+            e.target.style.transform = 'scale(1)';
+          }}
+          title="Open AI Assistant"
+        >
+          💬
+        </button>
+      )}
+
+      {/* Chatbot Modal */}
+      {showChatbot && <Chatbot onClose={() => setShowChatbot(false)} />}
     </div>
   );
 }

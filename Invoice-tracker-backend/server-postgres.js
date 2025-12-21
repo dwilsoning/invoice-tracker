@@ -14,6 +14,10 @@ const { authenticateToken, requireAdmin, optionalAuth } = require('./middleware/
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 
+// Import chatbot services
+const { sendChatCompletion, sendSimpleQuery, testConnection } = require('./services/matchaAI');
+const { generateAnalyticsContext, getDetailedInvoiceData } = require('./services/chatbotContext');
+
 const app = express();
 const PORT = 3001;
 
@@ -3068,6 +3072,123 @@ app.get('/api/aging-report', authenticateToken, async (req, res) => {
   } catch (error) {
     console.error('Error generating aging report:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== CHATBOT ENDPOINTS ====================
+
+/**
+ * POST /api/chatbot/query
+ * Send a message to the AI chatbot
+ * Requires authentication
+ */
+app.post('/api/chatbot/query', authenticateToken, async (req, res) => {
+  try {
+    const { message, chatHistory } = req.body;
+
+    if (!message || typeof message !== 'string' || message.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Message is required and must be a non-empty string'
+      });
+    }
+
+    // Validate chat history format if provided
+    if (chatHistory && !Array.isArray(chatHistory)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Chat history must be an array'
+      });
+    }
+
+    // Send query to MatchaAI
+    const response = await sendChatCompletion(message, chatHistory || []);
+
+    if (response.success) {
+      res.json({
+        success: true,
+        message: response.message,
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: response.error || 'Failed to get response from AI'
+      });
+    }
+  } catch (error) {
+    console.error('Chatbot query error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error processing chatbot query'
+    });
+  }
+});
+
+/**
+ * GET /api/chatbot/context
+ * Get the current analytics context that the chatbot uses
+ * Requires authentication
+ * Useful for debugging or showing users what data the AI has access to
+ */
+app.get('/api/chatbot/context', authenticateToken, async (req, res) => {
+  try {
+    const context = await generateAnalyticsContext();
+    res.json({
+      success: true,
+      context,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error generating chatbot context:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to generate analytics context'
+    });
+  }
+});
+
+/**
+ * GET /api/chatbot/test
+ * Test the MatchaAI connection
+ * Requires authentication
+ */
+app.get('/api/chatbot/test', authenticateToken, async (req, res) => {
+  try {
+    const testResult = await testConnection();
+    res.json(testResult);
+  } catch (error) {
+    console.error('Chatbot test error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to test chatbot connection'
+    });
+  }
+});
+
+/**
+ * POST /api/chatbot/invoices
+ * Get detailed invoice data with filters
+ * Requires authentication
+ * Used when the chatbot needs specific invoice details
+ */
+app.post('/api/chatbot/invoices', authenticateToken, async (req, res) => {
+  try {
+    const filters = req.body.filters || {};
+    const invoices = await getDetailedInvoiceData(filters);
+
+    res.json({
+      success: true,
+      count: invoices.length,
+      invoices,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching invoice data:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch invoice data'
+    });
   }
 });
 
