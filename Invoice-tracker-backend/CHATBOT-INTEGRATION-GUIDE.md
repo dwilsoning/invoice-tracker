@@ -175,7 +175,10 @@ The chatbot follows the **exact same rules** as the Analytics dashboard:
 
 3. **Currency Conversion**:
    - All amounts converted to USD for aggregations
-   - Uses latest exchange rates from database (or defaults)
+   - Uses **live exchange rates** fetched from API
+   - Rates updated **4 times daily** at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT
+   - Same rates used by both server and chatbot (centralized service)
+   - Negative amounts (credits, adjustments) are excluded from calculations
 
 4. **Status Filtering**:
    - Pending invoices for DSI, aging, cash flow
