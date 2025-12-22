@@ -1257,14 +1257,28 @@ app.post('/api/upload-payments', async (req, res) => {
           });
 
           let fileUpdatedCount = 0;
+          const updatedInvoiceIds = [];
 
           for (const update of updates) {
-            const result = await db.run(`
-              UPDATE invoices
-              SET status = 'Paid', payment_date = $1
-              WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
-            `, update.paymentDate, update.invoiceNumber);
-            fileUpdatedCount += result.rowCount || 0;
+            // First get the invoice ID
+            const invoice = await db.get(`
+              SELECT id FROM invoices
+              WHERE LOWER(TRIM(invoice_number)) = LOWER($1)
+            `, update.invoiceNumber);
+
+            if (invoice) {
+              // Then update it
+              const result = await db.run(`
+                UPDATE invoices
+                SET status = 'Paid', payment_date = $1
+                WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
+              `, update.paymentDate, update.invoiceNumber);
+
+              if (result.rowCount > 0) {
+                fileUpdatedCount += result.rowCount;
+                updatedInvoiceIds.push(invoice.id);
+              }
+            }
           }
 
           totalUpdatedCount += fileUpdatedCount;
@@ -1272,7 +1286,8 @@ app.post('/api/upload-payments', async (req, res) => {
           fileResults.push({
             filename: file.originalFilename,
             success: true,
-            updatedCount: fileUpdatedCount
+            updatedCount: fileUpdatedCount,
+            invoiceIds: updatedInvoiceIds
           });
 
           // Clean up the uploaded file
@@ -1298,12 +1313,18 @@ app.post('/api/upload-payments', async (req, res) => {
         }
       }
 
+      // Collect all updated invoice IDs from all files
+      const allUpdatedIds = fileResults
+        .filter(r => r.success && r.invoiceIds)
+        .flatMap(r => r.invoiceIds);
+
       res.json({
         success: true,
         updatedCount: totalUpdatedCount, // For backward compatibility
         totalUpdatedCount,
         filesProcessed: fileResults.length,
-        fileResults
+        fileResults,
+        updatedInvoiceIds: allUpdatedIds // IDs of all invoices that were updated
       });
 
     } catch (error) {

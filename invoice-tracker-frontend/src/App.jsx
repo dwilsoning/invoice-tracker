@@ -448,7 +448,41 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           ? `Updated ${response.data.updatedCount} invoice payments from ${response.data.filesProcessed} files`
           : `Updated ${response.data.updatedCount} invoice payments`;
         showMessage('success', message);
+
+        // Get the IDs of updated invoices
+        const updatedIds = response.data.updatedInvoiceIds || [];
+
         await loadInvoices();
+
+        // If invoices were updated, show them in the invoice table
+        if (updatedIds.length > 0) {
+          // Set flag to prevent useEffect from clearing the filter during reset
+          setIsUploadingInvoices(true);
+
+          // Clear all filters and show only updated invoices
+          setStatusFilter([]);
+          setTypeFilter([]);
+          setClientFilter([]);
+          setContractFilter('All');
+          setContractPercentageRangeMin('');
+          setContractPercentageRangeMax('');
+          setFrequencyFilter([]);
+          setSearchTerm('');
+          setDateFrom('');
+          setDateTo('');
+          setAgingFilter('All');
+          setActiveStatBox(null);
+          setSelectedExpectedInvoiceId(null);
+          setGroupBy('None');
+          setSecondaryGroupBy('None');
+          setExpandedGroups({});
+          setUploadedInvoiceIds(updatedIds);
+          setShowOnlyUploadedInvoices(true);
+          setShowInvoiceTable(true); // Show invoice table with updated invoices
+
+          // Clear the upload flag after a brief delay
+          setTimeout(() => setIsUploadingInvoices(false), 100);
+        }
       }
       
     } catch (error) {
@@ -2301,6 +2335,24 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                             setSelectedDuplicate(null);
                             setDuplicateDetails([]);
                             setSearchTerm(''); // Clear search term when closing duplicate details
+                            // Also hide invoice table if it has no other active filters
+                            const hasOtherFilters =
+                              activeStatBox ||
+                              statusFilter.length > 0 ||
+                              agingFilter !== 'All' ||
+                              typeFilter.length > 0 ||
+                              clientFilter.length > 0 ||
+                              contractFilter !== 'All' ||
+                              showContractsWithNoValue ||
+                              contractPercentageRangeMin ||
+                              contractPercentageRangeMax ||
+                              frequencyFilter.length > 0 ||
+                              dateFrom ||
+                              dateTo ||
+                              (showOnlyUploadedInvoices && uploadedInvoiceIds.length > 0);
+                            if (!hasOtherFilters) {
+                              setShowInvoiceTable(false);
+                            }
                           }}
                           className="text-gray-500 hover:text-gray-700"
                         >
