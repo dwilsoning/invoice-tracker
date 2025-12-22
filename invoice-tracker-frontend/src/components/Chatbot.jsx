@@ -35,33 +35,33 @@ const Chatbot = ({ onClose }) => {
     }
   }, []);
 
-  // Drag handlers
+  // Drag handlers - using delta movement for multi-monitor support
   const handleMouseDown = (e) => {
     if (e.target.closest('[data-draggable-header]')) {
       setIsDragging(true);
-      const modalRect = modalRef.current.getBoundingClientRect();
       setDragOffset({
-        x: e.clientX - modalRect.left,
-        y: e.clientY - modalRect.top
+        x: e.clientX,
+        y: e.clientY
       });
     }
   };
 
   const handleMouseMove = (e) => {
-    if (isDragging && modalRef.current) {
-      const modalRect = modalRef.current.getBoundingClientRect();
-      const newX = e.clientX - dragOffset.x;
-      const newY = e.clientY - dragOffset.y;
+    if (isDragging) {
+      // Calculate movement delta
+      const deltaX = e.clientX - dragOffset.x;
+      const deltaY = e.clientY - dragOffset.y;
 
-      // Constrain to viewport bounds with some padding
-      const minX = -modalRect.width + 100; // Allow 100px to remain visible
-      const minY = 0; // Don't allow dragging above viewport
-      const maxX = window.innerWidth - 100; // Keep 100px visible on right
-      const maxY = window.innerHeight - 100; // Keep 100px visible at bottom
+      // Update position by adding delta
+      setPosition(prev => ({
+        x: prev.x + deltaX,
+        y: prev.y + deltaY
+      }));
 
-      setPosition({
-        x: Math.max(minX, Math.min(maxX, newX)),
-        y: Math.max(minY, Math.min(maxY, newY))
+      // Update drag offset for next movement
+      setDragOffset({
+        x: e.clientX,
+        y: e.clientY
       });
     }
   };
@@ -79,7 +79,7 @@ const Chatbot = ({ onClose }) => {
         document.removeEventListener('mouseup', handleMouseUp);
       };
     }
-  }, [isDragging, dragOffset]);
+  }, [isDragging, dragOffset, position]);
 
   // Add welcome message on mount
   useEffect(() => {
@@ -215,7 +215,7 @@ const Chatbot = ({ onClose }) => {
       <div
         ref={modalRef}
         style={{
-          position: 'absolute',
+          position: 'fixed',
           left: `${position.x}px`,
           top: `${position.y}px`,
           backgroundColor: '#ffffff',
@@ -226,7 +226,8 @@ const Chatbot = ({ onClose }) => {
           flexDirection: 'column',
           boxShadow: '0 24px 80px rgba(57, 51, 146, 0.5), 0 0 0 1px rgba(112, 124, 241, 0.3)',
           overflow: 'hidden',
-          cursor: isDragging ? 'grabbing' : 'default'
+          cursor: isDragging ? 'grabbing' : 'default',
+          zIndex: 10001
         }}
         onMouseDown={handleMouseDown}
       >
@@ -239,9 +240,9 @@ const Chatbot = ({ onClose }) => {
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            background: 'linear-gradient(135deg, #707CF1 0%, #5a66d9 100%)',
+            background: 'linear-gradient(135deg, #393392 0%, #2d2870 100%)',
             color: 'white',
-            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+            boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)',
             cursor: 'grab',
             userSelect: 'none'
           }}
@@ -355,12 +356,12 @@ const Chatbot = ({ onClose }) => {
                 maxWidth: '80%',
                 padding: '14px 18px',
                 borderRadius: message.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
-                backgroundColor: message.role === 'user' ? '#707CF1' : message.isError ? '#FEE2E2' : '#ffffff',
+                backgroundColor: message.role === 'user' ? '#393392' : message.isError ? '#FEE2E2' : '#ffffff',
                 color: message.role === 'user' ? 'white' : message.isError ? '#991B1B' : '#1f2937',
-                boxShadow: message.role === 'user' ? '0 2px 8px rgba(112, 124, 241, 0.4)' : '0 2px 12px rgba(0, 0, 0, 0.08)',
+                boxShadow: message.role === 'user' ? '0 2px 8px rgba(57, 51, 146, 0.4)' : '0 2px 12px rgba(0, 0, 0, 0.08)',
                 whiteSpace: 'pre-wrap',
                 wordWrap: 'break-word',
-                border: message.role === 'assistant' && !message.isError ? '1px solid rgba(112, 124, 241, 0.15)' : 'none'
+                border: message.role === 'assistant' && !message.isError ? '1px solid rgba(57, 51, 146, 0.15)' : 'none'
               }}>
                 <div style={{ fontSize: '15px', lineHeight: '1.7' }}>
                   {message.content}
@@ -394,21 +395,21 @@ const Chatbot = ({ onClose }) => {
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
-                    backgroundColor: '#707CF1',
+                    backgroundColor: '#393392',
                     animation: 'pulse 1.4s ease-in-out infinite'
                   }} />
                   <div style={{
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
-                    backgroundColor: '#707CF1',
+                    backgroundColor: '#393392',
                     animation: 'pulse 1.4s ease-in-out 0.2s infinite'
                   }} />
                   <div style={{
                     width: '8px',
                     height: '8px',
                     borderRadius: '50%',
-                    backgroundColor: '#707CF1',
+                    backgroundColor: '#393392',
                     animation: 'pulse 1.4s ease-in-out 0.4s infinite'
                   }} />
                 </div>
@@ -451,11 +452,11 @@ const Chatbot = ({ onClose }) => {
                       boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
                     }}
                     onMouseOver={(e) => {
-                      e.target.style.backgroundColor = '#707CF1';
-                      e.target.style.borderColor = '#707CF1';
+                      e.target.style.backgroundColor = '#393392';
+                      e.target.style.borderColor = '#393392';
                       e.target.style.color = 'white';
                       e.target.style.transform = 'translateY(-2px)';
-                      e.target.style.boxShadow = '0 4px 8px rgba(112, 124, 241, 0.4)';
+                      e.target.style.boxShadow = '0 4px 8px rgba(57, 51, 146, 0.4)';
                     }}
                     onMouseOut={(e) => {
                       e.target.style.backgroundColor = 'white';
@@ -518,9 +519,9 @@ const Chatbot = ({ onClose }) => {
                 backgroundColor: '#fafbfc'
               }}
               onFocus={(e) => {
-                e.target.style.borderColor = '#707CF1';
+                e.target.style.borderColor = '#393392';
                 e.target.style.backgroundColor = 'white';
-                e.target.style.boxShadow = '0 0 0 3px rgba(112, 124, 241, 0.15)';
+                e.target.style.boxShadow = '0 0 0 3px rgba(57, 51, 146, 0.15)';
               }}
               onBlur={(e) => {
                 e.target.style.borderColor = '#e2e8f0';
@@ -534,7 +535,7 @@ const Chatbot = ({ onClose }) => {
               disabled={!inputMessage.trim() || isLoading}
               style={{
                 padding: '14px 28px',
-                backgroundColor: inputMessage.trim() && !isLoading ? '#707CF1' : '#cbd5e1',
+                backgroundColor: inputMessage.trim() && !isLoading ? '#393392' : '#cbd5e1',
                 color: 'white',
                 border: 'none',
                 borderRadius: '12px',
@@ -544,20 +545,20 @@ const Chatbot = ({ onClose }) => {
                 transition: 'all 0.2s',
                 minWidth: '100px',
                 height: '56px',
-                boxShadow: inputMessage.trim() && !isLoading ? '0 2px 8px rgba(112, 124, 241, 0.4)' : 'none'
+                boxShadow: inputMessage.trim() && !isLoading ? '0 2px 8px rgba(57, 51, 146, 0.4)' : 'none'
               }}
               onMouseOver={(e) => {
                 if (inputMessage.trim() && !isLoading) {
-                  e.target.style.backgroundColor = '#5a66d9';
+                  e.target.style.backgroundColor = '#2d2870';
                   e.target.style.transform = 'translateY(-2px)';
-                  e.target.style.boxShadow = '0 4px 12px rgba(112, 124, 241, 0.5)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(57, 51, 146, 0.5)';
                 }
               }}
               onMouseOut={(e) => {
                 if (inputMessage.trim() && !isLoading) {
-                  e.target.style.backgroundColor = '#707CF1';
+                  e.target.style.backgroundColor = '#393392';
                   e.target.style.transform = 'translateY(0)';
-                  e.target.style.boxShadow = '0 2px 8px rgba(112, 124, 241, 0.4)';
+                  e.target.style.boxShadow = '0 2px 8px rgba(57, 51, 146, 0.4)';
                 }
               }}
             >

@@ -4,7 +4,6 @@ import Analytics from './Analytics';
 import { useAuth } from './contexts/AuthContext';
 import Login from './components/Login';
 import Header from './components/Header';
-import Chatbot from './components/Chatbot';
 
 const API_URL = (import.meta.env.VITE_API_URL || 'http://localhost:3001') + '/api';
 const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
@@ -1386,9 +1385,12 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       await loadInvoices();
       await loadDuplicates(); // Refresh duplicates in case changes affect duplicate status
 
-      // If we're viewing duplicate details, reload them to show the updated data
+      // If we're viewing duplicate details, reload them ONLY if the edited invoice is part of the duplicate group
       if (selectedDuplicate && duplicateDetails.length > 0) {
-        await loadDuplicateDetails(selectedDuplicate);
+        // Check if the edited invoice ID is in the duplicate IDs
+        if (selectedDuplicate.ids && selectedDuplicate.ids.includes(editingInvoice.id)) {
+          await loadDuplicateDetails(selectedDuplicate);
+        }
       }
 
       setEditingInvoice(null);
@@ -3891,7 +3893,20 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
 function App() {
   const { isAuthenticated, isAdmin, loading } = useAuth();
   const [currentView, setCurrentView] = useState('tracker'); // 'tracker' or 'analytics'
-  const [showChatbot, setShowChatbot] = useState(false);
+  // Function to open Sage chatbot in popup window
+  const openSageChatbot = () => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      window.open(
+        `/sage-chatbot.html?token=${encodeURIComponent(token)}`,
+        'SageChatbot',
+        'width=900,height=750,scrollbars=yes,resizable=yes'
+      );
+    } else {
+      console.error('No authentication token found');
+      alert('Authentication token not found. Please refresh the page and try again.');
+    }
+  };
 
   // Show loading screen while checking authentication
   if (loading) {
@@ -3923,9 +3938,8 @@ function App() {
       )}
 
       {/* Floating AI Chatbot Button */}
-      {!showChatbot && (
-        <div
-          onClick={() => setShowChatbot(true)}
+      <div
+        onClick={openSageChatbot}
           style={{
             position: 'fixed',
             bottom: '24px',
@@ -3941,12 +3955,12 @@ function App() {
           <div
             style={{
               padding: '8px 16px',
-              backgroundColor: '#707CF1',
+              backgroundColor: '#393392',
               color: 'white',
               borderRadius: '20px',
               fontSize: '14px',
               fontWeight: '500',
-              boxShadow: '0 2px 8px rgba(112, 124, 241, 0.4)',
+              boxShadow: '0 2px 8px rgba(57, 51, 146, 0.4)',
               whiteSpace: 'nowrap',
               opacity: 0.95
             }}
@@ -3958,11 +3972,11 @@ function App() {
               width: '64px',
               height: '64px',
               borderRadius: '50%',
-              backgroundColor: '#707CF1',
+              backgroundColor: '#393392',
               color: 'white',
               border: '3px solid white',
               cursor: 'pointer',
-              boxShadow: '0 4px 16px rgba(112, 124, 241, 0.5)',
+              boxShadow: '0 4px 16px rgba(57, 51, 146, 0.5)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -3973,14 +3987,14 @@ function App() {
               outline: 'none'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#5a66d9';
+              e.currentTarget.style.backgroundColor = '#2d2870';
               e.currentTarget.style.transform = 'scale(1.08)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(112, 124, 241, 0.6)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(57, 51, 146, 0.6)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#707CF1';
+              e.currentTarget.style.backgroundColor = '#393392';
               e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(112, 124, 241, 0.5)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(57, 51, 146, 0.5)';
             }}
             title="Ask Sage - Finance Specialist"
           >
@@ -4002,10 +4016,6 @@ function App() {
             <span style={{ fontSize: '9px', marginTop: '2px', opacity: 0.9 }}>SAGE</span>
           </button>
         </div>
-      )}
-
-      {/* Chatbot Modal */}
-      {showChatbot && <Chatbot onClose={() => setShowChatbot(false)} />}
     </div>
   );
 }
