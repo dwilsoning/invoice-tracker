@@ -2,13 +2,27 @@
 
 ## Overview
 
-This integration adds an AI-powered chatbot to the Invoice Tracker application. The chatbot provides real-time analytics insights by querying your invoice data using MatchaAI's API.
+This integration adds an AI-powered chatbot to the Invoice Tracker application. The chatbot, named **Finley**, is an expert Finance Specialist that provides real-time analytics insights by querying your invoice data using MatchaAI's API.
+
+## Meet Finley
+
+Finley is your dedicated finance assistant with expertise in:
+- Invoice lifecycle management
+- Accounts receivable analytics
+- Aged debt recovery and collection strategies
+- Cash flow optimisation
+- Payment pattern analysis
+
+Finley provides professional, action-oriented financial insights and proactively alerts you to critical issues like overdue invoices, payment pattern deterioration, and concentration risks.
 
 ## Features
 
-- **Real-time Analytics**: Chatbot has access to live invoice data following the same rules as your analytics dashboard
+- **Expert Finance Persona**: Finley acts as both an analyst and advisor, combining technical knowledge with clear communication
+- **Real-time Analytics**: Access to live invoice data following the same rules as your analytics dashboard
+- **Proactive Alerting**: Critical, warning, and informational alerts based on data patterns
+- **Actionable Insights**: Responses follow a structured framework (Summarise → Quantify → Contextualise → Recommend → Alert)
 - **Conversational Interface**: Full chat history support for multi-turn conversations
-- **Comprehensive Data**: Access to DSI, aging analysis, cash flow projections, risk metrics, and more
+- **Comprehensive Data**: Access to DSO, aging analysis, cash flow projections, risk metrics, and more
 - **Authenticated Access**: All users can access the chatbot (requires JWT authentication)
 - **Responsive UI**: Floating chat button accessible from anywhere in the application
 
@@ -186,18 +200,32 @@ The chatbot follows the **exact same rules** as the Analytics dashboard:
 
 ## Example Queries
 
-Here are some questions you can ask the chatbot:
+Here are some questions you can ask Finley:
 
-- "What is my current DSI?"
-- "Which clients are high risk?"
+**Quick Insights:**
+- "What is my current DSO?"
 - "Show me the aging analysis"
+- "Which clients are high risk?"
+- "How much is overdue?"
+
+**Cash Flow & Revenue:**
 - "What is my cash flow for the next 30 days?"
 - "Who are my top 5 clients by revenue?"
-- "Which clients pay the slowest?"
-- "How much is overdue?"
 - "What is my total pending amount?"
-- "Which clients have invoices over 90 days old?"
 - "What's my currency exposure in AUD?"
+
+**Collection Strategy:**
+- "Which clients should I chase this week?"
+- "Which clients pay the slowest?"
+- "Which clients have invoices over 90 days old?"
+- "Are there any critical alerts I should know about?"
+
+**Trend Analysis:**
+- "Is our DSO improving?"
+- "Are there any customers with deteriorating payment patterns?"
+- "Do we have concentration risk with any clients?"
+
+Finley will provide structured responses with summaries, specific data points, contextual analysis, actionable recommendations, and relevant alerts.
 
 ## Troubleshooting
 

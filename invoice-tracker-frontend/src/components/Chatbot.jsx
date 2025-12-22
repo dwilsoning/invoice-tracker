@@ -28,7 +28,7 @@ const Chatbot = ({ onClose }) => {
     setMessages([
       {
         role: 'assistant',
-        content: 'Hello! I\'m your Invoice Tracker AI assistant. I have access to your real-time analytics data including aging reports, cash flow projections, client payment trends, and risk metrics. How can I help you today?',
+        content: 'Hello! I\'m Finley, your expert Finance Specialist for the Matcha Invoice Tracker.\n\nI specialise in invoice management, accounts receivable analytics, and aged debt recovery. I have access to your real-time analytics including:\n\n• DSO and aging analysis\n• Cash flow projections\n• Payment velocity and trends\n• Risk metrics and alerts\n• Client payment patterns\n\nI\'ll provide clear insights, actionable recommendations, and proactive alerts to help you optimise your accounts receivable. How can I assist you today?',
         timestamp: new Date().toISOString()
       }
     ]);
@@ -112,7 +112,7 @@ const Chatbot = ({ onClose }) => {
     setMessages([
       {
         role: 'assistant',
-        content: 'Chat cleared. How can I help you with your invoice analytics?',
+        content: 'Chat cleared. I\'m ready to provide fresh insights on your invoice analytics. What would you like to know?',
         timestamp: new Date().toISOString()
       }
     ]);
@@ -120,14 +120,14 @@ const Chatbot = ({ onClose }) => {
   };
 
   const suggestedQuestions = [
-    'What is my current DSI?',
-    'Which clients are high risk?',
+    'What is my current DSO?',
+    'Which clients should I chase this week?',
     'Show me the aging analysis',
+    'Are there any critical alerts?',
+    'Which clients are high risk?',
     'What is my cash flow for the next 30 days?',
     'Who are my top 5 clients by revenue?',
-    'Which clients pay the slowest?',
-    'How much is overdue?',
-    'What is my total pending amount?'
+    'Are there any payment pattern issues?'
   ];
 
   const askSuggestedQuestion = (question) => {
@@ -172,10 +172,10 @@ const Chatbot = ({ onClose }) => {
         }}>
           <div>
             <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>
-              Invoice Analytics AI Assistant
+              Finley - Finance Specialist
             </h2>
             <p style={{ margin: '4px 0 0 0', fontSize: '14px', opacity: 0.9 }}>
-              Powered by MatchaAI
+              Expert in Invoice Analytics & Aged Debt Recovery
             </p>
           </div>
           <div style={{ display: 'flex', gap: '10px' }}>
