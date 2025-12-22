@@ -1958,7 +1958,7 @@ console.log('ℹ️  SA Health status checks: Manual only (automatic scheduling 
 
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
-  res.json(exchangeRates);
+  res.json(exchangeRatesService.getExchangeRates());
 });
 
 // Natural language query
@@ -3063,7 +3063,7 @@ app.get('/api/aging-report', authenticateToken, async (req, res) => {
       currency: 'USD',
       grandTotal: Math.round(grandTotal),
       buckets: agingData,
-      exchangeRates: exchangeRates
+      exchangeRates: exchangeRatesService.getExchangeRates()
     };
 
     res.json(summary);
