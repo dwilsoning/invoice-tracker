@@ -12,6 +12,7 @@ const Chatbot = ({ onClose }) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
   const [isDragging, setIsDragging] = useState(false);
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
+  const [textareaHeight, setTextareaHeight] = useState(56);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const modalRef = useRef(null);
@@ -92,6 +93,24 @@ const Chatbot = ({ onClose }) => {
     ]);
   }, []);
 
+  // Auto-resize textarea as user types
+  const handleInputChange = (e) => {
+    setInputMessage(e.target.value);
+  };
+
+  // Update textarea height when input changes
+  useEffect(() => {
+    if (inputRef.current) {
+      // Reset height to recalculate
+      inputRef.current.style.height = '56px';
+      // Calculate new height based on scroll height
+      const scrollHeight = inputRef.current.scrollHeight;
+      const newHeight = Math.min(scrollHeight, 140);
+      console.log('Textarea resize:', { scrollHeight, newHeight, messageLength: inputMessage.length });
+      setTextareaHeight(newHeight);
+    }
+  }, [inputMessage]);
+
   const sendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
@@ -106,6 +125,9 @@ const Chatbot = ({ onClose }) => {
     setInputMessage('');
     setIsLoading(true);
     setError(null);
+
+    // Reset textarea height after sending
+    setTextareaHeight(56);
 
     try {
       // Prepare chat history for API (MatchaAI format)
@@ -500,10 +522,11 @@ const Chatbot = ({ onClose }) => {
             <textarea
               ref={inputRef}
               value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
+              onChange={handleInputChange}
               onKeyPress={handleKeyPress}
               placeholder="Ask Sage about your invoices, DSO, cash flow, aging..."
               disabled={isLoading}
+              wrap="soft"
               style={{
                 flex: 1,
                 padding: '14px 18px',
@@ -511,12 +534,19 @@ const Chatbot = ({ onClose }) => {
                 borderRadius: '12px',
                 fontSize: '15px',
                 resize: 'none',
+                height: `${textareaHeight}px`,
                 minHeight: '56px',
                 maxHeight: '140px',
                 fontFamily: 'inherit',
                 outline: 'none',
-                transition: 'all 0.2s',
-                backgroundColor: '#fafbfc'
+                transition: 'border-color 0.2s, background-color 0.2s, box-shadow 0.2s, height 0.1s',
+                backgroundColor: '#fafbfc',
+                overflowY: textareaHeight >= 140 ? 'auto' : 'hidden',
+                overflowX: 'hidden',
+                lineHeight: '1.5',
+                boxSizing: 'border-box',
+                wordWrap: 'break-word',
+                whiteSpace: 'pre-wrap'
               }}
               onFocus={(e) => {
                 e.target.style.borderColor = '#393392';
@@ -528,7 +558,6 @@ const Chatbot = ({ onClose }) => {
                 e.target.style.backgroundColor = '#fafbfc';
                 e.target.style.boxShadow = 'none';
               }}
-              rows={2}
             />
             <button
               onClick={sendMessage}
@@ -572,7 +601,7 @@ const Chatbot = ({ onClose }) => {
             marginBottom: 0,
             fontWeight: '500'
           }}>
-            💬 Press Enter to send • Shift+Enter for new line
+            💬 Press Enter to send • Shift+Enter for new line • Height: {textareaHeight}px
           </p>
         </div>
       </div>

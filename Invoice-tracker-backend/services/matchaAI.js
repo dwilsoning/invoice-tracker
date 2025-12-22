@@ -1,5 +1,5 @@
 const axios = require('axios');
-const { generateContextString } = require('./chatbotContext');
+const { generateContextString, getDetailedInvoiceData } = require('./chatbotContext');
 
 /**
  * MatchaAI Integration Service
@@ -15,6 +15,71 @@ if (!MATCHA_API_KEY || !MATCHA_API_URL || !MATCHA_MISSION_ID) {
 }
 
 /**
+ * Detect if user query requests filtered data and extract filter parameters
+ * @param {string} query - User's question
+ * @returns {Object|null} - Filter parameters or null if no filtering detected
+ */
+function detectFilters(query) {
+  const lowerQuery = query.toLowerCase();
+  const filters = {};
+
+  // Detect client name
+  const clientMatches = query.match(/(?:for|from|about|client|invoices?\s+(?:for|from))\s+([A-Z][A-Za-z\s&]+?)(?:\s+(?:from|in|during|for|only|invoices?|$))/);
+  if (clientMatches && clientMatches[1]) {
+    filters.client = clientMatches[1].trim();
+  }
+
+  // Detect month and year (e.g., "November 2025", "Nov 25", "November 25")
+  const monthMatch = query.match(/(?:from|in|during|for)\s+(january|february|march|april|may|june|july|august|september|october|november|december|jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\.?\s*(\d{2,4})?/i);
+  if (monthMatch) {
+    const monthNames = {
+      'january': 0, 'jan': 0,
+      'february': 1, 'feb': 1,
+      'march': 2, 'mar': 2,
+      'april': 3, 'apr': 3,
+      'may': 4,
+      'june': 5, 'jun': 5,
+      'july': 6, 'jul': 6,
+      'august': 7, 'aug': 7,
+      'september': 8, 'sep': 8,
+      'october': 9, 'oct': 9,
+      'november': 10, 'nov': 10,
+      'december': 11, 'dec': 11
+    };
+
+    const monthNum = monthNames[monthMatch[1].toLowerCase()];
+    let year = monthMatch[2] ? parseInt(monthMatch[2]) : new Date().getFullYear();
+
+    // Convert 2-digit year to 4-digit
+    if (year < 100) {
+      year += 2000;
+    }
+
+    // Create date range for the entire month
+    const dateFrom = new Date(year, monthNum, 1);
+    const dateTo = new Date(year, monthNum + 1, 0); // Last day of month
+
+    filters.dateFrom = dateFrom.toISOString().split('T')[0];
+    filters.dateTo = dateTo.toISOString().split('T')[0];
+  }
+
+  // Detect status
+  if (lowerQuery.includes('pending') || lowerQuery.includes('unpaid')) {
+    filters.status = 'Pending';
+  } else if (lowerQuery.includes('paid')) {
+    filters.status = 'Paid';
+  }
+
+  // Detect overdue
+  if (lowerQuery.includes('overdue')) {
+    filters.overdueOnly = true;
+  }
+
+  // Only return filters if at least one was detected
+  return Object.keys(filters).length > 0 ? filters : null;
+}
+
+/**
  * Send a chat completion request to MatchaAI
  * @param {string} userMessage - The user's message/question
  * @param {Array} chatHistory - Previous messages in the conversation
@@ -26,10 +91,43 @@ async function sendChatCompletion(userMessage, chatHistory = [], customContext =
     // Generate real-time analytics context
     const analyticsContext = await generateContextString();
 
+    // Detect if user is requesting filtered data
+    const filters = detectFilters(userMessage);
+    let filteredDataContext = '';
+
+    if (filters) {
+      console.log('Detected filters in query:', filters);
+      const filteredInvoices = await getDetailedInvoiceData(filters);
+
+      // Format filtered data for context
+      if (filteredInvoices.length > 0) {
+        const totalUSD = filteredInvoices.reduce((sum, inv) => sum + inv.amountUSD, 0);
+        filteredDataContext = `\n\n=== FILTERED INVOICE DATA ===\n`;
+        filteredDataContext += `Query detected filters: ${JSON.stringify(filters)}\n`;
+        filteredDataContext += `Found ${filteredInvoices.length} matching invoices\n`;
+        filteredDataContext += `Total Amount: $${Math.round(totalUSD).toLocaleString('en-US')} USD\n\n`;
+        filteredDataContext += `Invoice Details:\n`;
+        filteredInvoices.forEach(inv => {
+          filteredDataContext += `- ${inv.invoiceNumber}: ${inv.client}, ${inv.invoiceDate}, $${Math.round(inv.amountUSD).toLocaleString('en-US')} USD`;
+          if (inv.currency !== 'USD') {
+            filteredDataContext += ` (${inv.currency} ${Math.round(inv.amount).toLocaleString('en-US')})`;
+          }
+          filteredDataContext += `, ${inv.status}`;
+          if (inv.agingBucket) {
+            filteredDataContext += `, ${inv.agingBucket} days overdue`;
+          }
+          filteredDataContext += `\n`;
+        });
+      } else {
+        filteredDataContext = `\n\n=== FILTERED INVOICE DATA ===\n`;
+        filteredDataContext += `No invoices found matching filters: ${JSON.stringify(filters)}\n`;
+      }
+    }
+
     // Combine with any custom context
     const fullContext = customContext
-      ? `${analyticsContext}\n\n${customContext}`
-      : analyticsContext;
+      ? `${analyticsContext}\n\n${filteredDataContext}\n\n${customContext}`
+      : `${analyticsContext}${filteredDataContext}`;
 
     // Prepare the request payload
     const payload = {

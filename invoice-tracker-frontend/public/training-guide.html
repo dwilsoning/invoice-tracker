@@ -1538,6 +1538,59 @@ Your internal notes here...
                     </ul>
                 </div>
 
+                <h3>Filtering & Detailed Invoice Analysis</h3>
+                <p>Sage can analyze specific subsets of your invoice data by automatically detecting filters in your questions:</p>
+
+                <h4>Supported Filters</h4>
+                <table>
+                    <tr>
+                        <th>Filter Type</th>
+                        <th>Examples</th>
+                        <th>What It Does</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Client Name</strong></td>
+                        <td>"for SA Health"<br>"about ABC Company"<br>"invoices from XYZ Corp"</td>
+                        <td>Shows only invoices for that specific client</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date Range (Month/Year)</strong></td>
+                        <td>"from November 2025"<br>"in December 25"<br>"for Nov 25"</td>
+                        <td>Shows invoices with invoice dates in that month</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status</strong></td>
+                        <td>"pending invoices"<br>"paid invoices"</td>
+                        <td>Filters by payment status</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Overdue</strong></td>
+                        <td>"overdue invoices"</td>
+                        <td>Shows only invoices past their due date</td>
+                    </tr>
+                </table>
+
+                <h4>Example Filtered Queries</h4>
+                <ul>
+                    <li>"Analyze invoices for SA Health from November 2025"</li>
+                    <li>"Show me pending invoices for Strategic Asia Pacific Partners"</li>
+                    <li>"What are the overdue invoices from December 25?"</li>
+                    <li>"Total pending for ABC Company in November"</li>
+                    <li>"List paid invoices for XYZ Corp from October 2025"</li>
+                </ul>
+
+                <div class="tip-box">
+                    <h4>How Filtering Works</h4>
+                    <p>When Sage detects a filter in your question, it will:</p>
+                    <ol>
+                        <li>Automatically fetch matching invoices from the database</li>
+                        <li>Show you the invoice count and total amount</li>
+                        <li>List individual invoice details (number, date, amount in USD)</li>
+                        <li>Provide analysis and recommendations based on the filtered subset</li>
+                    </ol>
+                    <p><strong>Pro Tip:</strong> All amounts are displayed in USD, with original currency shown in parentheses when different from USD.</p>
+                </div>
+
                 <h3>Example Questions to Ask Sage</h3>
 
                 <h4>Quick Insights</h4>
@@ -1670,12 +1723,20 @@ Your internal notes here...
                 </div>
                 <p><strong>When to use:</strong> Monthly reviews, team performance tracking, trend analysis</p>
 
+                <h4>Client-Specific Analysis</h4>
+                <p>Analyze invoices for a specific client or time period:</p>
+                <div class="example-query">
+"Analyze invoices for SA Health from November 2025"
+                </div>
+                <p><strong>When to use:</strong> Client meetings, contract reviews, billing inquiries, dispute resolution</p>
+
                 <h3>Tips for Getting the Most from Sage</h3>
 
                 <div class="tip-box">
                     <h4>Best Practices</h4>
                     <ul>
                         <li><strong>Be specific:</strong> "Show me clients with invoices over 90 days old" is better than "Show me overdue invoices"</li>
+                        <li><strong>Use filters for detailed analysis:</strong> Mention client names or dates to get specific invoice details</li>
                         <li><strong>Ask follow-up questions:</strong> Sage remembers your conversation, so you can drill deeper</li>
                         <li><strong>Request recommendations:</strong> Ask "What should I do about..." for actionable advice</li>
                         <li><strong>Use Sage for quick checks:</strong> Analytics Dashboard for deep analysis</li>
@@ -1689,9 +1750,10 @@ Your internal notes here...
                     <ul>
                         <li>Sage cannot modify invoice data (use the main tracker for editing)</li>
                         <li>Sage cannot upload new invoices (use the upload area)</li>
-                        <li>Sage cannot access individual invoice details (click invoice numbers in the table)</li>
                         <li>Sage cannot delete or mark invoices as paid (use action buttons in the table)</li>
-                        <li>Sage provides insights only - you must take the recommended actions manually</li>
+                        <li>Sage cannot access PDF attachments or invoice documents</li>
+                        <li>Sage provides insights and analysis only - you must take the recommended actions manually</li>
+                        <li>For detailed individual invoice information beyond what Sage provides, click invoice numbers in the main tracker table</li>
                     </ul>
                 </div>
 

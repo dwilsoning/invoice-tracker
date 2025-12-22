@@ -346,25 +346,32 @@ async function generateContextString() {
     '🟠 WARNING ALERTS: Invoices entering 60-day bracket, payment pattern deterioration, concentration risk',
     '🟢 INFORMATIONAL ALERTS: Invoices due within 7 days, successful payments, payment improvements',
     '',
+    '=== DATA SCOPE ===',
+    '📅 PRODUCTION MODE: Starting January 1, 2026, all analytics automatically filter to show only invoices dated 2026 onwards.',
+    '   - Before Jan 1, 2026: All historical invoice data is included',
+    '   - From Jan 1, 2026: Only invoices with invoice dates from 2026+ are included',
+    '   - This ensures accurate payment timeliness metrics by excluding backloaded historical data',
+    '   - The filter applies automatically to all analytics, aging analysis, and cash flow projections',
+    '',
     '=== INVOICE TRACKER ANALYTICS DATA ===',
     '',
     '## OVERVIEW',
     `Total Invoices: ${analytics.summary.totalInvoices}`,
     `Pending Invoices: ${analytics.summary.pendingInvoices}`,
     `Paid Invoices: ${analytics.summary.paidInvoices}`,
-    `Total Pending Amount: $${analytics.summary.totalPendingAmountUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`,
-    `Total Revenue: $${analytics.summary.totalRevenueUSD.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} USD`,
+    `Total Pending Amount: $${Math.round(analytics.summary.totalPendingAmountUSD).toLocaleString('en-US')} USD`,
+    `Total Revenue: $${Math.round(analytics.summary.totalRevenueUSD).toLocaleString('en-US')} USD`,
     `Days Sales Outstanding (DSO): ${analytics.summary.daysInvoicesOutstanding} days`,
     '',
     '## AGING ANALYSIS',
     'Breakdown of pending invoices by days overdue:',
     ...Object.entries(analytics.aging).map(([bucket, data]) =>
-      `- ${bucket} days: ${data.count} invoices, $${data.totalUSD.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`
+      `- ${bucket} days: ${data.count} invoices, $${Math.round(data.totalUSD).toLocaleString('en-US')} USD`
     ),
     '',
     '## TOP 10 CLIENTS BY REVENUE',
     ...analytics.topClients.map((client, i) =>
-      `${i + 1}. ${client.client}: $${client.revenue.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`
+      `${i + 1}. ${client.client}: $${Math.round(client.revenue).toLocaleString('en-US')} USD`
     ),
     '',
     '## PAYMENT VELOCITY',
@@ -374,24 +381,24 @@ async function generateContextString() {
     ),
     '',
     '## RISK METRICS',
-    `Total Overdue Amount: $${analytics.riskMetrics.totalOverdueAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
+    `Total Overdue Amount: $${Math.round(analytics.riskMetrics.totalOverdueAmount).toLocaleString('en-US')} USD`,
     `Clients at Risk: ${analytics.riskMetrics.clientsAtRisk}`,
     '',
     'High Risk Clients (>$50k overdue):',
     ...analytics.riskMetrics.highRiskClients.map(client =>
-      `- ${client.client}: $${client.overdueAmount.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD (${client.overdueInvoices} invoices) - ${client.riskLevel} Risk`
+      `- ${client.client}: $${Math.round(client.overdueAmount).toLocaleString('en-US')} USD (${client.overdueInvoices} invoices) - ${client.riskLevel} Risk`
     ),
     '',
     '## CASH FLOW PROJECTION',
-    `Overdue: $${analytics.cashFlow.overdue.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
-    `Next 30 Days: $${analytics.cashFlow.next30.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
-    `31-60 Days: $${analytics.cashFlow.days31to60.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
-    `61-90 Days: $${analytics.cashFlow.days61to90.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
-    `Beyond 90 Days: $${analytics.cashFlow.beyond90.toLocaleString('en-US', { minimumFractionDigits: 2 })} USD`,
+    `Overdue: $${Math.round(analytics.cashFlow.overdue).toLocaleString('en-US')} USD`,
+    `Next 30 Days: $${Math.round(analytics.cashFlow.next30).toLocaleString('en-US')} USD`,
+    `31-60 Days: $${Math.round(analytics.cashFlow.days31to60).toLocaleString('en-US')} USD`,
+    `61-90 Days: $${Math.round(analytics.cashFlow.days61to90).toLocaleString('en-US')} USD`,
+    `Beyond 90 Days: $${Math.round(analytics.cashFlow.beyond90).toLocaleString('en-US')} USD`,
     '',
     '## CURRENCY EXPOSURE',
     ...Object.entries(analytics.currencyExposure).map(([currency, amount]) =>
-      `${currency}: ${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
+      `${currency}: ${Math.round(amount).toLocaleString('en-US')}`
     ),
     '',
     '## EXCHANGE RATES (Updated 4x daily at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT)',
@@ -410,10 +417,21 @@ async function generateContextString() {
     '=== INSTRUCTIONS ===',
     'Use the above data to provide expert financial insights and actionable recommendations.',
     'Always provide specific numbers and data points from the context.',
-    'Format currency amounts clearly with $ and USD designation.',
+    'IMPORTANT: Format ALL currency amounts as integers (whole numbers) without decimals - e.g., $23,122 not $23,122.13',
+    'Always include $ and USD designation for clarity.',
     'When discussing clients, reference actual client names from the data.',
     'Proactively identify and flag alerts based on the data patterns.',
-    'Follow the Response Framework: Summarise → Quantify → Contextualise → Recommend → Alert'
+    'Follow the Response Framework: Summarise → Quantify → Contextualise → Recommend → Alert',
+    '',
+    '=== FILTERING CAPABILITIES ===',
+    'You can analyze filtered subsets of invoice data when users request it.',
+    'Supported filters:',
+    '  - Client name (e.g., "invoices for SA Health")',
+    '  - Date ranges (e.g., "from November 2025", "in December 25")',
+    '  - Status (Pending/Paid)',
+    '  - Overdue only',
+    'When FILTERED INVOICE DATA appears in context, use it to answer the specific question.',
+    'Always reference the filtered totals and counts when analyzing subsets.'
   ];
 
   return contextLines.join('\n');
