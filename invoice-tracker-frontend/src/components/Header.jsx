@@ -33,7 +33,7 @@ function Header() {
             <div className="flex items-center">
               {version && (
                 <span className="text-xs text-gray-500 font-medium">
-                  Version {version} - 04 Dec 2024
+                  Version {version} - Jan 26 Edition
                 </span>
               )}
             </div>
