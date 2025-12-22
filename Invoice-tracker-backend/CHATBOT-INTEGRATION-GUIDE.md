@@ -2,22 +2,22 @@
 
 ## Overview
 
-This integration adds an AI-powered chatbot to the Invoice Tracker application. The chatbot, named **Finley**, is an expert Finance Specialist that provides real-time analytics insights by querying your invoice data using MatchaAI's API.
+This integration adds an AI-powered chatbot to the Invoice Tracker application. The chatbot, named **Sage**, is an expert Finance Specialist that provides real-time analytics insights by querying your invoice data using MatchaAI's API.
 
-## Meet Finley
+## Meet Sage
 
-Finley is your dedicated finance assistant with expertise in:
+Sage is your dedicated finance assistant with expertise in:
 - Invoice lifecycle management
 - Accounts receivable analytics
 - Aged debt recovery and collection strategies
 - Cash flow optimisation
 - Payment pattern analysis
 
-Finley provides professional, action-oriented financial insights and proactively alerts you to critical issues like overdue invoices, payment pattern deterioration, and concentration risks.
+Sage provides professional, action-oriented financial insights and proactively alerts you to critical issues like overdue invoices, payment pattern deterioration, and concentration risks.
 
 ## Features
 
-- **Expert Finance Persona**: Finley acts as both an analyst and advisor, combining technical knowledge with clear communication
+- **Expert Finance Persona**: Sage acts as both an analyst and advisor, combining technical knowledge with clear communication
 - **Real-time Analytics**: Access to live invoice data following the same rules as your analytics dashboard
 - **Proactive Alerting**: Critical, warning, and informational alerts based on data patterns
 - **Actionable Insights**: Responses follow a structured framework (Summarise → Quantify → Contextualise → Recommend → Alert)
@@ -200,7 +200,7 @@ The chatbot follows the **exact same rules** as the Analytics dashboard:
 
 ## Example Queries
 
-Here are some questions you can ask Finley:
+Here are some questions you can ask Sage:
 
 **Quick Insights:**
 - "What is my current DSO?"
@@ -225,7 +225,7 @@ Here are some questions you can ask Finley:
 - "Are there any customers with deteriorating payment patterns?"
 - "Do we have concentration risk with any clients?"
 
-Finley will provide structured responses with summaries, specific data points, contextual analysis, actionable recommendations, and relevant alerts.
+Sage will provide structured responses with summaries, specific data points, contextual analysis, actionable recommendations, and relevant alerts.
 
 ## Troubleshooting
 

@@ -3933,39 +3933,83 @@ function App() {
 
       {/* Floating AI Chatbot Button */}
       {!showChatbot && (
-        <button
+        <div
           onClick={() => setShowChatbot(true)}
           style={{
             position: 'fixed',
             bottom: '24px',
             right: '24px',
-            width: '60px',
-            height: '60px',
-            borderRadius: '50%',
-            backgroundColor: '#0076A2',
-            color: 'white',
-            border: 'none',
             cursor: 'pointer',
-            boxShadow: '0 4px 12px rgba(0, 118, 162, 0.4)',
+            zIndex: 9999,
             display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '28px',
-            transition: 'all 0.3s',
-            zIndex: 9999
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: '8px'
           }}
-          onMouseOver={(e) => {
-            e.target.style.backgroundColor = '#005A7D';
-            e.target.style.transform = 'scale(1.1)';
-          }}
-          onMouseOut={(e) => {
-            e.target.style.backgroundColor = '#0076A2';
-            e.target.style.transform = 'scale(1)';
-          }}
-          title="Open AI Assistant"
         >
-          💬
-        </button>
+          <div
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#0076A2',
+              color: 'white',
+              borderRadius: '20px',
+              fontSize: '14px',
+              fontWeight: '500',
+              boxShadow: '0 2px 8px rgba(0, 118, 162, 0.3)',
+              whiteSpace: 'nowrap',
+              opacity: 0.95
+            }}
+          >
+            Ask Sage
+          </div>
+          <button
+            style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '50%',
+              backgroundColor: '#0076A2',
+              color: 'white',
+              border: '3px solid white',
+              cursor: 'pointer',
+              boxShadow: '0 4px 16px rgba(0, 118, 162, 0.5)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: '600',
+              transition: 'all 0.3s',
+              outline: 'none'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#005A7D';
+              e.currentTarget.style.transform = 'scale(1.08)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 118, 162, 0.6)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#0076A2';
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 118, 162, 0.5)';
+            }}
+            title="Ask Sage - Finance Specialist"
+          >
+            <div style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px',
+              fontWeight: '700',
+              marginBottom: '2px'
+            }}>
+              S
+            </div>
+            <span style={{ fontSize: '9px', marginTop: '2px', opacity: 0.9 }}>SAGE</span>
+          </button>
+        </div>
       )}
 
       {/* Chatbot Modal */}

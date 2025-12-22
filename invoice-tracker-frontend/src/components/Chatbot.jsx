@@ -28,7 +28,7 @@ const Chatbot = ({ onClose }) => {
     setMessages([
       {
         role: 'assistant',
-        content: 'Hello! I\'m Finley, your expert Finance Specialist for the Matcha Invoice Tracker.\n\nI specialise in invoice management, accounts receivable analytics, and aged debt recovery. I have access to your real-time analytics including:\n\n• DSO and aging analysis\n• Cash flow projections\n• Payment velocity and trends\n• Risk metrics and alerts\n• Client payment patterns\n\nI\'ll provide clear insights, actionable recommendations, and proactive alerts to help you optimise your accounts receivable. How can I assist you today?',
+        content: 'Hello! I\'m Sage, your expert Finance Specialist for the Altera APAC Invoice Tracker.\n\nI specialise in invoice management, accounts receivable analytics, and aged debt recovery. I have access to your real-time analytics including:\n\n• DSO and aging analysis\n• Cash flow projections\n• Payment velocity and trends\n• Risk metrics and alerts\n• Client payment patterns\n\nI\'ll provide clear insights, actionable recommendations, and proactive alerts to help you optimise your accounts receivable. How can I assist you today?',
         timestamp: new Date().toISOString()
       }
     ]);
@@ -150,70 +150,101 @@ const Chatbot = ({ onClose }) => {
     }}>
       <div style={{
         backgroundColor: '#ffffff',
-        borderRadius: '12px',
+        borderRadius: '16px',
         width: '90%',
-        maxWidth: '800px',
-        height: '85vh',
+        maxWidth: '900px',
+        height: '88vh',
+        maxHeight: '900px',
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: '0 20px 60px rgba(0, 0, 0, 0.3)'
+        boxShadow: '0 24px 80px rgba(0, 0, 0, 0.35)',
+        overflow: 'hidden'
       }}>
         {/* Header */}
         <div style={{
-          padding: '20px 24px',
-          borderBottom: '1px solid #e5e7eb',
+          padding: '24px 28px',
+          borderBottom: 'none',
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          backgroundColor: '#0076A2',
+          background: 'linear-gradient(135deg, #0076A2 0%, #005A7D 100%)',
           color: 'white',
-          borderTopLeftRadius: '12px',
-          borderTopRightRadius: '12px'
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
         }}>
-          <div>
-            <h2 style={{ margin: 0, fontSize: '20px', fontWeight: '600' }}>
-              Finley - Finance Specialist
-            </h2>
-            <p style={{ margin: '4px 0 0 0', fontSize: '14px', opacity: 0.9 }}>
-              Expert in Invoice Analytics & Aged Debt Recovery
-            </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '14px' }}>
+            <div style={{
+              width: '52px',
+              height: '52px',
+              borderRadius: '50%',
+              backgroundColor: 'rgba(255, 255, 255, 0.25)',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '26px',
+              fontWeight: '700',
+              border: '3px solid rgba(255, 255, 255, 0.4)',
+              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.2)'
+            }}>
+              S
+            </div>
+            <div>
+              <h2 style={{ margin: 0, fontSize: '22px', fontWeight: '700', letterSpacing: '-0.02em' }}>
+                Sage
+              </h2>
+              <p style={{ margin: '4px 0 0 0', fontSize: '13px', opacity: 0.95, fontWeight: '400' }}>
+                Finance Specialist • Invoice Analytics Expert
+              </p>
+            </div>
           </div>
-          <div style={{ display: 'flex', gap: '10px' }}>
+          <div style={{ display: 'flex', gap: '12px' }}>
             <button
               onClick={clearChat}
               style={{
-                padding: '8px 16px',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                border: 'none',
-                borderRadius: '6px',
+                padding: '10px 18px',
+                backgroundColor: 'rgba(255, 255, 255, 0.15)',
+                border: '1px solid rgba(255, 255, 255, 0.3)',
+                borderRadius: '8px',
                 color: 'white',
                 cursor: 'pointer',
                 fontSize: '14px',
-                fontWeight: '500',
-                transition: 'background-color 0.2s'
+                fontWeight: '600',
+                transition: 'all 0.2s',
+                backdropFilter: 'blur(10px)'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
-              onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.25)';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.5)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+                e.target.style.borderColor = 'rgba(255, 255, 255, 0.3)';
+              }}
             >
-              Clear Chat
+              🔄 Clear
             </button>
             <button
               onClick={onClose}
               style={{
-                padding: '8px 16px',
-                backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                padding: '10px 18px',
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
                 border: 'none',
-                borderRadius: '6px',
-                color: 'white',
+                borderRadius: '8px',
+                color: '#0076A2',
                 cursor: 'pointer',
                 fontSize: '14px',
-                fontWeight: '500',
-                transition: 'background-color 0.2s'
+                fontWeight: '600',
+                transition: 'all 0.2s'
               }}
-              onMouseOver={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.3)'}
-              onMouseOut={(e) => e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.2)'}
+              onMouseOver={(e) => {
+                e.target.style.backgroundColor = 'white';
+                e.target.style.transform = 'translateY(-1px)';
+              }}
+              onMouseOut={(e) => {
+                e.target.style.backgroundColor = 'rgba(255, 255, 255, 0.9)';
+                e.target.style.transform = 'translateY(0)';
+              }}
             >
-              Close
+              ✕ Close
             </button>
           </div>
         </div>
@@ -222,8 +253,8 @@ const Chatbot = ({ onClose }) => {
         <div style={{
           flex: 1,
           overflowY: 'auto',
-          padding: '24px',
-          backgroundColor: '#f9fafb'
+          padding: '28px',
+          background: 'linear-gradient(to bottom, #f8fafc 0%, #f1f5f9 100%)'
         }}>
           {messages.map((message, index) => (
             <div
@@ -235,24 +266,26 @@ const Chatbot = ({ onClose }) => {
               }}
             >
               <div style={{
-                maxWidth: '75%',
-                padding: '12px 16px',
-                borderRadius: '12px',
+                maxWidth: '80%',
+                padding: '14px 18px',
+                borderRadius: message.role === 'user' ? '18px 18px 4px 18px' : '18px 18px 18px 4px',
                 backgroundColor: message.role === 'user' ? '#0076A2' : message.isError ? '#FEE2E2' : '#ffffff',
                 color: message.role === 'user' ? 'white' : message.isError ? '#991B1B' : '#1f2937',
-                boxShadow: '0 1px 3px rgba(0, 0, 0, 0.1)',
+                boxShadow: message.role === 'user' ? '0 2px 8px rgba(0, 118, 162, 0.3)' : '0 2px 12px rgba(0, 0, 0, 0.08)',
                 whiteSpace: 'pre-wrap',
-                wordWrap: 'break-word'
+                wordWrap: 'break-word',
+                border: message.role === 'assistant' && !message.isError ? '1px solid rgba(0, 0, 0, 0.06)' : 'none'
               }}>
-                <div style={{ fontSize: '14px', lineHeight: '1.6' }}>
+                <div style={{ fontSize: '15px', lineHeight: '1.7' }}>
                   {message.content}
                 </div>
                 <div style={{
                   fontSize: '11px',
-                  marginTop: '6px',
-                  opacity: 0.7
+                  marginTop: '8px',
+                  opacity: message.role === 'user' ? 0.8 : 0.6,
+                  fontWeight: '500'
                 }}>
-                  {new Date(message.timestamp).toLocaleTimeString()}
+                  {new Date(message.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
             </div>
@@ -299,41 +332,51 @@ const Chatbot = ({ onClose }) => {
 
           {/* Suggested Questions */}
           {messages.length === 1 && !isLoading && (
-            <div style={{ marginTop: '20px' }}>
+            <div style={{ marginTop: '24px' }}>
               <p style={{
-                fontSize: '14px',
-                color: '#6b7280',
-                marginBottom: '12px',
-                fontWeight: '500'
+                fontSize: '13px',
+                color: '#64748b',
+                marginBottom: '14px',
+                fontWeight: '600',
+                textTransform: 'uppercase',
+                letterSpacing: '0.05em'
               }}>
-                Try asking me:
+                💡 Suggested Questions
               </p>
               <div style={{
                 display: 'flex',
                 flexWrap: 'wrap',
-                gap: '8px'
+                gap: '10px'
               }}>
                 {suggestedQuestions.map((question, idx) => (
                   <button
                     key={idx}
                     onClick={() => askSuggestedQuestion(question)}
                     style={{
-                      padding: '8px 14px',
+                      padding: '10px 16px',
                       backgroundColor: 'white',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '20px',
+                      border: '1px solid #e2e8f0',
+                      borderRadius: '12px',
                       fontSize: '13px',
-                      color: '#374151',
+                      color: '#475569',
                       cursor: 'pointer',
-                      transition: 'all 0.2s'
+                      transition: 'all 0.2s',
+                      fontWeight: '500',
+                      boxShadow: '0 1px 3px rgba(0, 0, 0, 0.05)'
                     }}
                     onMouseOver={(e) => {
-                      e.target.style.backgroundColor = '#f3f4f6';
+                      e.target.style.backgroundColor = '#0076A2';
                       e.target.style.borderColor = '#0076A2';
+                      e.target.style.color = 'white';
+                      e.target.style.transform = 'translateY(-2px)';
+                      e.target.style.boxShadow = '0 4px 8px rgba(0, 118, 162, 0.3)';
                     }}
                     onMouseOut={(e) => {
                       e.target.style.backgroundColor = 'white';
-                      e.target.style.borderColor = '#d1d5db';
+                      e.target.style.borderColor = '#e2e8f0';
+                      e.target.style.color = '#475569';
+                      e.target.style.transform = 'translateY(0)';
+                      e.target.style.boxShadow = '0 1px 3px rgba(0, 0, 0, 0.05)';
                     }}
                   >
                     {question}
@@ -348,11 +391,10 @@ const Chatbot = ({ onClose }) => {
 
         {/* Input Area */}
         <div style={{
-          padding: '20px 24px',
-          borderTop: '1px solid #e5e7eb',
-          backgroundColor: 'white',
-          borderBottomLeftRadius: '12px',
-          borderBottomRightRadius: '12px'
+          padding: '24px 28px',
+          borderTop: '2px solid #e5e7eb',
+          backgroundColor: '#ffffff',
+          boxShadow: '0 -4px 12px rgba(0, 0, 0, 0.05)'
         }}>
           {error && (
             <div style={{
@@ -367,68 +409,83 @@ const Chatbot = ({ onClose }) => {
             </div>
           )}
 
-          <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-end' }}>
+          <div style={{ display: 'flex', gap: '14px', alignItems: 'flex-end' }}>
             <textarea
               ref={inputRef}
               value={inputMessage}
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask me anything about your invoice analytics..."
+              placeholder="Ask Sage about your invoices, DSO, cash flow, aging..."
               disabled={isLoading}
               style={{
                 flex: 1,
-                padding: '12px 16px',
-                border: '1px solid #d1d5db',
-                borderRadius: '8px',
-                fontSize: '14px',
+                padding: '14px 18px',
+                border: '2px solid #e2e8f0',
+                borderRadius: '12px',
+                fontSize: '15px',
                 resize: 'none',
-                minHeight: '50px',
-                maxHeight: '120px',
+                minHeight: '56px',
+                maxHeight: '140px',
                 fontFamily: 'inherit',
                 outline: 'none',
-                transition: 'border-color 0.2s'
+                transition: 'all 0.2s',
+                backgroundColor: '#fafbfc'
               }}
-              onFocus={(e) => e.target.style.borderColor = '#0076A2'}
-              onBlur={(e) => e.target.style.borderColor = '#d1d5db'}
+              onFocus={(e) => {
+                e.target.style.borderColor = '#0076A2';
+                e.target.style.backgroundColor = 'white';
+                e.target.style.boxShadow = '0 0 0 3px rgba(0, 118, 162, 0.1)';
+              }}
+              onBlur={(e) => {
+                e.target.style.borderColor = '#e2e8f0';
+                e.target.style.backgroundColor = '#fafbfc';
+                e.target.style.boxShadow = 'none';
+              }}
               rows={2}
             />
             <button
               onClick={sendMessage}
               disabled={!inputMessage.trim() || isLoading}
               style={{
-                padding: '12px 24px',
-                backgroundColor: inputMessage.trim() && !isLoading ? '#0076A2' : '#9ca3af',
+                padding: '14px 28px',
+                backgroundColor: inputMessage.trim() && !isLoading ? '#0076A2' : '#cbd5e1',
                 color: 'white',
                 border: 'none',
-                borderRadius: '8px',
-                fontSize: '14px',
-                fontWeight: '600',
+                borderRadius: '12px',
+                fontSize: '15px',
+                fontWeight: '700',
                 cursor: inputMessage.trim() && !isLoading ? 'pointer' : 'not-allowed',
-                transition: 'background-color 0.2s',
-                minWidth: '80px',
-                height: '50px'
+                transition: 'all 0.2s',
+                minWidth: '100px',
+                height: '56px',
+                boxShadow: inputMessage.trim() && !isLoading ? '0 2px 8px rgba(0, 118, 162, 0.3)' : 'none'
               }}
               onMouseOver={(e) => {
                 if (inputMessage.trim() && !isLoading) {
                   e.target.style.backgroundColor = '#005A7D';
+                  e.target.style.transform = 'translateY(-2px)';
+                  e.target.style.boxShadow = '0 4px 12px rgba(0, 118, 162, 0.4)';
                 }
               }}
               onMouseOut={(e) => {
                 if (inputMessage.trim() && !isLoading) {
                   e.target.style.backgroundColor = '#0076A2';
+                  e.target.style.transform = 'translateY(0)';
+                  e.target.style.boxShadow = '0 2px 8px rgba(0, 118, 162, 0.3)';
                 }
               }}
             >
-              {isLoading ? 'Sending...' : 'Send'}
+              {isLoading ? '⏳' : '📨'} {isLoading ? 'Sending...' : 'Send'}
             </button>
           </div>
           <p style={{
             fontSize: '12px',
-            color: '#9ca3af',
-            marginTop: '8px',
-            marginBottom: 0
+            color: '#94a3b8',
+            marginTop: '10px',
+            marginBottom: 0,
+            fontWeight: '500'
           }}>
-            Press Enter to send, Shift+Enter for new line
+            💬 Press Enter to send • Shift+Enter for new line
           </p>
         </div>
       </div>
