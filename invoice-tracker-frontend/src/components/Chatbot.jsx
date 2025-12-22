@@ -48,10 +48,20 @@ const Chatbot = ({ onClose }) => {
   };
 
   const handleMouseMove = (e) => {
-    if (isDragging) {
+    if (isDragging && modalRef.current) {
+      const modalRect = modalRef.current.getBoundingClientRect();
+      const newX = e.clientX - dragOffset.x;
+      const newY = e.clientY - dragOffset.y;
+
+      // Constrain to viewport bounds with some padding
+      const minX = -modalRect.width + 100; // Allow 100px to remain visible
+      const minY = 0; // Don't allow dragging above viewport
+      const maxX = window.innerWidth - 100; // Keep 100px visible on right
+      const maxY = window.innerHeight - 100; // Keep 100px visible at bottom
+
       setPosition({
-        x: e.clientX - dragOffset.x,
-        y: e.clientY - dragOffset.y
+        x: Math.max(minX, Math.min(maxX, newX)),
+        y: Math.max(minY, Math.min(maxY, newY))
       });
     }
   };
