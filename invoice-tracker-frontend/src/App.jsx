@@ -1675,15 +1675,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               >
                 {isRefreshing ? '🔄 Refreshing...' : '🔄 Refresh'}
               </button>
-              <label className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-lg cursor-pointer hover:bg-white hover:bg-opacity-30 transition">
-                <input
-                  type="checkbox"
-                  checked={autoRefresh}
-                  onChange={(e) => setAutoRefresh(e.target.checked)}
-                  className="w-4 h-4 cursor-pointer"
-                />
-                <span className="text-sm text-white font-medium">Auto-refresh (30s)</span>
-              </label>
             </div>
 
             {/* Server Status Indicator */}
@@ -3950,12 +3941,12 @@ function App() {
           <div
             style={{
               padding: '8px 16px',
-              backgroundColor: '#0076A2',
+              backgroundColor: '#707CF1',
               color: 'white',
               borderRadius: '20px',
               fontSize: '14px',
               fontWeight: '500',
-              boxShadow: '0 2px 8px rgba(0, 118, 162, 0.3)',
+              boxShadow: '0 2px 8px rgba(112, 124, 241, 0.4)',
               whiteSpace: 'nowrap',
               opacity: 0.95
             }}
@@ -3967,11 +3958,11 @@ function App() {
               width: '64px',
               height: '64px',
               borderRadius: '50%',
-              backgroundColor: '#0076A2',
+              backgroundColor: '#707CF1',
               color: 'white',
               border: '3px solid white',
               cursor: 'pointer',
-              boxShadow: '0 4px 16px rgba(0, 118, 162, 0.5)',
+              boxShadow: '0 4px 16px rgba(112, 124, 241, 0.5)',
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
@@ -3982,14 +3973,14 @@ function App() {
               outline: 'none'
             }}
             onMouseOver={(e) => {
-              e.currentTarget.style.backgroundColor = '#005A7D';
+              e.currentTarget.style.backgroundColor = '#5a66d9';
               e.currentTarget.style.transform = 'scale(1.08)';
-              e.currentTarget.style.boxShadow = '0 6px 20px rgba(0, 118, 162, 0.6)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(112, 124, 241, 0.6)';
             }}
             onMouseOut={(e) => {
-              e.currentTarget.style.backgroundColor = '#0076A2';
+              e.currentTarget.style.backgroundColor = '#707CF1';
               e.currentTarget.style.transform = 'scale(1)';
-              e.currentTarget.style.boxShadow = '0 4px 16px rgba(0, 118, 162, 0.5)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(112, 124, 241, 0.5)';
             }}
             title="Ask Sage - Finance Specialist"
           >
@@ -3997,13 +3988,14 @@ function App() {
               width: '32px',
               height: '32px',
               borderRadius: '50%',
-              backgroundColor: 'rgba(255, 255, 255, 0.25)',
+              backgroundColor: '#00BBBA',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '18px',
               fontWeight: '700',
-              marginBottom: '2px'
+              marginBottom: '2px',
+              color: '#151744'
             }}>
               S
             </div>
