@@ -312,6 +312,7 @@
                 <a href="#expected">Expected Invoices</a>
                 <a href="#duplicates">Duplicates</a>
                 <a href="#analytics">Analytics</a>
+                <a href="#sage">Sage AI Assistant</a>
                 <a href="#maintenance">Maintenance</a>
                 <a href="#troubleshooting">Troubleshooting</a>
             </div>
@@ -1437,6 +1438,299 @@ Your internal notes here...
                         <li>Alerts and notifications (planned)</li>
                     </ul>
                 </div>
+            </section>
+
+            <!-- Sage AI Assistant -->
+            <section id="sage">
+                <h2>Sage - AI Finance Specialist</h2>
+
+                <div class="info-box">
+                    <strong>Meet Sage:</strong> Your expert Finance Specialist embedded within the Altera APAC Invoice Tracker. Sage provides real-time analytics insights, proactive alerts, and actionable recommendations to help you optimize your accounts receivable.
+                </div>
+
+                <h3>What is Sage?</h3>
+                <p>Sage is an AI-powered chatbot with deep expertise in:</p>
+                <ul>
+                    <li><strong>Invoice Management:</strong> Tracking, reconciliation, duplicate detection, workflow guidance</li>
+                    <li><strong>Accounts Receivable Analytics:</strong> DSO analysis, aging reports, payment trends</li>
+                    <li><strong>Aged Debt Recovery:</strong> Debtor reporting, risk categorization, collection strategies</li>
+                    <li><strong>Cash Flow Optimization:</strong> Cash flow forecasting, payment patterns, trend analysis</li>
+                    <li><strong>Proactive Alerting:</strong> Due date monitoring, payment deterioration, concentration risk</li>
+                </ul>
+
+                <h3>How to Access Sage</h3>
+                <ol>
+                    <li>Look for the <strong>purple floating button</strong> in the bottom-right corner of the screen</li>
+                    <li>The button displays a teal badge with "S" and "Ask Sage" label</li>
+                    <li>Click the button to open Sage's chat window</li>
+                    <li>The chat window appears in the center of your screen</li>
+                </ol>
+
+                <h3>Using the Sage Chat Window</h3>
+
+                <h4>Window Features</h4>
+                <ul>
+                    <li><strong>Draggable:</strong> Click and drag the purple header to move Sage anywhere on your screen</li>
+                    <li><strong>Resizable Position:</strong> Position Sage wherever you need it while still using the tracker behind it</li>
+                    <li><strong>"Drag to move" hint:</strong> Visible in the header to remind you</li>
+                    <li><strong>Chat History:</strong> Full conversation history with timestamps</li>
+                    <li><strong>Clear Button:</strong> Start a fresh conversation anytime</li>
+                    <li><strong>Close Button:</strong> Close Sage when finished (teal button)</li>
+                </ul>
+
+                <h4>Asking Questions</h4>
+                <ol>
+                    <li><strong>Type your question</strong> in the text box at the bottom</li>
+                    <li><strong>Suggested questions</strong> appear when you first open Sage (click any to ask immediately)</li>
+                    <li><strong>Press Enter</strong> to send your question (or click the Send button)</li>
+                    <li><strong>Shift+Enter</strong> adds a new line without sending</li>
+                    <li>Sage analyzes your real-time invoice data and responds with structured insights</li>
+                </ol>
+
+                <h3>What Data Does Sage Have Access To?</h3>
+                <p>Sage has access to the <strong>exact same real-time analytics data</strong> as your Analytics Dashboard, including:</p>
+
+                <h4>Summary Metrics</h4>
+                <ul>
+                    <li>Total invoices, pending invoices, paid invoices</li>
+                    <li>Total pending amount (USD)</li>
+                    <li>Total revenue (USD)</li>
+                    <li>Days Sales Outstanding (DSO)</li>
+                </ul>
+
+                <h4>Aging Analysis</h4>
+                <ul>
+                    <li>Invoice aging buckets: Current, 31-60, 61-90, 91-120, 121-180, 181-270, 271-365, >365 days</li>
+                    <li>Count and total amount per bucket</li>
+                    <li>Breakdown by client within each bucket</li>
+                </ul>
+
+                <h4>Client Analytics</h4>
+                <ul>
+                    <li>Top 10 clients by revenue</li>
+                    <li>Payment velocity (average days to pay per client)</li>
+                    <li>High-risk clients (>$50k overdue)</li>
+                    <li>Risk levels (Critical >$200k, High >$100k, Medium ≤$100k)</li>
+                </ul>
+
+                <h4>Cash Flow Projections</h4>
+                <ul>
+                    <li>Overdue amounts</li>
+                    <li>Next 30 days expected</li>
+                    <li>31-60 days expected</li>
+                    <li>61-90 days expected</li>
+                    <li>Beyond 90 days expected</li>
+                </ul>
+
+                <h4>Currency Information</h4>
+                <ul>
+                    <li>Breakdown of pending invoices by currency</li>
+                    <li>Current exchange rates (updated 4x daily at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT)</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>Important:</strong> Sage follows the exact same data rules as the Analytics dashboard:
+                    <ul>
+                        <li>Excludes Credit Memo, Vendor Invoice, and Purchase Order types from calculations</li>
+                        <li>Uses live exchange rates for currency conversion</li>
+                        <li>Excludes negative amounts from aggregations</li>
+                        <li>Production mode filtering (after January 1, 2026, only shows 2026+ data)</li>
+                    </ul>
+                </div>
+
+                <h3>Example Questions to Ask Sage</h3>
+
+                <h4>Quick Insights</h4>
+                <ul>
+                    <li>"What is my current DSO?"</li>
+                    <li>"Show me the aging analysis"</li>
+                    <li>"Which clients are high risk?"</li>
+                    <li>"How much is overdue?"</li>
+                    <li>"Are there any critical alerts?"</li>
+                </ul>
+
+                <h4>Cash Flow & Revenue</h4>
+                <ul>
+                    <li>"What is my cash flow for the next 30 days?"</li>
+                    <li>"Who are my top 5 clients by revenue?"</li>
+                    <li>"What is my total pending amount?"</li>
+                    <li>"What's my currency exposure in AUD?"</li>
+                </ul>
+
+                <h4>Collection Strategy</h4>
+                <ul>
+                    <li>"Which clients should I chase this week?"</li>
+                    <li>"Which clients pay the slowest?"</li>
+                    <li>"Which clients have invoices over 90 days old?"</li>
+                    <li>"Who has the most overdue invoices?"</li>
+                </ul>
+
+                <h4>Trend Analysis</h4>
+                <ul>
+                    <li>"Is our DSO improving?"</li>
+                    <li>"Are there any customers with deteriorating payment patterns?"</li>
+                    <li>"Do we have concentration risk with any clients?"</li>
+                    <li>"Are there any payment pattern issues?"</li>
+                </ul>
+
+                <h3>How Sage Responds</h3>
+                <p>Sage follows a structured response framework to provide maximum value:</p>
+
+                <h4>Response Structure</h4>
+                <ol>
+                    <li><strong>Summarize:</strong> Clear headline summary of the answer</li>
+                    <li><strong>Quantify:</strong> Specific numbers and data points</li>
+                    <li><strong>Contextualize:</strong> Compare to benchmarks or historical data</li>
+                    <li><strong>Recommend:</strong> Actionable next steps</li>
+                    <li><strong>Alert:</strong> Flag any relevant alerts based on data patterns</li>
+                </ol>
+
+                <h4>Proactive Alerts</h4>
+                <p>Sage automatically identifies and flags:</p>
+                <ul>
+                    <li><strong>🔴 CRITICAL ALERTS:</strong> Invoices overdue 90+ days, sudden payment stops, high-value invoices nearing due dates</li>
+                    <li><strong>🟠 WARNING ALERTS:</strong> Invoices entering 60-day bracket, payment pattern deterioration, concentration risk</li>
+                    <li><strong>🟢 INFORMATIONAL ALERTS:</strong> Invoices due within 7 days, successful payments, payment improvements</li>
+                </ul>
+
+                <h3>Sage vs Analytics Dashboard</h3>
+
+                <table>
+                    <tr>
+                        <th>Feature</th>
+                        <th>Sage AI Assistant</th>
+                        <th>Analytics Dashboard</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Interface</strong></td>
+                        <td>Conversational chat</td>
+                        <td>Visual charts & graphs</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Best For</strong></td>
+                        <td>Quick questions, specific insights, recommendations</td>
+                        <td>Comprehensive analysis, visual trends, reports</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Access</strong></td>
+                        <td>Same real-time data as dashboard</td>
+                        <td>All analytics metrics</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Response Type</strong></td>
+                        <td>Text-based explanations with numbers</td>
+                        <td>Visual charts with legends</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Use While Working</strong></td>
+                        <td>Yes - draggable window, can position anywhere</td>
+                        <td>No - separate full-screen view</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Proactive Insights</strong></td>
+                        <td>Yes - identifies issues and recommends actions</td>
+                        <td>No - passive visualization</td>
+                    </tr>
+                </table>
+
+                <h3>Common Use Cases for Sage</h3>
+
+                <h4>Quick Status Check</h4>
+                <p>Ask Sage for a quick overview without opening the full Analytics Dashboard:</p>
+                <div class="example-query">
+"What's my current DSO and are there any critical alerts?"
+                </div>
+                <p><strong>When to use:</strong> Daily check-ins, quick status updates before meetings</p>
+
+                <h4>Collection Prioritization</h4>
+                <p>Get specific recommendations on which clients to chase:</p>
+                <div class="example-query">
+"Which clients should I focus on for collections this week?"
+                </div>
+                <p><strong>When to use:</strong> Planning collection activities, prioritizing follow-ups</p>
+
+                <h4>Risk Assessment</h4>
+                <p>Identify problematic accounts:</p>
+                <div class="example-query">
+"Show me all high-risk clients and their overdue amounts"
+                </div>
+                <p><strong>When to use:</strong> Credit decisions, risk reviews, escalations</p>
+
+                <h4>Cash Flow Planning</h4>
+                <p>Understand expected cash inflow:</p>
+                <div class="example-query">
+"What is my expected cash flow for the next 30 days?"
+                </div>
+                <p><strong>When to use:</strong> Financial planning, expense decisions, forecasting</p>
+
+                <h4>Performance Monitoring</h4>
+                <p>Track collection efficiency:</p>
+                <div class="example-query">
+"Is our DSO improving compared to last month?"
+                </div>
+                <p><strong>When to use:</strong> Monthly reviews, team performance tracking, trend analysis</p>
+
+                <h3>Tips for Getting the Most from Sage</h3>
+
+                <div class="tip-box">
+                    <h4>Best Practices</h4>
+                    <ul>
+                        <li><strong>Be specific:</strong> "Show me clients with invoices over 90 days old" is better than "Show me overdue invoices"</li>
+                        <li><strong>Ask follow-up questions:</strong> Sage remembers your conversation, so you can drill deeper</li>
+                        <li><strong>Request recommendations:</strong> Ask "What should I do about..." for actionable advice</li>
+                        <li><strong>Use Sage for quick checks:</strong> Analytics Dashboard for deep analysis</li>
+                        <li><strong>Position Sage wisely:</strong> Drag it to the side so you can see both Sage and your invoice table</li>
+                        <li><strong>Clear chat when switching topics:</strong> Start fresh for unrelated questions</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>What Sage Cannot Do</h4>
+                    <ul>
+                        <li>Sage cannot modify invoice data (use the main tracker for editing)</li>
+                        <li>Sage cannot upload new invoices (use the upload area)</li>
+                        <li>Sage cannot access individual invoice details (click invoice numbers in the table)</li>
+                        <li>Sage cannot delete or mark invoices as paid (use action buttons in the table)</li>
+                        <li>Sage provides insights only - you must take the recommended actions manually</li>
+                    </ul>
+                </div>
+
+                <h3>Troubleshooting Sage</h3>
+
+                <h4>Sage Won't Open</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Make sure you're logged in (Sage requires authentication)</li>
+                    <li>Refresh the page (<span class="keyboard-shortcut">F5</span>)</li>
+                    <li>Clear browser cache</li>
+                    <li>Check browser console for errors (<span class="keyboard-shortcut">F12</span>)</li>
+                </ul>
+
+                <h4>Sage Responds with an Error</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Check that the backend server is running</li>
+                    <li>Verify your authentication token hasn't expired (re-login if needed)</li>
+                    <li>Try asking the question differently</li>
+                    <li>Check network connectivity</li>
+                </ul>
+
+                <h4>Sage Gives Unexpected Answers</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Verify the data in your Analytics Dashboard matches</li>
+                    <li>Be more specific in your question</li>
+                    <li>Clear chat and start a new conversation</li>
+                    <li>Check that production mode filtering is working correctly</li>
+                </ul>
+
+                <h4>Can't Move Sage Window</h4>
+                <p><strong>Solutions:</strong></p>
+                <ul>
+                    <li>Make sure you're clicking and dragging the <strong>purple header bar</strong> (not the body)</li>
+                    <li>Try clicking directly on the "Sage" title or the "Drag to move" text</li>
+                    <li>Refresh the page if dragging still doesn't work</li>
+                </ul>
             </section>
 
             <!-- Database Maintenance -->
