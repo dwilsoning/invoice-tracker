@@ -8,11 +8,13 @@ const { db } = require('../db-postgres');
 
 /**
  * Convert amount to USD using exchange rates
+ * Rate represents: how much USD you get for 1 unit of foreign currency
+ * Example: If AUD rate is 0.65, then AUD 100 × 0.65 = USD 65
  */
 function convertToUSD(amount, currency, exchangeRates) {
   if (!amount || !currency) return 0;
   const rate = exchangeRates[currency] || 1;
-  return amount / rate;
+  return amount * rate;
 }
 
 /**
@@ -145,6 +147,9 @@ async function generateAnalyticsContext() {
     const bucket = getAgingBucket(inv.dueDate);
     const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
 
+    // Skip negative amounts (credits, adjustments, etc.)
+    if (amountUSD < 0) return;
+
     agingBuckets[bucket].count++;
     agingBuckets[bucket].totalUSD += amountUSD;
 
@@ -158,6 +163,7 @@ async function generateAnalyticsContext() {
   const clientRevenue = {};
   analyticsInvoices.forEach(inv => {
     const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
+    if (amountUSD < 0) return; // Skip negative amounts
     clientRevenue[inv.client] = (clientRevenue[inv.client] || 0) + amountUSD;
   });
   const topClients = Object.entries(clientRevenue)
