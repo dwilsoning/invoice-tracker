@@ -18,6 +18,9 @@ const usersRoutes = require('./routes/users');
 const { sendChatCompletion, sendSimpleQuery, testConnection } = require('./services/matchaAI');
 const { generateAnalyticsContext, getDetailedInvoiceData } = require('./services/chatbotContext');
 
+// Import exchange rates service
+const exchangeRatesService = require('./services/exchangeRates');
+
 const app = express();
 const PORT = 3001;
 
@@ -46,16 +49,6 @@ if (!fs.existsSync(attachmentsDir)) fs.mkdirSync(attachmentsDir);
 
 // Using PostgreSQL database from db-postgres.js
 
-// Exchange rate cache
-let exchangeRates = {
-  USD: 1,
-  AUD: 0.65,
-  EUR: 1.08,
-  GBP: 1.27,
-  SGD: 0.74,
-  NZD: 0.61
-};
-
 // Fetch exchange rates
 async function fetchExchangeRates() {
   try {
@@ -64,13 +57,19 @@ async function fetchExchangeRates() {
 
     const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
     if (response.data && response.data.rates) {
-      exchangeRates.USD = 1;
-      exchangeRates.AUD = 1 / response.data.rates.AUD;
-      exchangeRates.EUR = 1 / response.data.rates.EUR;
-      exchangeRates.GBP = 1 / response.data.rates.GBP;
-      exchangeRates.SGD = 1 / response.data.rates.SGD;
-      exchangeRates.NZD = 1 / response.data.rates.NZD;
-      console.log('✅ Exchange rates updated:', exchangeRates);
+      const newRates = {
+        USD: 1,
+        AUD: 1 / response.data.rates.AUD,
+        EUR: 1 / response.data.rates.EUR,
+        GBP: 1 / response.data.rates.GBP,
+        SGD: 1 / response.data.rates.SGD,
+        NZD: 1 / response.data.rates.NZD
+      };
+
+      // Update the shared exchange rates service
+      exchangeRatesService.setExchangeRates(newRates);
+
+      console.log('✅ Exchange rates updated:', newRates);
     }
   } catch (error) {
     console.error('❌ Error fetching exchange rates, using cached rates:', error.message);
@@ -88,10 +87,9 @@ cron.schedule('0 2,8,14,20 * * *', fetchExchangeRates, {
 });
 console.log('📅 Scheduled: Exchange rate updates at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT');
 
-// Convert to USD
+// Convert to USD (uses shared exchange rates service)
 function convertToUSD(amount, currency) {
-  const rate = exchangeRates[currency] || 1;
-  return Math.round(amount * rate);
+  return Math.round(exchangeRatesService.convertToUSD(amount, currency));
 }
 
 // Determine date format based on currency

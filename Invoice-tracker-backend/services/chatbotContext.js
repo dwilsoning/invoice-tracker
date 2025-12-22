@@ -1,4 +1,5 @@
 const { db } = require('../db-postgres');
+const exchangeRatesService = require('./exchangeRates');
 
 /**
  * Chatbot Context Service
@@ -7,14 +8,11 @@ const { db } = require('../db-postgres');
  */
 
 /**
- * Convert amount to USD using exchange rates
- * Rate represents: how much USD you get for 1 unit of foreign currency
- * Example: If AUD rate is 0.65, then AUD 100 × 0.65 = USD 65
+ * Convert amount to USD using current exchange rates
+ * Uses the shared exchange rates service to ensure consistency with the server
  */
-function convertToUSD(amount, currency, exchangeRates) {
-  if (!amount || !currency) return 0;
-  const rate = exchangeRates[currency] || 1;
-  return amount * rate;
+function convertToUSD(amount, currency) {
+  return exchangeRatesService.convertToUSD(amount, currency);
 }
 
 /**
@@ -62,36 +60,12 @@ function applyProductionModeFilter(invoices) {
 }
 
 /**
- * Get all invoices with exchange rates
+ * Get all invoices
+ * Exchange rates are managed by the shared exchangeRatesService
  */
-async function getAllInvoicesAndRates() {
+async function getAllInvoices() {
   const invoices = await db.all('SELECT * FROM invoices ORDER BY invoice_date DESC');
-
-  // Try to get exchange rates from database, fall back to defaults
-  let exchangeRates;
-  try {
-    const ratesResult = await db.get('SELECT rates, last_updated FROM exchange_rates ORDER BY last_updated DESC LIMIT 1');
-    exchangeRates = ratesResult?.rates || getDefaultExchangeRates();
-  } catch (error) {
-    // Table might not exist, use default rates
-    exchangeRates = getDefaultExchangeRates();
-  }
-
-  return { invoices, exchangeRates };
-}
-
-/**
- * Get default exchange rates
- */
-function getDefaultExchangeRates() {
-  return {
-    USD: 1,
-    AUD: 0.65,
-    EUR: 1.08,
-    GBP: 1.27,
-    SGD: 0.74,
-    NZD: 0.61
-  };
+  return invoices;
 }
 
 /**
@@ -99,7 +73,7 @@ function getDefaultExchangeRates() {
  * This follows the exact same rules as the Analytics.jsx dashboard
  */
 async function generateAnalyticsContext() {
-  const { invoices, exchangeRates } = await getAllInvoicesAndRates();
+  const invoices = await getAllInvoices();
 
   // Apply production mode filter
   const filteredInvoices = applyProductionModeFilter(invoices);
@@ -117,7 +91,7 @@ async function generateAnalyticsContext() {
 
   // Calculate DSI (Days Sales Outstanding)
   const totalPendingUSD = pendingInvoices.reduce((sum, inv) =>
-    sum + convertToUSD(inv.amountDue, inv.currency, exchangeRates), 0
+    sum + convertToUSD(inv.amountDue, inv.currency), 0
   );
 
   const last90Days = new Date();
@@ -126,7 +100,7 @@ async function generateAnalyticsContext() {
     new Date(inv.paymentDate) >= last90Days
   );
   const totalRevenue90Days = recent90DayInvoices.reduce((sum, inv) =>
-    sum + convertToUSD(inv.amountDue, inv.currency, exchangeRates), 0
+    sum + convertToUSD(inv.amountDue, inv.currency), 0
   );
   const avgDailyRevenue = totalRevenue90Days / 90;
   const dsi = avgDailyRevenue > 0 ? totalPendingUSD / avgDailyRevenue : 0;
@@ -145,7 +119,7 @@ async function generateAnalyticsContext() {
 
   pendingInvoices.forEach(inv => {
     const bucket = getAgingBucket(inv.dueDate);
-    const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
+    const amountUSD = convertToUSD(inv.amountDue, inv.currency);
 
     // Skip negative amounts (credits, adjustments, etc.)
     if (amountUSD < 0) return;
@@ -162,7 +136,7 @@ async function generateAnalyticsContext() {
   // Top clients by revenue
   const clientRevenue = {};
   analyticsInvoices.forEach(inv => {
-    const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
+    const amountUSD = convertToUSD(inv.amountDue, inv.currency);
     if (amountUSD < 0) return; // Skip negative amounts
     clientRevenue[inv.client] = (clientRevenue[inv.client] || 0) + amountUSD;
   });
@@ -197,7 +171,7 @@ async function generateAnalyticsContext() {
     const today = new Date();
     const dueDate = new Date(inv.dueDate);
     if (today > dueDate) {
-      const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
+      const amountUSD = convertToUSD(inv.amountDue, inv.currency);
       if (!clientOverdue[inv.client]) {
         clientOverdue[inv.client] = { amount: 0, invoices: 0 };
       }
@@ -229,7 +203,7 @@ async function generateAnalyticsContext() {
   pendingInvoices.forEach(inv => {
     const dueDate = new Date(inv.dueDate);
     const daysUntilDue = Math.floor((dueDate - today) / (1000 * 60 * 60 * 24));
-    const amountUSD = convertToUSD(inv.amountDue, inv.currency, exchangeRates);
+    const amountUSD = convertToUSD(inv.amountDue, inv.currency);
 
     if (daysUntilDue < 0) {
       cashFlowBuckets.overdue += amountUSD;
@@ -257,7 +231,7 @@ async function generateAnalyticsContext() {
       paidInvoices: paidInvoices.length,
       totalPendingAmountUSD: totalPendingUSD,
       totalRevenueUSD: analyticsInvoices.reduce((sum, inv) =>
-        sum + convertToUSD(inv.amountDue, inv.currency, exchangeRates), 0
+        sum + convertToUSD(inv.amountDue, inv.currency), 0
       ),
       daysInvoicesOutstanding: Math.round(dsi)
     },
@@ -271,7 +245,7 @@ async function generateAnalyticsContext() {
     },
     cashFlow: cashFlowBuckets,
     currencyExposure,
-    exchangeRates,
+    exchangeRates: exchangeRatesService.getExchangeRates(),
     generatedAt: new Date().toISOString()
   };
 }
@@ -280,7 +254,7 @@ async function generateAnalyticsContext() {
  * Generate detailed invoice list for specific queries
  */
 async function getDetailedInvoiceData(filters = {}) {
-  const { invoices, exchangeRates } = await getAllInvoicesAndRates();
+  const invoices = await getAllInvoices();
 
   let filtered = applyProductionModeFilter(invoices);
 
@@ -322,7 +296,7 @@ async function getDetailedInvoiceData(filters = {}) {
     dueDate: inv.dueDate,
     amount: inv.amountDue,
     currency: inv.currency,
-    amountUSD: convertToUSD(inv.amountDue, inv.currency, exchangeRates),
+    amountUSD: convertToUSD(inv.amountDue, inv.currency),
     status: inv.status,
     invoiceType: inv.invoiceType,
     contract: inv.customerContract,
@@ -389,9 +363,9 @@ async function generateContextString() {
       `${currency}: ${amount.toLocaleString('en-US', { minimumFractionDigits: 2 })}`
     ),
     '',
-    '## EXCHANGE RATES',
+    '## EXCHANGE RATES (Updated 4x daily at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT)',
     ...Object.entries(analytics.exchangeRates).map(([currency, rate]) =>
-      `${currency}: ${rate}`
+      `${currency}: ${rate.toFixed(4)}`
     ),
     '',
     `Generated at: ${analytics.generatedAt}`,
