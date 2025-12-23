@@ -13,8 +13,9 @@ function Header() {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [version, setVersion] = useState(null);
 
-  const environment = import.meta.env.VITE_ENVIRONMENT || 'development';
-  const isDevelopment = environment === 'development';
+  // Only show TEST badge if explicitly set to 'development'
+  // If VITE_ENVIRONMENT is not set, default to production (no badge)
+  const isDevelopment = import.meta.env.VITE_ENVIRONMENT === 'development';
 
   useEffect(() => {
     const fetchVersion = async () => {

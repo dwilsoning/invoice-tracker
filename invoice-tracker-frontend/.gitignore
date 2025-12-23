@@ -15,9 +15,7 @@ dist-ssr
 # Environment files (local development only)
 .env
 .env.local
-
-# Keep .env.production as a template
-!.env.production
+.env.production
 
 # Editor directories and files
 .vscode/*
