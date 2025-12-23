@@ -426,7 +426,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         setAgingFilter('All');
         setActiveStatBox(null);
         setSelectedExpectedInvoiceId(null);
-        setGroupBy('None');
+        setGroupBy('Contract');
         setSecondaryGroupBy('None');
         setExpandedGroups({});
         setUploadedInvoiceIds(uploadedIds);
