@@ -426,7 +426,7 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
         setAgingFilter('All');
         setActiveStatBox(null);
         setSelectedExpectedInvoiceId(null);
-        setGroupBy('None');
+        setGroupBy('Contract');
         setSecondaryGroupBy('None');
         setExpandedGroups({});
         setUploadedInvoiceIds(uploadedIds);
@@ -447,7 +447,41 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
           ? `Updated ${response.data.updatedCount} invoice payments from ${response.data.filesProcessed} files`
           : `Updated ${response.data.updatedCount} invoice payments`;
         showMessage('success', message);
+
+        // Get the IDs of updated invoices
+        const updatedIds = response.data.updatedInvoiceIds || [];
+
         await loadInvoices();
+
+        // If invoices were updated, show them in the invoice table
+        if (updatedIds.length > 0) {
+          // Set flag to prevent useEffect from clearing the filter during reset
+          setIsUploadingInvoices(true);
+
+          // Clear all filters and show only updated invoices
+          setStatusFilter([]);
+          setTypeFilter([]);
+          setClientFilter([]);
+          setContractFilter('All');
+          setContractPercentageRangeMin('');
+          setContractPercentageRangeMax('');
+          setFrequencyFilter([]);
+          setSearchTerm('');
+          setDateFrom('');
+          setDateTo('');
+          setAgingFilter('All');
+          setActiveStatBox(null);
+          setSelectedExpectedInvoiceId(null);
+          setGroupBy('None');
+          setSecondaryGroupBy('None');
+          setExpandedGroups({});
+          setUploadedInvoiceIds(updatedIds);
+          setShowOnlyUploadedInvoices(true);
+          setShowInvoiceTable(true); // Show invoice table with updated invoices
+
+          // Clear the upload flag after a brief delay
+          setTimeout(() => setIsUploadingInvoices(false), 100);
+        }
       }
       
     } catch (error) {
@@ -1351,9 +1385,12 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
       await loadInvoices();
       await loadDuplicates(); // Refresh duplicates in case changes affect duplicate status
 
-      // If we're viewing duplicate details, reload them to show the updated data
+      // If we're viewing duplicate details, reload them ONLY if the edited invoice is part of the duplicate group
       if (selectedDuplicate && duplicateDetails.length > 0) {
-        await loadDuplicateDetails(selectedDuplicate);
+        // Check if the edited invoice ID is in the duplicate IDs
+        if (selectedDuplicate.ids && selectedDuplicate.ids.includes(editingInvoice.id)) {
+          await loadDuplicateDetails(selectedDuplicate);
+        }
       }
 
       setEditingInvoice(null);
@@ -1640,15 +1677,6 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
               >
                 {isRefreshing ? '🔄 Refreshing...' : '🔄 Refresh'}
               </button>
-              <label className="flex items-center gap-2 px-3 py-2 bg-white bg-opacity-20 rounded-lg cursor-pointer hover:bg-white hover:bg-opacity-30 transition">
-                <input
-                  type="checkbox"
-                  checked={autoRefresh}
-                  onChange={(e) => setAutoRefresh(e.target.checked)}
-                  className="w-4 h-4 cursor-pointer"
-                />
-                <span className="text-sm text-white font-medium">Auto-refresh (30s)</span>
-              </label>
             </div>
 
             {/* Server Status Indicator */}
@@ -2300,6 +2328,24 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
                             setSelectedDuplicate(null);
                             setDuplicateDetails([]);
                             setSearchTerm(''); // Clear search term when closing duplicate details
+                            // Also hide invoice table if it has no other active filters
+                            const hasOtherFilters =
+                              activeStatBox ||
+                              statusFilter.length > 0 ||
+                              agingFilter !== 'All' ||
+                              typeFilter.length > 0 ||
+                              clientFilter.length > 0 ||
+                              contractFilter !== 'All' ||
+                              showContractsWithNoValue ||
+                              contractPercentageRangeMin ||
+                              contractPercentageRangeMax ||
+                              frequencyFilter.length > 0 ||
+                              dateFrom ||
+                              dateTo ||
+                              (showOnlyUploadedInvoices && uploadedInvoiceIds.length > 0);
+                            if (!hasOtherFilters) {
+                              setShowInvoiceTable(false);
+                            }
                           }}
                           className="text-gray-500 hover:text-gray-700"
                         >
@@ -3847,6 +3893,20 @@ function InvoiceTracker({ onNavigateToAnalytics, isAdmin }) {
 function App() {
   const { isAuthenticated, isAdmin, loading } = useAuth();
   const [currentView, setCurrentView] = useState('tracker'); // 'tracker' or 'analytics'
+  // Function to open Sage chatbot in popup window
+  const openSageChatbot = () => {
+    const token = sessionStorage.getItem('token');
+    if (token) {
+      window.open(
+        `/sage-chatbot.html?token=${encodeURIComponent(token)}`,
+        'SageChatbot',
+        'width=900,height=750,scrollbars=yes,resizable=yes'
+      );
+    } else {
+      console.error('No authentication token found');
+      alert('Authentication token not found. Please refresh the page and try again.');
+    }
+  };
 
   // Show loading screen while checking authentication
   if (loading) {
@@ -3876,6 +3936,86 @@ function App() {
           onNavigateBack={() => setCurrentView('tracker')}
         />
       )}
+
+      {/* Floating AI Chatbot Button */}
+      <div
+        onClick={openSageChatbot}
+          style={{
+            position: 'fixed',
+            bottom: '24px',
+            right: '24px',
+            cursor: 'pointer',
+            zIndex: 9999,
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'flex-end',
+            gap: '8px'
+          }}
+        >
+          <div
+            style={{
+              padding: '8px 16px',
+              backgroundColor: '#393392',
+              color: 'white',
+              borderRadius: '20px',
+              fontSize: '14px',
+              fontWeight: '500',
+              boxShadow: '0 2px 8px rgba(57, 51, 146, 0.4)',
+              whiteSpace: 'nowrap',
+              opacity: 0.95
+            }}
+          >
+            Ask Sage
+          </div>
+          <button
+            style={{
+              width: '64px',
+              height: '64px',
+              borderRadius: '50%',
+              backgroundColor: '#393392',
+              color: 'white',
+              border: '3px solid white',
+              cursor: 'pointer',
+              boxShadow: '0 4px 16px rgba(57, 51, 146, 0.5)',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '12px',
+              fontWeight: '600',
+              transition: 'all 0.3s',
+              outline: 'none'
+            }}
+            onMouseOver={(e) => {
+              e.currentTarget.style.backgroundColor = '#2d2870';
+              e.currentTarget.style.transform = 'scale(1.08)';
+              e.currentTarget.style.boxShadow = '0 6px 20px rgba(57, 51, 146, 0.6)';
+            }}
+            onMouseOut={(e) => {
+              e.currentTarget.style.backgroundColor = '#393392';
+              e.currentTarget.style.transform = 'scale(1)';
+              e.currentTarget.style.boxShadow = '0 4px 16px rgba(57, 51, 146, 0.5)';
+            }}
+            title="Ask Sage - Finance Specialist"
+          >
+            <div style={{
+              width: '32px',
+              height: '32px',
+              borderRadius: '50%',
+              backgroundColor: '#00BBBA',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              fontSize: '18px',
+              fontWeight: '700',
+              marginBottom: '2px',
+              color: '#151744'
+            }}>
+              S
+            </div>
+            <span style={{ fontSize: '9px', marginTop: '2px', opacity: 0.9 }}>SAGE</span>
+          </button>
+        </div>
     </div>
   );
 }

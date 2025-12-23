@@ -14,6 +14,13 @@ const { authenticateToken, requireAdmin, optionalAuth } = require('./middleware/
 const authRoutes = require('./routes/auth');
 const usersRoutes = require('./routes/users');
 
+// Import chatbot services
+const { sendChatCompletion, sendSimpleQuery, testConnection } = require('./services/matchaAI');
+const { generateAnalyticsContext, getDetailedInvoiceData } = require('./services/chatbotContext');
+
+// Import exchange rates service
+const exchangeRatesService = require('./services/exchangeRates');
+
 const app = express();
 const PORT = 3001;
 
@@ -42,16 +49,6 @@ if (!fs.existsSync(attachmentsDir)) fs.mkdirSync(attachmentsDir);
 
 // Using PostgreSQL database from db-postgres.js
 
-// Exchange rate cache
-let exchangeRates = {
-  USD: 1,
-  AUD: 0.65,
-  EUR: 1.08,
-  GBP: 1.27,
-  SGD: 0.74,
-  NZD: 0.61
-};
-
 // Fetch exchange rates
 async function fetchExchangeRates() {
   try {
@@ -60,13 +57,19 @@ async function fetchExchangeRates() {
 
     const response = await axios.get('https://api.exchangerate-api.com/v4/latest/USD');
     if (response.data && response.data.rates) {
-      exchangeRates.USD = 1;
-      exchangeRates.AUD = 1 / response.data.rates.AUD;
-      exchangeRates.EUR = 1 / response.data.rates.EUR;
-      exchangeRates.GBP = 1 / response.data.rates.GBP;
-      exchangeRates.SGD = 1 / response.data.rates.SGD;
-      exchangeRates.NZD = 1 / response.data.rates.NZD;
-      console.log('✅ Exchange rates updated:', exchangeRates);
+      const newRates = {
+        USD: 1,
+        AUD: 1 / response.data.rates.AUD,
+        EUR: 1 / response.data.rates.EUR,
+        GBP: 1 / response.data.rates.GBP,
+        SGD: 1 / response.data.rates.SGD,
+        NZD: 1 / response.data.rates.NZD
+      };
+
+      // Update the shared exchange rates service
+      exchangeRatesService.setExchangeRates(newRates);
+
+      console.log('✅ Exchange rates updated:', newRates);
     }
   } catch (error) {
     console.error('❌ Error fetching exchange rates, using cached rates:', error.message);
@@ -84,10 +87,9 @@ cron.schedule('0 2,8,14,20 * * *', fetchExchangeRates, {
 });
 console.log('📅 Scheduled: Exchange rate updates at 2 AM, 8 AM, 2 PM, 8 PM AEST/AEDT');
 
-// Convert to USD
+// Convert to USD (uses shared exchange rates service)
 function convertToUSD(amount, currency) {
-  const rate = exchangeRates[currency] || 1;
-  return Math.round(amount * rate);
+  return Math.round(exchangeRatesService.convertToUSD(amount, currency));
 }
 
 // Determine date format based on currency
@@ -1255,14 +1257,28 @@ app.post('/api/upload-payments', async (req, res) => {
           });
 
           let fileUpdatedCount = 0;
+          const updatedInvoiceIds = [];
 
           for (const update of updates) {
-            const result = await db.run(`
-              UPDATE invoices
-              SET status = 'Paid', payment_date = $1
-              WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
-            `, update.paymentDate, update.invoiceNumber);
-            fileUpdatedCount += result.rowCount || 0;
+            // First get the invoice ID
+            const invoice = await db.get(`
+              SELECT id FROM invoices
+              WHERE LOWER(TRIM(invoice_number)) = LOWER($1)
+            `, update.invoiceNumber);
+
+            if (invoice) {
+              // Then update it
+              const result = await db.run(`
+                UPDATE invoices
+                SET status = 'Paid', payment_date = $1
+                WHERE LOWER(TRIM(invoice_number)) = LOWER($2)
+              `, update.paymentDate, update.invoiceNumber);
+
+              if (result.rowCount > 0) {
+                fileUpdatedCount += result.rowCount;
+                updatedInvoiceIds.push(invoice.id);
+              }
+            }
           }
 
           totalUpdatedCount += fileUpdatedCount;
@@ -1270,7 +1286,8 @@ app.post('/api/upload-payments', async (req, res) => {
           fileResults.push({
             filename: file.originalFilename,
             success: true,
-            updatedCount: fileUpdatedCount
+            updatedCount: fileUpdatedCount,
+            invoiceIds: updatedInvoiceIds
           });
 
           // Clean up the uploaded file
@@ -1296,12 +1313,18 @@ app.post('/api/upload-payments', async (req, res) => {
         }
       }
 
+      // Collect all updated invoice IDs from all files
+      const allUpdatedIds = fileResults
+        .filter(r => r.success && r.invoiceIds)
+        .flatMap(r => r.invoiceIds);
+
       res.json({
         success: true,
         updatedCount: totalUpdatedCount, // For backward compatibility
         totalUpdatedCount,
         filesProcessed: fileResults.length,
-        fileResults
+        fileResults,
+        updatedInvoiceIds: allUpdatedIds // IDs of all invoices that were updated
       });
 
     } catch (error) {
@@ -1956,7 +1979,7 @@ console.log('ℹ️  SA Health status checks: Manual only (automatic scheduling 
 
 // Get exchange rates
 app.get('/api/exchange-rates', async (req, res) => {
-  res.json(exchangeRates);
+  res.json(exchangeRatesService.getExchangeRates());
 });
 
 // Natural language query
@@ -3061,13 +3084,130 @@ app.get('/api/aging-report', authenticateToken, async (req, res) => {
       currency: 'USD',
       grandTotal: Math.round(grandTotal),
       buckets: agingData,
-      exchangeRates: exchangeRates
+      exchangeRates: exchangeRatesService.getExchangeRates()
     };
 
     res.json(summary);
   } catch (error) {
     console.error('Error generating aging report:', error);
     res.status(500).json({ error: error.message });
+  }
+});
+
+// ==================== CHATBOT ENDPOINTS ====================
+
+/**
+ * POST /api/chatbot/query
+ * Send a message to the AI chatbot
+ * Requires authentication
+ */
+app.post('/api/chatbot/query', authenticateToken, async (req, res) => {
+  try {
+    const { message, chatHistory } = req.body;
+
+    if (!message || typeof message !== 'string' || message.trim().length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'Message is required and must be a non-empty string'
+      });
+    }
+
+    // Validate chat history format if provided
+    if (chatHistory && !Array.isArray(chatHistory)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Chat history must be an array'
+      });
+    }
+
+    // Send query to MatchaAI
+    const response = await sendChatCompletion(message, chatHistory || []);
+
+    if (response.success) {
+      res.json({
+        success: true,
+        message: response.message,
+        timestamp: new Date().toISOString()
+      });
+    } else {
+      res.status(500).json({
+        success: false,
+        error: response.error || 'Failed to get response from AI'
+      });
+    }
+  } catch (error) {
+    console.error('Chatbot query error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error processing chatbot query'
+    });
+  }
+});
+
+/**
+ * GET /api/chatbot/context
+ * Get the current analytics context that the chatbot uses
+ * Requires authentication
+ * Useful for debugging or showing users what data the AI has access to
+ */
+app.get('/api/chatbot/context', authenticateToken, async (req, res) => {
+  try {
+    const context = await generateAnalyticsContext();
+    res.json({
+      success: true,
+      context,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error generating chatbot context:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to generate analytics context'
+    });
+  }
+});
+
+/**
+ * GET /api/chatbot/test
+ * Test the MatchaAI connection
+ * Requires authentication
+ */
+app.get('/api/chatbot/test', authenticateToken, async (req, res) => {
+  try {
+    const testResult = await testConnection();
+    res.json(testResult);
+  } catch (error) {
+    console.error('Chatbot test error:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to test chatbot connection'
+    });
+  }
+});
+
+/**
+ * POST /api/chatbot/invoices
+ * Get detailed invoice data with filters
+ * Requires authentication
+ * Used when the chatbot needs specific invoice details
+ */
+app.post('/api/chatbot/invoices', authenticateToken, async (req, res) => {
+  try {
+    const filters = req.body.filters || {};
+    const invoices = await getDetailedInvoiceData(filters);
+
+    res.json({
+      success: true,
+      count: invoices.length,
+      invoices,
+      timestamp: new Date().toISOString()
+    });
+  } catch (error) {
+    console.error('Error fetching invoice data:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch invoice data'
+    });
   }
 });
 
